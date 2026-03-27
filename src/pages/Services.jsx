@@ -1,0 +1,131 @@
+import { useState, useMemo } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
+import { CITIES, SERVICE_CATEGORIES, t, getCityName } from '../lib/constants';
+import { Search, SlidersHorizontal } from 'lucide-react';
+import ServiceCard from '../components/ServiceCard';
+
+export default function Services() {
+  const { lang } = useOutletContext();
+  const urlParams = new URLSearchParams(window.location.search);
+  const [selectedCity, setSelectedCity] = useState(urlParams.get('city') || '');
+  const [selectedCategory, setSelectedCategory] = useState(urlParams.get('category') || '');
+  const [search, setSearch] = useState(urlParams.get('q') || '');
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+
+  const { data: services = [], isLoading } = useQuery({
+    queryKey: ['allServices', selectedCity, selectedCategory],
+    queryFn: () => {
+      const filter = {};
+      if (selectedCity) filter.city = selectedCity;
+      if (selectedCategory) filter.category = selectedCategory;
+      return Object.keys(filter).length > 0
+        ? base44.entities.Service.filter(filter, '-created_date', 50)
+        : base44.entities.Service.list('-created_date', 50);
+    },
+  });
+
+  const filtered = useMemo(() => {
+    let result = services;
+    if (search) {
+      const q = search.toLowerCase();
+      result = result.filter(s => s.name.toLowerCase().includes(q) || s.description?.toLowerCase().includes(q));
+    }
+    if (verifiedOnly) {
+      result = result.filter(s => s.is_verified);
+    }
+    return result;
+  }, [services, search, verifiedOnly]);
+
+  return (
+    <div className="px-4 py-6 max-w-5xl mx-auto">
+      <h1 className="text-2xl font-black tracking-tight mb-1">{t('services', lang)}</h1>
+      <p className="text-sm text-muted-foreground mb-6">Find trusted services across Egypt</p>
+
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search services..."
+          className="w-full pl-10 pr-4 py-3 bg-card rounded-xl border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+        />
+      </div>
+
+      {/* City Filter */}
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-3">
+        <button
+          onClick={() => setSelectedCity('')}
+          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+            !selectedCity ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+          }`}
+        >
+          {t('all_cities', lang)}
+        </button>
+        {CITIES.map(city => (
+          <button
+            key={city.id}
+            onClick={() => setSelectedCity(city.id)}
+            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+              selectedCity === city.id ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+            }`}
+          >
+            {getCityName(city, lang)}
+          </button>
+        ))}
+      </div>
+
+      {/* Category + Verified Filter */}
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-4">
+        <button
+          onClick={() => setVerifiedOnly(!verifiedOnly)}
+          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+            verifiedOnly ? 'bg-success text-success-foreground' : 'bg-card border border-border'
+          }`}
+        >
+          <SlidersHorizontal className="w-3 h-3" />
+          Verified Only
+        </button>
+        <button
+          onClick={() => setSelectedCategory('')}
+          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+            !selectedCategory ? 'bg-accent text-accent-foreground' : 'bg-card border border-border'
+          }`}
+        >
+          All
+        </button>
+        {SERVICE_CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => setSelectedCategory(cat.id)}
+            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+              selectedCategory === cat.id ? 'bg-accent text-accent-foreground' : 'bg-card border border-border'
+            }`}
+          >
+            {lang === 'ru' ? cat.labelRu : lang === 'de' ? cat.labelDe : cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Results */}
+      {isLoading ? (
+        <div className="flex justify-center py-12">
+          <div className="w-8 h-8 border-4 border-border border-t-accent rounded-full animate-spin" />
+        </div>
+      ) : filtered.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.map(s => <ServiceCard key={s.id} service={s} />)}
+        </div>
+      ) : (
+        <div className="text-center py-16">
+          <Search className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+          <p className="font-medium text-muted-foreground">No services found</p>
+          <p className="text-sm text-muted-foreground/60 mt-1">Try adjusting your filters</p>
+        </div>
+      )}
+    </div>
+  );
+}
