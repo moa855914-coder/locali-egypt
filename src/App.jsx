@@ -18,6 +18,13 @@ import BeforeYouLand from './pages/BeforeYouLand';
 import Phrases from './pages/Phrases';
 import WomenSafety from './pages/WomenSafety';
 import Deals from './pages/Deals';
+import CityPrices from './pages/city/CityPrices';
+import CityScams from './pages/city/CityScams';
+import CityRestaurants from './pages/city/CityRestaurants';
+import CityThingsToDo from './pages/city/CityThingsToDo';
+import CityTransport from './pages/city/CityTransport';
+import CityATM from './pages/city/CityATM';
+import CitySafety from './pages/city/CitySafety';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -48,6 +55,13 @@ const AuthenticatedApp = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/city/:cityId" element={<CityPage />} />
+        <Route path="/city/:cityId/prices" element={<CityPrices />} />
+        <Route path="/city/:cityId/scams" element={<CityScams />} />
+        <Route path="/city/:cityId/restaurants" element={<CityRestaurants />} />
+        <Route path="/city/:cityId/things-to-do" element={<CityThingsToDo />} />
+        <Route path="/city/:cityId/transport" element={<CityTransport />} />
+        <Route path="/city/:cityId/atm-currency" element={<CityATM />} />
+        <Route path="/city/:cityId/safety" element={<CitySafety />} />
         <Route path="/services" element={<Services />} />
         <Route path="/service/:serviceId" element={<ServiceDetail />} />
         <Route path="/price-checker" element={<PriceChecker />} />

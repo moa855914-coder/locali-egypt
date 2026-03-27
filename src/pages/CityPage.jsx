@@ -1,10 +1,21 @@
 import { useParams, useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { CITIES, SERVICE_CATEGORIES, t, getCityName } from '../lib/constants';
-import { MapPin, ArrowLeft, AlertTriangle, DollarSign, ShieldCheck, Star } from 'lucide-react';
+import { CITIES, t, getCityName } from '../lib/constants';
+import { CITY_META } from '../lib/cityContent';
+import { MapPin, ArrowLeft, AlertTriangle, DollarSign, ShieldCheck, Star, UtensilsCrossed, Car, CreditCard, Shield, Map } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import SafeNextStep from '../components/SafeNextStep';
+
+const CITY_GUIDES = [
+  { slug: 'prices', label: 'Real Prices', icon: DollarSign, desc: 'What things actually cost', color: 'bg-accent/10 text-accent' },
+  { slug: 'scams', label: 'Scam Alerts', icon: AlertTriangle, desc: 'Know before it happens', color: 'bg-red-500/10 text-red-500' },
+  { slug: 'restaurants', label: 'Restaurants', icon: UtensilsCrossed, desc: 'Honest recommendations', color: 'bg-orange-500/10 text-orange-500' },
+  { slug: 'things-to-do', label: 'Things To Do', icon: Map, desc: 'Verified activities', color: 'bg-blue-500/10 text-blue-500' },
+  { slug: 'transport', label: 'Transport', icon: Car, desc: 'Get around safely', color: 'bg-slate-500/10 text-slate-500' },
+  { slug: 'atm-currency', label: 'ATMs & Money', icon: CreditCard, desc: 'Where & how to get cash', color: 'bg-emerald-500/10 text-emerald-600' },
+  { slug: 'safety', label: 'Safety Tips', icon: Shield, desc: 'What you need to know', color: 'bg-purple-500/10 text-purple-500' },
+];
 
 export default function CityPage() {
   const { cityId } = useParams();
@@ -66,25 +77,27 @@ export default function CityPage() {
           </div>
         </div>
 
-        {/* Categories */}
+        {/* City Guides Grid */}
         <div>
-          <h2 className="text-lg font-extrabold mb-3">Browse by Category</h2>
-          <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
-            {SERVICE_CATEGORIES.map((cat) => (
+          <h2 className="text-xl font-extrabold mb-4 tracking-tight">City Guides</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {CITY_GUIDES.map(({ slug, label, icon: Icon, desc, color }) => (
               <Link
-                key={cat.id}
-                to={`/services?city=${cityId}&category=${cat.id}`}
-                className="flex-shrink-0 bg-card border border-border/50 rounded-2xl px-4 py-3 hover:border-accent/50 transition-all"
+                key={slug}
+                to={`/city/${cityId}/${slug}`}
+                className="group bg-card rounded-2xl border border-border/50 p-4 hover:shadow-md hover:border-accent/30 transition-all"
               >
-                <span className="text-sm font-semibold whitespace-nowrap">
-                  {lang === 'ru' ? cat.labelRu : lang === 'de' ? cat.labelDe : cat.label}
-                </span>
+                <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center mb-3`}>
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-bold text-sm">{label}</h3>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{desc}</p>
               </Link>
             ))}
           </div>
         </div>
 
-        {/* Featured */}
+        {/* Featured Services */}
         {featuredServices.length > 0 && (
           <div>
             <h2 className="text-lg font-extrabold mb-3">Featured</h2>
