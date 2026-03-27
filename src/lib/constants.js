@@ -1,8 +1,8 @@
 export const CITIES = [
-  { id: 'sharm-el-sheikh', name: 'Sharm El Sheikh', nameRu: 'Шарм-эш-Шейх', nameDe: 'Scharm asch-Schaich', image: '/__generating__/img_139728dcbda4.png', region: 'Red Sea' },
-  { id: 'hurghada', name: 'Hurghada', nameRu: 'Хургада', nameDe: 'Hurghada', image: '/__generating__/img_c25a0f279e64.png', region: 'Red Sea' },
-  { id: 'luxor', name: 'Luxor', nameRu: 'Луксор', nameDe: 'Luxor', image: '/__generating__/img_e1bb417062a2.png', region: 'Cultural' },
-  { id: 'aswan', name: 'Aswan', nameRu: 'Асуан', nameDe: 'Assuan', image: '/__generating__/img_2f417d36bbbf.png', region: 'Cultural' },
+  { id: 'sharm-el-sheikh', name: 'Sharm El Sheikh', nameRu: 'Шарм-эш-Шейх', nameDe: 'Scharm asch-Schaich', image: 'https://media.base44.com/images/public/69c689e2d4aa000453950c3f/720515fcf_generated_cfe87f7e.png', region: 'Red Sea' },
+  { id: 'hurghada', name: 'Hurghada', nameRu: 'Хургада', nameDe: 'Hurghada', image: 'https://media.base44.com/images/public/69c689e2d4aa000453950c3f/790e4e258_generated_70147618.png', region: 'Red Sea' },
+  { id: 'luxor', name: 'Luxor', nameRu: 'Луксор', nameDe: 'Luxor', image: 'https://media.base44.com/images/public/69c689e2d4aa000453950c3f/810e2218d_generated_2acd98c5.png', region: 'Cultural' },
+  { id: 'aswan', name: 'Aswan', nameRu: 'Асуан', nameDe: 'Assuan', image: 'https://media.base44.com/images/public/69c689e2d4aa000453950c3f/7a020f162_generated_873418ba.png', region: 'Cultural' },
 ];
 
 export const SERVICE_CATEGORIES = [

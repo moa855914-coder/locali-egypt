@@ -18,7 +18,7 @@ export default function HeroSection({ lang }) {
   return (
     <div className="relative overflow-hidden">
       <img
-        src="/__generating__/img_32e1f14e347d.png"
+        src="https://media.base44.com/images/public/69c689e2d4aa000453950c3f/0a9ecf132_generated_b9058818.png"
         alt="Egyptian market street"
         className="absolute inset-0 w-full h-full object-cover"
       />
