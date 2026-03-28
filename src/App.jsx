@@ -19,6 +19,13 @@ import Phrases from './pages/Phrases';
 import WomenSafety from './pages/WomenSafety';
 import Deals from './pages/Deals';
 import CityPrices from './pages/city/CityPrices';
+import EgyptSafeNow from './pages/EgyptSafeNow';
+import EgyptVsDubai from './pages/EgyptVsDubai';
+import LastMinuteEgypt from './pages/LastMinuteEgypt';
+import Nightlife from './pages/Nightlife';
+import RemoteWork from './pages/RemoteWork';
+import RideSharing from './pages/RideSharing';
+import LongStay from './pages/LongStay';
 import CityScams from './pages/city/CityScams';
 import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
@@ -72,6 +79,13 @@ const AuthenticatedApp = () => {
         <Route path="/phrases" element={<Phrases />} />
         <Route path="/women-safety" element={<WomenSafety />} />
         <Route path="/deals" element={<Deals />} />
+        <Route path="/egypt-safe-now" element={<EgyptSafeNow />} />
+        <Route path="/egypt-vs-dubai" element={<EgyptVsDubai />} />
+        <Route path="/last-minute-egypt" element={<LastMinuteEgypt />} />
+        <Route path="/nightlife" element={<Nightlife />} />
+        <Route path="/remote-work" element={<RemoteWork />} />
+        <Route path="/ride-sharing" element={<RideSharing />} />
+        <Route path="/long-stay" element={<LongStay />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
