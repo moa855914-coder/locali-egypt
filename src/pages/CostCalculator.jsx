@@ -1,44 +1,82 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Calculator, Minus, Plus } from 'lucide-react';
-import { t } from '../lib/constants';
+import { Calculator, Minus, Plus, Info } from 'lucide-react';
+import { t, CITIES } from '../lib/constants';
 import { motion } from 'framer-motion';
 
-const ACCOMMODATION = [
-  { label: 'Hostel', daily: 400 },
-  { label: 'Budget Hotel', daily: 800 },
-  { label: 'Mid-range Hotel', daily: 1800 },
-  { label: 'Luxury Resort', daily: 5000 },
+const CITY_COSTS = {
+  'sharm-el-sheikh': { name: 'Sharm El Sheikh', budget_daily: 550, mid_daily: 1200, luxury_daily: 4500, meal_avg: 180, transport_avg: 120 },
+  hurghada: { name: 'Hurghada', budget_daily: 480, mid_daily: 1000, luxury_daily: 3800, meal_avg: 150, transport_avg: 100 },
+  luxor: { name: 'Luxor', budget_daily: 400, mid_daily: 900, luxury_daily: 3000, meal_avg: 130, transport_avg: 90 },
+  aswan: { name: 'Aswan', budget_daily: 350, mid_daily: 750, luxury_daily: 2500, meal_avg: 110, transport_avg: 80 },
+};
+
+const ACCOMMODATION_TIERS = [
+  { label: 'Hostel / Guesthouse', costByCity: { 'sharm-el-sheikh': 350, hurghada: 300, luxor: 250, aswan: 200 } },
+  { label: 'Budget Hotel (2–3 star)', costByCity: { 'sharm-el-sheikh': 600, hurghada: 550, luxor: 450, aswan: 400 } },
+  { label: 'Mid-Range Hotel (3–4 star)', costByCity: { 'sharm-el-sheikh': 1400, hurghada: 1100, luxor: 900, aswan: 750 } },
+  { label: 'Luxury Resort (5 star)', costByCity: { 'sharm-el-sheikh': 5000, hurghada: 4000, luxor: 3000, aswan: 2500 } },
 ];
 
 const ACTIVITIES_LIST = [
-  { label: 'Diving (per session)', cost: 1500 },
-  { label: 'Desert Safari', cost: 1200 },
-  { label: 'Nile Cruise (per day)', cost: 3000 },
-  { label: 'Temple Tour', cost: 800 },
-  { label: 'Snorkeling Trip', cost: 600 },
-  { label: 'Quad Biking', cost: 800 },
+  { label: 'Diving – 2 dives (Sharm/Hurghada)', cost: 1100 },
+  { label: 'Desert Safari (4 hours)', cost: 750 },
+  { label: 'Snorkeling day trip', cost: 500 },
+  { label: 'Hot Air Balloon – Luxor (certified)', cost: 1800 },
+  { label: 'Valley of Kings entry (3 tombs)', cost: 360 },
+  { label: 'Karnak Temple entry', cost: 300 },
+  { label: 'Felucca (2 hours, whole boat)', cost: 200 },
+  { label: 'Abu Simbel day trip (bus)', cost: 600 },
+  { label: 'Nubian Village boat trip', cost: 200 },
+  { label: 'Quad biking (1 hour)', cost: 700 },
+  { label: 'Camel ride (30 min)', cost: 180 },
+  { label: 'Giftun Island / Dolphin House trip', cost: 450 },
 ];
+
+const BUDGET_PROFILES = {
+  'sharm-el-sheikh': [
+    { profile: 'Budget Traveler', daily: '500–800 EGP', monthly: '15,000–24,000 EGP', includes: 'Guesthouse, local restaurants, public transport, one activity every 3 days' },
+    { profile: 'Mid-Range Tourist', daily: '1,200–2,000 EGP', monthly: '36,000–60,000 EGP', includes: '3-star hotel, mix of local and tourist restaurants, Careem transport, activities every other day' },
+    { profile: 'Luxury Traveler', daily: '4,000–8,000+ EGP', monthly: '120,000+ EGP', includes: '5-star resort, all meals in hotel, private transport, daily activities' },
+  ],
+  hurghada: [
+    { profile: 'Budget Traveler', daily: '450–700 EGP', monthly: '13,500–21,000 EGP', includes: 'Hostel in El Dahar, local food, microbus transport, 2 dives per week' },
+    { profile: 'Mid-Range Tourist', daily: '1,000–1,800 EGP', monthly: '30,000–54,000 EGP', includes: '3-star hotel Sahl Hasheesh, mix of restaurants, Careem, regular excursions' },
+    { profile: 'All-Inclusive', daily: '2,500–5,000 EGP', monthly: '75,000–150,000 EGP', includes: 'All-inclusive 4–5 star resort with full board, activities included' },
+  ],
+  luxor: [
+    { profile: 'Budget Traveler', daily: '350–600 EGP', monthly: '10,500–18,000 EGP', includes: 'West Bank guesthouse, local restaurants, bicycle, 2 temples per day' },
+    { profile: 'Mid-Range Tourist', daily: '800–1,400 EGP', monthly: '24,000–42,000 EGP', includes: '3-star Corniche hotel, mix of food options, taxis, guided tours' },
+    { profile: 'Luxury Traveler', daily: '3,000–6,000 EGP', monthly: '90,000+ EGP', includes: 'Nile-view hotel, private Egyptologist guide daily, private transport' },
+  ],
+  aswan: [
+    { profile: 'Budget Traveler', daily: '300–500 EGP', monthly: '9,000–15,000 EGP', includes: 'Corniche guesthouse, local food, Nile boats, temples every other day' },
+    { profile: 'Mid-Range Tourist', daily: '700–1,200 EGP', monthly: '21,000–36,000 EGP', includes: '3-star Corniche hotel, good restaurants, taxis, daily activities' },
+    { profile: 'Luxury Traveler', daily: '2,500–5,000 EGP', monthly: '75,000+ EGP', includes: 'Sofitel Old Cataract, premium dining, private felucca, VIP Abu Simbel' },
+  ],
+};
 
 export default function CostCalculator() {
   const { lang } = useOutletContext();
-  const [days, setDays] = useState(5);
+  const [days, setDays] = useState(7);
+  const [selectedCity, setSelectedCity] = useState('hurghada');
   const [accommodation, setAccommodation] = useState(1);
   const [meals, setMeals] = useState(3);
   const [selectedActivities, setSelectedActivities] = useState([]);
 
-  const toggleActivity = (idx) => {
-    setSelectedActivities(prev => 
-      prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]
-    );
-  };
-
-  const accomTotal = days * ACCOMMODATION[accommodation].daily;
-  const mealTotal = days * meals * 200;
-  const transportTotal = days * 300;
+  const cityData = CITY_COSTS[selectedCity];
+  const accomCost = ACCOMMODATION_TIERS[accommodation].costByCity[selectedCity];
+  const accomTotal = days * accomCost;
+  const mealTotal = days * meals * cityData.meal_avg;
+  const transportTotal = days * cityData.transport_avg;
   const activitiesTotal = selectedActivities.reduce((sum, idx) => sum + ACTIVITIES_LIST[idx].cost, 0);
   const total = accomTotal + mealTotal + transportTotal + activitiesTotal;
   const totalUSD = Math.round(total / 50);
+  const totalEUR = Math.round(total / 54);
+
+  const toggleActivity = (idx) => {
+    setSelectedActivities(prev => prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]);
+  };
 
   return (
     <div className="px-4 py-6 max-w-3xl mx-auto">
@@ -48,20 +86,34 @@ export default function CostCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-black tracking-tight">{t('cost_calculator', lang)}</h1>
-          <p className="text-sm text-muted-foreground">Estimate your Egypt trip cost</p>
+          <p className="text-sm text-muted-foreground">Real costs for all 4 cities — updated 2025</p>
         </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
+        {/* City selector */}
+        <div className="bg-card rounded-2xl border border-border/50 p-5">
+          <label className="text-sm font-bold mb-3 block">Which City?</label>
+          <div className="grid grid-cols-2 gap-2">
+            {CITIES.map(c => (
+              <button key={c.id} onClick={() => setSelectedCity(c.id)}
+                className={`p-3 rounded-xl text-left transition-all ${selectedCity === c.id ? 'bg-accent text-accent-foreground ring-2 ring-accent' : 'bg-secondary hover:bg-secondary/80'}`}>
+                <p className="text-xs font-bold">{c.name}</p>
+                <p className="text-[10px] mt-0.5 opacity-70">{CITY_COSTS[c.id]?.budget_daily}–{CITY_COSTS[c.id]?.mid_daily} EGP/day</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Days */}
         <div className="bg-card rounded-2xl border border-border/50 p-5">
           <label className="text-sm font-bold mb-3 block">Number of Days</label>
           <div className="flex items-center justify-center gap-6">
-            <button onClick={() => setDays(Math.max(1, days - 1))} className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors">
+            <button onClick={() => setDays(Math.max(1, days - 1))} className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center hover:bg-secondary/80">
               <Minus className="w-5 h-5" />
             </button>
             <span className="text-4xl font-black w-16 text-center">{days}</span>
-            <button onClick={() => setDays(days + 1)} className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors">
+            <button onClick={() => setDays(days + 1)} className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center hover:bg-secondary/80">
               <Plus className="w-5 h-5" />
             </button>
           </div>
@@ -71,26 +123,19 @@ export default function CostCalculator() {
         <div className="bg-card rounded-2xl border border-border/50 p-5">
           <label className="text-sm font-bold mb-3 block">Accommodation</label>
           <div className="grid grid-cols-2 gap-2">
-            {ACCOMMODATION.map((a, i) => (
-              <button
-                key={a.label}
-                onClick={() => setAccommodation(i)}
-                className={`p-3 rounded-xl text-left transition-all ${
-                  accommodation === i
-                    ? 'bg-accent text-accent-foreground ring-2 ring-accent'
-                    : 'bg-secondary hover:bg-secondary/80'
-                }`}
-              >
+            {ACCOMMODATION_TIERS.map((a, i) => (
+              <button key={a.label} onClick={() => setAccommodation(i)}
+                className={`p-3 rounded-xl text-left transition-all ${accommodation === i ? 'bg-accent text-accent-foreground ring-2 ring-accent' : 'bg-secondary hover:bg-secondary/80'}`}>
                 <p className="text-xs font-bold">{a.label}</p>
-                <p className="text-lg font-extrabold mt-1">{a.daily} <span className="text-xs font-normal">EGP/night</span></p>
+                <p className="text-base font-extrabold mt-1">{a.costByCity[selectedCity]} <span className="text-xs font-normal">EGP/night</span></p>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Meals per day */}
+        {/* Meals */}
         <div className="bg-card rounded-2xl border border-border/50 p-5">
-          <label className="text-sm font-bold mb-3 block">Meals per Day</label>
+          <label className="text-sm font-bold mb-3 block">Meals Per Day</label>
           <div className="flex items-center justify-center gap-6">
             <button onClick={() => setMeals(Math.max(0, meals - 1))} className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center">
               <Minus className="w-5 h-5" />
@@ -100,24 +145,17 @@ export default function CostCalculator() {
               <Plus className="w-5 h-5" />
             </button>
           </div>
-          <p className="text-xs text-muted-foreground text-center mt-2">~200 EGP avg per meal</p>
+          <p className="text-xs text-muted-foreground text-center mt-2">~{cityData.meal_avg} EGP avg per meal in {cityData.name}</p>
         </div>
 
         {/* Activities */}
         <div className="bg-card rounded-2xl border border-border/50 p-5">
-          <label className="text-sm font-bold mb-3 block">Activities (optional)</label>
+          <label className="text-sm font-bold mb-3 block">Add Activities (fair prices)</label>
           <div className="grid grid-cols-2 gap-2">
             {ACTIVITIES_LIST.map((act, i) => (
-              <button
-                key={act.label}
-                onClick={() => toggleActivity(i)}
-                className={`p-3 rounded-xl text-left transition-all ${
-                  selectedActivities.includes(i)
-                    ? 'bg-accent text-accent-foreground ring-2 ring-accent'
-                    : 'bg-secondary hover:bg-secondary/80'
-                }`}
-              >
-                <p className="text-xs font-bold">{act.label}</p>
+              <button key={act.label} onClick={() => toggleActivity(i)}
+                className={`p-3 rounded-xl text-left transition-all ${selectedActivities.includes(i) ? 'bg-accent text-accent-foreground ring-2 ring-accent' : 'bg-secondary hover:bg-secondary/80'}`}>
+                <p className="text-[11px] font-bold leading-tight">{act.label}</p>
                 <p className="text-sm font-extrabold mt-1">{act.cost} EGP</p>
               </button>
             ))}
@@ -125,38 +163,43 @@ export default function CostCalculator() {
         </div>
 
         {/* Total */}
-        <motion.div
-          className="bg-primary text-primary-foreground rounded-2xl p-6"
-          initial={{ scale: 0.95 }}
-          animate={{ scale: 1 }}
-          key={total}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        >
-          <p className="text-xs font-bold opacity-60 mb-1">Estimated Total ({days} days)</p>
+        <motion.div className="bg-primary text-primary-foreground rounded-2xl p-6"
+          initial={{ scale: 0.95 }} animate={{ scale: 1 }} key={total} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+          <p className="text-xs font-bold opacity-60 mb-1">Estimated Total — {days} days in {cityData.name}</p>
           <p className="text-4xl font-black">{total.toLocaleString()} EGP</p>
-          <p className="text-lg font-bold opacity-70">≈ ${totalUSD} USD</p>
-
-          <div className="mt-4 space-y-2 text-xs opacity-70">
-            <div className="flex justify-between">
-              <span>Accommodation</span>
-              <span>{accomTotal.toLocaleString()} EGP</span>
+          <div className="flex gap-4 mt-1">
+            <p className="text-lg font-bold opacity-70">≈ ${totalUSD} USD</p>
+            <p className="text-lg font-bold opacity-70">≈ €{totalEUR} EUR</p>
+          </div>
+          <div className="mt-4 space-y-1.5 text-xs opacity-70">
+            <div className="flex justify-between"><span>Accommodation ({days} nights)</span><span>{accomTotal.toLocaleString()} EGP</span></div>
+            <div className="flex justify-between"><span>Food ({meals} meals/day)</span><span>{mealTotal.toLocaleString()} EGP</span></div>
+            <div className="flex justify-between"><span>Transport (est.)</span><span>{transportTotal.toLocaleString()} EGP</span></div>
+            {activitiesTotal > 0 && <div className="flex justify-between"><span>Selected activities</span><span>{activitiesTotal.toLocaleString()} EGP</span></div>}
+            <div className="border-t border-white/20 pt-1.5 flex justify-between font-bold">
+              <span>Daily average</span><span>{Math.round(total / days).toLocaleString()} EGP/day</span>
             </div>
-            <div className="flex justify-between">
-              <span>Food</span>
-              <span>{mealTotal.toLocaleString()} EGP</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Transport</span>
-              <span>{transportTotal.toLocaleString()} EGP</span>
-            </div>
-            {activitiesTotal > 0 && (
-              <div className="flex justify-between">
-                <span>Activities</span>
-                <span>{activitiesTotal.toLocaleString()} EGP</span>
-              </div>
-            )}
           </div>
         </motion.div>
+
+        {/* Budget profiles */}
+        <div className="bg-card rounded-2xl border border-border/50 p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Info className="w-4 h-4 text-accent" />
+            <h3 className="font-bold text-sm">Real Daily Budget Ranges — {cityData.name}</h3>
+          </div>
+          <div className="space-y-3">
+            {(BUDGET_PROFILES[selectedCity] || []).map((profile, i) => (
+              <div key={i} className="bg-secondary rounded-xl p-3">
+                <div className="flex justify-between items-start mb-1">
+                  <span className="font-bold text-sm">{profile.profile}</span>
+                  <span className="text-accent font-bold text-xs">{profile.daily}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">{profile.includes}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
