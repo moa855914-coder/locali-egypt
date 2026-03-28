@@ -27,6 +27,9 @@ import RemoteWork from './pages/RemoteWork';
 import RideSharing from './pages/RideSharing';
 import LongStay from './pages/LongStay';
 import CityScams from './pages/city/CityScams';
+import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
+import TripDecision from './pages/TripDecision';
+import VerifyApply from './pages/VerifyApply';
 import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
@@ -86,6 +89,9 @@ const AuthenticatedApp = () => {
         <Route path="/remote-work" element={<RemoteWork />} />
         <Route path="/ride-sharing" element={<RideSharing />} />
         <Route path="/long-stay" element={<LongStay />} />
+        <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
+        <Route path="/trip-decision" element={<TripDecision />} />
+        <Route path="/verify-apply" element={<VerifyApply />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
