@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { useParams, useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ArrowLeft, Star, ShieldCheck, MapPin, Phone, Globe, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, MapPin, Phone, Globe } from 'lucide-react';
 import ScamGauge from '../components/ScamGauge';
 import SafeNextStep from '../components/SafeNextStep';
+import ReviewSection from '../components/ReviewSection';
 
 export default function ServiceDetail() {
   const { serviceId } = useParams();
@@ -18,11 +18,7 @@ export default function ServiceDetail() {
     },
   });
 
-  const { data: reviews = [] } = useQuery({
-    queryKey: ['reviews', serviceId],
-    queryFn: () => base44.entities.Review.filter({ service_id: serviceId }, '-created_date', 20),
-    enabled: !!serviceId,
-  });
+
 
   if (isLoading) {
     return (
@@ -123,28 +119,7 @@ export default function ServiceDetail() {
 
         {/* Reviews */}
         <div>
-          <h2 className="text-lg font-extrabold mb-3">Reviews ({reviews.length})</h2>
-          {reviews.length > 0 ? (
-            <div className="space-y-3">
-              {reviews.map(review => (
-                <div key={review.id} className="bg-card rounded-2xl border border-border/50 p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex">
-                      {[1, 2, 3, 4, 5].map(star => (
-                        <Star key={star} className={`w-3.5 h-3.5 ${star <= review.rating ? 'text-accent fill-accent' : 'text-border'}`} />
-                      ))}
-                    </div>
-                    {review.author_country && (
-                      <span className="text-[10px] text-muted-foreground">from {review.author_country}</span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">{review.comment}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">No reviews yet</p>
-          )}
+          <ReviewSection entityId={serviceId} city={service?.city} />
         </div>
 
         <SafeNextStep

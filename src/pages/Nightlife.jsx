@@ -4,7 +4,8 @@ import { base44 } from '@/api/base44Client';
 import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
 import SafeNextStep from '../components/SafeNextStep';
-import { Music, Shield, MapPin, Star, Anchor } from 'lucide-react';
+import { Music, Shield, MapPin, Star } from 'lucide-react';
+import ReviewSection from '../components/ReviewSection';
 
 const STATIC_VENUES = {
   'sharm-el-sheikh': [
@@ -39,6 +40,7 @@ const SAFETY_STYLES = {
 export default function Nightlife() {
   const [city, setCity] = useState('sharm-el-sheikh');
   const [typeFilter, setTypeFilter] = useState('all');
+  const [expandedVenue, setExpandedVenue] = useState(null);
 
   useSEO({
     title: 'Nightlife in Sharm El Sheikh & Hurghada 2025 — Bars, Beach Clubs & Yacht Trips',
@@ -100,38 +102,62 @@ export default function Nightlife() {
 
       {/* Venue listings */}
       <div className="space-y-4 mb-10">
-        {filtered.map((venue, i) => (
-          <div key={i} className="bg-card rounded-2xl border border-border/50 p-5">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold">{venue.name}</h3>
-                  <span className="text-[10px] font-bold bg-secondary px-2 py-0.5 rounded-full">{TYPE_LABELS[venue.type]}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="w-3 h-3 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">{venue.location}</span>
+        {filtered.map((venue, i) => {
+          const key = venue.id || `${city}-${i}`;
+          const isOpen = expandedVenue === key;
+          const avgRating = venue.avg_rating;
+          return (
+            <div key={key} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold">{venue.name}</h3>
+                      <span className="text-[10px] font-bold bg-secondary px-2 py-0.5 rounded-full">{TYPE_LABELS[venue.type]}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-xs text-muted-foreground">{venue.location}</span>
+                      </div>
+                      <span className="text-xs font-bold text-accent">{PRICE_LABELS[venue.price_range]}</span>
+                      {avgRating > 0 && (
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 text-accent fill-accent" />
+                          <span className="text-xs font-bold">{Number(avgRating).toFixed(1)}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <span className="text-xs font-bold text-accent">{PRICE_LABELS[venue.price_range]}</span>
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${SAFETY_STYLES[venue.safety_rating]}`}>
+                      {venue.safety_rating === 'safe' ? '✓ Safe' : venue.safety_rating === 'moderate' ? '⚠ Moderate' : '! Caution'}
+                    </span>
+                    {venue.entry_fee > 0 && <span className="text-[10px] text-muted-foreground">Entry: {venue.entry_fee} EGP</span>}
+                    {venue.entry_fee === 0 && <span className="text-[10px] text-success">Free entry</span>}
+                  </div>
                 </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-2">{venue.desc || venue.description}</p>
+                {venue.tags?.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {venue.tags.map((tag, j) => <span key={j} className="text-[10px] bg-secondary px-2 py-0.5 rounded-full capitalize">{tag}</span>)}
+                  </div>
+                )}
+                {venue.id && (
+                  <button onClick={() => setExpandedVenue(isOpen ? null : key)}
+                    className="text-xs font-bold text-accent hover:underline">
+                    {isOpen ? '▲ Hide reviews' : '▼ Reviews & ratings'}
+                  </button>
+                )}
               </div>
-              <div className="flex flex-col items-end gap-2 shrink-0">
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${SAFETY_STYLES[venue.safety_rating]}`}>
-                  {venue.safety_rating === 'safe' ? '✓ Safe' : venue.safety_rating === 'moderate' ? '⚠ Moderate' : '! Caution'}
-                </span>
-                {venue.entry_fee > 0 && <span className="text-[10px] text-muted-foreground">Entry: {venue.entry_fee} EGP</span>}
-                {venue.entry_fee === 0 && <span className="text-[10px] text-success">Free entry</span>}
-              </div>
+              {isOpen && venue.id && (
+                <div className="px-5 pb-5 border-t border-border/30 pt-4">
+                  <ReviewSection entityId={venue.id} city={city} />
+                </div>
+              )}
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-2">{venue.desc}</p>
-            {venue.tags?.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
-                {venue.tags.map((tag, j) => <span key={j} className="text-[10px] bg-secondary px-2 py-0.5 rounded-full capitalize">{tag}</span>)}
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* VIP & Yacht info */}
