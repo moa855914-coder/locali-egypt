@@ -30,6 +30,7 @@ import CityScams from './pages/city/CityScams';
 import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
 import TripDecision from './pages/TripDecision';
 import VerifyApply from './pages/VerifyApply';
+import SimCards from './pages/SimCards';
 import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
@@ -92,6 +93,7 @@ const AuthenticatedApp = () => {
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
         <Route path="/verify-apply" element={<VerifyApply />} />
+        <Route path="/sim-cards" element={<SimCards />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
