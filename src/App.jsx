@@ -31,6 +31,10 @@ import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
 import TripDecision from './pages/TripDecision';
 import VerifyApply from './pages/VerifyApply';
 import SimCards from './pages/SimCards';
+import VisaEntry from './pages/VisaEntry';
+import CurrencyRates from './pages/CurrencyRates';
+import FeaturedLocals from './pages/FeaturedLocals';
+import TouristStories from './pages/TouristStories';
 import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
@@ -94,6 +98,10 @@ const AuthenticatedApp = () => {
         <Route path="/trip-decision" element={<TripDecision />} />
         <Route path="/verify-apply" element={<VerifyApply />} />
         <Route path="/sim-cards" element={<SimCards />} />
+        <Route path="/visa-entry" element={<VisaEntry />} />
+        <Route path="/currency-rates" element={<CurrencyRates />} />
+        <Route path="/featured-locals" element={<FeaturedLocals />} />
+        <Route path="/tourist-stories" element={<TouristStories />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
