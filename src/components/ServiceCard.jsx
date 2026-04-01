@@ -45,12 +45,14 @@ export default function ServiceCard({ service }) {
           </div>
         )}
         <div className="flex items-center gap-3">
-          {service.avg_rating > 0 && (
+          {service.avg_rating > 0 ? (
             <div className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5 text-accent fill-accent" />
               <span className="text-sm font-bold">{service.avg_rating.toFixed(1)}</span>
               <span className="text-xs text-muted-foreground">({service.review_count})</span>
             </div>
+          ) : (
+            <span className="text-xs text-muted-foreground italic">Be the first to review</span>
           )}
           {service.scam_score > 0 && (
             <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold ${

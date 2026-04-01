@@ -1,7 +1,7 @@
 import { useParams, useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ArrowLeft, ShieldCheck, MapPin, Phone, Globe } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, MapPin, Phone, Globe, Star } from 'lucide-react';
 import ScamGauge from '../components/ScamGauge';
 import SafeNextStep from '../components/SafeNextStep';
 import ReviewSection from '../components/ReviewSection';
