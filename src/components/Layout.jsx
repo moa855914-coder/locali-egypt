@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import FloatingAIChat from './FloatingAIChat';
 import TopBar from './TopBar';
 import useLanguage from '../hooks/useLanguage';
 
@@ -11,6 +12,7 @@ export default function Layout() {
       <main>
         <Outlet context={{ lang, changeLang }} />
       </main>
+      <FloatingAIChat />
     </div>
   );
 }
