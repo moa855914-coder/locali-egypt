@@ -40,6 +40,7 @@ import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
 import CityATM from './pages/city/CityATM';
 import AIAssistant from './pages/AIAssistant';
+import LiveSituationPage from './pages/LiveSituationPage';
 import CitySafety from './pages/city/CitySafety';
 
 const AuthenticatedApp = () => {
@@ -104,6 +105,7 @@ const AuthenticatedApp = () => {
         <Route path="/featured-locals" element={<FeaturedLocals />} />
         <Route path="/tourist-stories" element={<TouristStories />} />
         <Route path="/ai-assistant" element={<AIAssistant />} />
+        <Route path="/live-situation" element={<LiveSituationPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
