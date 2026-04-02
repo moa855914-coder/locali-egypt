@@ -39,6 +39,7 @@ import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
 import CityATM from './pages/city/CityATM';
+import AIAssistant from './pages/AIAssistant';
 import CitySafety from './pages/city/CitySafety';
 
 const AuthenticatedApp = () => {
@@ -102,6 +103,7 @@ const AuthenticatedApp = () => {
         <Route path="/currency-rates" element={<CurrencyRates />} />
         <Route path="/featured-locals" element={<FeaturedLocals />} />
         <Route path="/tourist-stories" element={<TouristStories />} />
+        <Route path="/ai-assistant" element={<AIAssistant />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
