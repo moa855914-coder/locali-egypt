@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router-dom';
 import LiveSituationBanner from '../components/LiveSituationBanner';
 import HeroSection from '../components/HeroSection';
 import CityCard from '../components/CityCard';
-import QuickAccessGrid from '../components/QuickAccessGrid';
+import HomeSections from '../components/HomeSections';
 import HomeTips from '../components/HomeTips';
 import { CITIES, t } from '../lib/constants';
 
@@ -20,7 +20,7 @@ export default function Home() {
 
       {/* Quick Access */}
       <section className="px-4 py-6 max-w-7xl mx-auto">
-        <QuickAccessGrid lang={lang} />
+        <HomeSections lang={lang} />
       </section>
 
       {/* Cities */}
