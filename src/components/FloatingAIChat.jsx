@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import ChatCurrencyTicker from './ChatCurrencyTicker';
 import { base44 } from '@/api/base44Client';
 import { Bot, X, Send, Sparkles, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -165,6 +166,8 @@ export default function FloatingAIChat() {
               </button>
             </div>
           </div>
+
+          <ChatCurrencyTicker />
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3 bg-secondary/20">
