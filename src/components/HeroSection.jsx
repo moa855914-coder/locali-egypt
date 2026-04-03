@@ -1,19 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Bot, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { t } from '../lib/constants';
 
-export default function HeroSection({ lang }) {
-  const [query, setQuery] = useState('');
+export default function HeroSection({ lang, onOpenChat }) {
   const navigate = useNavigate();
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim()) {
-      navigate(`/services?q=${encodeURIComponent(query)}`);
-    }
-  };
 
   return (
     <div className="relative overflow-hidden">
@@ -40,24 +32,31 @@ export default function HeroSection({ lang }) {
           </p>
         </motion.div>
 
-        <motion.form
-          onSubmit={handleSearch}
+        <motion.div
           className="mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="relative max-w-lg">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t('search_placeholder', lang)}
-              className="w-full pl-12 pr-4 py-4 bg-card/95 backdrop-blur-sm rounded-2xl border border-border/50 text-sm font-medium placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent shadow-2xl"
-            />
+          <div className="max-w-lg">
+            <button
+              onClick={onOpenChat}
+              className="w-full flex items-center gap-4 px-5 py-4 bg-card/95 backdrop-blur-sm rounded-2xl border border-accent/40 shadow-2xl hover:border-accent hover:bg-card transition-all group text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <Bot className="w-5 h-5 text-accent-foreground" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-bold text-foreground">{lang === 'ru' ? 'Спроси умного гида!' : lang === 'de' ? 'Frag deinen smarten Guide!' : 'Ask your smart guide! 🇪🇬'}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{lang === 'ru' ? 'Рестораны, маршруты, цены, безопасность…' : lang === 'de' ? 'Restaurants, Routen, Preise, Sicherheit…' : 'Restaurants, rides, prices, safety…'}</p>
+              </div>
+              <div className="flex items-center gap-1 bg-accent/10 rounded-full px-2.5 py-1">
+                <Sparkles className="w-3 h-3 text-accent" />
+                <span className="text-[10px] font-bold text-accent">AI</span>
+              </div>
+            </button>
           </div>
-        </motion.form>
+        </motion.div>
       </div>
     </div>
   );

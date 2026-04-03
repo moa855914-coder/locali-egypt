@@ -7,11 +7,11 @@ import HomeTips from '../components/HomeTips';
 import { CITIES, t } from '../lib/constants';
 
 export default function Home() {
-  const { lang } = useOutletContext();
+  const { lang, openAIChat } = useOutletContext();
 
   return (
     <div>
-      <HeroSection lang={lang} />
+      <HeroSection lang={lang} onOpenChat={openAIChat} />
       
       {/* Live Situation Banner */}
       <section className="px-4 pt-4 max-w-7xl mx-auto">

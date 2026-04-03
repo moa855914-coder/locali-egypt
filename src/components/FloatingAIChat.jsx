@@ -75,8 +75,15 @@ function Bubble({ message }) {
   );
 }
 
-export default function FloatingAIChat() {
+export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (externalOpen) {
+      setOpen(true);
+      if (onExternalOpenHandled) onExternalOpenHandled();
+    }
+  }, [externalOpen]);
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
