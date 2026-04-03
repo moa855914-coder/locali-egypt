@@ -4,12 +4,12 @@ import { Bot, X, Send, Sparkles, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const QUICK_PROMPTS = [
+  { label: '🗓️ Plan my trip', text: 'I want to plan a trip to Egypt. Can you help?' },
   { label: '🍽️ Best restaurants', text: 'What are the best restaurants near me in Egypt?' },
-  { label: '💊 24hr pharmacy', text: 'Where is the nearest 24-hour pharmacy?' },
-  { label: '💱 USD → EGP rate', text: 'What is the current USD to EGP exchange rate?' },
-  { label: '🚗 Shared ride Cairo', text: 'I need a shared ride to Cairo.' },
-  { label: '🏥 English doctor', text: 'I need an English-speaking doctor.' },
-  { label: '🔒 Is it safe?', text: 'Is Egypt safe for tourists right now?' },
+  { label: '💱 USD → EGP', text: 'What is the current USD to EGP exchange rate?' },
+  { label: '🏛️ Top sights Luxor', text: 'What are the top sightseeing spots in Luxor?' },
+  { label: '🚗 Ride to Cairo', text: 'I need a shared ride to Cairo. What are my options?' },
+  { label: '🔒 Is it safe now?', text: 'Is Egypt safe for tourists right now?' },
 ];
 
 function TypingIndicator() {
