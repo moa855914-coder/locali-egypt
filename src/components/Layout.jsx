@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
 import FloatingAIChat from './FloatingAIChat';
 import TopBar from './TopBar';
 import useLanguage from '../hooks/useLanguage';
@@ -15,6 +16,7 @@ export default function Layout() {
         <Outlet context={{ lang, changeLang, openAIChat: () => setOpenChat(true) }} />
       </main>
       <FloatingAIChat externalOpen={openChat} onExternalOpenHandled={() => setOpenChat(false)} />
+      <Footer lang={lang} />
     </div>
   );
 }

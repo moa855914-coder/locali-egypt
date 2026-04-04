@@ -42,6 +42,8 @@ import CityATM from './pages/city/CityATM';
 import AIAssistant from './pages/AIAssistant';
 import LiveSituationPage from './pages/LiveSituationPage';
 import CitySafety from './pages/city/CitySafety';
+import Terms from './pages/Terms';
+import BookingPage from './pages/BookingPage';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -106,6 +108,8 @@ const AuthenticatedApp = () => {
         <Route path="/tourist-stories" element={<TouristStories />} />
         <Route path="/ai-assistant" element={<AIAssistant />} />
         <Route path="/live-situation" element={<LiveSituationPage />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/book" element={<BookingPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

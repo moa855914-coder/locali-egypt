@@ -18,8 +18,8 @@ const SECTIONS = [
       { label: 'Cost Calculator', labelRu: 'Калькулятор', labelDe: 'Kostenrechner', icon: Calculator, path: '/cost-calculator', color: 'bg-emerald-500/10 text-emerald-600' },
       { label: 'Real Prices', labelRu: 'Реальные цены', labelDe: 'Echte Preise', icon: DollarSign, path: '/price-checker', color: 'bg-accent/10 text-accent' },
       { label: 'Smart AI Guide', labelRu: 'AI Гид', labelDe: 'AI Guide', icon: Bot, path: '/ai-assistant', color: 'bg-violet-500/10 text-violet-500', isAI: true },
-      { label: 'Deals & Offers', labelRu: 'Скидки', labelDe: 'Angebote', icon: Star, path: '/deals', color: 'bg-amber-500/10 text-amber-600' },
-      { label: 'Currency Rates', labelRu: 'Курсы валют', labelDe: 'Wechselkurse', icon: TrendingUp, path: '/currency-rates', color: 'bg-green-500/10 text-green-600' },
+      { label: 'Deals & Offers', labelRu: 'Скидки', labelDe: 'Angebote', labelFr: 'Offres', icon: Star, path: '/deals', color: 'bg-amber-500/10 text-amber-600' },
+      { label: 'Book a Tour', labelRu: 'Забронировать', labelDe: 'Tour buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
     ],
   },
   {
