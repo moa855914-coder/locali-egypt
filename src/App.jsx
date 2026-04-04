@@ -44,6 +44,11 @@ import LiveSituationPage from './pages/LiveSituationPage';
 import CitySafety from './pages/city/CitySafety';
 import Terms from './pages/Terms';
 import BookingPage from './pages/BookingPage';
+import SafetyGuide from './pages/SafetyGuide';
+import AirportItems from './pages/AirportItems';
+import Beaches from './pages/Beaches';
+import SmartGuide from './pages/SmartGuide';
+import AnalyticsDashboard from './pages/AnalyticsDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -110,6 +115,11 @@ const AuthenticatedApp = () => {
         <Route path="/live-situation" element={<LiveSituationPage />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/book" element={<BookingPage />} />
+        <Route path="/safety-guide" element={<SafetyGuide />} />
+        <Route path="/airport-items" element={<AirportItems />} />
+        <Route path="/beaches" element={<Beaches />} />
+        <Route path="/smart-guide" element={<SmartGuide />} />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

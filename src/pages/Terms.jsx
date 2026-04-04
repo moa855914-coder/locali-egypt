@@ -56,7 +56,7 @@ const CONTENT = {
       { heading: '2. Exactitude des informations', body: 'Toutes les informations sont fournies de bonne foi et mises à jour régulièrement. Vérifiez toujours les prix directement auprès des prestataires.' },
       { heading: '3. Réservation & Commission', body: 'Une commission de 7% peut être appliquée lors de réservations via nos liens WhatsApp. Nos codes de suivi (LOC-XXX-XXXX) permettent de tracer les recommandations.' },
       { heading: '4. Badges Vérifiés', body: 'Les services marqués "Vérifié" ont été examinés par notre équipe. La vérification ne constitue pas une garantie de qualité.' },
-      { heading: '5. Contenu Utilisateur', body: 'Les avis et signalements d'arnaques sont modérés. En soumettant du contenu, vous accordez à Locali Egypt une licence non exclusive pour l'afficher.' },
+      { heading: '5. Contenu Utilisateur', body: "Les avis et signalements d'arnaques sont mod\u00e9r\u00e9s. En soumettant du contenu, vous accordez \u00e0 Locali Egypt une licence non exclusive pour l'afficher." },
       { heading: '6. Propriété Intellectuelle', body: '© 2026 Locali Egypt – Tous droits réservés. Toute reproduction sans autorisation écrite est interdite.' },
     ],
   },

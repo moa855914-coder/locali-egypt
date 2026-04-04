@@ -3,7 +3,7 @@ import {
   Bot, DollarSign, Calculator, ShieldCheck, LayoutGrid,
   Phone, ShieldAlert, AlertTriangle, Car, Home, Wifi, Utensils,
   Waves, Baby, Music, ShoppingBag, Star, Radio, TrendingUp,
-  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users
+  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package
 } from 'lucide-react';
 
 const SECTIONS = [
@@ -79,7 +79,24 @@ const SECTIONS = [
       { label: 'Tourist Stories', labelRu: 'Истории туристов', labelDe: 'Reiseberichte', icon: Star, path: '/tourist-stories', color: 'bg-amber-500/10 text-amber-500' },
       { label: 'Remote Work', labelRu: 'Удалённая работа', labelDe: 'Remote-Arbeit', icon: Wifi, path: '/remote-work', color: 'bg-indigo-500/10 text-indigo-500' },
       { label: 'Egypt vs Dubai', labelRu: 'Египет vs Дубай', labelDe: 'Ägypten vs Dubai', icon: TrendingUp, path: '/egypt-vs-dubai', color: 'bg-sky-500/10 text-sky-500' },
-      { label: 'Trip Decision', labelRu: 'Выбор поездки', labelDe: 'Reiseentscheidung', icon: CheckSquare, path: '/trip-decision', color: 'bg-violet-500/10 text-violet-500' },
+      { label: 'Trip Decision', labelRu: 'Выбор поездки', labelDe: 'Reiseentscheidung', labelFr: 'Décision voyage', icon: CheckSquare, path: '/trip-decision', color: 'bg-violet-500/10 text-violet-500' },
+      { label: 'Smart Guide', labelRu: 'Умный гид', labelDe: 'Smart Guide', labelFr: 'Guide intelligent', icon: Bot, path: '/smart-guide', color: 'bg-violet-500/10 text-violet-600' },
+    ],
+  },
+  {
+    group: 'New Features',
+    groupAr: 'ميزات جديدة',
+    groupRu: 'Новые функции',
+    groupDe: 'Neue Features',
+    groupFr: 'Nouvelles fonctions',
+    color: 'text-violet-500',
+    items: [
+      { label: 'Safety Guide', labelRu: 'Безопасность', labelDe: 'Sicherheit', labelFr: 'Sécurité', icon: ShieldCheck, path: '/safety-guide', color: 'bg-success/10 text-success' },
+      { label: 'Beaches', labelRu: 'Пляжи', labelDe: 'Strände', labelFr: 'Plages', icon: Waves, path: '/beaches', color: 'bg-blue-500/10 text-blue-500' },
+      { label: 'Airport Items', labelRu: 'Таможня', labelDe: 'Zoll & Gepäck', labelFr: 'Douane', icon: Package, path: '/airport-items', color: 'bg-amber-500/10 text-amber-500' },
+      { label: 'Book a Tour', labelRu: 'Туры', labelDe: 'Tours buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
+      { label: 'Analytics', labelRu: 'Аналитика', labelDe: 'Analytik', labelFr: 'Analytique', icon: TrendingUp, path: '/analytics', color: 'bg-slate-500/10 text-slate-500' },
+      { label: 'Terms', labelRu: 'Условия', labelDe: 'AGB', labelFr: 'CGU', icon: CheckSquare, path: '/terms', color: 'bg-gray-500/10 text-gray-500' },
     ],
   },
 ];
