@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { generateTrackingCode } from '../lib/constants';
-import { Phone, ShieldCheck, Star, ExternalLink, Copy, Check } from 'lucide-react';
+import { Phone, ShieldCheck, Star, ExternalLink, Copy, Check, CreditCard } from 'lucide-react';
+import PaymentModal from '../components/PaymentModal';
 
 const WHATSAPP_BASE = 'https://wa.me/';
 
@@ -149,6 +150,7 @@ const CITY_LABELS = {
 function TourCard({ tour, lang }) {
   const [code] = useState(() => generateTrackingCode(tour.city, 'TOUR'));
   const [copied, setCopied] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
   const whatsappMsg = encodeURIComponent(
     `Hello! I'd like to book: "${tour.name}" via Locali Egypt.\nTracking Code: ${code}\nDuration: ${tour.duration}\nPrice: ${tour.price_egp} EGP (~$${tour.price_usd} USD)\nPlease confirm availability.`
@@ -214,18 +216,28 @@ function TourCard({ tour, lang }) {
       </div>
 
       {/* CTA */}
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 space-y-2">
+        <button
+          onClick={() => setShowPayment(true)}
+          className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
+        >
+          <CreditCard className="w-4 h-4" />
+          Book & Pay Now
+        </button>
         <a
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-success text-success-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
+          className="flex items-center justify-center gap-2 w-full bg-success/10 text-success border border-success/30 py-2.5 rounded-xl text-sm font-bold hover:bg-success/20 transition-colors"
         >
           <Phone className="w-4 h-4" />
-          Book Now via WhatsApp
+          WhatsApp Only
           <ExternalLink className="w-3.5 h-3.5 opacity-70" />
         </a>
       </div>
+      {showPayment && (
+        <PaymentModal tour={tour} trackingCode={code} onClose={() => setShowPayment(false)} />
+      )}
     </div>
   );
 }
