@@ -49,6 +49,8 @@ import AirportItems from './pages/AirportItems';
 import Beaches from './pages/Beaches';
 import SmartGuide from './pages/SmartGuide';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
+import Hotels from './pages/Hotels';
+import ElGouna from './pages/ElGouna';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -120,6 +122,8 @@ const AuthenticatedApp = () => {
         <Route path="/beaches" element={<Beaches />} />
         <Route path="/smart-guide" element={<SmartGuide />} />
         <Route path="/analytics" element={<AnalyticsDashboard />} />
+        <Route path="/hotels" element={<Hotels />} />
+        <Route path="/el-gouna" element={<ElGouna />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

@@ -3,7 +3,7 @@ import {
   Bot, DollarSign, Calculator, ShieldCheck, LayoutGrid,
   Phone, ShieldAlert, AlertTriangle, Car, Home, Wifi, Utensils,
   Waves, Baby, Music, ShoppingBag, Star, Radio, TrendingUp,
-  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package
+  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2
 } from 'lucide-react';
 
 const SECTIONS = [
@@ -20,6 +20,8 @@ const SECTIONS = [
       { label: 'Smart AI Guide', labelRu: 'AI Гид', labelDe: 'AI Guide', icon: Bot, path: '/ai-assistant', color: 'bg-violet-500/10 text-violet-500', isAI: true },
       { label: 'Deals & Offers', labelRu: 'Скидки', labelDe: 'Angebote', labelFr: 'Offres', icon: Star, path: '/deals', color: 'bg-amber-500/10 text-amber-600' },
       { label: 'Book a Tour', labelRu: 'Забронировать', labelDe: 'Tour buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
+      { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels buchen', labelFr: 'Hôtels', icon: Building2, path: '/hotels', color: 'bg-blue-500/10 text-blue-600' },
+      { label: 'El Gouna', labelRu: 'Эль-Гуна', labelDe: 'El Gouna', labelFr: 'El Gouna', icon: Waves, path: '/el-gouna', color: 'bg-cyan-500/10 text-cyan-600' },
     ],
   },
   {
