@@ -21,7 +21,6 @@ const SECTIONS = [
       { label: 'Deals & Offers', labelRu: 'Скидки', labelDe: 'Angebote', labelFr: 'Offres', icon: Star, path: '/deals', color: 'bg-amber-500/10 text-amber-600' },
       { label: 'Book a Tour', labelRu: 'Забронировать', labelDe: 'Tour buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels buchen', labelFr: 'Hôtels', icon: Building2, path: '/hotels', color: 'bg-blue-500/10 text-blue-600' },
-      { label: 'El Gouna', labelRu: 'Эль-Гуна', labelDe: 'El Gouna', labelFr: 'El Gouna', icon: Waves, path: '/el-gouna', color: 'bg-cyan-500/10 text-cyan-600' },
     ],
   },
   {
