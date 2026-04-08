@@ -60,6 +60,7 @@ import TourOperators from './pages/TourOperators';
 import Apartments from './pages/Apartments';
 import VerifiedDrivers from './pages/VerifiedDrivers';
 import LocaliRide from './pages/LocaliRide';
+import NationalityGuide from './pages/NationalityGuide';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -114,6 +115,7 @@ const AuthenticatedApp = () => {
         <Route path="/remote-work" element={<RemoteWork />} />
         <Route path="/ride-sharing" element={<LocaliRide />} />
         <Route path="/locali-ride" element={<LocaliRide />} />
+        <Route path="/nationality-guide" element={<NationalityGuide />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
