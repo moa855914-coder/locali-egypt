@@ -16,8 +16,8 @@ const NAV_LINKS = [
 export default function TopBar({ lang, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const { currentUser } = useAuth();
-  const isAdmin = currentUser?.role === 'admin';
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
 
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-sm">
