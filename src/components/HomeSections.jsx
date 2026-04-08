@@ -12,6 +12,10 @@ const SECTIONS = [
     groupAr: 'الأدوات الأساسية',
     groupRu: 'Основные инструменты',
     groupDe: 'Wichtige Tools',
+    groupFr: 'Outils essentiels',
+    groupIt: 'Strumenti essenziali',
+    groupEs: 'Herramientas esenciales',
+    groupZh: '基本工具',
     color: 'text-accent',
     items: [
       { label: 'Services Directory', labelRu: 'Каталог услуг', labelDe: 'Dienste', icon: LayoutGrid, path: '/services', color: 'bg-blue-500/10 text-blue-500' },
@@ -113,12 +117,20 @@ const SECTIONS = [
 function getLabel(item, lang) {
   if (lang === 'ru') return item.labelRu || item.label;
   if (lang === 'de') return item.labelDe || item.label;
+  if (lang === 'fr') return item.labelFr || item.label;
+  if (lang === 'it') return item.labelIt || item.label;
+  if (lang === 'es') return item.labelEs || item.label;
+  if (lang === 'zh') return item.labelZh || item.label;
   return item.label;
 }
 
 function getGroupLabel(section, lang) {
   if (lang === 'ru') return section.groupRu || section.group;
   if (lang === 'de') return section.groupDe || section.group;
+  if (lang === 'fr') return section.groupFr || section.group;
+  if (lang === 'it') return section.groupIt || section.group;
+  if (lang === 'es') return section.groupEs || section.group;
+  if (lang === 'zh') return section.groupZh || section.group;
   return section.group;
 }
 
