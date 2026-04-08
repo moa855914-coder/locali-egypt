@@ -32,6 +32,9 @@ function HotelCard({ hotel, city }) {
 
   const commission = Math.round(hotel.price_egp_night * 0.07);
 
+  // Booking.com affiliate — searches by hotel name & city
+  const bookingComUrl = `https://www.booking.com/search.html?ss=${encodeURIComponent(hotel.name + ' ' + (CITY_LABELS[city] || city))}&aid=YOUR_AFFILIATE_ID&label=localiegypt`;
+
   const whatsappMsg = encodeURIComponent(
     `Hello! I'd like to book: "${hotel.name}" via Locali Egypt.\nTracking Code: ${code}\nCity: ${CITY_LABELS[city]}\nPrice: ${hotel.price_egp_night} EGP/night (~$${hotel.price_usd_night} USD)\nPlease confirm availability.`
   );
@@ -150,6 +153,17 @@ function HotelCard({ hotel, city }) {
             </a>
           )}
         </div>
+        {/* Booking.com affiliate link */}
+        <a
+          href={bookingComUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full bg-blue-500/10 border border-blue-500/20 text-blue-600 py-2.5 rounded-xl text-xs font-bold hover:bg-blue-500/20 transition-colors"
+        >
+          <ExternalLink className="w-3.5 h-3.5" />
+          Check Availability on Booking.com
+          <span className="text-[9px] opacity-70">(4–6% affiliate)</span>
+        </a>
       </div>
 
       {showPayment && (
