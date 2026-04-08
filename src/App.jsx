@@ -64,6 +64,7 @@ import NationalityGuide from './pages/NationalityGuide';
 import AdminVerification from './pages/AdminVerification';
 import AdminDataPopulate from './pages/AdminDataPopulate';
 import AdminContentManager from './pages/AdminContentManager';
+import TouristVillages from './pages/TouristVillages';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -122,6 +123,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/verify" element={<AdminVerification />} />
         <Route path="/admin/populate" element={<AdminDataPopulate />} />
         <Route path="/admin/content" element={<AdminContentManager />} />
+        <Route path="/tourist-villages" element={<TouristVillages />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
