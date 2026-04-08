@@ -46,6 +46,7 @@ const SECTIONS = [
     color: 'text-blue-500',
     items: [
       { label: 'Ride Sharing', labelRu: 'Совместные поездки', labelDe: 'Mitfahrgelegenheit', icon: Car, path: '/ride-sharing', color: 'bg-blue-500/10 text-blue-500' },
+      { label: 'Private Drivers', labelRu: 'Частные водители', labelDe: 'Privatfahrer', labelFr: 'Chauffeurs privés', icon: ShieldCheck, path: '/verified-drivers', color: 'bg-success/10 text-success' },
       { label: 'Long Stay', labelRu: 'Долгосрочное', labelDe: 'Langzeitaufenthalt', icon: Home, path: '/long-stay', color: 'bg-indigo-500/10 text-indigo-500' },
       { label: 'SIM Cards', labelRu: 'SIM-карты', labelDe: 'SIM-Karten', icon: Wifi, path: '/sim-cards', color: 'bg-teal-500/10 text-teal-500' },
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels', icon: Hotel, path: '/services?category=long_stay', color: 'bg-slate-500/10 text-slate-500' },

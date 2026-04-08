@@ -57,6 +57,8 @@ import AskALocal from './pages/AskALocal';
 import VerifiedGuides from './pages/VerifiedGuides';
 import About from './pages/About';
 import TourOperators from './pages/TourOperators';
+import Apartments from './pages/Apartments';
+import VerifiedDrivers from './pages/VerifiedDrivers';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -137,6 +139,8 @@ const AuthenticatedApp = () => {
         <Route path="/guides" element={<VerifiedGuides />} />
         <Route path="/about" element={<About />} />
         <Route path="/tour-operators" element={<TourOperators />} />
+        <Route path="/apartments" element={<Apartments />} />
+        <Route path="/verified-drivers" element={<VerifiedDrivers />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
