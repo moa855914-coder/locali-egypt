@@ -13,14 +13,14 @@ const NATIONAL_EMERGENCY = [
 
 const CITY_HOSPITALS = {
   'Sharm El Sheikh': [
-    { name: 'Sharm International Hospital', phone: '+20 69 366 0893', type: 'General + Emergency', note: 'Main hospital. 24/7 emergency. English, Russian speaking.' },
-    { name: 'Hyperbaric Medical Center', phone: '+20 69 360 0922', type: 'Diving Emergencies', note: 'Decompression chamber. Know this address before diving.' },
-    { name: 'Movenpick Hospital (hotel clinic)', phone: '+20 69 360 1081', type: 'General', note: 'Inside Movenpick resort. English-speaking doctors.' },
+    { name: 'Sharm International Hospital', phone: '+20 69 366 0893', type: 'General + Emergency', note: 'Main hospital. 24/7 emergency. English, Russian speaking. Verified: US Embassy list + African Dev. Bank.' },
+    { name: 'South Sinai Hospital', phone: '+20 69 366 6020', type: 'General + Emergency', note: '24/7 emergency line. English-speaking staff. Verified: southsinaihospital.com' },
+    { name: 'Hyperbaric Medical Center Sharm', phone: '+20 69 360 0922', type: 'Diving Emergencies', note: 'Decompression chamber. Know this address before diving.' },
   ],
   'Hurghada': [
-    { name: 'Hurghada General Hospital', phone: '+20 65 354 9331', type: 'General + Emergency', note: 'Main public hospital. 24/7. Long wait times but free.' },
+    { name: 'Hurghada General Hospital', phone: '+20 65 354 6740', type: 'General + Emergency', note: 'Main public hospital. 24/7. Verified: redseapages.com + egyptyello.com' },
+    { name: 'The Egyptian Hospital Hurghada', phone: '+20 111 050 6888', type: 'Private + Emergency 24/7', note: '283 Mohamed Said St., El Kawthar. WhatsApp available. Verified: Facebook الرسمي' },
     { name: 'Hurghada Hyperbaric Center', phone: '+20 65 354 9150', type: 'Diving Emergencies', note: 'Specialist decompression chamber. 24/7 for dive emergencies.' },
-    { name: 'Dr. Ahmed Private Clinic', phone: '+20 65 354 7100', type: 'General Medicine', note: 'English and Russian speaking. Faster than general hospital.' },
   ],
   'Luxor': [
     { name: 'Luxor International Hospital', phone: '+20 95 237 8999', type: 'General + Emergency', note: '24/7 emergency. Accepts travel insurance. English staff.' },
@@ -35,8 +35,8 @@ const CITY_HOSPITALS = {
 };
 
 const CITY_TOURIST_POLICE = {
-  'Sharm El Sheikh': { address: 'Near Naama Bay roundabout, Peace Road', phone: '+20 69 366 0597', note: 'Large presence in Naama Bay. Very accessible.' },
-  'Hurghada': { address: 'Near Sahl Hasheesh junction, main coastal road', phone: '+20 65 354 6984', note: 'Located between El Dahar and Marina.' },
+  'Sharm El Sheikh': { address: 'Near Naama Bay roundabout, Peace Road', phone: '+20 69 366 0311', note: 'Large presence in Naama Bay. Very accessible. Verified: sharm-el-sheikh.com + heroesofadventure.com' },
+  'Hurghada': { address: 'Near Sahl Hasheesh junction, main coastal road', phone: '+20 65 354 6984', note: 'Located between El Dahar and Marina. National line: 126' },
   'Luxor': { address: 'Corniche road, near Luxor Temple', phone: '+20 95 237 6620', note: 'Staff at Valley of Kings, Karnak, and Luxor Temple daily.' },
   'Aswan': { address: 'Corniche road, central Aswan', phone: '+20 97 231 2348', note: 'Friendly and accessible. Speak English.' },
 };

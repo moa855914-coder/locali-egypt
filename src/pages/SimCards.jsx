@@ -22,6 +22,8 @@ const OPERATORS = [
       { name: 'Heavy Data', data: '40 GB', validity: '30 days', price: 250, calls: 'Unlimited local', best_for: 'Power users, video calls daily' },
       { name: 'Mega Bundle', data: '60 GB', validity: '30 days', price: 350, calls: 'Unlimited local + international mins', best_for: 'Digital nomads, 1-month stays' },
     ],
+    customerService: '888 (من خط Vodafone) أو 16888 (من أي خط)',
+    customerServiceRaw: '888',
     stores: ['Vodafone Store — Naama Bay Mall (Sharm)', 'Vodafone — Sahl Hasheesh Road (Hurghada)', 'Vodafone — Luxor Temple Road (Luxor)', 'Vodafone — Corniche Street (Aswan)'],
     topup: 'Top-up cards sold at supermarkets, pharmacies. Use Vodafone app for online recharge.',
   },
@@ -43,6 +45,8 @@ const OPERATORS = [
       { name: 'Power', data: '40 GB', validity: '30 days', price: 225, calls: 'Unlimited local', best_for: 'Heavy users, video streaming' },
       { name: 'Max', data: '75 GB', validity: '30 days', price: 320, calls: 'Unlimited local + 60 int\'l mins', best_for: 'Long-stay digital nomads' },
     ],
+    customerService: '110 (من خط Orange) أو 16110 (من أي خط)',
+    customerServiceRaw: '16110',
     stores: ['Orange Store — Old Market (Sharm)', 'Orange Store — Marina Road (Hurghada)', 'Orange Store — Corniche (Luxor)', 'Orange Store — Train Station Area (Aswan)'],
     topup: 'Top-up at Orange stores, supermarkets, and the Orange app.',
   },
@@ -64,6 +68,8 @@ const OPERATORS = [
       { name: 'Premium', data: '50 GB', validity: '30 days', price: 210, calls: 'Unlimited local', best_for: 'Heavy data users' },
       { name: 'Unlimited', data: '100 GB', validity: '30 days', price: 300, calls: 'Unlimited local', best_for: 'Maximum data, best per-GB price' },
     ],
+    customerService: '110 (من خط e&)',
+    customerServiceRaw: '110',
     stores: ['e& Store — New Hurghada Mall', 'e& Store — Naama Bay (Sharm)', 'e& Store — Luxor City Center', 'e& Store — Aswan Corniche'],
     topup: 'Top-up at official e& stores and via the myetisalat app.',
   },
@@ -84,6 +90,8 @@ const OPERATORS = [
       { name: 'Value+', data: '30 GB', validity: '30 days', price: 140, calls: '300 mins local', best_for: 'Budget long stays — accept slower speeds' },
       { name: 'Unlimited', data: 'Unlimited*', validity: '30 days', price: 250, calls: 'Unlimited local', best_for: 'Fixed speed cap after 40GB' },
     ],
+    customerService: '111 أو 01555000111',
+    customerServiceRaw: '111',
     stores: ['WE — El Dahar (Hurghada)', 'WE — Nasr City Road (Sharm)', 'WE — Train Station (Luxor)', 'WE — Corniche (Aswan)'],
     topup: 'WE stores only — less convenient than competitors.',
   },
@@ -253,8 +261,11 @@ export default function SimCards() {
             </ul>
           </div>
 
-          <div className="mt-3 bg-secondary/60 rounded-xl p-3">
+          <div className="mt-3 bg-secondary/60 rounded-xl p-3 space-y-1">
             <p className="text-xs text-muted-foreground"><strong>Top-up:</strong> {activeOp.topup}</p>
+            {activeOp.customerService && (
+              <p className="text-xs text-muted-foreground"><strong>Customer Service:</strong> <a href={`tel:${activeOp.customerServiceRaw}`} className="text-accent font-bold">{activeOp.customerService}</a></p>
+            )}
           </div>
         </div>
       )}
