@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useSEO } from '../lib/seo';
 import { base44 } from '@/api/base44Client';
 import SafeNextStep from '../components/SafeNextStep';
@@ -74,55 +75,44 @@ const CALCULATOR_CURRENCIES = [
 ];
 
 export default function CurrencyRates() {
-  const [rates, setRates] = useState(OFFICIAL_RATES_FALLBACK);
-  const [lastUpdated, setLastUpdated] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [selectedCity, setSelectedCity] = useState('hurghada');
   const [calcAmount, setCalcAmount] = useState('100');
   const [calcCurrency, setCalcCurrency] = useState('EUR');
 
-  useSEO({
-    title: 'Egypt Currency Rates 2026 — USD EUR GBP to EGP | ATM Guide & Exchange Tips',
-    description: 'Live Egyptian pound exchange rates vs USD, EUR, GBP, RUB. Best ATMs by city, exchange tips, ATM fee warnings. Updated daily.',
+  const { data: fetchedRates, isLoading: loading, dataUpdatedAt, refetch } = useQuery({
+    queryKey: ['currency-rates-page'],
+    queryFn: async () => {
+      const result = await base44.integrations.Core.InvokeLLM({
+      prompt: `Get current exchange rates to Egyptian Pound (EGP) as of today. Return ONLY a JSON object with these exact keys: USD, EUR, GBP, RUB, PLN, CAD, AUD, SAR. Each value should be a number representing how many EGP 1 unit of that currency buys.`,
+        add_context_from_internet: true,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            USD: { type: 'number' }, EUR: { type: 'number' }, GBP: { type: 'number' },
+            RUB: { type: 'number' }, PLN: { type: 'number' }, CAD: { type: 'number' },
+            AUD: { type: 'number' }, SAR: { type: 'number' },
+          },
+        },
+      });
+      if (!result?.USD) throw new Error('No rates');
+      return result;
+    },
+    staleTime: 1000 * 60 * 10,
+    refetchInterval: 1000 * 60 * 10,
   });
 
-  const fetchRates = async () => {
-    setLoading(true);
-    const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `Get current exchange rates to Egyptian Pound (EGP) as of today. Return ONLY a JSON object with these exact keys: USD, EUR, GBP, RUB, PLN, CAD, AUD, SAR. Each value should be a number representing how many EGP 1 unit of that currency buys. Example: {"USD": 49.85, "EUR": 54.20, "GBP": 62.90, "RUB": 0.55, "PLN": 12.1, "CAD": 36.2, "AUD": 31.5, "SAR": 13.3}`,
-      add_context_from_internet: true,
-      response_json_schema: {
-        type: 'object',
-        properties: {
-          USD: { type: 'number' },
-          EUR: { type: 'number' },
-          GBP: { type: 'number' },
-          RUB: { type: 'number' },
-          PLN: { type: 'number' },
-          CAD: { type: 'number' },
-          AUD: { type: 'number' },
-          SAR: { type: 'number' },
-        },
-      },
-    });
+  const rates = fetchedRates ? [
+    { currency: 'USD 🇺🇸', symbol: '$', rate: fetchedRates.USD, flag: '🇺🇸' },
+    { currency: 'EUR 🇪🇺', symbol: '€', rate: fetchedRates.EUR, flag: '🇪🇺' },
+    { currency: 'GBP 🇬🇧', symbol: '£', rate: fetchedRates.GBP, flag: '🇬🇧' },
+    { currency: 'RUB 🇷🇺', symbol: '₽', rate: fetchedRates.RUB, flag: '🇷🇺' },
+    { currency: 'PLN 🇵🇱', symbol: 'zł', rate: fetchedRates.PLN, flag: '🇵🇱' },
+    { currency: 'CAD 🇨🇦', symbol: 'CA$', rate: fetchedRates.CAD, flag: '🇨🇦' },
+    { currency: 'AUD 🇦🇺', symbol: 'A$', rate: fetchedRates.AUD, flag: '🇦🇺' },
+    { currency: 'SAR 🇸🇦', symbol: 'SR', rate: fetchedRates.SAR, flag: '🇸🇦' },
+  ] : OFFICIAL_RATES_FALLBACK;
 
-    if (result && result.USD) {
-      setRates([
-        { currency: 'USD 🇺🇸', symbol: '$', rate: result.USD, flag: '🇺🇸' },
-        { currency: 'EUR 🇪🇺', symbol: '€', rate: result.EUR, flag: '🇪🇺' },
-        { currency: 'GBP 🇬🇧', symbol: '£', rate: result.GBP, flag: '🇬🇧' },
-        { currency: 'RUB 🇷🇺', symbol: '₽', rate: result.RUB, flag: '🇷🇺' },
-        { currency: 'PLN 🇵🇱', symbol: 'zł', rate: result.PLN, flag: '🇵🇱' },
-        { currency: 'CAD 🇨🇦', symbol: 'CA$', rate: result.CAD, flag: '🇨🇦' },
-        { currency: 'AUD 🇦🇺', symbol: 'A$', rate: result.AUD, flag: '🇦🇺' },
-        { currency: 'SAR 🇸🇦', symbol: 'SR', rate: result.SAR, flag: '🇸🇦' },
-      ]);
-      setLastUpdated(new Date().toLocaleString());
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchRates(); }, []);
+  const lastUpdated = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleString() : null;
 
   const calcRate = CALCULATOR_CURRENCIES.find(c => c.code === calcCurrency);
   const egpResult = calcRate ? (parseFloat(calcAmount) * calcRate.rate).toFixed(0) : '—';
@@ -149,7 +139,7 @@ export default function CurrencyRates() {
       {/* Live rates grid */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-extrabold">Live Rates → Egyptian Pound (EGP)</h2>
-        <button onClick={fetchRates} disabled={loading}
+        <button onClick={() => refetch()} disabled={loading}
           className="flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-xs font-bold hover:border-accent transition-colors disabled:opacity-50">
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           {loading ? 'Updating...' : 'Refresh'}
