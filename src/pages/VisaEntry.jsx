@@ -10,18 +10,18 @@ const NATIONALITY_GROUPS = [
     countries: 'Germany, UK, France, Italy, Spain, Poland, Netherlands, Belgium, Czech, Austria, Sweden, Norway, Switzerland + all EU',
     needs_visa: true,
     visa_on_arrival: true,
-    voa_cost: '$25 USD (cash only at airport)',
+    voa_cost: '$30 USD (cash only at airport)',
     sinai_only: true,
     sinai_cost: 'FREE',
     evisa_available: true,
-    evisa_cost: '$25 USD',
+    evisa_cost: '$30 USD',
     evisa_time: '3–5 business days',
     evisa_url: 'https://visa2egypt.gov.eg',
     max_stay_voa: '30 days (extendable)',
     max_stay_sinai: '15 days (Sinai Peninsula only)',
     required_docs: [
       'Valid passport (6+ months validity from date of entry)',
-      '$25 USD cash for visa on arrival (exact preferred)',
+      '$30 USD cash for visa on arrival (exact preferred — raised March 2026)',
       'Return or onward flight ticket (may be asked)',
       'Hotel booking for first night (may be asked)',
       'Proof of funds (rarely checked but good to carry)',
@@ -41,8 +41,8 @@ const NATIONALITY_GROUPS = [
       'If you want all of Egypt, pay the $25 visa instead',
     ],
     common_problems: [
-      { problem: 'Brought only card — VoA requires cash USD', solution: 'Always carry $30+ USD cash when flying into Egypt. Airport ATMs can be slow.' },
-      { problem: 'Chosen Sinai-only visa then wants to visit Cairo or Luxor', solution: 'You cannot change a Sinai-only entry. Must exit and re-enter with a full visa, or pre-buy the $25 VoA.' },
+      { problem: 'Brought only card — VoA requires cash USD', solution: 'Always carry $35+ USD cash when flying into Egypt. Airport ATMs can be slow.' },
+      { problem: 'Chosen Sinai-only visa then wants to visit Cairo or Luxor', solution: 'You cannot change a Sinai-only entry. Must exit and re-enter with a full visa, or pre-buy the $30 VoA.' },
       { problem: 'eVisa not processed in time (applied 2 days before travel)', solution: 'Apply eVisa minimum 5 business days before travel. In doubt, get VoA at the airport.' },
       { problem: 'Immigration officer asks for return ticket and hotel booking', solution: 'Have Booking.com confirmation on your phone. Not always asked, but good to have.' },
     ],
@@ -53,18 +53,18 @@ const NATIONALITY_GROUPS = [
     countries: 'Russia, Ukraine, Belarus, Kazakhstan, Uzbekistan, Azerbaijan, Armenia, Georgia, Moldova',
     needs_visa: true,
     visa_on_arrival: true,
-    voa_cost: '$25 USD (cash only)',
+    voa_cost: '$30 USD (cash only)',
     sinai_only: true,
     sinai_cost: 'FREE',
     evisa_available: true,
-    evisa_cost: '$25 USD',
+    evisa_cost: '$30 USD',
     evisa_time: '3–5 business days',
     evisa_url: 'https://visa2egypt.gov.eg',
     max_stay_voa: '30 days',
     max_stay_sinai: '15 days (Sinai only)',
     required_docs: [
       'Passport valid 6+ months from entry date',
-      '$25 USD cash (US dollars — not rubles, not card)',
+      '$30 USD cash (US dollars — not rubles, not card)',
       'Return flight confirmation (sometimes asked)',
       'Hotel booking for first night',
     ],
@@ -93,18 +93,18 @@ const NATIONALITY_GROUPS = [
     countries: 'USA, Canada',
     needs_visa: true,
     visa_on_arrival: true,
-    voa_cost: '$25 USD (cash only)',
+    voa_cost: '$30 USD (cash only)',
     sinai_only: true,
     sinai_cost: 'FREE',
     evisa_available: true,
-    evisa_cost: '$25 USD',
+    evisa_cost: '$30 USD',
     evisa_time: '3–7 business days',
     evisa_url: 'https://visa2egypt.gov.eg',
     max_stay_voa: '30 days (extendable in Egypt for 3 months)',
     max_stay_sinai: '15 days',
     required_docs: [
       'US or Canadian passport valid 6+ months from entry',
-      '$25 USD cash for visa on arrival',
+      '$30 USD cash for visa on arrival',
       'Return or onward ticket confirmation',
       'Hotel booking for first night',
     ],
@@ -121,7 +121,7 @@ const NATIONALITY_GROUPS = [
       'Not valid for Cairo, Hurghada, Nile Valley',
     ],
     common_problems: [
-      { problem: 'US passport holders often don\'t know about the free Sinai option', solution: 'If only visiting Sharm, save $25 by declaring "Sinai only" at immigration.' },
+      { problem: 'US passport holders often don\'t know about the free Sinai option', solution: 'If only visiting Sharm, save $30 by declaring "Sinai only" at immigration.' },
       { problem: 'eVisa website sometimes rejects US credit cards', solution: 'Try a different card or use PayPal option. Alternatively, just get VoA at airport.' },
       { problem: 'Wanting to stay longer than 30 days', solution: 'Visa can be extended at Mogamma (Cairo) or major passport offices in Luxor and Aswan for another 3 months, at minimal cost.' },
       { problem: 'US State Dept advisory causes families to push back on trip', solution: 'US Egypt advisory is Level 2 (same as France, Belgium, Germany). Tourist areas are fully safe. Read the actual advisory — it does not advise against tourist city travel.' },
@@ -133,7 +133,7 @@ const NATIONALITY_GROUPS = [
     countries: 'Australia, NZ, Japan, South Korea, Brazil, India, South Africa, Gulf states (GCC), and most others',
     needs_visa: true,
     visa_on_arrival: true,
-    voa_cost: '$25 USD (most nationalities)',
+    voa_cost: '$30 USD (most nationalities)',
     sinai_only: true,
     sinai_cost: 'FREE (some nationalities)',
     evisa_available: true,
@@ -144,7 +144,7 @@ const NATIONALITY_GROUPS = [
     max_stay_sinai: '15 days (where applicable)',
     required_docs: [
       'Passport valid 6+ months from entry',
-      '$25 USD cash (exact change preferred)',
+      '$30 USD cash (exact change preferred — raised March 2026)',
       'Onward/return ticket confirmation',
       'Hotel booking for first night',
       'Proof of sufficient funds (sometimes requested)',
@@ -152,7 +152,7 @@ const NATIONALITY_GROUPS = [
     process_voa: [
       'Check official Egyptian e-visa portal for your specific nationality',
       'Most nationalities (100+) are eligible for visa on arrival',
-      'At airport: Banque Misr kiosk → pay $25 USD → get sticker → immigration',
+      'At airport: Banque Misr kiosk → pay $30 USD → get sticker → immigration',
       'Some nationalities (Bangladesh, Nigeria, etc.) may need pre-arranged visa',
     ],
     process_sinai: [
@@ -217,8 +217,8 @@ export default function VisaEntry() {
             <p className="text-[10px] text-muted-foreground">Sinai-only entry for most nationalities</p>
           </div>
           <div className="bg-white/50 dark:bg-black/20 rounded-xl p-3 text-center">
-            <p className="text-xl font-black text-accent">$25 USD</p>
-            <p className="text-[10px] text-muted-foreground">Full visa on arrival — cash only</p>
+            <p className="text-xl font-black text-accent">$30 USD</p>
+            <p className="text-[10px] text-muted-foreground">Full visa on arrival — cash only (since Mar 2026)</p>
           </div>
         </div>
       </div>

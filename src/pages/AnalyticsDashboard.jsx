@@ -14,7 +14,7 @@ const SUBS = {
   activity_comm: 200,  // $USD from 7% activity commissions
   transfer_comm: 80,   // $USD from 10% transfer commissions
   booking_aff: 100,    // $USD from Booking.com 4-6% affiliate
-  usd_to_egp: 50,
+  usd_to_egp: 54.5,
 };
 
 const mrr_phase1 = SUBS.guides * 8 + SUBS.operators * 25 + SUBS.featured * 15 + SUBS.activity_comm + SUBS.transfer_comm + SUBS.booking_aff;

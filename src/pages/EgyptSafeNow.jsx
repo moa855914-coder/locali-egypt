@@ -6,7 +6,7 @@ import { ShieldCheck, AlertTriangle, Info, CheckCircle2, XCircle, Globe, Plane, 
 const FAQS = [
   { q: 'Is Egypt safe for tourists right now in 2026?', a: 'Yes. Egypt\'s main tourist areas — Sharm El Sheikh, Hurghada, Luxor, and Aswan — are safe for tourists right now. These cities receive millions of visitors per year with extremely rare incidents. The primary risk travelers face is financial scams, not violence.' },
   { q: 'Should I cancel my Egypt trip because of the region?', a: 'No. Unless your government has issued a specific advisory against your destination city, you should not cancel. Egypt\'s tourist resorts are geographically hundreds of kilometers from conflict areas. Hurghada, Luxor, and Aswan are on the opposite side of Egypt from any regional tensions.' },
-  { q: 'Are tourists still coming to Egypt right now?', a: 'Yes. Egypt received 15.7 million tourists in 2024 and is on track to exceed this in 2025–2026. Flights from Germany, UK, Russia, Poland, Ukraine, and Eastern Europe continue operating normally to Hurghada and Sharm. Occupancy at major resorts remains high.' },
+  { q: 'Are tourists still coming to Egypt right now?', a: 'Yes. Egypt received a record 19 million tourists in 2025, up 21% from 2024. Flights from Germany, UK, Russia, Poland, Ukraine, and Eastern Europe continue operating normally to Hurghada and Sharm. Occupancy at major resorts remains high.' },
   { q: 'Is it safe to visit Egypt given the situation in Gaza?', a: 'Egypt is geographically large. Sharm El Sheikh, Hurghada, Luxor, and Aswan are hundreds of kilometers from the Sinai border regions. Tourist sites have seen zero impact. Egypt has maintained stability and strong security throughout all regional tensions.' },
   { q: 'Which Egyptian cities are safest for tourists?', a: 'Aswan and Hurghada consistently rank as Egypt\'s safest tourist cities. Sharm El Sheikh has heavy security presence. Luxor is safe but has more aggressive vendor culture. All four have maintained clean safety records for international tourists for decades.' },
   { q: 'What are the real risks when visiting Egypt?', a: 'The real risks are: financial scams and overcharging (very common — this site helps you avoid them), digestive issues from food/water (manageable with care), sun/heat exposure (serious in summer), and road safety outside cities. Violent crime against tourists is statistically extremely rare.' },
@@ -41,7 +41,7 @@ const STATUS_STYLES = {
 };
 
 const TOURIST_NUMBERS = [
-  { label: 'Tourists in 2024', value: '15.7M', icon: Users, color: 'text-success' },
+  { label: 'Tourists in 2025 (record)', value: '19M', icon: Users, color: 'text-success' },
   { label: 'Tourism GDP %', value: '12%', icon: TrendingUp, color: 'text-accent' },
   { label: 'Days since major tourist incident', value: '3,000+', icon: ShieldCheck, color: 'text-success' },
   { label: 'EU airlines still flying', value: '40+', icon: Plane, color: 'text-blue-500' },
@@ -87,7 +87,7 @@ export default function EgyptSafeNow() {
           Egypt is safe for tourists in Hurghada, Sharm El Sheikh, Luxor, and Aswan.
         </p>
         <p className="text-sm text-muted-foreground leading-relaxed mt-2">
-          Over 15 million visitors arrived safely in 2024. All major European tour operators are flying normally. The real risks tourists face are financial scams and overcharging — not violence. Western media coverage of regional tensions does not reflect the situation in Egypt's tourist cities.
+          Nearly 19 million visitors arrived safely in 2025 — a record year, up 21% from 2024. All major European tour operators are flying normally. The real risks tourists face are financial scams and overcharging — not violence. Western media coverage of regional tensions does not reflect the situation in Egypt's tourist cities.
         </p>
       </div>
 
@@ -204,7 +204,7 @@ export default function EgyptSafeNow() {
           { title: 'World-Class Diving', desc: 'Red Sea visibility: 20–40 meters. Coral reef ecosystems unmatched in the Mediterranean. Sharm and Hurghada are globally top-10 dive destinations.' },
           { title: 'Unbeatable History', desc: '7,000 years of civilization. Luxor has more ancient history per km² than anywhere on earth. Abu Simbel, Karnak, Valley of Kings.' },
           { title: 'Weather Certainty', desc: '330+ sunny days per year in Red Sea cities. October–April is 22–28°C. Winter sun destination without the crowds of peak summer.' },
-          { title: 'Ease of Access', desc: 'Direct flights from most European cities. Visa on arrival ($25 USD) for most nationalities. No advance planning required for resort travel.' },
+          { title: 'Ease of Access', desc: 'Direct flights from most European cities. Visa on arrival ($30 USD since March 2026) for most nationalities. No advance planning required for resort travel.' },
           { title: 'Local Warmth', desc: 'Despite persistent scam culture near tourist sites, ordinary Egyptians are genuinely hospitable. A short journey off the main strip reveals extraordinary warmth.' },
         ].map((item, i) => (
           <div key={i} className="bg-card rounded-2xl border border-border/50 p-4">
