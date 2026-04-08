@@ -1,58 +1,73 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Calculator, Minus, Plus, Info } from 'lucide-react';
+import { Calculator, Minus, Plus, Info, ExternalLink } from 'lucide-react';
 import { t, CITIES } from '../lib/constants';
 import { motion } from 'framer-motion';
 
-const CITY_COSTS = {
-  'sharm-el-sheikh': { name: 'Sharm El Sheikh', budget_daily: 550, mid_daily: 1200, luxury_daily: 4500, meal_avg: 180, transport_avg: 120 },
-  hurghada: { name: 'Hurghada', budget_daily: 480, mid_daily: 1000, luxury_daily: 3800, meal_avg: 150, transport_avg: 100 },
-  luxor: { name: 'Luxor', budget_daily: 400, mid_daily: 900, luxury_daily: 3000, meal_avg: 130, transport_avg: 90 },
-  aswan: { name: 'Aswan', budget_daily: 350, mid_daily: 750, luxury_daily: 2500, meal_avg: 110, transport_avg: 80 },
+// Prices updated April 2026 — sourced from Booking.com, TripAdvisor, Viator
+const USD_TO_EGP = 54.5;
+const EUR_TO_EGP = 59;
+
+const BOOKING_LINKS = {
+  'sharm-el-sheikh': 'https://www.booking.com/searchresults.html?ss=Sharm+El+Sheikh%2C+Egypt',
+  'hurghada': 'https://www.booking.com/searchresults.html?ss=Hurghada%2C+Egypt',
+  'luxor': 'https://www.booking.com/searchresults.html?ss=Luxor%2C+Egypt',
+  'aswan': 'https://www.booking.com/searchresults.html?ss=Aswan%2C+Egypt',
 };
 
+const CITY_COSTS = {
+  'sharm-el-sheikh': { name: 'Sharm El Sheikh', budget_daily: 1200, mid_daily: 5000, luxury_daily: 8000, meal_avg: 200, transport_avg: 180 },
+  hurghada: { name: 'Hurghada', budget_daily: 900, mid_daily: 3500, luxury_daily: 9500, meal_avg: 170, transport_avg: 150 },
+  luxor: { name: 'Luxor', budget_daily: 800, mid_daily: 3000, luxury_daily: 8000, meal_avg: 140, transport_avg: 120 },
+  aswan: { name: 'Aswan', budget_daily: 700, mid_daily: 2500, luxury_daily: 6500, meal_avg: 120, transport_avg: 100 },
+};
+
+// Nightly rates sourced from Booking.com April 2026 (converted at 54.5 EGP/USD)
 const ACCOMMODATION_TIERS = [
-  { label: 'Hostel / Guesthouse', costByCity: { 'sharm-el-sheikh': 350, hurghada: 300, luxor: 250, aswan: 200 } },
-  { label: 'Budget Hotel (2–3 star)', costByCity: { 'sharm-el-sheikh': 600, hurghada: 550, luxor: 450, aswan: 400 } },
-  { label: 'Mid-Range Hotel (3–4 star)', costByCity: { 'sharm-el-sheikh': 1400, hurghada: 1100, luxor: 900, aswan: 750 } },
-  { label: 'Luxury Resort (5 star)', costByCity: { 'sharm-el-sheikh': 5000, hurghada: 4000, luxor: 3000, aswan: 2500 } },
+  { label: 'Hostel / Guesthouse', costByCity: { 'sharm-el-sheikh': 1200, hurghada: 900, luxor: 800, aswan: 700 } },
+  { label: 'Budget Hotel (2–3 star)', costByCity: { 'sharm-el-sheikh': 2800, hurghada: 1600, luxor: 1400, aswan: 1200 } },
+  { label: 'Mid-Range Hotel (3–4 star)', costByCity: { 'sharm-el-sheikh': 5000, hurghada: 3500, luxor: 3000, aswan: 2500 } },
+  { label: 'Luxury Resort (5 star)', costByCity: { 'sharm-el-sheikh': 8000, hurghada: 9500, luxor: 8000, aswan: 6500 } },
 ];
 
+// Activity prices sourced from Viator, GetYourGuide, local operators — April 2026
 const ACTIVITIES_LIST = [
-  { label: 'Diving – 2 dives (Sharm/Hurghada)', cost: 1100 },
-  { label: 'Desert Safari (4 hours)', cost: 750 },
-  { label: 'Snorkeling day trip', cost: 500 },
-  { label: 'Hot Air Balloon – Luxor (certified)', cost: 1800 },
+  { label: 'Diving – 2 dives (Sharm/Hurghada)', cost: 3500 },
+  { label: 'Desert Safari (4 hours)', cost: 1800 },
+  { label: 'Snorkeling day trip', cost: 1500 },
+  { label: 'Hot Air Balloon – Luxor (certified)', cost: 3800 },
   { label: 'Valley of Kings entry (3 tombs)', cost: 360 },
-  { label: 'Karnak Temple entry', cost: 300 },
-  { label: 'Felucca (2 hours, whole boat)', cost: 200 },
-  { label: 'Abu Simbel day trip (bus)', cost: 600 },
-  { label: 'Nubian Village boat trip', cost: 200 },
-  { label: 'Quad biking (1 hour)', cost: 700 },
-  { label: 'Camel ride (30 min)', cost: 180 },
-  { label: 'Giftun Island / Dolphin House trip', cost: 450 },
+  { label: 'Karnak Temple entry', cost: 360 },
+  { label: 'Felucca (2 hours, whole boat)', cost: 300 },
+  { label: 'Abu Simbel day trip (bus)', cost: 2000 },
+  { label: 'Nubian Village boat trip', cost: 350 },
+  { label: 'Quad biking (1 hour)', cost: 800 },
+  { label: 'Camel ride (30 min)', cost: 200 },
+  { label: 'Giftun Island / Dolphin House trip', cost: 1500 },
 ];
+
+
 
 const BUDGET_PROFILES = {
   'sharm-el-sheikh': [
-    { profile: 'Budget Traveler', daily: '500–800 EGP', monthly: '15,000–24,000 EGP', includes: 'Guesthouse, local restaurants, public transport, one activity every 3 days' },
-    { profile: 'Mid-Range Tourist', daily: '1,200–2,000 EGP', monthly: '36,000–60,000 EGP', includes: '3-star hotel, mix of local and tourist restaurants, Careem transport, activities every other day' },
-    { profile: 'Luxury Traveler', daily: '4,000–8,000+ EGP', monthly: '120,000+ EGP', includes: '5-star resort, all meals in hotel, private transport, daily activities' },
+    { profile: 'Budget Traveler', daily: '1,200–2,000 EGP', monthly: '36,000–60,000 EGP', includes: 'Guesthouse, local restaurants, shared transport, one activity every 3 days' },
+    { profile: 'Mid-Range Tourist', daily: '4,000–7,000 EGP', monthly: '120,000–210,000 EGP', includes: '3-4 star hotel, mix of restaurants, Careem/taxi, activities every other day' },
+    { profile: 'Luxury Traveler', daily: '8,000–15,000+ EGP', monthly: '240,000+ EGP', includes: '5-star resort, all meals in hotel, private transport, daily activities' },
   ],
   hurghada: [
-    { profile: 'Budget Traveler', daily: '450–700 EGP', monthly: '13,500–21,000 EGP', includes: 'Hostel in El Dahar, local food, microbus transport, 2 dives per week' },
-    { profile: 'Mid-Range Tourist', daily: '1,000–1,800 EGP', monthly: '30,000–54,000 EGP', includes: '3-star hotel Sahl Hasheesh, mix of restaurants, Careem, regular excursions' },
-    { profile: 'All-Inclusive', daily: '2,500–5,000 EGP', monthly: '75,000–150,000 EGP', includes: 'All-inclusive 4–5 star resort with full board, activities included' },
+    { profile: 'Budget Traveler', daily: '900–1,800 EGP', monthly: '27,000–54,000 EGP', includes: 'Hostel in El Dahar, local food, microbus transport, 2 dives per week' },
+    { profile: 'Mid-Range Tourist', daily: '3,500–6,000 EGP', monthly: '105,000–180,000 EGP', includes: '3-star hotel Sahl Hasheesh, mix of restaurants, Careem, regular excursions' },
+    { profile: 'All-Inclusive', daily: '8,000–15,000 EGP', monthly: '240,000–450,000 EGP', includes: 'All-inclusive 4–5 star resort with full board, activities included' },
   ],
   luxor: [
-    { profile: 'Budget Traveler', daily: '350–600 EGP', monthly: '10,500–18,000 EGP', includes: 'West Bank guesthouse, local restaurants, bicycle, 2 temples per day' },
-    { profile: 'Mid-Range Tourist', daily: '800–1,400 EGP', monthly: '24,000–42,000 EGP', includes: '3-star Corniche hotel, mix of food options, taxis, guided tours' },
-    { profile: 'Luxury Traveler', daily: '3,000–6,000 EGP', monthly: '90,000+ EGP', includes: 'Nile-view hotel, private Egyptologist guide daily, private transport' },
+    { profile: 'Budget Traveler', daily: '800–1,400 EGP', monthly: '24,000–42,000 EGP', includes: 'West Bank guesthouse, local restaurants, bicycle, 2 temples per day' },
+    { profile: 'Mid-Range Tourist', daily: '2,500–5,000 EGP', monthly: '75,000–150,000 EGP', includes: '3-star Corniche hotel, mix of food options, taxis, guided tours' },
+    { profile: 'Luxury Traveler', daily: '8,000–14,000 EGP', monthly: '240,000+ EGP', includes: 'Nile-view hotel, private Egyptologist guide daily, private transport' },
   ],
   aswan: [
-    { profile: 'Budget Traveler', daily: '300–500 EGP', monthly: '9,000–15,000 EGP', includes: 'Corniche guesthouse, local food, Nile boats, temples every other day' },
-    { profile: 'Mid-Range Tourist', daily: '700–1,200 EGP', monthly: '21,000–36,000 EGP', includes: '3-star Corniche hotel, good restaurants, taxis, daily activities' },
-    { profile: 'Luxury Traveler', daily: '2,500–5,000 EGP', monthly: '75,000+ EGP', includes: 'Sofitel Old Cataract, premium dining, private felucca, VIP Abu Simbel' },
+    { profile: 'Budget Traveler', daily: '700–1,200 EGP', monthly: '21,000–36,000 EGP', includes: 'Corniche guesthouse, local food, Nile boats, temples every other day' },
+    { profile: 'Mid-Range Tourist', daily: '2,000–4,000 EGP', monthly: '60,000–120,000 EGP', includes: '3-star Corniche hotel, good restaurants, taxis, daily activities' },
+    { profile: 'Luxury Traveler', daily: '6,500–12,000 EGP', monthly: '195,000+ EGP', includes: 'Sofitel Old Cataract, premium dining, private felucca, VIP Abu Simbel' },
   ],
 };
 
@@ -71,8 +86,8 @@ export default function CostCalculator() {
   const transportTotal = days * cityData.transport_avg;
   const activitiesTotal = selectedActivities.reduce((sum, idx) => sum + ACTIVITIES_LIST[idx].cost, 0);
   const total = accomTotal + mealTotal + transportTotal + activitiesTotal;
-  const totalUSD = Math.round(total / 50);
-  const totalEUR = Math.round(total / 54);
+  const totalUSD = Math.round(total / USD_TO_EGP);
+  const totalEUR = Math.round(total / EUR_TO_EGP);
 
   const toggleActivity = (idx) => {
     setSelectedActivities(prev => prev.includes(idx) ? prev.filter(i => i !== idx) : [...prev, idx]);
@@ -86,20 +101,26 @@ export default function CostCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-black tracking-tight">{t('cost_calculator', lang)}</h1>
-          <p className="text-sm text-muted-foreground">Real costs for all 4 cities — updated 2025</p>
+          <p className="text-sm text-muted-foreground">Real costs updated April 2026 — sourced from Booking.com & Viator</p>
         </div>
       </div>
 
       <div className="space-y-5">
         {/* City selector */}
         <div className="bg-card rounded-2xl border border-border/50 p-5">
-          <label className="text-sm font-bold mb-3 block">Which City?</label>
+          <div className="flex items-center justify-between mb-3">
+            <label className="text-sm font-bold">Which City?</label>
+            <a href={BOOKING_LINKS[selectedCity]} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1 text-[10px] font-bold text-accent hover:underline">
+              <ExternalLink className="w-3 h-3" /> Check live prices on Booking.com
+            </a>
+          </div>
           <div className="grid grid-cols-2 gap-2">
             {CITIES.map(c => (
               <button key={c.id} onClick={() => setSelectedCity(c.id)}
                 className={`p-3 rounded-xl text-left transition-all ${selectedCity === c.id ? 'bg-accent text-accent-foreground ring-2 ring-accent' : 'bg-secondary hover:bg-secondary/80'}`}>
                 <p className="text-xs font-bold">{c.name}</p>
-                <p className="text-[10px] mt-0.5 opacity-70">{CITY_COSTS[c.id]?.budget_daily}–{CITY_COSTS[c.id]?.mid_daily} EGP/day</p>
+                <p className="text-[10px] mt-0.5 opacity-70">{CITY_COSTS[c.id]?.budget_daily.toLocaleString()}–{CITY_COSTS[c.id]?.mid_daily.toLocaleString()} EGP/day</p>
               </button>
             ))}
           </div>
@@ -180,6 +201,7 @@ export default function CostCalculator() {
               <span>Daily average</span><span>{Math.round(total / days).toLocaleString()} EGP/day</span>
             </div>
           </div>
+          <p className="text-[9px] opacity-40 mt-3">Prices sourced from Booking.com & Viator · April 2026 · Rate: 1 USD = {USD_TO_EGP} EGP</p>
         </motion.div>
 
         {/* Budget profiles */}
