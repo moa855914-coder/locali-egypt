@@ -102,6 +102,7 @@ const SECTIONS = [
       { label: 'Bazaars', labelRu: 'Базары', labelDe: 'Basare', labelFr: 'Bazars', icon: ShoppingBag, path: '/bazaars', color: 'bg-orange-500/10 text-orange-600' },
       { label: 'Guides', labelRu: 'Гиды', labelDe: 'Reiseführer', labelFr: 'Guides', icon: Users, path: '/guides', color: 'bg-blue-500/10 text-blue-600' },
       { label: 'About', labelRu: 'О нас', labelDe: 'Über uns', labelFr: 'À propos', icon: CheckSquare, path: '/about', color: 'bg-gray-500/10 text-gray-500' },
+      { label: 'Tour Operators', labelRu: 'Туроператоры', labelDe: 'Reiseveranstalter', labelFr: 'Voyagistes', icon: Building2, path: '/tour-operators', color: 'bg-indigo-500/10 text-indigo-600' },
       { label: 'Analytics', labelRu: 'Аналитика', labelDe: 'Analytik', labelFr: 'Analytique', icon: TrendingUp, path: '/analytics', color: 'bg-slate-500/10 text-slate-500' },
       { label: 'Terms', labelRu: 'Условия', labelDe: 'AGB', labelFr: 'CGU', icon: CheckSquare, path: '/terms', color: 'bg-gray-500/10 text-gray-500' },
     ],

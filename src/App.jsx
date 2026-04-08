@@ -56,6 +56,7 @@ import ArabTourists from './pages/ArabTourists';
 import AskALocal from './pages/AskALocal';
 import VerifiedGuides from './pages/VerifiedGuides';
 import About from './pages/About';
+import TourOperators from './pages/TourOperators';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -134,6 +135,7 @@ const AuthenticatedApp = () => {
         <Route path="/ask-a-local" element={<AskALocal />} />
         <Route path="/guides" element={<VerifiedGuides />} />
         <Route path="/about" element={<About />} />
+        <Route path="/tour-operators" element={<TourOperators />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
