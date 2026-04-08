@@ -62,6 +62,7 @@ import VerifiedDrivers from './pages/VerifiedDrivers';
 import LocaliRide from './pages/LocaliRide';
 import NationalityGuide from './pages/NationalityGuide';
 import AdminVerification from './pages/AdminVerification';
+import AdminDataPopulate from './pages/AdminDataPopulate';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -118,6 +119,7 @@ const AuthenticatedApp = () => {
         <Route path="/locali-ride" element={<LocaliRide />} />
         <Route path="/nationality-guide" element={<NationalityGuide />} />
         <Route path="/admin/verify" element={<AdminVerification />} />
+        <Route path="/admin/populate" element={<AdminDataPopulate />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
