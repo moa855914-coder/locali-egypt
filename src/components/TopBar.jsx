@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles } from 'lucide-react';
+import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { t } from '../lib/constants';
+import { useAuth } from '../lib/AuthContext';
 
 const NAV_LINKS = [
   { path: '/services', labelKey: 'services', icon: Search },
@@ -15,6 +16,8 @@ const NAV_LINKS = [
 export default function TopBar({ lang, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { currentUser } = useAuth();
+  const isAdmin = currentUser?.role === 'admin';
 
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-sm">
@@ -48,6 +51,15 @@ export default function TopBar({ lang, onLangChange }) {
         {/* Right side */}
         <div className="flex items-center gap-3">
           <LanguageSwitcher lang={lang} onChange={onLangChange} />
+          {isAdmin && (
+            <Link
+              to="/admin/verify"
+              className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Admin
+            </Link>
+          )}
           <Link
             to="/emergency"
             className="hidden md:flex items-center gap-1.5 bg-red-500 text-white px-3 py-2 rounded-lg text-sm font-bold hover:bg-red-600 transition-colors"
@@ -82,6 +94,16 @@ export default function TopBar({ lang, onLangChange }) {
               {t(labelKey, lang)}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              to="/admin/verify"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold text-primary bg-primary/10"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              Admin Dashboard
+            </Link>
+          )}
           <Link
             to="/emergency"
             onClick={() => setMobileOpen(false)}
