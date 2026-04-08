@@ -34,6 +34,7 @@ export const LANGUAGES = [
   { code: 'ru', label: 'RU', full: 'Русский' },
   { code: 'de', label: 'DE', full: 'Deutsch' },
   { code: 'fr', label: 'FR', full: 'Français' },
+  { code: 'ar', label: 'AR', full: 'العربية' },
 ];
 
 export const TRANSLATIONS = {

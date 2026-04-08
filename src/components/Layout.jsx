@@ -9,8 +9,10 @@ export default function Layout() {
   const { lang, changeLang } = useLanguage();
   const [openChat, setOpenChat] = useState(false);
 
+  const isRTL = lang === 'ar';
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
       <TopBar lang={lang} onLangChange={changeLang} />
       <main>
         <Outlet context={{ lang, changeLang, openAIChat: () => setOpenChat(true) }} />

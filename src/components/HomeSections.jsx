@@ -83,6 +83,8 @@ const SECTIONS = [
       { label: 'Egypt vs Dubai', labelRu: 'Египет vs Дубай', labelDe: 'Ägypten vs Dubai', icon: TrendingUp, path: '/egypt-vs-dubai', color: 'bg-sky-500/10 text-sky-500' },
       { label: 'Trip Decision', labelRu: 'Выбор поездки', labelDe: 'Reiseentscheidung', labelFr: 'Décision voyage', icon: CheckSquare, path: '/trip-decision', color: 'bg-violet-500/10 text-violet-500' },
       { label: 'Smart Guide', labelRu: 'Умный гид', labelDe: 'Smart Guide', labelFr: 'Guide intelligent', icon: Bot, path: '/smart-guide', color: 'bg-violet-500/10 text-violet-600' },
+      { label: 'Ask a Local', labelRu: 'Спросить местного', labelDe: 'Einen Einwohner fragen', labelFr: 'Demander à un local', icon: MessageSquare, path: '/ask-a-local', color: 'bg-teal-500/10 text-teal-600' },
+      { label: 'Arab Tourists', labelRu: 'Арабским туристам', labelDe: 'Arabische Touristen', labelFr: 'Touristes arabes', icon: Users, path: '/arab-tourists', color: 'bg-green-500/10 text-green-600' },
     ],
   },
   {
@@ -97,6 +99,9 @@ const SECTIONS = [
       { label: 'Beaches', labelRu: 'Пляжи', labelDe: 'Strände', labelFr: 'Plages', icon: Waves, path: '/beaches', color: 'bg-blue-500/10 text-blue-500' },
       { label: 'Airport Items', labelRu: 'Таможня', labelDe: 'Zoll & Gepäck', labelFr: 'Douane', icon: Package, path: '/airport-items', color: 'bg-amber-500/10 text-amber-500' },
       { label: 'Book a Tour', labelRu: 'Туры', labelDe: 'Tours buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
+      { label: 'Bazaars', labelRu: 'Базары', labelDe: 'Basare', labelFr: 'Bazars', icon: ShoppingBag, path: '/bazaars', color: 'bg-orange-500/10 text-orange-600' },
+      { label: 'Guides', labelRu: 'Гиды', labelDe: 'Reiseführer', labelFr: 'Guides', icon: Users, path: '/guides', color: 'bg-blue-500/10 text-blue-600' },
+      { label: 'About', labelRu: 'О нас', labelDe: 'Über uns', labelFr: 'À propos', icon: CheckSquare, path: '/about', color: 'bg-gray-500/10 text-gray-500' },
       { label: 'Analytics', labelRu: 'Аналитика', labelDe: 'Analytik', labelFr: 'Analytique', icon: TrendingUp, path: '/analytics', color: 'bg-slate-500/10 text-slate-500' },
       { label: 'Terms', labelRu: 'Условия', labelDe: 'AGB', labelFr: 'CGU', icon: CheckSquare, path: '/terms', color: 'bg-gray-500/10 text-gray-500' },
     ],

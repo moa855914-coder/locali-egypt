@@ -51,6 +51,11 @@ import SmartGuide from './pages/SmartGuide';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import Hotels from './pages/Hotels';
 import ElGouna from './pages/ElGouna';
+import Bazaars from './pages/Bazaars';
+import ArabTourists from './pages/ArabTourists';
+import AskALocal from './pages/AskALocal';
+import VerifiedGuides from './pages/VerifiedGuides';
+import About from './pages/About';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -124,6 +129,11 @@ const AuthenticatedApp = () => {
         <Route path="/analytics" element={<AnalyticsDashboard />} />
         <Route path="/hotels" element={<Hotels />} />
         <Route path="/el-gouna" element={<ElGouna />} />
+        <Route path="/bazaars" element={<Bazaars />} />
+        <Route path="/arab-tourists" element={<ArabTourists />} />
+        <Route path="/ask-a-local" element={<AskALocal />} />
+        <Route path="/guides" element={<VerifiedGuides />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
