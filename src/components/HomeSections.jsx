@@ -45,7 +45,7 @@ const SECTIONS = [
     groupDe: 'Transport & Unterkunft',
     color: 'text-blue-500',
     items: [
-      { label: 'Ride Sharing', labelRu: 'Совместные поездки', labelDe: 'Mitfahrgelegenheit', icon: Car, path: '/ride-sharing', color: 'bg-blue-500/10 text-blue-500' },
+      { label: 'Locali Ride', labelRu: 'Locali Ride', labelDe: 'Locali Ride', icon: Car, path: '/locali-ride', color: 'bg-accent/10 text-accent' },
       { label: 'Private Drivers', labelRu: 'Частные водители', labelDe: 'Privatfahrer', labelFr: 'Chauffeurs privés', icon: ShieldCheck, path: '/verified-drivers', color: 'bg-success/10 text-success' },
       { label: 'Long Stay', labelRu: 'Долгосрочное', labelDe: 'Langzeitaufenthalt', icon: Home, path: '/long-stay', color: 'bg-indigo-500/10 text-indigo-500' },
       { label: 'SIM Cards', labelRu: 'SIM-карты', labelDe: 'SIM-Karten', icon: Wifi, path: '/sim-cards', color: 'bg-teal-500/10 text-teal-500' },

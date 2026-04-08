@@ -59,6 +59,7 @@ import About from './pages/About';
 import TourOperators from './pages/TourOperators';
 import Apartments from './pages/Apartments';
 import VerifiedDrivers from './pages/VerifiedDrivers';
+import LocaliRide from './pages/LocaliRide';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -111,7 +112,8 @@ const AuthenticatedApp = () => {
         <Route path="/last-minute-egypt" element={<LastMinuteEgypt />} />
         <Route path="/nightlife" element={<Nightlife />} />
         <Route path="/remote-work" element={<RemoteWork />} />
-        <Route path="/ride-sharing" element={<RideSharing />} />
+        <Route path="/ride-sharing" element={<LocaliRide />} />
+        <Route path="/locali-ride" element={<LocaliRide />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
