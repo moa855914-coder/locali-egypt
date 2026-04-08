@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Star, ShieldCheck, MapPin } from 'lucide-react';
+import { Star, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
+import DiscountClaim from './DiscountClaim';
 
 export default function ServiceCard({ service }) {
   const priceLabel = { budget: '€', moderate: '€€', premium: '€€€' };
@@ -44,7 +45,7 @@ export default function ServiceCard({ service }) {
             <span className="text-xs text-muted-foreground truncate">{service.address}</span>
           </div>
         )}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-3">
           {service.avg_rating > 0 ? (
             <div className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5 text-accent fill-accent" />
@@ -64,7 +65,20 @@ export default function ServiceCard({ service }) {
             </div>
           )}
         </div>
+
+        {/* Discount code */}
+        <DiscountClaim businessName={service.name} compact />
+
+        {/* Verified upsell for unverified listings */}
+        {!service.is_verified && (
+          <div className="mt-2 flex items-center gap-1.5 bg-secondary/60 rounded-xl px-3 py-1.5">
+            <BadgeCheck className="w-3 h-3 text-muted-foreground shrink-0" />
+            <span className="text-[10px] text-muted-foreground">
+              Get Verified — <strong className="text-foreground">$6/month</strong> · Reach more tourists instantly
+            </span>
+          </div>
+        )}
       </div>
-    </Link>
-  );
-}
+      </Link>
+      );
+      }
