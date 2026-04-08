@@ -5,7 +5,8 @@ import { base44 } from '@/api/base44Client';
 import {
   ShieldCheck, AlertTriangle, XCircle, CheckCircle2, Phone,
   DollarSign, MapPin, Clock, FileText, Globe, RefreshCw,
-  ChevronDown, ChevronRight, BarChart2, Zap, Eye, Flag
+  ChevronDown, ChevronRight, BarChart2, Zap, Eye, Flag,
+  Search, Download, Loader2, Star, X, Database
 } from 'lucide-react';
 
 // ─── Validation Helpers ───────────────────────────────────────────────────────
@@ -184,9 +185,298 @@ function IssueRow({ page, section, field, reason, priority, status = 'issue' }) 
   );
 }
 
+// ─── Populate Data Tab ───────────────────────────────────────────────────────
+const POPULATE_CITIES = [
+  { id: 'hurghada', label: 'Hurghada' },
+  { id: 'sharm-el-sheikh', label: 'Sharm El Sheikh' },
+  { id: 'luxor', label: 'Luxor' },
+  { id: 'aswan', label: 'Aswan' },
+  { id: 'el-gouna', label: 'El Gouna' },
+];
+
+const POPULATE_CATEGORIES = [
+  { id: 'restaurant', label: '🍽️ Restaurants', entity: 'Service', serviceCategory: 'restaurant' },
+  { id: 'medical', label: '🏥 Hospitals & Clinics', entity: 'Service', serviceCategory: 'medical' },
+  { id: 'pharmacy', label: '💊 Pharmacies', entity: 'Service', serviceCategory: 'medical' },
+  { id: 'activities', label: '🤿 Activities & Tours', entity: 'Service', serviceCategory: 'activities' },
+  { id: 'supermarket', label: '🛒 Supermarkets', entity: 'Service', serviceCategory: 'other' },
+  { id: 'bank', label: '🏦 Banks & ATMs', entity: 'Service', serviceCategory: 'other' },
+  { id: 'transport', label: '🚗 Car Rentals', entity: 'Service', serviceCategory: 'transport' },
+  { id: 'guide', label: '🧭 Tourist Guides', entity: 'Guide', serviceCategory: null },
+  { id: 'real_estate', label: '🏢 Real Estate', entity: 'Service', serviceCategory: 'other' },
+];
+
+function buildPopulatePrompt(cityId, cityLabel, catId) {
+  const specs = {
+    restaurant: `Top 20 restaurants. For each: name, address, phone (+20 format), description (cuisine & highlights, 2 sentences), google_rating (number 1-5), price_range (budget/moderate/premium), tags (array of cuisine types like ["Seafood","Egyptian"]).`,
+    medical: `All hospitals and clinics. For each: name, address, phone, description (specialities, emergency yes/no, English-speaking), tags (["Emergency","English-speaking"] as applicable).`,
+    pharmacy: `All pharmacies (El Ezaby, Seif, El Dawaa chains + local). For each: name, address, phone, description (24h? chain name?), tags (["Pharmacy","24h"] as applicable).`,
+    activities: `Top 20 tours and activities. For each: name, address, phone, description (what's included, duration), avg_rating (number), price_range, tags (like ["Snorkeling","Desert Safari"]).`,
+    supermarket: `All supermarkets and hypermarkets (Carrefour, Seoudi, Spinneys, Metro etc). For each: name, address, phone, description (hours, imported goods available?), tags.`,
+    bank: `All bank branches. For each: name (bank + branch name), address, phone, description (ATM available? English service? opening hours?), tags (["Bank","ATM"] etc).`,
+    transport: `All car rental companies. For each: name, address, phone, description (fleet type, international license accepted, with/without driver option), price_range.`,
+    guide: `Licensed tourist guides. For each: full_name, description (speciality, experience), languages (array), tour_types (array like ["Historical","Desert"]), avg_rating (number or null), years_experience (number or null).`,
+    real_estate: `Real estate agencies. For each: name, address, phone, website, description (rental, sales, property management, languages spoken), tags (["Real Estate","Rentals"]).`,
+  };
+  return `Find real, currently operating businesses in ${cityLabel}, Egypt. Use Google Maps, TripAdvisor and authoritative travel sources. Only include places with real addresses. Return JSON with a "listings" array.\n\nCity: ${cityLabel}, Egypt\nCategory: ${catId}\n\n${specs[catId] || 'Find top 15 businesses.'} \n\nFor every item also include: city="${cityId}", is_verified=false, source="Web Search", last_verified="2026-04-08"`;
+}
+
+function PopulateResultCard({ item, approved, rejected, onApprove, onReject }) {
+  const name = item.name || item.full_name || '—';
+  return (
+    <div className={`rounded-xl border p-3 text-xs transition-all ${
+      approved ? 'border-success/50 bg-success/5' : rejected ? 'border-red-400/20 bg-red-500/5 opacity-40' : 'border-border/50 bg-background'
+    }`}>
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="font-bold text-sm truncate">{name}</p>
+          {item.address && <p className="text-muted-foreground flex items-center gap-1 mt-0.5 truncate"><MapPin className="w-2.5 h-2.5 shrink-0" />{item.address}</p>}
+          {item.phone && <p className="text-muted-foreground flex items-center gap-1"><Phone className="w-2.5 h-2.5 shrink-0" />{item.phone}</p>}
+          {(item.google_rating || item.avg_rating) && (
+            <p className="flex items-center gap-1 mt-0.5"><Star className="w-2.5 h-2.5 text-amber-400 fill-amber-400" />{item.google_rating || item.avg_rating}</p>
+          )}
+          {item.description && <p className="text-muted-foreground mt-1 line-clamp-2 leading-relaxed">{item.description}</p>}
+          {item.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-1">
+              {item.tags.slice(0, 3).map((t, i) => <span key={i} className="bg-secondary px-1.5 py-0.5 rounded-full">{t}</span>)}
+            </div>
+          )}
+          {item.languages?.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-1">
+              {item.languages.map((l, i) => <span key={i} className="bg-blue-500/10 text-blue-700 px-1.5 py-0.5 rounded-full">{l}</span>)}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col gap-1 shrink-0">
+          <button onClick={onApprove} className={`p-1.5 rounded-lg transition-all ${
+            approved ? 'bg-success text-success-foreground' : 'bg-success/10 text-success hover:bg-success/20'
+          }`}><CheckCircle2 className="w-3.5 h-3.5" /></button>
+          <button onClick={onReject} className={`p-1.5 rounded-lg transition-all ${
+            rejected ? 'bg-red-500 text-white' : 'bg-red-500/10 text-red-500 hover:bg-red-500/20'
+          }`}><X className="w-3.5 h-3.5" /></button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PopulateDataTab() {
+  const [city, setCity] = useState('hurghada');
+  const [category, setCategory] = useState('restaurant');
+  const [results, setResults] = useState([]);
+  const [approved, setApproved] = useState(new Set());
+  const [rejected, setRejected] = useState(new Set());
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [log, setLog] = useState([]);
+  const [savedTotal, setSavedTotal] = useState(0);
+
+  const addLog = (msg) => setLog(prev => [...prev.slice(-15), { msg, t: new Date().toLocaleTimeString() }]);
+
+  const toggleApprove = (i) => {
+    setApproved(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
+    setRejected(prev => { const n = new Set(prev); n.delete(i); return n; });
+  };
+  const toggleReject = (i) => {
+    setRejected(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
+    setApproved(prev => { const n = new Set(prev); n.delete(i); return n; });
+  };
+
+  const fetchData = async () => {
+    setLoading(true);
+    setResults([]);
+    setApproved(new Set());
+    setRejected(new Set());
+    const cityLabel = POPULATE_CITIES.find(c => c.id === city)?.label || city;
+    addLog(`🔍 Searching ${category} in ${cityLabel}…`);
+
+    const schema = {
+      type: 'object',
+      properties: {
+        listings: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' }, full_name: { type: 'string' },
+              address: { type: 'string' }, phone: { type: 'string' },
+              description: { type: 'string' }, google_rating: { type: 'number' },
+              avg_rating: { type: 'number' }, price_range: { type: 'string' },
+              website: { type: 'string' }, is_verified: { type: 'boolean' },
+              tags: { type: 'array', items: { type: 'string' } },
+              languages: { type: 'array', items: { type: 'string' } },
+              tour_types: { type: 'array', items: { type: 'string' } },
+              years_experience: { type: 'number' }, review_count: { type: 'number' },
+              source: { type: 'string' }, last_verified: { type: 'string' },
+            }
+          }
+        }
+      }
+    };
+
+    const res = await base44.integrations.Core.InvokeLLM({
+      prompt: buildPopulatePrompt(city, cityLabel, category),
+      add_context_from_internet: true,
+      response_json_schema: schema,
+      model: 'gemini_3_flash',
+    });
+
+    const listings = res?.listings || [];
+    setResults(listings);
+    addLog(`✅ Found ${listings.length} listings — review then save`);
+    setLoading(false);
+  };
+
+  const saveApproved = async () => {
+    const toSave = results.filter((_, i) => approved.has(i));
+    if (!toSave.length) { addLog('⚠️ No approved items'); return; }
+    setSaving(true);
+    addLog(`💾 Saving ${toSave.length} listings…`);
+    const cat = POPULATE_CATEGORIES.find(c => c.id === category);
+    const entityName = cat?.entity || 'Service';
+    let saved = 0;
+    for (const item of toSave) {
+      let record;
+      if (entityName === 'Guide') {
+        record = {
+          full_name: item.full_name || item.name || 'Unknown',
+          city, cities_covered: [city],
+          languages: item.languages || ['Arabic'],
+          tour_types: item.tour_types || [],
+          description: item.description || '',
+          avg_rating: item.avg_rating || null,
+          review_count: item.review_count || 0,
+          status: 'pending', is_verified: false,
+          years_experience: item.years_experience || null,
+        };
+      } else {
+        record = {
+          name: item.name || item.full_name || 'Unknown',
+          category: cat?.serviceCategory || 'other',
+          city, address: item.address || '',
+          phone: item.phone || '', description: item.description || '',
+          website: item.website || '',
+          avg_rating: item.google_rating || item.avg_rating || 0,
+          is_verified: false,
+          price_range: ['budget','moderate','premium'].includes(item.price_range) ? item.price_range : 'moderate',
+          tags: item.tags || [],
+        };
+      }
+      try { await base44.entities[entityName].create(record); saved++; }
+      catch { addLog(`❌ Failed: ${record.name || record.full_name}`); }
+    }
+    setSavedTotal(p => p + saved);
+    addLog(`✅ Saved ${saved} listings to database`);
+    setSaving(false);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-3 text-xs text-amber-700">
+        ⚡ Uses AI + live web search (Gemini). Takes ~20 seconds. <strong>Review each result before saving.</strong> Uses integration credits.
+      </div>
+
+      {savedTotal > 0 && (
+        <div className="bg-success/10 border border-success/20 rounded-2xl p-3 flex items-center gap-2 text-sm text-success font-bold">
+          <CheckCircle2 className="w-4 h-4" /> {savedTotal} listings saved this session
+        </div>
+      )}
+
+      {/* Selectors */}
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-card rounded-2xl border border-border/50 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">1. City</p>
+          <div className="flex flex-wrap gap-2">
+            {POPULATE_CITIES.map(c => (
+              <button key={c.id} onClick={() => setCity(c.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                  city === c.id ? 'bg-accent text-accent-foreground border-accent' : 'bg-secondary border-border'
+                }`}>{c.label}</button>
+            ))}
+          </div>
+        </div>
+        <div className="bg-card rounded-2xl border border-border/50 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3">2. Category</p>
+          <div className="flex flex-wrap gap-2">
+            {POPULATE_CATEGORIES.map(c => (
+              <button key={c.id} onClick={() => setCategory(c.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                  category === c.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-secondary border-border'
+                }`}>{c.label}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Search button */}
+      <button onClick={fetchData} disabled={loading}
+        className="flex items-center gap-2 w-full bg-accent text-accent-foreground py-3.5 rounded-2xl font-bold text-sm justify-center disabled:opacity-60">
+        {loading
+          ? <><Loader2 className="w-4 h-4 animate-spin" /> Searching the web… (~20 seconds)</>
+          : <><Search className="w-4 h-4" /> 3. Find Real Data — {POPULATE_CITIES.find(c => c.id === city)?.label} · {POPULATE_CATEGORIES.find(c => c.id === category)?.label}</>
+        }
+      </button>
+
+      {/* Results */}
+      {results.length > 0 && (
+        <>
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <p className="font-extrabold">{results.length} listings found</p>
+              <p className="text-xs text-muted-foreground">{approved.size} approved · {rejected.size} rejected · {results.length - approved.size - rejected.size} pending</p>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => { setApproved(new Set(results.map((_, i) => i))); setRejected(new Set()); }}
+                className="px-3 py-1.5 rounded-xl bg-success/10 text-success text-xs font-bold border border-success/30">
+                ✓ Approve All
+              </button>
+              <button onClick={() => { setRejected(new Set(results.map((_, i) => i))); setApproved(new Set()); }}
+                className="px-3 py-1.5 rounded-xl bg-red-500/10 text-red-500 text-xs font-bold border border-red-400/30">
+                ✗ Reject All
+              </button>
+            </div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-3">
+            {results.map((item, i) => (
+              <PopulateResultCard key={i} item={item}
+                approved={approved.has(i)} rejected={rejected.has(i)}
+                onApprove={() => toggleApprove(i)} onReject={() => toggleReject(i)}
+              />
+            ))}
+          </div>
+
+          <button onClick={saveApproved} disabled={saving || approved.size === 0}
+            className="flex items-center gap-2 w-full bg-success text-success-foreground py-3.5 rounded-2xl font-bold text-sm justify-center disabled:opacity-50">
+            {saving
+              ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
+              : <><Download className="w-4 h-4" /> 4. Save {approved.size} Approved Listings to Database</>
+            }
+          </button>
+        </>
+      )}
+
+      {/* Log */}
+      {log.length > 0 && (
+        <div className="bg-card rounded-2xl border border-border/50 p-4">
+          <p className="font-bold text-xs mb-2">Activity Log</p>
+          <div className="space-y-1 max-h-28 overflow-y-auto">
+            {log.map((entry, i) => (
+              <p key={i} className="text-[11px] font-mono text-muted-foreground">
+                <span className="opacity-50 mr-2">{entry.t}</span>{entry.msg}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 export default function AdminVerification() {
   const { lang } = useOutletContext();
+  const [activeTab, setActiveTab] = useState('verify');
   const [refreshKey, setRefreshKey] = useState(0);
   const [dbIssues, setDbIssues] = useState([]);
   const [dbOk, setDbOk] = useState([]);
@@ -385,7 +675,7 @@ export default function AdminVerification() {
   return (
     <div className="px-4 py-8 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex items-start justify-between gap-3 mb-6">
+      <div className="flex items-start justify-between gap-3 mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <ShieldCheck className="w-6 h-6 text-accent" />
@@ -396,13 +686,34 @@ export default function AdminVerification() {
             {lastRun && <span> · Last run: {lastRun.toLocaleTimeString()}</span>}
           </p>
         </div>
-        <button onClick={() => setRefreshKey(k => k + 1)}
-          disabled={isLoading || running}
-          className="flex items-center gap-2 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold disabled:opacity-50">
-          <RefreshCw className={`w-3.5 h-3.5 ${(isLoading || running) ? 'animate-spin' : ''}`} />
-          Re-run
+        {activeTab === 'verify' && (
+          <button onClick={() => setRefreshKey(k => k + 1)}
+            disabled={isLoading || running}
+            className="flex items-center gap-2 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold disabled:opacity-50">
+            <RefreshCw className={`w-3.5 h-3.5 ${(isLoading || running) ? 'animate-spin' : ''}`} />
+            Re-run
+          </button>
+        )}
+      </div>
+
+      {/* Tab nav */}
+      <div className="flex gap-2 mb-6">
+        <button onClick={() => setActiveTab('verify')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === 'verify' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+          }`}>
+          <ShieldCheck className="w-3.5 h-3.5" /> Verification
+        </button>
+        <button onClick={() => setActiveTab('populate')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            activeTab === 'populate' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+          }`}>
+          <Database className="w-3.5 h-3.5" /> Populate Data
         </button>
       </div>
+
+      {activeTab === 'populate' && <PopulateDataTab />}
+      {activeTab === 'verify' && (<>
 
       {/* Readiness score */}
       <div className="bg-card rounded-2xl border border-border/50 p-5 mb-6">
@@ -541,6 +852,7 @@ export default function AdminVerification() {
       <div className="mt-6 bg-secondary/50 rounded-2xl p-4 text-xs text-muted-foreground text-center">
         ⚠️ This tool flags issues only — it does not auto-fix anything. All corrections must be made manually by admin. Never delete any listing, only add verification warnings.
       </div>
+      </>)}
     </div>
   );
 }
