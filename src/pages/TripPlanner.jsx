@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { Link } from 'react-router-dom';
 import { MapPin, Calendar, DollarSign, Users, Sparkles, ArrowRight, Copy, Check, RefreshCw, Heart, Plane, Hotel, Utensils, Camera, Shield, AlertTriangle } from 'lucide-react';
 import { useSEO } from '../lib/seo';
 
@@ -162,6 +163,23 @@ Use real, accurate prices based on April 2026 data. Be specific and practical, n
     };
     setItinerary(plan);
     localStorage.setItem('locali_itinerary', JSON.stringify(plan));
+
+    // Save to DB if logged in
+    try {
+      const me = await base44.auth.me();
+      if (me?.email) {
+        await base44.entities.SavedItinerary.create({
+          city,
+          city_label: cityLabel,
+          days,
+          budget: budgetLabel,
+          interests: interestLabels,
+          travelers,
+          itinerary_text: result,
+          user_email: me.email,
+        });
+      }
+    } catch { /* not logged in — localStorage only */ }
     setLoading(false);
   };
 

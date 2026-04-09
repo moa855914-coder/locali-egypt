@@ -68,6 +68,7 @@ import TouristVillages from './pages/TouristVillages';
 import VerifiedContacts from './pages/VerifiedContacts';
 import DataSources from './pages/DataSources';
 import TripPlanner from './pages/TripPlanner';
+import MyTrips from './pages/MyTrips';
 import Methodology from './pages/Methodology';
 
 const AuthenticatedApp = () => {
@@ -132,6 +133,7 @@ const AuthenticatedApp = () => {
         <Route path="/data-sources" element={<DataSources />} />
         <Route path="/methodology" element={<Methodology />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
+        <Route path="/my-trips" element={<MyTrips />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
