@@ -41,15 +41,21 @@
     },
     "source": {
       "type": "string",
-      "title": "Source"
+      "enum": [
+        "openexchangerates",
+        "google_finance",
+        "xe_com",
+        "fallback_emergency"
+      ],
+      "title": "Data Source"
     },
     "change_usd": {
       "type": "number",
-      "title": "USD Change vs Previous Day"
+      "title": "USD Change vs Previous Day (%)"
     },
     "change_eur": {
       "type": "number",
-      "title": "EUR Change vs Previous Day"
+      "title": "EUR Change vs Previous Day (%)"
     },
     "alert": {
       "type": "string",
@@ -59,6 +65,7 @@
   "required": [
     "usd",
     "eur",
-    "rate_date"
+    "rate_date",
+    "source"
   ]
 }
