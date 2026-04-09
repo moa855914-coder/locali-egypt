@@ -78,6 +78,7 @@ import BeachClubs from './pages/BeachClubs';
 import BazaarsMarkets from './pages/BazaarsMarkets';
 import WaterSports from './pages/WaterSports';
 import Museums from './pages/Museums';
+import UnifiedSearch from './pages/UnifiedSearch';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -148,6 +149,7 @@ const AuthenticatedApp = () => {
         <Route path="/bazaars" element={<BazaarsMarkets />} />
         <Route path="/water-sports" element={<WaterSports />} />
         <Route path="/museums" element={<Museums />} />
+        <Route path="/listings" element={<UnifiedSearch />} />
         <Route path="/airport-items" element={<AirportItems />} />
         <Route path="/el-gouna" element={<ElGouna />} />
         <Route path="/nationality-guide" element={<NationalityGuide />} />
