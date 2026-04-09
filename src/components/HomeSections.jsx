@@ -65,7 +65,8 @@ const SECTIONS = [
     groupDe: 'Essen, Spaß & Aktivitäten',
     color: 'text-amber-500',
     items: [
-      { label: 'Restaurants', labelRu: 'Рестораны', labelDe: 'Restaurants', icon: Utensils, path: '/services?category=restaurant', color: 'bg-orange-500/10 text-orange-500' },
+      { label: 'Restaurants', labelRu: 'Рестораны', labelDe: 'Restaurants', icon: Utensils, path: '/restaurants', color: 'bg-orange-500/10 text-orange-500' },
+      { label: 'Beaches', labelRu: 'Пляжи', labelDe: 'Strände', icon: Waves, path: '/beach-clubs', color: 'bg-cyan-500/10 text-cyan-500' },
       { label: 'Activities', labelRu: 'Активности', labelDe: 'Aktivitäten', icon: Waves, path: '/services?category=activities', color: 'bg-cyan-500/10 text-cyan-500' },
       { label: 'Kids & Family', labelRu: 'Дети и семья', labelDe: 'Familie', icon: Baby, path: '/services?category=kids_family', color: 'bg-yellow-500/10 text-yellow-600' },
       { label: 'Nightlife', labelRu: 'Ночная жизнь', labelDe: 'Nachtleben', icon: Music, path: '/nightlife', color: 'bg-purple-500/10 text-purple-500' },

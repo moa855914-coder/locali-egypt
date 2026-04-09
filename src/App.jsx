@@ -73,6 +73,8 @@ import Methodology from './pages/Methodology';
 import BoatTrips from './pages/BoatTrips';
 import HorseRidingExperiences from './pages/HorseRidingExperiences';
 import TempleTrips from './pages/TempleTrips';
+import Restaurants from './pages/Restaurants';
+import BeachClubs from './pages/BeachClubs';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -138,6 +140,8 @@ const AuthenticatedApp = () => {
         <Route path="/boat-trips" element={<BoatTrips />} />
         <Route path="/horse-riding" element={<HorseRidingExperiences />} />
         <Route path="/temple-trips" element={<TempleTrips />} />
+        <Route path="/restaurants" element={<Restaurants />} />
+        <Route path="/beach-clubs" element={<BeachClubs />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/my-trips" element={<MyTrips />} />
         <Route path="/long-stay" element={<LongStay />} />
