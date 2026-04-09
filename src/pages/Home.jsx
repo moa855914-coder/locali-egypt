@@ -1,4 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
+import QuickFunnel from '../components/QuickFunnel';
 import LiveSituationBanner from '../components/LiveSituationBanner';
 import HeroSection from '../components/HeroSection';
 import CityCard from '../components/CityCard';
@@ -14,6 +15,11 @@ export default function Home() {
     <div>
       <HeroSection lang={lang} onOpenChat={openAIChat} />
       
+      {/* Quick Funnel */}
+      <section className="px-4 pt-4 max-w-7xl mx-auto">
+        <QuickFunnel lang={lang} />
+      </section>
+
       {/* Live Situation Banner */}
       <section className="px-4 pt-4 max-w-7xl mx-auto">
         <LiveSituationBanner />

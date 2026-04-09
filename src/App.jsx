@@ -67,6 +67,7 @@ import AdminContentManager from './pages/AdminContentManager';
 import TouristVillages from './pages/TouristVillages';
 import VerifiedContacts from './pages/VerifiedContacts';
 import DataSources from './pages/DataSources';
+import TripPlanner from './pages/TripPlanner';
 import Methodology from './pages/Methodology';
 
 const AuthenticatedApp = () => {
@@ -130,6 +131,7 @@ const AuthenticatedApp = () => {
         <Route path="/verified-contacts" element={<VerifiedContacts />} />
         <Route path="/data-sources" element={<DataSources />} />
         <Route path="/methodology" element={<Methodology />} />
+        <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
