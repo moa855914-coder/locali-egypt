@@ -11,34 +11,27 @@ import {
 
 // ─── Validation Helpers ───────────────────────────────────────────────────────
 function validateEgyptPhone(phone) {
-  if (!phone) return { valid: false, reason: 'Missing phone number' };
+  if (!phone) return { valid: false, reason: 'Missing phone' };
   const clean = phone.replace(/[\s\-().+]/g, '');
-  // International format: +20 + 10/11/12/15 + 8 digits OR +20 + 2/3/46/65/93 + 7 digits
-  if (/^20(10|11|12|15)\d{8}$/.test(clean)) return { valid: true };
-  if (/^20(2|3|46|65|93)\d{7}$/.test(clean)) return { valid: true };
-  // Local format: 010/011/012/015 + 8 digits OR 02/03/046/065/093 + 7 digits
-  if (/^(010|011|012|015)\d{8}$/.test(clean)) return { valid: true };
-  if (/^(02|03|046|065|093)\d{7}$/.test(clean)) return { valid: true };
-  // WhatsApp-style: +20...
-  if (/^\+20(10|11|12|15)\d{8}$/.test(phone.replace(/\s/g, ''))) return { valid: true };
-  if (/^\+20(2|3|46|65|93)\d{7}$/.test(phone.replace(/\s/g, ''))) return { valid: true };
-  return { valid: false, reason: `Format invalid: "${phone}" — expected 010/011/012/015 + 8 digits or +20...` };
+  // Accept: 01X + 8 digits, +201X + 8 digits, 02X + 7 digits, +202X + 7 digits, or anything 9+ digits
+  if (/^(\+)?20?[0-9]{9,}$/.test(clean)) return { valid: true };
+  return { valid: false, reason: `Invalid phone format` };
 }
 
 const PRICE_RANGES = {
-  taxi_airport: { min: 100, max: 500, label: 'Airport transfer (EGP)' },
-  taxi_city: { min: 300, max: 800, label: 'City tour taxi (EGP)' },
-  restaurant_budget: { min: 50, max: 150, label: 'Budget meal (EGP)' },
-  restaurant_mid: { min: 150, max: 400, label: 'Mid-range meal (EGP)' },
-  snorkeling: { min: 300, max: 900, label: 'Snorkeling activity (EGP)' },
-  diving: { min: 500, max: 1500, label: 'Diving (EGP)' },
-  hot_air_balloon: { min: 1500, max: 4000, label: 'Hot air balloon (EGP)' },
-  desert_safari: { min: 400, max: 1200, label: 'Desert safari (EGP)' },
-  hotel_budget: { min: 200, max: 600, label: 'Budget hotel/night (EGP)' },
-  hotel_mid: { min: 600, max: 1500, label: 'Mid hotel/night (EGP)' },
-  hotel_luxury: { min: 1500, max: 999999, label: 'Luxury hotel/night (EGP)' },
-  apartment: { min: 400, max: 5000, label: 'Apartment/night (EGP)' },
-  driver_route: { min: 100, max: 5000, label: 'Driver route (EGP)' },
+  taxi_airport: { min: 50, max: 1000 },
+  taxi_city: { min: 100, max: 1500 },
+  restaurant_budget: { min: 20, max: 300 },
+  restaurant_mid: { min: 100, max: 600 },
+  snorkeling: { min: 100, max: 2000 },
+  diving: { min: 200, max: 3000 },
+  hot_air_balloon: { min: 800, max: 6000 },
+  desert_safari: { min: 200, max: 2000 },
+  hotel_budget: { min: 100, max: 1500 },
+  hotel_mid: { min: 400, max: 3000 },
+  hotel_luxury: { min: 1000, max: 999999 },
+  apartment: { min: 200, max: 10000 },
+  driver_route: { min: 50, max: 10000 },
 };
 
 function validatePrice(price, category) {
@@ -54,11 +47,7 @@ function validatePrice(price, category) {
 
 function validateAddress(address) {
   if (!address || address.trim().length === 0) return { valid: false, reason: 'Missing address' };
-  const normalized = address.toLowerCase().trim();
-  if (normalized.length < 10) return { valid: false, reason: 'Address too short (min 10 chars)' };
-  const cityKeywords = ['hurghada', 'sharm', 'luxor', 'aswan', 'gouna', 'cairo', 'el-gouna', 'el gouna', 'dahab', 'الغردقة', 'شرم', 'الأقصر', 'أسوان', 'القاهرة', 'سيناء', 'sakkala', 'naama', 'marina', 'corniche', 'sinai'];
-  const hasCity = cityKeywords.some(kw => normalized.includes(kw));
-  if (!hasCity) return { valid: false, reason: 'Address must include a city/area name (Hurghada, Sharm, Luxor, Aswan, etc)' };
+  if (address.trim().length < 5) return { valid: false, reason: 'Address too short' };
   return { valid: true };
 }
 
@@ -70,13 +59,13 @@ function validateHours(hours) {
 }
 
 function validateContent(text, field) {
-  if (!text) return { valid: false, reason: `Empty ${field}` };
+  if (!text) return { valid: false, reason: `${field} is empty` };
   const trimmed = String(text).trim();
-  if (trimmed.length === 0) return { valid: false, reason: `${field} cannot be empty` };
-  const bad = ['lorem ipsum', 'tbd', 'coming soon', 'enter text', 'placeholder', 'test listing', 'example', 'sample text', 'click here', 'edit this'];
+  if (trimmed.length === 0) return { valid: false, reason: `${field} is empty` };
+  const bad = ['lorem ipsum', 'tbd', 'coming soon', 'placeholder', 'test'];
   const found = bad.find(b => trimmed.toLowerCase().includes(b));
-  if (found) return { valid: false, reason: `Placeholder detected in ${field}: "${found}"` };
-  if (trimmed.length < 10) return { valid: false, reason: `${field} too short: "${trimmed}" (min 10 chars)` };
+  if (found) return { valid: false, reason: `Placeholder: "${found}"` };
+  if (trimmed.length < 3) return { valid: false, reason: `${field} too short` };
   return { valid: true };
 }
 
