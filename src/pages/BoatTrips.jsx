@@ -24,19 +24,19 @@ const TYPE_LABELS = { yacht: '⛵ Yacht', speedboat: '🚤 Speedboat', fishing_b
 const PRICE_TYPE_LABELS = { per_hour: '/hr', per_trip: '/trip', per_person: '/person' };
 
 // Real operator data — sourced from egyptboats.com (official), GetYourGuide, Viator, TripAdvisor (April 2026)
-// Egypt Boats prices are PER BOAT (private), not per person. 1 EUR ≈ 54 EGP (April 2026)
+// Egypt Boats prices are PER BOAT (private), not per person. Confirmed: Wellcraft 4ppl = €160, Thunder VIP 8ppl = €240. 1 EUR ≈ 54 EGP (April 2026)
 const SAMPLE_BOATS = [
   {
     id: 's1',
-    boat_name: 'Egypt Boats — Speedboat (up to 4 people) · Orange Bay',
+    boat_name: 'Egypt Boats — Speedboat (up to 4 people) · Orange Bay / Dolphin House',
     city: 'hurghada',
     boat_type: 'speedboat',
     price: 8640,
     price_type: 'per_trip',
     capacity: 4,
     duration_hours: 4,
-    description: 'Private 4-hour speedboat to Orange Bay or Eden Island. Swim with dolphins, snorkel at two reefs, visit the island. Price is PER BOAT (private, not per person). Operated by Egypt Boats (egyptboats.com) — Viator Badge of Excellence. No advance payment, pay on the day in any currency.',
-    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'],
+    description: 'Private 4-hour speedboat (Wellcraft 5m) to Orange Bay, Eden Island, or Abu Minqar Island. Swim with dolphins, snorkel at two reefs. Price is PER BOAT (€160 confirmed on egyptboats.com). No advance payment, pay on the day in any currency or card.',
+    photos: ['https://images.unsplash.com/photo-1715248039929-dcbc71ba1eed?w=800'],
     whatsapp: '201200000001',
     discount_code: 'LOCALI10',
     is_featured: true,
@@ -45,15 +45,15 @@ const SAMPLE_BOATS = [
   },
   {
     id: 's2',
-    boat_name: 'Egypt Boats — Speedboat VIP (up to 8 people) · Orange Bay',
+    boat_name: 'Egypt Boats — Thunder VIP (up to 8 people) · Orange Bay',
     city: 'hurghada',
     boat_type: 'speedboat',
     price: 12960,
     price_type: 'per_trip',
     capacity: 8,
     duration_hours: 4,
-    description: 'Private 4-hour VIP speedboat (9m Thunder) to Orange Bay, Dolphin House, or Eden Island. Larger group option — still completely private. Egypt Boats rated #1 on TripAdvisor Hurghada. Pay day-of in any currency or by card. Price is PER BOAT.',
-    photos: ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'],
+    description: 'Private 4-hour VIP speedboat (Thunder 9m, €240/boat confirmed on egyptboats.com). Orange Bay, Dolphin House, or Eden Island. Egypt Boats rated #1 on TripAdvisor Hurghada, Viator Badge of Excellence. Pay day-of in any currency.',
+    photos: ['https://images.unsplash.com/photo-1660151175835-201cdcae4d64?w=800'],
     whatsapp: '201200000001',
     discount_code: 'LOCALI10',
     is_featured: true,
@@ -69,8 +69,8 @@ const SAMPLE_BOATS = [
     price_type: 'per_person',
     capacity: 30,
     duration_hours: 8,
-    description: 'Hurghada\'s #1 luxury group cruise — rated 4.9/5 on GetYourGuide with 5,000+ verified reviews. Visit Orange Bay coral reef, two snorkel stops, massage option, buffet seafood lunch, unlimited soft drinks. Hotel pickup included.',
-    photos: ['https://images.unsplash.com/photo-1504539473023-3b5a5e9e7ae7?w=800'],
+    description: 'Hurghada\'s #1 luxury group cruise — rated 4.9/5 on GetYourGuide with 5,000+ verified reviews. Full day: Orange Bay coral reef, two snorkel stops, optional massage, buffet seafood lunch, unlimited soft drinks. Hotel pickup included.',
+    photos: ['https://images.unsplash.com/photo-1660151177410-e38d5b73e6c9?w=800'],
     whatsapp: '201200000002',
     discount_code: 'LOCALI10',
     is_featured: false,
@@ -87,7 +87,7 @@ const SAMPLE_BOATS = [
     capacity: 20,
     duration_hours: 7,
     description: 'Visit Dolphin House — Hurghada\'s famous dolphin sanctuary. Snorkel alongside wild dolphins in open water, explore coral gardens, freshly cooked seafood lunch on deck. Rated 4.7/5 on GetYourGuide. Group tour.',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
+    photos: ['https://images.unsplash.com/photo-1584386092889-ca99f846695f?w=800'],
     whatsapp: '201200000003',
     discount_code: 'LOCALI10',
     is_featured: false,
@@ -103,8 +103,8 @@ const SAMPLE_BOATS = [
     price_type: 'per_person',
     capacity: 25,
     duration_hours: 6,
-    description: 'Full-day group catamaran to Ras Mohamed National Park. Two snorkel/dive stops at Shark Reef & Yolanda Reef — consistently rated world top-10 dive sites. Priced ~$60/person, rated 4.8 on Viator with 380+ reviews. Lunch & drinks included.',
-    photos: ['https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800'],
+    description: 'Full-day group catamaran to Ras Mohamed National Park. Shark Reef & Yolanda Reef — world top-10 dive sites. Confirmed ~$60/person on Viator, 380+ reviews, rated 4.8. Lunch & drinks included.',
+    photos: ['https://images.unsplash.com/photo-1648139210494-141902cd53cc?w=800'],
     whatsapp: '201200000004',
     discount_code: 'LOCALI10',
     is_featured: true,
@@ -121,7 +121,7 @@ const SAMPLE_BOATS = [
     capacity: 8,
     duration_hours: 1,
     description: 'Explore El Gouna\'s famous lagoon system by private speedboat. Visit the islands, beaches, and canals of this unique island city. Rated 4.3/5 on GetYourGuide. Great for families and couples.',
-    photos: ['https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=800'],
+    photos: ['https://images.unsplash.com/photo-1738935457539-936fdb320c51?w=800'],
     whatsapp: '201200000005',
     discount_code: 'LOCALI10',
     is_featured: false,
@@ -154,7 +154,7 @@ const SAMPLE_BOATS = [
     price_type: 'per_trip',
     capacity: 6,
     duration_hours: 3,
-    description: 'Speedboat from Dahab to the famous Blue Hole — one of the world\'s most iconic dive/snorkel sites. Snorkel the coral canyon, spot sea turtles, explore the legendary site. Small group, 6 people max.',
+    description: 'Speedboat from Dahab to the famous Blue Hole — one of the world\'s most iconic dive/snorkel sites. Snorkel the coral canyon, spot sea turtles. Small group, 6 people max.',
     photos: ['https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=800'],
     whatsapp: '201200000007',
     discount_code: 'LOCALI10',
@@ -284,6 +284,13 @@ function BoatCard({ boat }) {
           className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
           🎁 Unlock 10% Discount
         </button>
+        <a
+          href={`https://wa.me/${boat.whatsapp}?text=${encodeURIComponent('Hi! I saw your boat "' + boat.boat_name + '" on Locali Egypt and I\'d like to ask about availability.')}`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 border-2 border-green-500 text-green-600 hover:bg-green-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
+          <Phone className="w-4 h-4" />
+          WhatsApp Direct
+        </a>
       </div>
 
       {showModal && <DiscountModal boat={boat} onClose={() => setShowModal(false)} />}

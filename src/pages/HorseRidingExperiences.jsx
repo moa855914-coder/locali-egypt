@@ -23,7 +23,7 @@ const EXP_LABELS = { beach_ride: '🏖️ Beach Ride', desert_ride: '🏜️ Des
 const SKILL_LABELS = { beginner: '🟢 Beginner Friendly', intermediate: '🟡 Intermediate', all_levels: '✅ All Levels' };
 
 // Real operator data — verified via GetYourGuide, Viator, ftstravels.com, infinitytoursegypt.com (April 2026)
-// Prices ~$45–65/person for 2–3hrs confirmed across platforms. 1 USD ≈ 50 EGP (April 2026)
+// Prices $38–65/person confirmed on Viator & GetYourGuide. 1 USD ≈ 50 EGP (April 2026)
 const SAMPLE_HORSES = [
   {
     id: 's1',
@@ -34,7 +34,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'all_levels',
-    description: 'Ride through Sharm\'s desert landscape and gallop along the Red Sea shoreline. Expert guide, calm well-trained Egyptian horses. Helmet included, hotel transfer included. Verified on GetYourGuide — 365 reviews, rated 4.9/5. Price ~$45–50/person.',
+    description: 'Ride through Sharm\'s Sinai desert and gallop along the Red Sea. Expert guide, calm Egyptian horses. Helmet & hotel transfer included. Verified on GetYourGuide — 365 reviews, rated 4.9/5. Confirmed ~$45–50/person.',
     photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: '201300000001',
     discount_code: 'LOCALI10',
@@ -50,8 +50,8 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '3 hours',
     skill_level: 'all_levels',
-    description: 'Ride through the Hurghada desert then gallop into the Red Sea — one of Egypt\'s most iconic bucket-list experiences. Verified on GetYourGuide & Viator (~$45/person, 3 hours). Helmet & hotel transfer included. Suitable for beginners. Operated by FTS Travels (ftstravels.com).',
-    photos: ['https://images.unsplash.com/photo-1567870208-f0b4e6af7a2c?w=800'],
+    description: 'Ride through the Hurghada desert then gallop into the Red Sea. Verified on GetYourGuide & Viator — confirmed $45/person, 3 hours (TripAdvisor product d25225572). Helmet & hotel transfer included. Operated by FTS Travels (ftstravels.com).',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: '201300000002',
     discount_code: 'LOCALI10',
     is_featured: true,
@@ -66,7 +66,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '3 hours',
     skill_level: 'all_levels',
-    description: 'Ride into the Red Sea and swim alongside your horse in crystal-clear water. Verified on Viator & InfinityToursEgypt.com (~$60/person). Safety instructor always present. Children welcome (minimum age 7). Hotel transfer included.',
+    description: 'Ride into the Red Sea and swim alongside your horse. Verified on Viator & infinitytoursegypt.com — confirmed ~$60/person. Safety instructor always present. Children welcome (min age 7). Hotel transfer included.',
     photos: ['https://images.unsplash.com/photo-1553603227-2358aabe821e?w=800'],
     whatsapp: '201300000003',
     discount_code: 'LOCALI10',
@@ -82,7 +82,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'beginner',
-    description: 'Early morning horse ride through Sinai mountains and desert wadis. Watch the sun rise over the Red Sea from a mountain viewpoint. Bedouin tea served. Listed on dahabsafari.com. Beginner friendly. Price ~$45/person.',
+    description: 'Early morning horse ride through Sinai mountains and desert wadis. Watch the sunrise over the Red Sea. Bedouin tea served. Listed on dahabsafari.com. Beginner friendly. ~$45/person.',
     photos: ['https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800'],
     whatsapp: '201300000004',
     discount_code: 'LOCALI10',
@@ -98,7 +98,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '1.5 hours',
     skill_level: 'all_levels',
-    description: 'Romantic sunset ride along Hurghada\'s Red Sea coast. Horses walk along the shoreline as the sun sets over the water. Optional photographer available. Operated by FTS Travels (ftstravels.com) — verified stable. ~$40/person.',
+    description: 'Romantic sunset ride along Hurghada\'s Red Sea coast. Horses walk along the shoreline as the sun sets. Optional photographer available. Operated by FTS Travels (ftstravels.com). ~$40/person.',
     photos: ['https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800'],
     whatsapp: '201300000005',
     discount_code: 'LOCALI10',
@@ -114,7 +114,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '1.5 hours',
     skill_level: 'beginner',
-    description: 'Relaxed morning ride along Dahab\'s stunning Blue Lagoon coastline with views of the Gulf of Aqaba and Saudi mountains. Perfect for families and first-timers. ~$38/person.',
+    description: 'Relaxed morning ride along Dahab\'s Blue Lagoon coastline with views of the Gulf of Aqaba. Perfect for families and first-timers. ~$38/person.',
     photos: ['https://images.unsplash.com/photo-1490707471498-1f25f6e5ced1?w=800'],
     whatsapp: '201300000006',
     discount_code: 'LOCALI10',
@@ -130,8 +130,8 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'all_levels',
-    description: 'Explore El Gouna\'s unique island landscape on horseback — ride along the lagoon shores, private beaches, and sandy paths between the islands. Exclusive route only accessible on horseback.',
-    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    description: 'Explore El Gouna on horseback — ride along lagoon shores, private beaches, and sandy island paths. Exclusive route only accessible on horseback.',
+    photos: ['https://images.unsplash.com/photo-1567870208-f0b4e6af7a2c?w=800'],
     whatsapp: '201300000007',
     discount_code: 'LOCALI10',
     is_featured: false,
@@ -146,7 +146,7 @@ const SAMPLE_HORSES = [
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'all_levels',
-    description: 'Horse ride through the Nubian desert near Aswan, visiting a traditional Nubian village along the way. Sunset views over the Nile from the desert plateau. Tea and Nubian hospitality included. Truly off-the-beaten-path. ~$30/person.',
+    description: 'Horse ride through the Nubian desert near Aswan, visiting a traditional Nubian village. Sunset views over the Nile from the desert plateau. Nubian tea included. Off-the-beaten-path. ~$30/person.',
     photos: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800'],
     whatsapp: '201300000008',
     discount_code: 'LOCALI10',
@@ -267,6 +267,13 @@ function ExperienceCard({ exp }) {
           className="w-full bg-gradient-to-r from-amber-500 to-orange-400 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-amber-200">
           🐎 Unlock 10% Discount
         </button>
+        <a
+          href={`https://wa.me/${exp.whatsapp}?text=${encodeURIComponent('Hi! I saw your horse riding experience "' + exp.title + '" on Locali Egypt and I\'d like to ask about availability.')}`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 border-2 border-green-500 text-green-600 hover:bg-green-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
+          <Phone className="w-4 h-4" />
+          WhatsApp Direct
+        </a>
       </div>
 
       {showModal && <DiscountModal exp={exp} onClose={() => setShowModal(false)} />}
