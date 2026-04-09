@@ -13,7 +13,7 @@ export const FALLBACK_RATES = {
  * Falls back to hardcoded rates if DB is empty.
  */
 export function useLiveRates() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['live-rates-db'],
     queryFn: async () => {
       const records = await base44.entities.CurrencyRate.list('-created_date', 1);
@@ -34,6 +34,7 @@ export function useLiveRates() {
   return {
     rates,
     isLoading,
+    refetch,
     rateDate: data?.rate_date || null,
     alert: data?.alert || null,
     changeUsd: data?.change_usd || 0,

@@ -74,7 +74,7 @@ export default function CurrencyRates() {
   const [calcAmount, setCalcAmount] = useState('100');
   const [calcCurrency, setCalcCurrency] = useState('EUR');
 
-  const { rates: dbRates, isLoading: loading, rateDate, alert: rateAlert } = useLiveRates();
+  const { rates: dbRates, isLoading: loading, rateDate, alert: rateAlert, refetch } = useLiveRates();
 
   const rates = [
     { currency: 'USD 🇺🇸', symbol: '$', rate: dbRates.usd },
@@ -121,7 +121,7 @@ export default function CurrencyRates() {
       {/* Live rates grid */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-extrabold">Live Rates → Egyptian Pound (EGP)</h2>
-        <button disabled={loading}
+        <button onClick={() => refetch()} disabled={loading}
           className="flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-xs font-bold hover:border-accent transition-colors disabled:opacity-50">
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           {loading ? 'Updating...' : 'Refresh'}
