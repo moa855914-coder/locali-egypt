@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useLiveRates } from '../hooks/useLiveRates';
 import { useSEO } from '../lib/seo';
 import { base44 } from '@/api/base44Client';
 import SafeNextStep from '../components/SafeNextStep';
@@ -67,52 +67,34 @@ const ATM_TIPS = [
   { icon: '🔄', title: 'Official bank rate vs "black market"', desc: 'Since Egypt\'s EGP float in 2022, official and parallel rates have largely converged. The gap is now 1–3%. Street money changers are not worth the risk of counterfeit notes.' },
 ];
 
-const CALCULATOR_CURRENCIES = [
-  { symbol: '$', code: 'USD', rate: 49.85 },
-  { symbol: '€', code: 'EUR', rate: 54.20 },
-  { symbol: '£', code: 'GBP', rate: 62.90 },
-  { symbol: '₽', code: 'RUB', rate: 0.555 },
-];
+
 
 export default function CurrencyRates() {
   const [selectedCity, setSelectedCity] = useState('hurghada');
   const [calcAmount, setCalcAmount] = useState('100');
   const [calcCurrency, setCalcCurrency] = useState('EUR');
 
-  const { data: fetchedRates, isLoading: loading, dataUpdatedAt, refetch } = useQuery({
-    queryKey: ['currency-rates-page'],
-    queryFn: async () => {
-      const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `Get current exchange rates to Egyptian Pound (EGP) as of today. Return ONLY a JSON object with these exact keys: USD, EUR, GBP, RUB, PLN, CAD, AUD, SAR. Each value should be a number representing how many EGP 1 unit of that currency buys.`,
-        add_context_from_internet: true,
-        response_json_schema: {
-          type: 'object',
-          properties: {
-            USD: { type: 'number' }, EUR: { type: 'number' }, GBP: { type: 'number' },
-            RUB: { type: 'number' }, PLN: { type: 'number' }, CAD: { type: 'number' },
-            AUD: { type: 'number' }, SAR: { type: 'number' },
-          },
-        },
-      });
-      if (!result?.USD) throw new Error('No rates');
-      return result;
-    },
-    staleTime: 1000 * 60 * 10,
-    refetchInterval: 1000 * 60 * 10,
-  });
+  const { rates: dbRates, isLoading: loading, rateDate, alert: rateAlert } = useLiveRates();
 
-  const rates = fetchedRates ? [
-    { currency: 'USD 🇺🇸', symbol: '$', rate: fetchedRates.USD, flag: '🇺🇸' },
-    { currency: 'EUR 🇪🇺', symbol: '€', rate: fetchedRates.EUR, flag: '🇪🇺' },
-    { currency: 'GBP 🇬🇧', symbol: '£', rate: fetchedRates.GBP, flag: '🇬🇧' },
-    { currency: 'RUB 🇷🇺', symbol: '₽', rate: fetchedRates.RUB, flag: '🇷🇺' },
-    { currency: 'PLN 🇵🇱', symbol: 'zł', rate: fetchedRates.PLN, flag: '🇵🇱' },
-    { currency: 'CAD 🇨🇦', symbol: 'CA$', rate: fetchedRates.CAD, flag: '🇨🇦' },
-    { currency: 'AUD 🇦🇺', symbol: 'A$', rate: fetchedRates.AUD, flag: '🇦🇺' },
-    { currency: 'SAR 🇸🇦', symbol: 'SR', rate: fetchedRates.SAR, flag: '🇸🇦' },
-  ] : OFFICIAL_RATES_FALLBACK;
+  const rates = [
+    { currency: 'USD 🇺🇸', symbol: '$', rate: dbRates.usd },
+    { currency: 'EUR 🇪🇺', symbol: '€', rate: dbRates.eur },
+    { currency: 'GBP 🇬🇧', symbol: '£', rate: dbRates.gbp },
+    { currency: 'RUB 🇷🇺', symbol: '₽', rate: dbRates.rub },
+    { currency: 'PLN 🇵🇱', symbol: 'zł', rate: dbRates.pln },
+    { currency: 'CAD 🇨🇦', symbol: 'CA$', rate: dbRates.cad },
+    { currency: 'AUD 🇦🇺', symbol: 'A$', rate: dbRates.aud },
+    { currency: 'SAR 🇸🇦', symbol: 'SR', rate: dbRates.sar },
+  ];
 
-  const lastUpdated = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleString() : null;
+  const lastUpdated = rateDate ? `${rateDate} · Updated daily 8am` : null;
+
+  const CALCULATOR_CURRENCIES = [
+    { symbol: '$', code: 'USD', rate: dbRates.usd },
+    { symbol: '€', code: 'EUR', rate: dbRates.eur },
+    { symbol: '£', code: 'GBP', rate: dbRates.gbp },
+    { symbol: '₽', code: 'RUB', rate: dbRates.rub },
+  ];
 
   const calcRate = CALCULATOR_CURRENCIES.find(c => c.code === calcCurrency);
   const egpResult = calcRate ? (parseFloat(calcAmount) * calcRate.rate).toFixed(0) : '—';
@@ -139,15 +121,18 @@ export default function CurrencyRates() {
       {/* Live rates grid */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-extrabold">Live Rates → Egyptian Pound (EGP)</h2>
-        <button onClick={() => refetch()} disabled={loading}
+        <button disabled={loading}
           className="flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-xs font-bold hover:border-accent transition-colors disabled:opacity-50">
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           {loading ? 'Updating...' : 'Refresh'}
         </button>
       </div>
 
+      {rateAlert && (
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-2.5 mb-3 text-xs text-amber-700 font-semibold">{rateAlert}</div>
+      )}
       {lastUpdated && (
-        <p className="text-[11px] text-muted-foreground mb-4">Last updated: {lastUpdated} · Official bank rate (Banque Misr reference)</p>
+        <p className="text-[11px] text-muted-foreground mb-4">Last updated: {lastUpdated} · Source: Central Bank of Egypt / XE.com</p>
       )}
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">

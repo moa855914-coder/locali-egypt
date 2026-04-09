@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
+import { CheckCircle2, Plane, ArrowRight, DollarSign } from 'lucide-react';
+import { useLiveRates } from '../hooks/useLiveRates';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle2, Plane, ArrowRight, DollarSign } from 'lucide-react';
-
-const FALLBACK_USD = 49.85;
 const FALLBACK_SUMMARY = 'Tourist areas operating normally. Flights running on schedule. No alerts affecting Sharm El Sheikh, Hurghada, Luxor or Aswan.';
 
 export default function LiveSituationBanner() {
@@ -19,18 +18,8 @@ export default function LiveSituationBanner() {
   const overallStatus = hasAlert ? 'red' : hasCaution ? 'yellow' : 'green';
   const summary = records.find(r => r.city === 'hurghada')?.recommendation || FALLBACK_SUMMARY;
   const updateDate = globalRec?.update_date || 'April 2, 2026';
-  const { data: liveRates } = useQuery({
-    queryKey: ['live-usd-banner'],
-    queryFn: () => base44.integrations.Core.InvokeLLM({
-      prompt: 'Get current USD to Egyptian Pound (EGP) exchange rate today from Central Bank of Egypt or XE.com. Return JSON with key usd_egp as a number.',
-      add_context_from_internet: true,
-      response_json_schema: { type: 'object', properties: { usd_egp: { type: 'number' } } },
-    }),
-    staleTime: 1000 * 60 * 10,
-    refetchInterval: 1000 * 60 * 10,
-  });
-
-  const usdRate = globalRec?.usd_to_egp || liveRates?.usd_egp || FALLBACK_USD;
+  const { rates } = useLiveRates();
+  const usdRate = globalRec?.usd_to_egp || rates.usd;
 
   const headerClass = overallStatus === 'green'
     ? 'bg-success/10 border-success/20'
