@@ -153,30 +153,19 @@ export default function HomeSections({ lang }) {
                   className="flex flex-col items-center gap-2.5 group"
                 >
                   <div
-                    className={`relative w-16 h-16 flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-1 group-active:scale-95 group-active:translate-y-1 ${item.isAI ? 'ring-2 ring-violet-400/60' : ''}`}
-                    style={{
-                      borderRadius: '20px',
-                      background: 'linear-gradient(145deg, #ffffff 0%, #f0f0f0 100%)',
-                      boxShadow: '0 8px 0 rgba(0,0,0,0.18), 0 10px 20px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,1)',
-                      transform: 'perspective(300px) rotateX(8deg)',
-                    }}
+                    className={`relative flex items-center justify-center transition-all duration-200 group-hover:scale-125 group-active:scale-90 ${item.isAI ? 'ring-2 ring-violet-400/60 rounded-3xl' : ''}`}
                   >
-                    <div
-                      className={`w-10 h-10 rounded-2xl ${item.color} flex items-center justify-center`}
-                      style={{
-                        boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.15)',
-                      }}
-                    >
-                      <Icon className="w-5 h-5" strokeWidth={2.2} />
-                      </div>
-                      {item.isAI && (
+                    <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center`}>
+                      <Icon className="w-7 h-7" strokeWidth={2.2} />
+                    </div>
+                    {item.isAI && (
                       <span className="absolute -top-1 -right-1 w-4 h-4 bg-violet-500 rounded-full flex items-center justify-center text-[8px] text-white font-black">✦</span>
-                      )}
-                      </div>
-                      <span className="text-[10px] font-bold text-center text-foreground leading-tight max-w-[60px]">
-                      {getLabel(item, lang)}
-                      </span>
-                      </Link>
+                    )}
+                  </div>
+                  <span className="text-[10px] font-bold text-center text-foreground leading-tight max-w-[60px]">
+                    {getLabel(item, lang)}
+                  </span>
+                </Link>
               );
             })}
           </div>
