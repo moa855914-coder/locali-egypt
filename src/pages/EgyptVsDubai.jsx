@@ -1,79 +1,110 @@
-import { useSEO } from '../lib/seo';
+import { useSEO, buildFAQSchema } from '../lib/seo';
 import SafeNextStep from '../components/SafeNextStep';
-import { CheckCircle2, DollarSign, Plane, Shield, Star, Sun, Thermometer, TrendingUp, Clock, Wifi } from 'lucide-react';
+import { CheckCircle2, DollarSign, Plane, Shield, Star, Sun, Thermometer, TrendingUp, Clock, Wifi, AlertTriangle, XCircle } from 'lucide-react';
+
+// ── Data ─────────────────────────────────────────────────────────────────────
+
+const DESTINATIONS = [
+  { id: 'egypt',     flag: '🇪🇬', name: 'Egypt',     tagline: 'Best value. World-class reef. 7,000 years of history.',  badge: '⭐ BEST VALUE 2026',      badgeColor: 'bg-accent text-accent-foreground' },
+  { id: 'dubai',     flag: '🇦🇪', name: 'Dubai',     tagline: '⚠️ US "Reconsider Travel" advisory — March 2026.',       badge: '⚠️ TRAVEL WARNING',       badgeColor: 'bg-red-500 text-white' },
+  { id: 'turkey',    flag: '🇹🇷', name: 'Turkey',    tagline: 'Good value, strong culture, big flight network.',        badge: 'Good Alternative',         badgeColor: 'bg-secondary text-muted-foreground' },
+  { id: 'vietnam',   flag: '🇻🇳', name: 'Vietnam',   tagline: '22h flight from Europe. No ancient culture buzz.',       badge: 'Long-haul Budget',         badgeColor: 'bg-secondary text-muted-foreground' },
+  { id: 'bali',      flag: '🇮🇩', name: 'Bali',      tagline: 'Beautiful but 18–22h flight. Overtourism issues.',       badge: 'Long-haul',                badgeColor: 'bg-secondary text-muted-foreground' },
+  { id: 'singapore', flag: '🇸🇬', name: 'Singapore', tagline: 'City-state stopover — one of the world\'s most expensive.', badge: 'Expensive Stopover',    badgeColor: 'bg-secondary text-muted-foreground' },
+  { id: 'thailand',  flag: '🇹🇭', name: 'Thailand',  tagline: 'Affordable but 10–12h flight. Monsoon risks Apr–Oct.',   badge: 'Long-haul Budget',         badgeColor: 'bg-secondary text-muted-foreground' },
+];
 
 const COMPARISON = [
   {
     category: 'Daily Cost for Tourists',
     icon: DollarSign,
-    egypt: { score: 5, points: ['Budget meal: €2–4', 'Taxi: €1–3 per trip', 'Hotel 3-star: €20–50/night', 'Activity (diving, desert): €8–20', 'SIM card 15GB: €2.50'] },
-    dubai: { score: 2, points: ['Budget meal: €12–22', 'Taxi: €8–18 per trip', 'Hotel 3-star: €80–180/night', 'Activity: €50–150', 'SIM card: €12–20'] },
-    turkey: { score: 4, points: ['Budget meal: €4–9', 'Taxi: €3–8 per trip', 'Hotel 3-star: €28–70/night', 'Activity: €15–40', 'SIM card 15GB: €5–8'] },
-    verdict: '🇪🇬 Egypt wins',
-    note: 'Egypt is 3–5x cheaper than Dubai and 1.5–2x cheaper than Turkey. Your holiday budget goes dramatically further.',
+    egypt:     { score: 5, points: ['Budget meal: €2–4', 'Taxi: €1–3 per trip', 'Hotel 3★: €20–50/night', 'Diving/Desert activity: €8–20', 'SIM 15GB: €2.50'] },
+    dubai:     { score: 1, points: ['Budget meal: €14–25', 'Taxi: €10–20 per trip', 'Hotel 3★: €90–200/night', 'Activity: €60–180', 'SIM card: €14–22'] },
+    turkey:    { score: 4, points: ['Budget meal: €4–9', 'Taxi: €3–8 per trip', 'Hotel 3★: €28–70/night', 'Activity: €15–40', 'SIM 15GB: €5–8'] },
+    vietnam:   { score: 4, points: ['Budget meal: €2–5', 'Taxi: €1–4 per trip', 'Hotel 3★: €25–55/night', 'Activity: €10–25', 'SIM 15GB: €3–5'] },
+    bali:      { score: 4, points: ['Budget meal: €3–7', 'Taxi/Grab: €2–5 per trip', 'Hotel 3★: €30–70/night', 'Activity: €15–35', 'SIM 15GB: €4–6'] },
+    singapore: { score: 1, points: ['Budget meal: €10–18', 'MRT/Taxi: €2–15 per trip', 'Hotel 3★: €110–220/night', 'Activity: €30–100', 'SIM: €8–15'] },
+    thailand:  { score: 4, points: ['Budget meal: €2–5', 'Tuk-tuk: €1–5 per trip', 'Hotel 3★: €25–60/night', 'Activity: €10–30', 'SIM 15GB: €4–7'] },
+    verdict: '🇪🇬 Egypt wins on value',
+    note: 'Egypt is the only destination with Red Sea diving at €8–20. Vietnam & Thailand match on price but require long-haul flights. Singapore and Dubai are 4–6x more expensive.',
   },
   {
-    category: 'Flight Availability & Price',
+    category: 'Flight Distance & Price from Europe',
     icon: Plane,
-    egypt: { score: 4, points: ['Charter flights EU: €120–350 return', 'Direct from UK, Germany, Poland, Russia', 'Budget airlines: Ryanair, Wizz Air, EasyJet', 'Current status: All routes operating normally'] },
-    dubai: { score: 5, points: ['Emirates hub — excellent global coverage', 'Tickets: €400–900 return from EU', 'Most expensive of the three', 'Status: Excellent — premium connections'] },
-    turkey: { score: 5, points: ['Turkish Airlines — largest network in Europe', 'Budget options: €80–250 from EU', 'Competitive connections from everywhere', 'Status: Excellent — major hub'] },
-    verdict: '🇪🇬 Egypt (price) / 🇦🇪 Dubai (frequency)',
-    note: 'Egypt offers the cheapest charter and budget flights from Europe. Dubai and Turkey win for global connectivity.',
+    egypt:     { score: 5, points: ['4–5h flight from EU', 'Charter return: €130–280', 'Budget airlines: Ryanair, EasyJet, Wizz Air', 'Weekly charters from 20+ European cities'] },
+    dubai:     { score: 3, points: ['6–7h from EU', '⚠️ REDUCED bookings due to Iran conflict', 'Return from €300–700', 'Emirates hub still operating'] },
+    turkey:    { score: 5, points: ['3–4h from EU', 'Turkish Airlines return: €90–230', 'Most EU cities connected', 'Budget options available'] },
+    vietnam:   { score: 1, points: ['10–13h from EU (1+ stop)', 'Return: €450–900', 'No budget options from Europe', 'Long flying = shorter actual holiday'] },
+    bali:      { score: 1, points: ['16–22h from EU (2 stops)', 'Return: €650–1,200', 'Exhausting travel days', 'Jet lag affects first 2–3 days'] },
+    singapore: { score: 2, points: ['12–14h from EU (1 stop)', 'Return: €600–1,100', 'Layover destination more than holiday', 'No beach — city only'] },
+    thailand:  { score: 2, points: ['10–12h from EU (1 stop)', 'Return: €450–850', 'Budget airlines from UK via DOH', 'Monsoon season risks Apr–Oct'] },
+    verdict: '🇪🇬 Egypt & 🇹🇷 Turkey win on proximity',
+    note: 'Egypt and Turkey are 4h from Europe. Vietnam, Bali, Thailand, and Singapore require 10–22h travel — meaning shorter holidays, jet lag, and 3x the flight cost.',
   },
   {
     category: 'Beach & Water Quality',
     icon: Sun,
-    egypt: { score: 5, points: ['Red Sea visibility: 20–40m', 'Water temp 22–28°C year-round', 'Coral reef ecosystems — world top-10', 'No jellyfish issues', 'Warm even in December'] },
-    dubai: { score: 3, points: ['Persian Gulf — murky water, limited reef', 'Artificial beach islands (Palm Jumeirah)', 'Jellyfish common in summer', 'Very hot June–September (40°C+)'] },
-    turkey: { score: 4, points: ['Mediterranean and Aegean coastlines', 'Clear blue water in southwest (Bodrum, Fethiye)', 'Good conditions May–October only', 'Can be crowded in peak season'] },
-    verdict: '🇪🇬 Egypt — no contest for diving/snorkeling',
-    note: 'For underwater quality and year-round warmth, Egypt\'s Red Sea is objectively in a different league from Dubai or Turkey.',
+    egypt:     { score: 5, points: ['Red Sea visibility: 20–40m', 'Water temp 22–28°C year-round', 'Coral reef: top 10 globally', 'No jellyfish, no monsoon', 'Warm even in December'] },
+    dubai:     { score: 2, points: ['Persian Gulf: murky, limited reef', 'Artificial islands (Palm Jumeirah)', 'Jellyfish common in summer', '40°C+ June–September'] },
+    turkey:    { score: 4, points: ['Mediterranean/Aegean: clear blue', 'Good May–October only', 'Can be crowded at peak', 'No coral reef diving'] },
+    vietnam:   { score: 3, points: ['Some good beaches (Da Nang, Phu Quoc)', 'Monsoon season makes many unusable', 'Visibility: 5–15m (much less than Red Sea)', 'Jellyfish season May–Oct'] },
+    bali:      { score: 3, points: ['Surf beaches (Kuta, Canggu)', 'Visibility 5–15m — lower than Red Sea', 'Rainy season Oct–Apr can disrupt', 'Coral bleaching issues in recent years'] },
+    singapore: { score: 1, points: ['Sentosa beach: artificial, murky', 'No snorkeling or diving', 'Sea is a shipping lane', 'City destination — not a beach trip'] },
+    thailand:  { score: 4, points: ['Phi Phi, Krabi, Phuket: beautiful', 'Monsoon Apr–Oct disrupts south islands', 'Visibility 5–20m in season', 'Mass tourism has degraded some reefs'] },
+    verdict: '🇪🇬 Egypt — objectively best year-round beach',
+    note: 'Egypt\'s Red Sea has 20–40m visibility year-round with no monsoon risk. Vietnam and Bali offer good beaches but only seasonally, and visibility is a fraction of the Red Sea.',
   },
   {
-    category: 'Safety for Tourists Right Now',
+    category: 'Safety Right Now — April 2026',
     icon: Shield,
-    egypt: { score: 4, points: ['Resort zones: heavily secured 24h', 'Tourist police at all major sites', 'Main risk: scams (not violence)', '15.7M visitors safely in 2024', 'No incidents in tourist areas'] },
-    dubai: { score: 5, points: ['Lowest crime rate in the world', 'Strict law enforcement', 'Ultra-safe, fully predictable', 'Well-regulated, transparent system'] },
-    turkey: { score: 4, points: ['Generally safe for tourists', 'Pickpocketing in Istanbul bazaars', 'Some political protests (avoid)', 'Earthquake risk in parts of the country'] },
-    verdict: '🇦🇪 Dubai (most predictable)',
-    note: 'Dubai is the most controlled environment. Egypt and Turkey are comparable — both safe for tourists who stay aware.',
+    egypt:     { score: 4, points: ['UK FCO: Normal precautions for tourist cities', 'Resort zones: 24h security', 'Tourist police at all major sites', '15.7M tourists safely in 2024', 'No conflict — not on any travel warning list'] },
+    dubai:     { score: 2, points: ['🚨 US State Dept: "RECONSIDER TRAVEL" (Mar 2, 2026)', 'Iran targeted UAE-linked businesses', 'US/Israel strikes on Iran — UAE proximity risk', 'Ceasefire fragile — instability may resume', 'UK FCDO: Heightened vigilance advised'] },
+    turkey:    { score: 4, points: ['Generally stable for tourists', 'NATO member', 'Away from Iran conflict zone', 'Some protest risks in Istanbul', 'EU travel advisory: normal precautions'] },
+    vietnam:   { score: 5, points: ['Very stable — no regional conflict', 'One-party government — very controlled', 'Low crime for tourists', 'Far from any Middle East conflict', 'US & EU: No travel advisory'] },
+    bali:      { score: 5, points: ['Stable — far from conflict', 'Low crime in tourist areas', 'Minor road safety issues', 'No major travel advisories', 'Natural disaster risk (volcanoes) only'] },
+    singapore: { score: 5, points: ['One of the safest cities globally', 'Zero conflict exposure', 'Strict law enforcement', 'No travel advisories', 'Extremely predictable environment'] },
+    thailand:  { score: 4, points: ['Generally safe for tourists', 'Away from Middle East conflict', 'Some political instability (coups historically)', 'Deep South: avoid', 'UK FCO: Normal precautions'] },
+    verdict: '⚠️ Dubai downgraded — Egypt & SE Asia comparable',
+    note: 'Dubai now carries a US "Reconsider Travel" advisory (March 2, 2026) due to Iran-US conflict proximity. Egypt\'s tourist areas are specifically listed as unaffected by regional tensions.',
   },
   {
     category: 'Historical & Cultural Depth',
     icon: Star,
-    egypt: { score: 5, points: ['7,000 years of documented civilization', 'Pyramids, Karnak, Abu Simbel, Valley of Kings', 'Living Nubian culture in Aswan', 'Authentic local food culture'] },
-    dubai: { score: 1, points: ['50-year-old city', 'Mostly luxury malls and modern architecture', 'Very limited local culture access', 'Highly international — little "local" remains'] },
-    turkey: { score: 5, points: ['Byzantine, Ottoman, Roman, Greek history', 'Istanbul, Cappadocia, Ephesus, Pamukkale', 'Rich, diverse food culture', 'Unique East-West cultural blend'] },
-    verdict: '🇪🇬 Egypt & 🇹🇷 Turkey',
-    note: 'Egypt and Turkey both offer extraordinary historical depth. Dubai is a modern lifestyle destination, not a cultural one.',
+    egypt:     { score: 5, points: ['7,000 years of documented civilization', 'Pyramids, Valley of Kings, Abu Simbel, Karnak', 'Authentic living Nubian culture', 'Most concentrated ancient history on earth'] },
+    dubai:     { score: 1, points: ['50-year-old city', 'Malls, skyscrapers, artificial islands', 'Very limited local culture for visitors', 'Highly international — little "local" remains'] },
+    turkey:    { score: 5, points: ['Byzantine, Ottoman, Roman, Greek layers', 'Istanbul, Cappadocia, Ephesus, Pamukkale', 'Rich and diverse food culture', 'Unique East-West cultural blend'] },
+    vietnam:   { score: 4, points: ['French colonial + Vietnamese history', 'Hue, Hoi An, Hanoi — beautiful old towns', 'War history (USA, France)', 'Unique cuisine and culture'] },
+    bali:      { score: 4, points: ['Unique Hindu culture in Muslim Indonesia', 'Temples, rice terraces, ceremonies', 'Art and craft traditions', 'Limited pre-colonial history'] },
+    singapore: { score: 2, points: ['Modern city-state, founded 1965', 'Multicultural (Chinese, Malay, Indian)', 'Good food culture', 'No ancient history — financial hub'] },
+    thailand:  { score: 4, points: ['Buddhist temples and culture', 'Royal history and tradition', 'Rich food culture — Thai cuisine global', 'Chiang Mai, Ayutthaya, Bangkok'] },
+    verdict: '🇪🇬 Egypt — unmatched ancient history',
+    note: 'Egypt has 7,000 years of traceable history. No destination competes with the sheer density and scale of Egypt\'s ancient sites.',
   },
   {
-    category: 'Current Stability (2026)',
-    icon: Thermometer,
-    egypt: { score: 4, points: ['Stable government since 2014', 'Tourist areas unaffected by regional tensions', 'Active tourism recovery — on track for record year', 'UK FCO: Normal precautions for tourist cities'] },
-    dubai: { score: 5, points: ['Fully stable — no travel advisories', 'Business and tourism as usual', 'Very predictable environment', 'Zero regional conflict proximity'] },
-    turkey: { score: 4, points: ['Generally stable', 'Inflation affecting pricing (good for visitors)', 'EU tourists welcome — visa-free for most', 'Lira weakness benefits foreign visitors'] },
-    verdict: '🇦🇪 Dubai (most stable)',
-    note: 'Dubai is the most politically stable. Egypt and Turkey are both safe for tourist areas right now in 2026.',
-  },
-  {
-    category: 'Internet & Connectivity',
-    icon: Wifi,
-    egypt: { score: 4, points: ['4G: Vodafone, Orange, Etisalat, WE', '15GB SIM from €2.50 (official store)', 'Good coverage in resort cities', 'VoIP and WhatsApp work fully'] },
-    dubai: { score: 5, points: ['World-class 5G coverage', 'VoIP calls partially restricted', 'Very expensive SIM (€12–20)', 'Fastest internet in the region'] },
-    turkey: { score: 4, points: ['Good 4G coverage', 'Some social media restrictions historically', '15GB SIM: €5–8', 'Good in major cities, weaker in rural areas'] },
-    verdict: '🇦🇪 Dubai (speed) / 🇪🇬 Egypt (value)',
-    note: 'Egypt offers the cheapest data package of the three — 15GB for €2.50. Dubai has the fastest speeds but restricts VoIP.',
-  },
-  {
-    category: 'Speed of Booking',
+    category: 'Visa & Entry Ease',
     icon: Clock,
-    egypt: { score: 5, points: ['Visa on arrival ($25 USD) — no pre-booking', 'Free Sinai-only visa for most nationalities', 'Hotels rarely sell out (except Nov–Jan)', 'Last-minute deals: hotels drop 40–60%'] },
-    dubai: { score: 4, points: ['Visa on arrival for most EU nationalities', 'Hotels often booked far in advance', 'Premium properties sell out fast', 'Tourist tax adds to last-minute cost'] },
-    turkey: { score: 5, points: ['Visa-free for EU citizens', 'Last-minute deals available', 'Wide range of accommodation options', 'Easy to book within 48 hours'] },
-    verdict: '🇪🇬 Egypt & 🇹🇷 Turkey',
-    note: 'Egypt and Turkey are the most last-minute-friendly. A full Egypt trip can be booked and departed within 48 hours.',
+    egypt:     { score: 5, points: ['Visa on arrival: $30 (March 2026)', 'Free Sinai-only for most EU', 'No pre-approval needed', 'Departure: book 24h ahead and fly'] },
+    dubai:     { score: 4, points: ['Visa on arrival for most EU', 'Straightforward entry', 'But: US advisory may affect insurers', 'Some nationalities need pre-approval'] },
+    turkey:    { score: 5, points: ['Visa-free for EU citizens', 'eVisa available for others', 'Quick online process', 'No issues at border'] },
+    vietnam:   { score: 3, points: ['eVisa required: $25, 3–5 days processing', 'eVisa-free for some EU countries (90 days)', 'Pre-booking required', 'Approval not guaranteed same day'] },
+    bali:      { score: 4, points: ['Visa on arrival: $35', 'Easy and quick at airport', 'Social media visa check risk (content restrictions)', '30-day limit standard'] },
+    singapore: { score: 5, points: ['Visa-free for most EU + US tourists', '30-90 days standard', 'Simple arrival card', 'Strict customs (drug rules)'] },
+    thailand:  { score: 5, points: ['Visa-free 30–60 days for most EU', 'Visa exemption extension available', 'Easy entry', 'Long-stay requires visa run'] },
+    verdict: '🇪🇬 Egypt & 🇹🇷 Turkey most last-minute-friendly',
+    note: 'Egypt can be booked and departed within 24 hours with no pre-approval. Vietnam requires eVisa processing of 3–5 days. Egypt\'s $30 visa on arrival is cheaper than Bali\'s ($35).',
+  },
+  {
+    category: 'Internet & Remote Work',
+    icon: Wifi,
+    egypt:     { score: 4, points: ['4G: Vodafone, Orange, Etisalat', '15GB SIM: €2.50 (official store)', 'Good coverage in resort cities', 'Full WhatsApp + VoIP'] },
+    dubai:     { score: 4, points: ['World-class 5G', '⚠️ VoIP calls restricted', 'SIM card: €14–22', 'Fastest in region'] },
+    turkey:    { score: 4, points: ['Good 4G coverage', 'Some social media throttling', 'SIM 15GB: €5–8', 'Good in major cities'] },
+    vietnam:   { score: 4, points: ['Fast 4G, affordable SIM', 'SIM 20GB: €3–5', 'Good coverage in cities', 'Some sites blocked (Facebook intermittent)'] },
+    bali:      { score: 3, points: ['Variable speeds', 'Good in Kuta/Seminyak/Canggu', 'Weaker outside tourist zones', 'SIM 10GB: €5–8'] },
+    singapore: { score: 5, points: ['World-class 5G everywhere', 'Full internet freedom', 'SIM: €10–15', 'Best in Asia for connectivity'] },
+    thailand:  { score: 4, points: ['Good 4G coverage', 'Some social media restrictions', 'SIM 15GB: €4–7', 'Reliable in tourist areas'] },
+    verdict: '🇪🇬 Egypt (value) / 🇸🇬 Singapore (speed)',
+    note: 'Egypt offers the cheapest data (€2.50 for 15GB) with full VoIP. Dubai has the best speeds but restricts VoIP calling.',
   },
 ];
 
@@ -85,95 +116,121 @@ const SCORE_DOTS = (score) => (
   </div>
 );
 
+// Full budget table: Egypt, Dubai, Vietnam, Bali, Singapore, Thailand, Turkey
 const BUDGET_TABLE = [
-  ['Return flights (EU)', '€130–280', '€350–650', '€90–230'],
-  ['Hotel 7 nights (3-star)', '€140–350', '€560–1,200', '€196–490'],
-  ['Food (7 days)', '€70–140', '€280–560', '€105–210'],
-  ['Activities (7 days)', '€80–180', '€280–560', '€120–280'],
-  ['Local transport', '€20–40', '€80–160', '€30–70'],
-  ['SIM card', '€2–4', '€12–20', '€5–10'],
-  ['TOTAL 7 days', '€440–990', '€1,560–3,150', '€550–1,290'],
+  ['Return flights (EU)', '€130–280', '€300–700', '€90–230', '€450–900', '€650–1,200', '€600–1,100', '€450–850'],
+  ['Hotel 7 nights (3★)', '€140–350', '€630–1,400', '€196–490', '€175–385', '€210–490', '€770–1,540', '€175–420'],
+  ['Food (7 days)', '€70–140', '€294–588', '€105–210', '€98–245', '€126–350', '€210–490', '€98–245'],
+  ['Activities', '€80–180', '€280–560', '€120–280', '€70–175', '€105–245', '€210–420', '€105–280'],
+  ['Local transport', '€20–40', '€80–160', '€30–70', '€35–70', '€35–70', '€70–140', '€35–70'],
+  ['SIM card', '€3–5', '€14–22', '€5–10', '€3–5', '€4–6', '€10–15', '€4–7'],
+  ['TOTAL 7 days/pp', '€440–995', '€1,600–3,430', '€550–1,290', '€830–1,820', '€1,130–2,355', '€1,870–3,705', '€870–1,872'],
+];
+
+const DUBAI_WARNING_SOURCES = [
+  { source: 'US State Department', date: 'March 2, 2026', level: 'Level 3: Reconsider Travel', url: 'https://travel.state.gov', note: 'Threat of armed conflict due to Iran-US tensions' },
+  { source: 'UK FCDO', date: 'March 2026', level: 'Heightened vigilance', url: 'https://gov.uk/foreign-travel-advice', note: 'Iranian regime stated intention to target US/Israel-linked businesses in UAE' },
+  { source: 'US Embassy UAE', date: 'March 3, 2026', level: 'Emergency Alert', url: 'https://ae.usembassy.gov', note: 'Reconsider travel due to threat of armed conflict and terrorism' },
 ];
 
 const FLIGHT_STATUS = [
-  { route: 'London → Hurghada / Sharm', status: 'Operating', airlines: 'EasyJet, Jet2, TUI, Thomas Cook' },
-  { route: 'Berlin / Frankfurt → Hurghada', status: 'Operating', airlines: 'Condor, TUI fly, Ryanair' },
-  { route: 'Warsaw / Krakow → Hurghada', status: 'Operating', airlines: 'Wizz Air, Enter Air, LOT' },
-  { route: 'Moscow / St Petersburg → Hurghada', status: 'Operating', airlines: 'Ural Airlines, S7, Azur Air' },
-  { route: 'Amsterdam → Sharm El Sheikh', status: 'Operating', airlines: 'TUI, Corendon, Transavia' },
-  { route: 'Paris → Cairo / Hurghada', status: 'Operating', airlines: 'Air France, Transavia, Air Cairo' },
-  { route: 'Rome → Hurghada', status: 'Operating', airlines: 'Neos, Blue Panorama, Alpitour' },
+  { route: 'London → Hurghada / Sharm', status: '✅ Operating', airlines: 'EasyJet, Jet2, TUI, Thomas Cook' },
+  { route: 'Berlin / Frankfurt → Hurghada', status: '✅ Operating', airlines: 'Condor, TUI fly, Ryanair' },
+  { route: 'Warsaw / Krakow → Hurghada', status: '✅ Operating', airlines: 'Wizz Air, Enter Air, LOT' },
+  { route: 'Moscow → Hurghada / Sharm', status: '✅ Operating', airlines: 'Ural Airlines, S7, Azur Air' },
+  { route: 'Amsterdam → Sharm El Sheikh', status: '✅ Operating', airlines: 'TUI, Corendon, Transavia' },
+  { route: 'Paris → Cairo / Hurghada', status: '✅ Operating', airlines: 'Air France, Transavia, Air Cairo' },
+  { route: 'Rome / Milan → Hurghada', status: '✅ Operating', airlines: 'Neos, Blue Panorama, Alpitour' },
 ];
+
+const FAQS = [
+  { q: 'Is Dubai safe to visit in 2026?', a: 'The US State Department issued a Level 3 "Reconsider Travel" advisory for the UAE on March 2, 2026, citing the threat of armed conflict and terrorism related to the US-Iran tensions. The Iranian government stated its intention to target US and Israel-linked businesses in the UAE. Check the latest FCDO and State Dept advisories before booking.' },
+  { q: 'How does Egypt compare to Vietnam for a beach holiday?', a: 'Egypt wins on: (1) flight time — 4–5h from Europe vs 10–13h for Vietnam, (2) Red Sea visibility 20–40m vs 5–15m in Vietnam, (3) no monsoon season disruption, (4) flights are 3x cheaper. Vietnam wins on: slightly lower daily costs and unique SE Asian culture. For a beach holiday from Europe, Egypt is objectively better value.' },
+  { q: 'Is Bali or Egypt better for European tourists in 2026?', a: 'Egypt is better for Europeans for these reasons: 4–5h flight vs 16–22h for Bali, 3x cheaper flights, comparable daily costs, superior underwater visibility (Red Sea 20–40m vs Bali 5–15m), no jet lag, and year-round warmth without monsoon risk. Bali excels for surfing and Hindu cultural immersion.' },
+  { q: 'Why choose Egypt over Singapore?', a: 'Singapore is a city-state stopover hub, not a beach destination. It has no snorkeling or diving, minimal beaches (artificial), costs 4–6x more than Egypt per day, and requires a 12–14h flight from Europe. Egypt offers actual beaches, world-class diving, ancient history, and a fraction of the cost.' },
+];
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
+const COL_HEADERS = ['🇪🇬 Egypt', '🇦🇪 Dubai', '🇹🇷 Turkey', '🇻🇳 Vietnam', '🇮🇩 Bali', '🇸🇬 Singapore', '🇹🇭 Thailand'];
 
 export default function EgyptVsDubai() {
   useSEO({
-    title: 'Egypt vs Dubai vs Turkey 2026 — Why Egypt Right Now | Honest Comparison',
-    description: 'Why Egypt is the best destination right now compared to Dubai and Turkey. Safety, costs, flights, beaches, culture. Egypt offers 3-5x more for your money. Updated March 2026.',
+    title: 'Egypt vs Dubai vs Vietnam vs Bali vs Singapore 2026 — Honest Comparison',
+    description: 'Is Dubai safe in 2026? US advisory says "Reconsider Travel". How does Egypt compare to Vietnam, Bali, Singapore, Thailand, and Turkey? Full honest comparison on cost, safety, beaches, and flights.',
+    jsonLd: buildFAQSchema(FAQS),
   });
 
   return (
     <div className="px-4 py-8 max-w-4xl mx-auto">
+
+      {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">Why Egypt Instead of Dubai Right Now — 2026</h1>
+        <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
+          Egypt vs Dubai vs SE Asia 2026 — The Real Comparison
+        </h1>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Honest comparison across every metric that matters. No sponsorship. No marketing. Egypt is genuinely one of the best-value travel destinations on earth right now — and most people don't know it.
+          Honest comparison across cost, safety, beaches, flights, and culture. No sponsorship. Data from UK FCDO, US State Dept, and real traveler reports.
         </p>
       </div>
 
-      {/* Hero verdict */}
-      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-5 mb-8">
-        <h2 className="font-extrabold text-lg mb-3">The Short Version</h2>
-        <div className="space-y-2">
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-0.5" />
-            <p className="text-sm"><strong>Egypt is 3–5x cheaper than Dubai</strong> for the same holiday quality — flight + hotel + food + activities.</p>
+      {/* 🚨 Dubai Warning Banner */}
+      <div className="bg-red-500/10 border-2 border-red-500/40 rounded-2xl p-5 mb-6">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+          <div>
+            <h2 className="font-extrabold text-base text-red-600 mb-2">🚨 Dubai / UAE — OFFICIAL TRAVEL WARNING — March 2026</h2>
+            <p className="text-sm text-muted-foreground mb-3">
+              The <strong>US State Department</strong> issued a <strong>Level 3 "Reconsider Travel"</strong> advisory for the UAE on <strong>March 2, 2026</strong>, citing the threat of armed conflict and terrorism following US-Israel military strikes on Iran (Operation starting Feb 28, 2026).
+            </p>
+            <div className="space-y-2 mb-3">
+              {DUBAI_WARNING_SOURCES.map((s, i) => (
+                <div key={i} className="bg-red-500/5 border border-red-500/20 rounded-xl px-3 py-2 flex items-start gap-2">
+                  <XCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs font-bold text-red-600">{s.source} — {s.date}: {s.level}</p>
+                    <p className="text-[11px] text-muted-foreground">{s.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              <strong>Bottom line:</strong> Travel insurance for UAE may be invalidated under current advisories. Many European tour operators have paused or restricted new UAE bookings. Egypt's tourist areas are <strong>completely unaffected</strong> by this conflict.
+            </p>
           </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-0.5" />
-            <p className="text-sm"><strong>Egypt's tourist areas are safe right now.</strong> Flights operating normally. 15.7M tourists in 2024.</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-0.5" />
-            <p className="text-sm"><strong>Egypt's Red Sea is objectively better than the Persian Gulf</strong> for diving, snorkeling, and beach quality.</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-0.5" />
-            <p className="text-sm"><strong>Egypt has 7,000 years of history.</strong> Dubai is 50 years old. Context matters.</p>
-          </div>
+        </div>
+      </div>
+
+      {/* Egypt is safe banner */}
+      <div className="bg-success/10 border border-success/30 rounded-2xl p-4 mb-8 flex items-start gap-3">
+        <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
+        <div>
+          <p className="font-bold text-sm text-success mb-1">Egypt Tourist Areas: No Travel Advisory — April 2026</p>
+          <p className="text-xs text-muted-foreground">UK FCDO rates Sharm El Sheikh, Hurghada, Luxor, and Aswan as "normal precautions only." Flights operating on all European routes. 15.7M tourists visited safely in 2024. Egypt is not involved in any regional conflict.</p>
         </div>
       </div>
 
       {/* Destination overview cards */}
-      <div className="grid grid-cols-3 gap-3 mb-10">
-        <div className="bg-accent/10 border-2 border-accent rounded-2xl p-4 text-center">
-          <p className="text-3xl mb-2">🇪🇬</p>
-          <h2 className="font-extrabold text-sm mb-1">Egypt</h2>
-          <p className="text-[10px] text-muted-foreground">Best value. Best Red Sea. Ancient history. Safe.</p>
-          <div className="mt-2 text-[10px] font-bold text-accent bg-accent/10 rounded-full px-2 py-0.5">⭐ BEST VALUE 2026</div>
-        </div>
-        <div className="bg-secondary border border-border rounded-2xl p-4 text-center">
-          <p className="text-3xl mb-2">🇦🇪</p>
-          <h2 className="font-extrabold text-sm mb-1">Dubai</h2>
-          <p className="text-[10px] text-muted-foreground">Safest. Most predictable. 3–5x more expensive.</p>
-          <div className="mt-2 text-[10px] font-bold text-muted-foreground bg-secondary rounded-full px-2 py-0.5">Luxury / Stopover</div>
-        </div>
-        <div className="bg-secondary border border-border rounded-2xl p-4 text-center">
-          <p className="text-3xl mb-2">🇹🇷</p>
-          <h2 className="font-extrabold text-sm mb-1">Turkey</h2>
-          <p className="text-[10px] text-muted-foreground">Good culture. Good value. Strong flights.</p>
-          <div className="mt-2 text-[10px] font-bold text-muted-foreground bg-secondary rounded-full px-2 py-0.5">Good Alternative</div>
-        </div>
+      <h2 className="text-xl font-extrabold mb-4">All Destinations — Quick Overview</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-10">
+        {DESTINATIONS.map((d) => (
+          <div key={d.id} className={`border rounded-2xl p-3 text-center ${d.id === 'egypt' ? 'border-accent bg-accent/5' : d.id === 'dubai' ? 'border-red-500/40 bg-red-500/5' : 'border-border bg-card'}`}>
+            <p className="text-3xl mb-1">{d.flag}</p>
+            <p className="font-extrabold text-sm">{d.name}</p>
+            <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{d.tagline}</p>
+            <div className={`mt-2 text-[9px] font-bold rounded-full px-2 py-0.5 ${d.badgeColor}`}>{d.badge}</div>
+          </div>
+        ))}
       </div>
 
-      {/* Flight status */}
+      {/* Flight Status */}
       <h2 className="text-xl font-extrabold mb-4 flex items-center gap-2">
-        <Plane className="w-5 h-5 text-accent" />
-        Current Flight Status — Egypt Routes (March 2026)
+        <Plane className="w-5 h-5 text-accent" /> Egypt Flight Status — April 2026
       </h2>
       <div className="bg-card border border-border/50 rounded-2xl overflow-hidden mb-10">
         <div className="px-4 py-3 bg-success/10 border-b border-success/20 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-          <span className="text-xs font-bold text-success">ALL MAJOR ROUTES OPERATING NORMALLY</span>
+          <span className="text-xs font-bold text-success">ALL MAJOR EGYPT ROUTES OPERATING NORMALLY</span>
         </div>
         <div className="divide-y divide-border/20">
           {FLIGHT_STATUS.map((f, i) => (
@@ -182,48 +239,55 @@ export default function EgyptVsDubai() {
                 <p className="text-sm font-semibold">{f.route}</p>
                 <p className="text-xs text-muted-foreground">{f.airlines}</p>
               </div>
-              <span className="text-[10px] font-bold bg-success text-success-foreground px-2 py-0.5 rounded-full shrink-0">{f.status}</span>
+              <span className="text-[10px] font-bold bg-success/10 text-success border border-success/20 px-2 py-0.5 rounded-full shrink-0">{f.status}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Category comparisons */}
-      <h2 className="text-xl font-extrabold mb-4">Category-by-Category Comparison</h2>
+      <h2 className="text-xl font-extrabold mb-4">Category-by-Category — All 7 Destinations</h2>
       <div className="space-y-4 mb-10">
         {COMPARISON.map((cat, i) => {
           const Icon = cat.icon;
+          const cols = [
+            { label: '🇪🇬 Egypt', data: cat.egypt },
+            { label: '🇦🇪 Dubai', data: cat.dubai },
+            { label: '🇹🇷 Turkey', data: cat.turkey },
+            { label: '🇻🇳 Vietnam', data: cat.vietnam },
+            { label: '🇮🇩 Bali', data: cat.bali },
+            { label: '🇸🇬 Singapore', data: cat.singapore },
+            { label: '🇹🇭 Thailand', data: cat.thailand },
+          ];
           return (
             <div key={i} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
-              <div className="px-5 py-3 border-b border-border/30 flex items-center justify-between">
+              <div className="px-5 py-3 border-b border-border/30 flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <Icon className="w-4 h-4 text-accent" />
                   <h3 className="font-extrabold text-sm">{cat.category}</h3>
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent text-accent-foreground">
-                  {cat.verdict}
-                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-accent text-accent-foreground">{cat.verdict}</span>
               </div>
-              <div className="grid grid-cols-3 divide-x divide-border/30">
-                {[
-                  { label: '🇪🇬 Egypt', data: cat.egypt },
-                  { label: '🇦🇪 Dubai', data: cat.dubai },
-                  { label: '🇹🇷 Turkey', data: cat.turkey },
-                ].map(({ label, data }) => (
-                  <div key={label} className="p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-bold">{label}</span>
-                      {SCORE_DOTS(data.score)}
+              {/* Scrollable columns */}
+              <div className="overflow-x-auto">
+                <div className="flex divide-x divide-border/30 min-w-[700px]">
+                  {cols.map(({ label, data }) => (
+                    <div key={label} className={`p-3 flex-1 min-w-[100px] ${label.includes('Dubai') ? 'bg-red-500/5' : ''}`}>
+                      <div className="flex items-center justify-between mb-2 gap-1">
+                        <span className="text-[10px] font-bold">{label}</span>
+                        {SCORE_DOTS(data.score)}
+                      </div>
+                      <ul className="space-y-0.5">
+                        {data.points.map((p, j) => (
+                          <li key={j} className={`text-[10px] flex gap-1 ${p.startsWith('⚠️') || p.startsWith('🚨') ? 'text-red-500 font-semibold' : 'text-muted-foreground'}`}>
+                            {p.startsWith('⚠️') || p.startsWith('🚨') ? null : <CheckCircle2 className="w-2.5 h-2.5 text-success shrink-0 mt-0.5" />}
+                            {p}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-1">
-                      {data.points.map((p, j) => (
-                        <li key={j} className="text-[10px] text-muted-foreground flex gap-1">
-                          <CheckCircle2 className="w-2.5 h-2.5 text-success shrink-0 mt-0.5" />{p}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
               <div className="px-5 py-2.5 bg-secondary/40 border-t border-border/30">
                 <p className="text-xs text-muted-foreground italic">💡 {cat.note}</p>
@@ -233,34 +297,38 @@ export default function EgyptVsDubai() {
         })}
       </div>
 
-      {/* Budget comparison table */}
-      <h2 className="text-xl font-extrabold mb-4">7-Day All-In Budget (per person, economy)</h2>
-      <div className="bg-card rounded-2xl border border-border/50 overflow-hidden mb-10">
-        <div className="grid grid-cols-4 border-b border-border/30 bg-secondary/50">
-          <div className="p-3 text-xs font-bold text-muted-foreground">Expense</div>
-          <div className="p-3 text-xs font-bold text-accent border-l border-border/30 text-center">🇪🇬 Egypt</div>
-          <div className="p-3 text-xs font-bold border-l border-border/30 text-center">🇦🇪 Dubai</div>
-          <div className="p-3 text-xs font-bold border-l border-border/30 text-center">🇹🇷 Turkey</div>
-        </div>
-        {BUDGET_TABLE.map(([exp, eg, dxb, tr], i) => (
-          <div key={i} className={`grid grid-cols-4 border-b border-border/20 last:border-0 ${i === BUDGET_TABLE.length - 1 ? 'bg-secondary/30 font-bold' : ''}`}>
-            <div className="p-3 text-xs text-muted-foreground">{exp}</div>
-            <div className="p-3 text-xs font-bold text-accent border-l border-border/30 text-center">{eg}</div>
-            <div className="p-3 text-xs border-l border-border/30 text-center">{dxb}</div>
-            <div className="p-3 text-xs border-l border-border/30 text-center">{tr}</div>
+      {/* Budget table — all 7 */}
+      <h2 className="text-xl font-extrabold mb-4">7-Day All-In Budget — Per Person from Europe</h2>
+      <div className="overflow-x-auto mb-10">
+        <div className="bg-card rounded-2xl border border-border/50 overflow-hidden min-w-[600px]">
+          <div className="grid border-b border-border/30 bg-secondary/50" style={{gridTemplateColumns: '1.6fr repeat(7, 1fr)'}}>
+            <div className="p-3 text-xs font-bold text-muted-foreground">Expense</div>
+            {COL_HEADERS.map((h, i) => (
+              <div key={i} className={`p-3 text-[10px] font-bold border-l border-border/30 text-center ${i === 0 ? 'text-accent bg-accent/5' : i === 1 ? 'text-red-500' : ''}`}>{h}</div>
+            ))}
           </div>
-        ))}
+          {BUDGET_TABLE.map((row, i) => (
+            <div key={i} className={`grid border-b border-border/20 last:border-0 ${i === BUDGET_TABLE.length - 1 ? 'bg-secondary/30 font-bold' : ''}`} style={{gridTemplateColumns: '1.6fr repeat(7, 1fr)'}}>
+              <div className="p-3 text-xs text-muted-foreground">{row[0]}</div>
+              {row.slice(1).map((val, j) => (
+                <div key={j} className={`p-3 text-[10px] border-l border-border/30 text-center ${j === 0 ? 'font-bold text-accent bg-accent/5' : j === 1 ? 'text-red-500/80' : ''}`}>{val}</div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Egypt-specific reasons to choose it now */}
-      <h2 className="text-xl font-extrabold mb-4">Why Specifically Right Now for Egypt?</h2>
+      {/* Why Egypt wins RIGHT NOW */}
+      <h2 className="text-xl font-extrabold mb-4">Why Egypt — Specifically Right Now (April 2026)</h2>
       <div className="space-y-2 mb-10">
         {[
-          { emoji: '💰', title: 'EGP devaluation = more value for you', desc: 'The Egyptian pound has devalued significantly since 2022. Your euros, dollars, and pounds buy dramatically more than 3 years ago — one of the best value moments in Egypt\'s modern tourist history.' },
-          { emoji: '✈️', title: 'Capacity restored — availability high', desc: 'After 2023 dips, charter capacity to Hurghada and Sharm has fully restored. Seat availability is higher than peak 2019 levels, meaning last-minute deals are everywhere.' },
-          { emoji: '🏖️', title: 'Resorts investing in quality', desc: 'Post-recovery investment has upgraded resort quality. 4-star properties at 3-star prices are common — the current moment rewards travelers who do their research.' },
-          { emoji: '🤿', title: 'Uncrowded dive sites', desc: 'The Red Sea dive sites are less crowded than peak 2019. Some of the world\'s best reefs with better-than-average visibility and fewer boats competing for the same spots.' },
-          { emoji: '🔒', title: 'Security investment ongoing', desc: 'Egyptian authorities have significantly invested in tourist area security infrastructure since 2015. The result is measurably better tourist protection than a decade ago.' },
+          { emoji: '🚨', title: 'Dubai has a US "Reconsider Travel" advisory — Egypt doesn\'t', desc: 'The US State Dept issued a Level 3 warning for UAE on March 2, 2026. Egypt\'s tourist areas carry no such warning. UK FCDO, German AA, and French MAE all rate Egypt\'s resort cities as "normal precautions."' },
+          { emoji: '💰', title: 'EGP devaluation = best value moment in 20 years', desc: 'The Egyptian pound devalued significantly since 2022. Your euros, dollars, and pounds buy 2–3x more than in 2019 — one of the most remarkable value moments in Egypt\'s modern tourist history.' },
+          { emoji: '✈️', title: '4–5h flight — no jet lag, no 20-hour marathon', desc: 'Vietnam is 10–13h from Europe. Bali is 16–22h. Thailand is 10–12h. Egypt is 4–5h. That difference means 2–3 full extra holiday days without exhausted travel days.' },
+          { emoji: '🤿', title: 'Red Sea visibility: 20–40m — SE Asia: 5–15m', desc: 'The Red Sea has objectively better underwater visibility than Vietnam, Bali, or Thailand. Year-round warm water (22–28°C) with no monsoon closures. World top-10 dive sites, accessible from €8–20/day.' },
+          { emoji: '🏛️', title: 'No other destination has 7,000 years of history', desc: 'Dubai is 50 years old. Singapore is 60 years old. Vietnam, Bali, and Thailand have fascinating cultures, but none rival the density and scale of Egyptian civilization: Pyramids, Luxor, Abu Simbel, Valley of Kings.' },
+          { emoji: '🗓️', title: 'Book and fly in 24 hours — no visa processing wait', desc: 'Vietnam requires an eVisa (3–5 days processing). Bali requires visa on arrival form. Egypt: $30 on arrival, no pre-booking. The fastest last-minute destination in the region.' },
+          { emoji: '🌡️', title: 'No monsoon. Warm in December. No typhoon risk.', desc: 'Thailand, Vietnam, and Bali all have monsoon seasons that close beaches and reduce visibility. Egypt\'s Red Sea coast has near-zero rainfall and operates at full capacity 12 months a year.' },
         ].map((item, i) => (
           <div key={i} className="bg-card rounded-2xl border border-border/50 p-4 flex gap-3">
             <span className="text-2xl shrink-0">{item.emoji}</span>
@@ -272,25 +340,38 @@ export default function EgyptVsDubai() {
         ))}
       </div>
 
+      {/* FAQ section */}
+      <h2 className="text-xl font-extrabold mb-4">Common Questions — Answered</h2>
+      <div className="space-y-3 mb-10">
+        {FAQS.map((faq, i) => (
+          <div key={i} className="bg-card border border-border/50 rounded-2xl p-4">
+            <p className="font-bold text-sm mb-1.5">Q: {faq.q}</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">A: {faq.a}</p>
+          </div>
+        ))}
+      </div>
+
       {/* Final verdict */}
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-5 mb-8">
-        <h2 className="font-extrabold text-lg mb-3">Honest Verdict — March 2026</h2>
-        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          <strong>Choose Egypt if:</strong> you want world-class diving, ancient history, authentic food, warm weather, and 3–5x more experience per euro. Egypt right now is arguably the best combination of safety, value, and experience in the Mediterranean/Middle East region.
-        </p>
-        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-          <strong>Choose Turkey if:</strong> you want a strong balance of culture, affordability, and beach — with excellent European flight connections and no language barrier in tourist areas.
-        </p>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          <strong>Choose Dubai if:</strong> you need ultra-safe, predictable luxury, world-class shopping, or a long-haul transit hub — and budget is not a concern.
-        </p>
+        <h2 className="font-extrabold text-lg mb-3">Honest Verdict — April 2026</h2>
+        <div className="space-y-3 text-sm text-muted-foreground">
+          <p><strong className="text-foreground">🇪🇬 Choose Egypt if:</strong> you want world-class diving, ancient history, warm Red Sea beaches, and 3–5x more experience per euro — from a 4–5h flight with no travel advisory. Best value in the Mediterranean/Middle East region right now.</p>
+          <p><strong className="text-foreground">🇦🇪 Avoid Dubai if:</strong> you are concerned about safety advisories or travel insurance validity. The current US Level 3 advisory and FCDO heightened vigilance make UAE a risk destination for the first time in modern history.</p>
+          <p><strong className="text-foreground">🇹🇷 Choose Turkey if:</strong> you want a strong blend of culture, affordability, and beach from Europe's best-connected airline hub.</p>
+          <p><strong className="text-foreground">🇻🇳🇮🇩🇹🇭 SE Asia if:</strong> you specifically want that cultural experience and can invest 10–22h of travel. Egypt wins on value-per-hour-of-travel-time for Europeans.</p>
+          <p><strong className="text-foreground">🇸🇬 Singapore:</strong> a world-class city stopover and transit hub — not a beach destination. Not a competitor for leisure holidays.</p>
+        </div>
+      </div>
+
+      <div className="bg-secondary/50 rounded-xl p-3 text-[10px] text-muted-foreground mb-8">
+        <strong>Sources:</strong> US State Department Travel Advisory (March 2, 2026) · UK FCDO Egypt Travel Advice (April 2026) · Booking.com / Skyscanner price ranges (April 2026) · GetYourGuide activity prices · Egyptian Ministry of Tourism statistics · Locali Egypt community reports.
       </div>
 
       <div className="space-y-3">
         <SafeNextStep title="Is Egypt Safe Right Now?" description="Full current safety assessment for 2026" to="/egypt-safe-now" />
-        <SafeNextStep title="Middle East Safety Map" description="See Egypt's stability vs surrounding region" to="/middle-east-safety-map" />
+        <SafeNextStep title="Middle East Safety Map" description="Egypt's stability vs surrounding region" to="/middle-east-safety-map" />
         <SafeNextStep title="Last Minute Egypt — Book Fast" description="Best deals, booking guide, packing list" to="/last-minute-egypt" />
-        <SafeNextStep title="Check Real Prices in Egypt" description="What everything actually costs" to="/price-checker" />
+        <SafeNextStep title="Check Real Prices in Egypt" description="What everything actually costs in EGP" to="/price-checker" />
       </div>
     </div>
   );
