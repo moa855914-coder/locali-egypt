@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { CITIES, t, getCityName } from '../lib/constants';
-import { Sparkles, Clock, Percent } from 'lucide-react';
+import { Sparkles, Clock, Percent, Phone } from 'lucide-react';
 
 export default function Deals() {
   const { lang } = useOutletContext();
@@ -77,20 +77,33 @@ export default function Deals() {
                   )}
                 </div>
                 <p className="text-sm text-muted-foreground mb-3">{deal.description}</p>
-                <div className="flex items-center gap-4">
-                  {deal.deal_price && (
-                    <div>
-                      <span className="text-xl font-extrabold text-accent">{deal.deal_price} EGP</span>
-                      {deal.original_price && (
-                        <span className="text-sm text-muted-foreground line-through ml-2">{deal.original_price} EGP</span>
-                      )}
-                    </div>
-                  )}
-                  {deal.valid_until && (
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Clock className="w-3 h-3" />
-                      Until {new Date(deal.valid_until).toLocaleDateString()}
-                    </div>
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div className="flex items-center gap-4">
+                    {deal.deal_price && (
+                      <div>
+                        <span className="text-xl font-extrabold text-accent">{deal.deal_price} EGP</span>
+                        {deal.original_price && (
+                          <span className="text-sm text-muted-foreground line-through ml-2">{deal.original_price} EGP</span>
+                        )}
+                      </div>
+                    )}
+                    {deal.valid_until && (
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Clock className="w-3 h-3" />
+                        Until {new Date(deal.valid_until).toLocaleDateString()}
+                      </div>
+                    )}
+                  </div>
+                  {deal.whatsapp && (
+                    <a
+                      href={`https://wa.me/${deal.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi! I saw your deal "${deal.title}" on Locali Egypt and I'm interested.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                    >
+                      <Phone className="w-3.5 h-3.5" />
+                      WhatsApp
+                    </a>
                   )}
                 </div>
               </div>
