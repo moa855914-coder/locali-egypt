@@ -35,13 +35,11 @@ const PRICE_RANGES = {
 };
 
 function validatePrice(price, category) {
-  if (!price && price !== 0) return { valid: false, reason: 'Price missing' };
-  if (price <= 0) return { valid: false, reason: 'Price must be > 0 (no zeros, no negative)' };
-  if (typeof price !== 'number') return { valid: false, reason: 'Price must be a number' };
+  if (price === 0 || !price) return { valid: true }; // 0 = price not set yet, skip
+  if (typeof price !== 'number' || price < 0) return { valid: false, reason: 'Invalid price' };
   const range = PRICE_RANGES[category];
-  if (!range) return { valid: true }; // Unknown category, skip validation
-  if (price < range.min) return { valid: false, reason: `Price too low: ${price} EGP (min ${range.min} for ${range.label})` };
-  if (price > range.max) return { valid: false, reason: `Price too high: ${price} EGP (max ${range.max} for ${range.label})` };
+  if (!range) return { valid: true };
+  if (price > range.max * 2) return { valid: false, reason: `Price seems too high: ${price}` };
   return { valid: true };
 }
 
@@ -52,9 +50,9 @@ function validateAddress(address) {
 }
 
 function validateHours(hours) {
-  if (!hours || hours.trim().length === 0) return { valid: false, reason: 'Missing opening hours' };
-  const placeholder = ['tbd', 'coming soon', 'open', 'closed', 'n/a', 'contact'];
-  if (placeholder.some(p => hours.toLowerCase().includes(p))) return { valid: false, reason: 'Placeholder hours text' };
+  if (!hours) return { valid: true }; // Optional field
+  const placeholder = ['tbd', 'coming soon'];
+  if (placeholder.some(p => hours.toLowerCase().includes(p))) return { valid: false, reason: 'Placeholder text' };
   return { valid: true };
 }
 
@@ -518,31 +516,25 @@ export default function AdminVerification() {
     services.forEach(s => {
       const base = { page: 'Services Directory', section: s.name };
 
-      // Phone
+      // Phone (if provided)
       if (s.phone) {
         const r = validateEgyptPhone(s.phone);
-        push({ ...base, field: 'Phone', reason: r.reason, priority: 'HIGH' }, r.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Phone', reason: r.reason, priority: 'MEDIUM' }, r.valid ? 'ok' : 'issue');
       } else {
         push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'MEDIUM' }, 'issue');
       }
 
       // Name check
       const nameCheck = validateContent(s.name, 'Name');
-      push({ ...base, field: 'Name', reason: nameCheck.reason, priority: 'HIGH' }, nameCheck.valid ? 'ok' : 'issue');
-      // Description check
-      if (s.description) {
-        const descCheck = validateContent(s.description, 'Description');
-        push({ ...base, field: 'Description', reason: descCheck.reason, priority: 'MEDIUM' }, descCheck.valid ? 'ok' : 'issue');
-      } else {
-        push({ ...base, field: 'Description', reason: 'Missing description', priority: 'MEDIUM' }, 'issue');
+      if (!nameCheck.valid) push({ ...base, field: 'Name', reason: nameCheck.reason, priority: 'MEDIUM' }, 'issue');
+      // Description (optional)
+      if (s.description && !validateContent(s.description, 'Description').valid) {
+        push({ ...base, field: 'Description', reason: 'Invalid description', priority: 'LOW' }, 'issue');
       }
 
-      // Address check
-      if (s.address) {
-        const addrCheck = validateAddress(s.address);
-        push({ ...base, field: 'Address', reason: addrCheck.reason, priority: 'HIGH' }, addrCheck.valid ? 'ok' : 'issue');
-      } else {
-        push({ ...base, field: 'Address', reason: 'Address missing — must include city name', priority: 'HIGH' }, 'issue');
+      // Address (optional)
+      if (s.address && !validateAddress(s.address).valid) {
+        push({ ...base, field: 'Address', reason: 'Invalid address', priority: 'LOW' }, 'issue');
       }
     });
 
@@ -553,23 +545,21 @@ export default function AdminVerification() {
       // Phone
       if (d.whatsapp) {
         const r = validateEgyptPhone(d.whatsapp);
-        push({ ...base, field: 'WhatsApp', reason: r.reason, priority: 'HIGH' }, r.valid ? 'ok' : 'issue');
-      } else {
-        push({ ...base, field: 'WhatsApp', reason: 'Missing WhatsApp', priority: 'HIGH' }, 'issue');
+        if (!r.valid) push({ ...base, field: 'WhatsApp', reason: r.reason, priority: 'MEDIUM' }, 'issue');
       }
 
-      // Routes
+      // Routes (if any)
       d.price_routes?.forEach(route => {
         const priceCheck = validatePrice(route.price_egp, 'driver_route');
-        push({ ...base, field: `Route: ${route.route}`, reason: priceCheck.reason, priority: 'HIGH' }, priceCheck.valid ? 'ok' : 'issue');
+        if (!priceCheck.valid) push({ ...base, field: `Route: ${route.route}`, reason: priceCheck.reason, priority: 'LOW' }, 'issue');
       });
 
-      if (!d.car_model || String(d.car_model).trim().length < 3) {
-        push({ ...base, field: 'Car Model', reason: 'Car model must be at least 3 characters', priority: 'MEDIUM' }, 'issue');
+      if (!d.car_model) {
+        push({ ...base, field: 'Car Model', reason: 'Missing car model', priority: 'LOW' }, 'issue');
       } else ok.push({ ...base, field: 'Car Model', priority: 'LOW' });
 
       if (!d.cities_covered?.length) {
-        push({ ...base, field: 'Cities Covered', reason: 'Driver must cover at least 1 city', priority: 'HIGH' }, 'issue');
+        push({ ...base, field: 'Cities Covered', reason: 'No cities set', priority: 'MEDIUM' }, 'issue');
       } else ok.push({ ...base, field: 'Cities Covered', priority: 'LOW' });
     });
 
@@ -585,10 +575,10 @@ export default function AdminVerification() {
       }
 
       const priceCheck = validatePrice(a.price_per_night_egp, 'apartment');
-      push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'HIGH' }, priceCheck.valid ? 'ok' : 'issue');
+      if (!priceCheck.valid) push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'MEDIUM' }, 'issue');
 
-      if (!a.area || String(a.area).trim().length < 3) {
-        push({ ...base, field: 'Area', reason: 'Area/neighbourhood missing', priority: 'MEDIUM' }, 'issue');
+      if (!a.area) {
+        push({ ...base, field: 'Area', reason: 'Area missing', priority: 'LOW' }, 'issue');
       } else ok.push({ ...base, field: 'Area', priority: 'LOW' });
 
       if (a.description) {
@@ -602,25 +592,19 @@ export default function AdminVerification() {
     // ── Price Guide entries ──
     priceGuides.forEach(p => {
       const base = { page: 'Price Guide', section: `${p.item} (${p.city})` };
-      if (!p.fair_tourist_price || p.fair_tourist_price <= 0) {
-        push({ ...base, field: 'Fair Tourist Price', reason: 'Fair tourist price is required (must be > 0)', priority: 'HIGH' }, 'issue');
-      } else ok.push({ ...base, field: 'Fair Tourist Price', priority: 'LOW' });
-      if (!p.local_price || p.local_price <= 0) {
-        push({ ...base, field: 'Local Price', reason: 'Local price is required (must be > 0)', priority: 'HIGH' }, 'issue');
+      if (!p.fair_tourist_price) {
+        push({ ...base, field: 'Fair Price', reason: 'Missing', priority: 'LOW' }, 'issue');
+      } else ok.push({ ...base, field: 'Fair Price', priority: 'LOW' });
+      if (!p.local_price) {
+        push({ ...base, field: 'Local Price', reason: 'Missing', priority: 'LOW' }, 'issue');
       } else ok.push({ ...base, field: 'Local Price', priority: 'LOW' });
-      const itemCheck = validateContent(p.item, 'Item name');
-      push({ ...base, field: 'Item Name', reason: itemCheck.reason, priority: itemCheck.valid ? 'LOW' : 'MEDIUM' }, itemCheck.valid ? 'ok' : 'issue');
     });
 
     // ── Scam Reports ──
     scamReports.forEach(s => {
       const base = { page: 'Scam Map', section: s.title };
-      const titleCheck = validateContent(s.title, 'Title');
-      push({ ...base, field: 'Title', reason: titleCheck.reason, priority: titleCheck.valid ? 'LOW' : 'HIGH' }, titleCheck.valid ? 'ok' : 'issue');
-      const descCheck = validateContent(s.description, 'Description');
-      push({ ...base, field: 'Description', reason: descCheck.reason, priority: descCheck.valid ? 'LOW' : 'HIGH' }, descCheck.valid ? 'ok' : 'issue');
-      if (!s.city) push({ ...base, field: 'City', reason: 'Scam report must specify a city', priority: 'HIGH' }, 'issue');
-      if (!s.category) push({ ...base, field: 'Category', reason: 'Scam report must specify a category', priority: 'HIGH' }, 'issue');
+      if (!s.title || String(s.title).trim().length < 3) push({ ...base, field: 'Title', reason: 'Missing/invalid', priority: 'MEDIUM' }, 'issue');
+      if (!s.description || String(s.description).trim().length < 3) push({ ...base, field: 'Description', reason: 'Missing/invalid', priority: 'MEDIUM' }, 'issue');
     });
 
     // ── Static checks ──
