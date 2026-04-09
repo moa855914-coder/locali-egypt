@@ -19,7 +19,7 @@ export default function LiveSituationBanner() {
   const summary = records.find(r => r.city === 'hurghada')?.recommendation || FALLBACK_SUMMARY;
   const updateDate = globalRec?.update_date || 'April 2, 2026';
   const { rates } = useLiveRates();
-  const usdRate = globalRec?.usd_to_egp || rates.usd;
+  const usdRate = rates.usd || globalRec?.usd_to_egp;
 
   const headerClass = overallStatus === 'green'
     ? 'bg-success/10 border-success/20'
