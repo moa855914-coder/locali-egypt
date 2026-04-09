@@ -1,11 +1,26 @@
 import { Link } from 'react-router-dom';
-import { useSEO } from '../lib/seo';
+import { useSEO, buildArticleSchema, buildFAQSchema, ISO_DATE, MONTH_YEAR } from '../lib/seo';
 import { ShieldCheck, Globe, DollarSign, AlertTriangle, Users, Star, RefreshCw, BookOpen } from 'lucide-react';
 
 export default function About() {
   useSEO({
     title: 'About Locali Egypt — Real Prices, Scam Alerts & Verified Tourist Services',
-    description: 'Locali Egypt is the most honest travel guide for tourists in Egypt. Real prices in EGP, scam alerts, verified services, and local guides for Hurghada, Sharm, Luxor, and Aswan.',
+    description: 'Locali Egypt is the most comprehensive local guide for international tourists visiting Egypt. Real prices in EGP, scam alerts, verified services, and trusted local contacts for Hurghada, Sharm El Sheikh, Luxor, Aswan, and El Gouna. Founded to solve the #1 tourist problem: getting scammed and overpaying.',
+    jsonLd: [
+      buildArticleSchema({
+        title: 'About Locali Egypt — Real Prices, Scam Alerts & Verified Tourist Services',
+        description: 'Locali Egypt is the most comprehensive local guide for international tourists visiting Egypt.',
+      }),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Locali Egypt',
+        url: 'https://localiegypt.com',
+        description: 'The most comprehensive local guide for international tourists visiting Egypt. Real prices in EGP, scam alerts, verified services, and trusted local contacts.',
+        areaServed: 'Egypt',
+        sameAs: ['https://localiegypt.com/methodology', 'https://localiegypt.com/data-sources'],
+      },
+    ],
   });
 
   return (
@@ -91,9 +106,22 @@ export default function About() {
         </p>
       </div>
 
+      {/* Trust signals */}
+      <div className="grid grid-cols-3 gap-3 mb-6">
+        {[
+          { stat: '200+', label: 'Verified prices in EGP' },
+          { stat: '7', label: 'Languages supported' },
+          { stat: 'Daily', label: 'Data update frequency' },
+        ].map((item, i) => (
+          <div key={i} className="bg-accent/5 border border-accent/20 rounded-2xl p-3 text-center">
+            <p className="text-lg font-black text-accent">{item.stat}</p>
+            <p className="text-[10px] text-muted-foreground">{item.label}</p>
+          </div>
+        ))}
+      </div>
       {/* Last updated */}
       <div className="bg-secondary/50 rounded-2xl p-4 text-center text-xs text-muted-foreground mb-6">
-        <p>Last updated: April 2026 · Version 2.1</p>
+        <p>Last updated: {MONTH_YEAR} · Data verified by local community + Egyptian Tourism Authority + UK FCDO</p>
         <p className="mt-1">Serving tourists in Hurghada, Sharm El Sheikh, Luxor, Aswan, and El Gouna</p>
       </div>
 

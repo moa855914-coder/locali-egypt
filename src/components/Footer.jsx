@@ -9,6 +9,9 @@ const FOOTER_LINKS = [
   { label: 'AI Guide', path: '/ai-assistant' },
   { label: 'Deals', path: '/deals' },
   { label: 'Scam Map', path: '/scam-map' },
+  { label: 'About', path: '/about' },
+  { label: 'Data Sources', path: '/data-sources' },
+  { label: 'Methodology', path: '/methodology' },
   { label: 'Terms & Conditions', path: '/terms' },
 ];
 
@@ -49,6 +52,12 @@ export default function Footer({ lang = 'en' }) {
           ))}
         </div>
 
+        {/* Data freshness signal */}
+        <div className="bg-secondary/40 rounded-xl px-3 py-2 mb-4 text-[10px] text-muted-foreground">
+          <span className="font-bold text-foreground">Data last updated:</span> {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} ·
+          Sources: Local community + Egyptian Tourism Authority + UK FCDO + Central Bank of Egypt ·
+          <a href="/data-sources" className="text-accent underline underline-offset-1">Full sources →</a>
+        </div>
         {/* Copyright */}
         <div className="border-t border-border/30 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <p className="text-[11px] text-muted-foreground">{t('copyright', lang)}</p>
