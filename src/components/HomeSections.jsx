@@ -3,7 +3,7 @@ import {
   Bot, DollarSign, Calculator, ShieldCheck, LayoutGrid,
   Phone, ShieldAlert, AlertTriangle, Car, Home, Wifi, Utensils,
   Waves, Baby, Music, ShoppingBag, Star, Radio, TrendingUp,
-  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2
+  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2, Anchor, Sailboat
 } from 'lucide-react';
 
 const SECTIONS = [
@@ -69,6 +69,8 @@ const SECTIONS = [
       { label: 'Activities', labelRu: 'Активности', labelDe: 'Aktivitäten', icon: Waves, path: '/services?category=activities', color: 'bg-cyan-500/10 text-cyan-500' },
       { label: 'Kids & Family', labelRu: 'Дети и семья', labelDe: 'Familie', icon: Baby, path: '/services?category=kids_family', color: 'bg-yellow-500/10 text-yellow-600' },
       { label: 'Nightlife', labelRu: 'Ночная жизнь', labelDe: 'Nachtleben', icon: Music, path: '/nightlife', color: 'bg-purple-500/10 text-purple-500' },
+      { label: 'Boat Trips', labelRu: 'Морские прогулки', labelDe: 'Bootstouren', labelFr: 'Excursions en bateau', labelAr: 'رحلات بحرية', icon: Anchor, path: '/boat-trips', color: 'bg-blue-500/10 text-blue-600' },
+      { label: 'Horse Riding', labelRu: 'Верховая езда', labelDe: 'Reiten', labelFr: 'Équitation', labelAr: 'ركوب الخيل', icon: Waves, path: '/horse-riding', color: 'bg-amber-500/10 text-amber-700' },
       { label: 'Shopping', labelRu: 'Шоппинг', labelDe: 'Shopping', icon: ShoppingBag, path: '/services?category=other', color: 'bg-pink-500/10 text-pink-500' },
       { label: 'Local Contacts', labelRu: 'Местные гиды', labelDe: 'Lokale Kontakte', icon: Users, path: '/featured-locals', color: 'bg-amber-500/10 text-amber-600' },
     ],
