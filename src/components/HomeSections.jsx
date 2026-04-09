@@ -71,6 +71,7 @@ const SECTIONS = [
       { label: 'Nightlife', labelRu: 'Ночная жизнь', labelDe: 'Nachtleben', icon: Music, path: '/nightlife', color: 'bg-purple-500/10 text-purple-500' },
       { label: 'Boat Trips', labelRu: 'Морские прогулки', labelDe: 'Bootstouren', labelFr: 'Excursions en bateau', labelAr: 'رحلات بحرية', icon: Anchor, path: '/boat-trips', color: 'bg-blue-500/10 text-blue-600' },
       { label: 'Horse Riding', labelRu: 'Верховая езда', labelDe: 'Reiten', labelFr: 'Équitation', labelAr: 'ركوب الخيل', icon: Waves, path: '/horse-riding', color: 'bg-amber-500/10 text-amber-700' },
+      { label: 'Temple Trips', labelRu: 'Храмы и туры', labelDe: 'Tempel & Touren', labelFr: 'Temples & Tours', labelAr: 'رحلات المعابد', icon: Anchor, path: '/temple-trips', color: 'bg-orange-500/10 text-orange-700' },
       { label: 'Shopping', labelRu: 'Шоппинг', labelDe: 'Shopping', icon: ShoppingBag, path: '/services?category=other', color: 'bg-pink-500/10 text-pink-500' },
       { label: 'Local Contacts', labelRu: 'Местные гиды', labelDe: 'Lokale Kontakte', icon: Users, path: '/featured-locals', color: 'bg-amber-500/10 text-amber-600' },
     ],
