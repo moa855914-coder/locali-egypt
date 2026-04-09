@@ -8,8 +8,103 @@ import {
   Home, Phone, CheckCircle2, Wifi, MapPin, ShieldCheck,
   Scale, Wrench, Building2, Car, BookOpen, GraduationCap,
   Heart, PawPrint, Dumbbell, ShoppingCart, Church, ChevronDown, ChevronRight,
-  Users, Star, Clock, AlertTriangle, Plus, ArrowRight
+  Users, Star, Clock, AlertTriangle, Plus, ArrowRight, Briefcase, ExternalLink
 } from 'lucide-react';
+
+const WORK_SOURCES = [
+  {
+    category: '📋 Official — Work Permit Application',
+    items: [
+      {
+        title: 'GAFI — Obtain a Work Permit (Official Portal)',
+        desc: 'Official Egyptian government portal. Submit work permit applications, check prerequisites, fees, and required documents.',
+        url: 'https://www.gafi.gov.eg/English/eServices/Pages/DepartmentService.aspx?DSID=40',
+        badge: '🏛️ Official Gov',
+        badgeColor: 'bg-blue-500/10 text-blue-700 border-blue-200',
+      },
+      {
+        title: 'Ministry of Manpower Egypt — Official Site',
+        desc: 'Egyptian Ministry of Manpower — the authority that issues and approves all foreign work permits in Egypt.',
+        url: 'https://www.manpower.gov.eg',
+        badge: '🏛️ Official Gov',
+        badgeColor: 'bg-blue-500/10 text-blue-700 border-blue-200',
+      },
+    ],
+  },
+  {
+    category: '📰 Legal Updates — New Labor Law 2025',
+    items: [
+      {
+        title: 'EY Tax Alert — Egypt New Labor Law No. 14 of 2025',
+        desc: 'Ernst & Young official analysis: Labor Law No. 14 of 2025 effective September 1, 2025. Replaces Law No. 12 of 2003. Key changes for foreign employers.',
+        url: 'https://www.ey.com/en_gl/technical/tax-alerts/egypt-enacts-new-labor-law-with-changes-affecting-employers-beginning-1-september-2025',
+        badge: '⚖️ Legal Analysis',
+        badgeColor: 'bg-amber-500/10 text-amber-700 border-amber-200',
+      },
+      {
+        title: 'Mondaq — Resolution 279/2025: Foreign Work Permit Rules',
+        desc: 'Detailed breakdown of Ministry of Labour Resolution 279 of 2025. Conditions, controls, and new framework for foreign worker licensing.',
+        url: 'https://www.mondaq.com/employee-rights-labour-relations/1735194/foreign-work-permits-in-egypt-%7C-legal-requirements-under-resolution-279-of-2025',
+        badge: '⚖️ Legal Analysis',
+        badgeColor: 'bg-amber-500/10 text-amber-700 border-amber-200',
+      },
+      {
+        title: 'Safeguard Global — Egypt 10% Foreign Worker Cap (Decree 279)',
+        desc: 'Effective December 2025: Egypt caps foreign workers at 10% of workforce per company. Updated permit rules, fees, and employer reporting requirements.',
+        url: 'https://www.safeguardglobal.com/resources/blog/egypt-279-decree-limits-foreign-workers/',
+        badge: '⚠️ Key Change',
+        badgeColor: 'bg-red-500/10 text-red-700 border-red-200',
+      },
+      {
+        title: 'Sterling Lexicon — New Foreign Worker Law from Sept 2025',
+        desc: 'Summary of the September 2025 law changes: waiver of reciprocal treatment, updated permit categories, and compliance timelines.',
+        url: 'https://www.sterlinglexicon.com/immigration-blog/new-law-governing-foreign-workers-in-egypt-to-be-introduced-in-september-2025/',
+        badge: '⚖️ Legal Summary',
+        badgeColor: 'bg-amber-500/10 text-amber-700 border-amber-200',
+      },
+      {
+        title: 'Legal Way Law Firm — Work Permits for Foreign Nationals in Egypt',
+        desc: 'Step-by-step guide: GAFI Labor Office submission, Ministry of Manpower approval, 3-week processing, annual validity. Requirements and documents checklist.',
+        url: 'https://legalwayfirm.com/work-permits-for-foreign-nationals-in-egypt/',
+        badge: '📋 How-To Guide',
+        badgeColor: 'bg-green-500/10 text-green-700 border-green-200',
+      },
+    ],
+  },
+  {
+    category: '💼 Job Boards — Find Work in Egypt',
+    items: [
+      {
+        title: 'Wuzzuf — Remote Jobs in Egypt (3,000+ listings)',
+        desc: "Egypt's #1 job platform. 3,000+ remote and on-site jobs updated daily. Filter by field, salary, and experience level.",
+        url: 'https://wuzzuf.net/a/remote-Jobs-in-Egypt',
+        badge: '🔍 Job Board',
+        badgeColor: 'bg-violet-500/10 text-violet-700 border-violet-200',
+      },
+      {
+        title: 'Bayt.com — Remote Jobs in Egypt',
+        desc: "Middle East's leading job site. 330+ remote jobs in Egypt updated weekly. Strong for multinational company roles.",
+        url: 'https://www.bayt.com/en/egypt/jobs/remote-jobs/',
+        badge: '🔍 Job Board',
+        badgeColor: 'bg-violet-500/10 text-violet-700 border-violet-200',
+      },
+      {
+        title: 'LinkedIn — Remote Jobs in Egypt (1,000+ roles)',
+        desc: '1,000+ remote jobs in Egypt on LinkedIn. Includes international companies hiring Egypt-based workers. Updated daily.',
+        url: 'https://www.linkedin.com/jobs/remote-jobs-egypt',
+        badge: '🔍 Job Board',
+        badgeColor: 'bg-violet-500/10 text-violet-700 border-violet-200',
+      },
+      {
+        title: 'Working Nomads — Remote Egypt Jobs',
+        desc: 'Curated list of fully remote jobs open to Egypt-based workers. Tech, marketing, writing, and customer support roles.',
+        url: 'https://www.workingnomads.com/remote-egypt-jobs',
+        badge: '🌍 Nomad Board',
+        badgeColor: 'bg-cyan-500/10 text-cyan-700 border-cyan-200',
+      },
+    ],
+  },
+];
 
 // ─── Existing data (preserved) ───────────────────────────────────────────────
 const STATIC_SERVICES = {
@@ -625,6 +720,43 @@ function ResidentGuideTab() {
   );
 }
 
+function WorkPermitsTab() {
+  return (
+    <>
+      <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 mb-6 flex items-start gap-2">
+        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+        <p className="text-xs text-amber-800 leading-relaxed">
+          <strong>New law in effect since September 2025 (Labor Law No. 14/2025) + Decree 279 (December 2025).</strong> Foreign worker rules have changed significantly. Always verify with official sources below before making any decisions.
+        </p>
+      </div>
+      <p className="text-xs text-muted-foreground mb-6">All links below go directly to the issuing authorities or verified legal sources — updated by those sources themselves.</p>
+      <div className="space-y-6">
+        {WORK_SOURCES.map((section, si) => (
+          <div key={si}>
+            <h3 className="text-xs font-extrabold uppercase tracking-widest text-muted-foreground mb-3">{section.category}</h3>
+            <div className="space-y-3">
+              {section.items.map((item, ii) => (
+                <a key={ii} href={item.url} target="_blank" rel="noopener noreferrer"
+                  className="group flex items-start gap-3 bg-card border border-border/50 rounded-2xl p-4 hover:border-accent/40 hover:shadow-sm transition-all">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      <p className="font-bold text-sm text-foreground group-hover:text-accent transition-colors">{item.title}</p>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${item.badgeColor}`}>{item.badge}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <p className="text-[10px] text-muted-foreground/50 mt-1.5 truncate">{item.url}</p>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-accent shrink-0 mt-0.5 transition-colors" />
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
 function CommunityTab() {
   return (
     <>
@@ -681,6 +813,7 @@ const TABS = [
   { id: 'housekeeping', label: '🧹 Cleaning', icon: Wrench },
   { id: 'maintenance', label: '🔧 Repairs', icon: Wrench },
   { id: 'property', label: '🏢 Property', icon: Building2 },
+  { id: 'work', label: '💼 Work Permits', icon: Briefcase },
   { id: 'more', label: '➕ More', icon: Plus },
   { id: 'guide', label: '📋 New Resident', icon: CheckCircle2 },
   { id: 'community', label: '👥 Community', icon: Users },
@@ -744,6 +877,7 @@ export default function LongStay() {
       {tab === 'housekeeping' && <HousekeepingTab city={city} />}
       {tab === 'maintenance' && <MaintenanceTab city={city} />}
       {tab === 'property' && <PropertyTab city={city} />}
+      {tab === 'work' && <WorkPermitsTab />}
       {tab === 'more' && <MoreServicesTab />}
       {tab === 'guide' && <ResidentGuideTab />}
       {tab === 'community' && <CommunityTab />}
