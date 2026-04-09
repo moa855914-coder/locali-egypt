@@ -143,19 +143,31 @@ export default function HomeSections({ lang }) {
           <h2 className={`text-xs font-extrabold uppercase tracking-widest mb-3 ${section.color}`}>
             {getGroupLabel(section, lang)}
           </h2>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
             {section.items.map((item) => {
               const Icon = item.icon;
               return (
                 <Link
                   key={item.path + item.label}
                   to={item.path}
-                  className="flex flex-col items-center gap-2 group"
+                  className="flex flex-col items-center gap-2.5 group"
                 >
-                  <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl border border-white/60 shadow-[0_4px_8px_rgba(0,0,0,0.12)] ${item.isAI ? 'ring-2 ring-violet-400/60' : ''}`} style={{boxShadow:'0 4px 8px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.08)'}}>
-                    <Icon className="w-6 h-6" />
+                  <div className={`relative w-16 h-16 flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-active:scale-95 ${item.isAI ? 'ring-2 ring-violet-400/60' : ''}`}
+                    style={{
+                      background: 'white',
+                      borderRadius: '22px',
+                      boxShadow: '0 6px 16px rgba(0,0,0,0.13), 0 2px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)',
+                      transform: 'perspective(200px) rotateX(2deg)',
+                    }}
+                  >
+                    <div className={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    {item.isAI && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-violet-500 rounded-full flex items-center justify-center text-[8px] text-white font-black">✦</span>
+                    )}
                   </div>
-                  <span className="text-[10px] font-bold text-center text-foreground leading-tight max-w-[56px]">
+                  <span className="text-[10px] font-bold text-center text-foreground leading-tight max-w-[60px]">
                     {getLabel(item, lang)}
                   </span>
                 </Link>
