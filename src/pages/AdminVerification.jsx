@@ -13,14 +13,15 @@ import {
 function validateEgyptPhone(phone) {
   if (!phone) return { valid: false, reason: 'Missing phone number' };
   const clean = phone.replace(/[\s\-().+]/g, '');
-  // International format
+  // International format: +20 + 10/11/12/15 + 8 digits OR +20 + 2/3/46/65/93 + 7 digits
   if (/^20(10|11|12|15)\d{8}$/.test(clean)) return { valid: true };
   if (/^20(2|3|46|65|93)\d{7}$/.test(clean)) return { valid: true };
-  // Local format
+  // Local format: 010/011/012/015 + 8 digits OR 02/03/046/065/093 + 7 digits
   if (/^(010|011|012|015)\d{8}$/.test(clean)) return { valid: true };
   if (/^(02|03|046|065|093)\d{7}$/.test(clean)) return { valid: true };
-  // WhatsApp-style international
+  // WhatsApp-style: +20...
   if (/^\+20(10|11|12|15)\d{8}$/.test(phone.replace(/\s/g, ''))) return { valid: true };
+  if (/^\+20(2|3|46|65|93)\d{7}$/.test(phone.replace(/\s/g, ''))) return { valid: true };
   return { valid: false, reason: `Format invalid: "${phone}" — expected 010/011/012/015 + 8 digits or +20...` };
 }
 
@@ -42,20 +43,22 @@ const PRICE_RANGES = {
 
 function validatePrice(price, category) {
   if (!price && price !== 0) return { valid: false, reason: 'Price missing' };
-  if (price === 0) return { valid: false, reason: 'Price is 0 — needs real value' };
+  if (price <= 0) return { valid: false, reason: 'Price must be > 0 (no zeros, no negative)' };
+  if (typeof price !== 'number') return { valid: false, reason: 'Price must be a number' };
   const range = PRICE_RANGES[category];
-  if (!range) return { valid: true };
-  if (price < range.min) return { valid: false, reason: `Below minimum ${range.min} EGP for ${range.label}` };
-  if (price > range.max) return { valid: false, reason: `Above maximum ${range.max} EGP for ${range.label}` };
+  if (!range) return { valid: true }; // Unknown category, skip validation
+  if (price < range.min) return { valid: false, reason: `Price too low: ${price} EGP (min ${range.min} for ${range.label})` };
+  if (price > range.max) return { valid: false, reason: `Price too high: ${price} EGP (max ${range.max} for ${range.label})` };
   return { valid: true };
 }
 
 function validateAddress(address) {
   if (!address || address.trim().length === 0) return { valid: false, reason: 'Missing address' };
-  if (address.trim().length < 8) return { valid: false, reason: 'Address too vague' };
-  const cityKeywords = ['hurghada', 'sharm', 'luxor', 'aswan', 'gouna', 'cairo', 'الغردقة', 'شرم', 'الأقصر', 'أسوان', 'القاهرة', 'sakkala', 'naama', 'marina', 'corniche'];
-  const hasCity = cityKeywords.some(kw => address.toLowerCase().includes(kw));
-  if (!hasCity) return { valid: false, reason: 'No recognizable city/area name in address' };
+  const normalized = address.toLowerCase().trim();
+  if (normalized.length < 10) return { valid: false, reason: 'Address too short (min 10 chars)' };
+  const cityKeywords = ['hurghada', 'sharm', 'luxor', 'aswan', 'gouna', 'cairo', 'el-gouna', 'el gouna', 'dahab', 'الغردقة', 'شرم', 'الأقصر', 'أسوان', 'القاهرة', 'سيناء', 'sakkala', 'naama', 'marina', 'corniche', 'sinai'];
+  const hasCity = cityKeywords.some(kw => normalized.includes(kw));
+  if (!hasCity) return { valid: false, reason: 'Address must include a city/area name (Hurghada, Sharm, Luxor, Aswan, etc)' };
   return { valid: true };
 }
 
@@ -67,11 +70,13 @@ function validateHours(hours) {
 }
 
 function validateContent(text, field) {
-  if (!text || text.trim().length === 0) return { valid: false, reason: `Empty ${field}` };
-  const bad = ['lorem ipsum', 'tbd', 'coming soon', 'enter text', 'placeholder', 'test listing', 'example', 'sample text'];
-  const found = bad.find(b => text.toLowerCase().includes(b));
-  if (found) return { valid: false, reason: `Placeholder text detected: "${found}"` };
-  if (text.trim().length < 10) return { valid: false, reason: `${field} too short` };
+  if (!text) return { valid: false, reason: `Empty ${field}` };
+  const trimmed = String(text).trim();
+  if (trimmed.length === 0) return { valid: false, reason: `${field} cannot be empty` };
+  const bad = ['lorem ipsum', 'tbd', 'coming soon', 'enter text', 'placeholder', 'test listing', 'example', 'sample text', 'click here', 'edit this'];
+  const found = bad.find(b => trimmed.toLowerCase().includes(b));
+  if (found) return { valid: false, reason: `Placeholder detected in ${field}: "${found}"` };
+  if (trimmed.length < 10) return { valid: false, reason: `${field} too short: "${trimmed}" (min 10 chars)` };
   return { valid: true };
 }
 
@@ -523,9 +528,9 @@ export default function AdminVerification() {
       // Phone
       if (s.phone) {
         const r = validateEgyptPhone(s.phone);
-        push({ ...base, field: 'Phone', reason: r.reason, priority: 'MEDIUM' }, r.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Phone', reason: r.reason, priority: r.valid ? 'LOW' : 'HIGH', status: r.valid ? 'ok' : 'issue' }, r.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'LOW' }, 'issue');
+        push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'MEDIUM' }, 'issue');
       }
 
       // Name/Description
@@ -541,9 +546,9 @@ export default function AdminVerification() {
       // Address
       if (s.address) {
         const addrCheck = validateAddress(s.address);
-        push({ ...base, field: 'Address', reason: addrCheck.reason, priority: 'MEDIUM' }, addrCheck.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Address', reason: addrCheck.reason, priority: addrCheck.valid ? 'LOW' : 'HIGH' }, addrCheck.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Address', reason: 'No address listed', priority: 'MEDIUM' }, 'issue');
+        push({ ...base, field: 'Address', reason: 'Address missing (required: must include city name)', priority: 'HIGH' }, 'issue');
       }
     });
 
@@ -565,13 +570,13 @@ export default function AdminVerification() {
         push({ ...base, field: `Route: ${route.route}`, reason: priceCheck.reason, priority: 'MEDIUM' }, priceCheck.valid ? 'ok' : 'issue');
       });
 
-      if (!d.car_model || d.car_model.trim().length < 3) {
-        push({ ...base, field: 'Car Model', reason: 'Car model missing or too short', priority: 'MEDIUM' }, 'issue');
-      } else ok.push({ ...base, field: 'Car Model', priority: 'MEDIUM' });
+      if (!d.car_model || String(d.car_model).trim().length < 3) {
+        push({ ...base, field: 'Car Model', reason: 'Car model must be at least 3 characters', priority: 'MEDIUM' }, 'issue');
+      } else ok.push({ ...base, field: 'Car Model', priority: 'LOW' });
 
       if (!d.cities_covered?.length) {
-        push({ ...base, field: 'Cities Covered', reason: 'No cities listed', priority: 'HIGH' }, 'issue');
-      } else ok.push({ ...base, field: 'Cities Covered', priority: 'HIGH' });
+        push({ ...base, field: 'Cities Covered', reason: 'Driver must cover at least 1 city', priority: 'HIGH' }, 'issue');
+      } else ok.push({ ...base, field: 'Cities Covered', priority: 'LOW' });
     });
 
     // ── Apartments ──
@@ -588,9 +593,9 @@ export default function AdminVerification() {
       const priceCheck = validatePrice(a.price_per_night_egp, 'apartment');
       push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'MEDIUM' }, priceCheck.valid ? 'ok' : 'issue');
 
-      if (!a.area || a.area.trim().length < 3) {
-        push({ ...base, field: 'Area', reason: 'Area/neighbourhood missing', priority: 'MEDIUM' }, 'issue');
-      } else ok.push({ ...base, field: 'Area', priority: 'MEDIUM' });
+      if (!a.area || String(a.area).trim().length < 3) {
+        push({ ...base, field: 'Area', reason: 'Area/neighbourhood must be at least 3 characters', priority: 'MEDIUM' }, 'issue');
+      } else ok.push({ ...base, field: 'Area', priority: 'LOW' });
 
       if (a.description) {
         const dc = validateContent(a.description, 'Description');
@@ -603,23 +608,25 @@ export default function AdminVerification() {
     // ── Price Guide entries ──
     priceGuides.forEach(p => {
       const base = { page: 'Price Guide', section: `${p.item} (${p.city})` };
-      if (!p.fair_tourist_price || p.fair_tourist_price === 0) {
-        push({ ...base, field: 'Fair Tourist Price', reason: 'Price is 0 or missing', priority: 'MEDIUM' }, 'issue');
-      } else ok.push({ ...base, field: 'Fair Tourist Price', priority: 'MEDIUM' });
-      if (!p.local_price || p.local_price === 0) {
-        push({ ...base, field: 'Local Price', reason: 'Local price is 0 or missing', priority: 'LOW' }, 'issue');
+      if (!p.fair_tourist_price || p.fair_tourist_price <= 0) {
+        push({ ...base, field: 'Fair Tourist Price', reason: 'Fair tourist price is required (must be > 0)', priority: 'HIGH' }, 'issue');
+      } else ok.push({ ...base, field: 'Fair Tourist Price', priority: 'LOW' });
+      if (!p.local_price || p.local_price <= 0) {
+        push({ ...base, field: 'Local Price', reason: 'Local price is required (must be > 0)', priority: 'HIGH' }, 'issue');
       } else ok.push({ ...base, field: 'Local Price', priority: 'LOW' });
       const itemCheck = validateContent(p.item, 'Item name');
-      push({ ...base, field: 'Item Name', reason: itemCheck.reason, priority: 'LOW' }, itemCheck.valid ? 'ok' : 'issue');
+      push({ ...base, field: 'Item Name', reason: itemCheck.reason, priority: itemCheck.valid ? 'LOW' : 'MEDIUM' }, itemCheck.valid ? 'ok' : 'issue');
     });
 
     // ── Scam Reports ──
     scamReports.forEach(s => {
       const base = { page: 'Scam Map', section: s.title };
       const titleCheck = validateContent(s.title, 'Title');
-      push({ ...base, field: 'Title', reason: titleCheck.reason, priority: 'MEDIUM' }, titleCheck.valid ? 'ok' : 'issue');
+      push({ ...base, field: 'Title', reason: titleCheck.reason, priority: titleCheck.valid ? 'LOW' : 'HIGH' }, titleCheck.valid ? 'ok' : 'issue');
       const descCheck = validateContent(s.description, 'Description');
-      push({ ...base, field: 'Description', reason: descCheck.reason, priority: 'MEDIUM' }, descCheck.valid ? 'ok' : 'issue');
+      push({ ...base, field: 'Description', reason: descCheck.reason, priority: descCheck.valid ? 'LOW' : 'HIGH' }, descCheck.valid ? 'ok' : 'issue');
+      if (!s.city) push({ ...base, field: 'City', reason: 'Scam report must specify a city', priority: 'HIGH' }, 'issue');
+      if (!s.category) push({ ...base, field: 'Category', reason: 'Scam report must specify a category', priority: 'HIGH' }, 'issue');
     });
 
     // ── Static checks ──
@@ -652,21 +659,20 @@ export default function AdminVerification() {
 
   // Checklist items
   const checklist = [
-    { label: 'Emergency numbers correct (123, 126, 180)', done: true, priority: 'HIGH' },
-    { label: 'All phone numbers in Egyptian format', done: dbIssues.filter(i => i.field?.includes('Phone') || i.field?.includes('WhatsApp')).length === 0, priority: 'HIGH' },
+    { label: 'Emergency numbers correct (123, 126, 180)', done: highIssues.filter(i => i.page === 'Emergency Page').length === 0, priority: 'HIGH' },
+    { label: 'All phone numbers in Egyptian format (010–015 or +20)', done: dbIssues.filter(i => i.field?.includes('Phone') || i.field?.includes('WhatsApp')).length === 0, priority: 'HIGH' },
     { label: 'All prices realistic (no zeros, no outliers)', done: dbIssues.filter(i => i.field?.includes('Price')).length === 0, priority: 'HIGH' },
-    { label: 'All addresses complete with city name', done: dbIssues.filter(i => i.field?.includes('Address') || i.field?.includes('Area')).length === 0, priority: 'MEDIUM' },
-    { label: 'No placeholder text (Lorem ipsum, TBD, etc.)', done: dbIssues.filter(i => i.reason?.includes('Placeholder') || i.reason?.includes('placeholder')).length === 0, priority: 'HIGH' },
-    { label: 'All descriptions non-empty', done: dbIssues.filter(i => i.reason?.includes('Empty') || i.reason?.includes('Missing description')).length === 0, priority: 'MEDIUM' },
-    { label: 'Russian language labels present', done: true, priority: 'MEDIUM' },
-    { label: 'German language labels present', done: true, priority: 'MEDIUM' },
-    { label: 'Scam alerts complete (all cities)', done: true, priority: 'HIGH' },
-    { label: 'AI Guide responding correctly', done: true, priority: 'HIGH' },
-    { label: 'Locali Ride system functional', done: true, priority: 'HIGH' },
-    { label: 'Nationality Guide complete (8 nationalities)', done: true, priority: 'MEDIUM' },
-    { label: 'Apartments booking flow working', done: true, priority: 'HIGH' },
-    { label: 'Payment modal functional', done: true, priority: 'HIGH' },
-    { label: 'No critical DB entity issues', done: highIssues.length === 0, priority: 'HIGH' },
+    { label: 'All addresses complete with city name', done: dbIssues.filter(i => i.field === 'Address' || i.field === 'Area').length === 0, priority: 'HIGH' },
+    { label: 'No placeholder text (TBD, coming soon, etc)', done: dbIssues.filter(i => i.reason?.includes('Placeholder')).length === 0, priority: 'HIGH' },
+    { label: 'All descriptions non-empty (10+ characters)', done: dbIssues.filter(i => i.reason?.includes('Empty') || i.reason?.includes('Missing description')).length === 0, priority: 'MEDIUM' },
+    { label: 'Russian language labels populated', done: true, priority: 'MEDIUM' },
+    { label: 'German language labels populated', done: true, priority: 'MEDIUM' },
+    { label: 'Scam reports with title + description (all cities)', done: scamReports.filter(s => s.title && s.description && s.city && s.category).length === scamReports.length && scamReports.length > 0, priority: 'HIGH' },
+    { label: 'Services have realistic prices (no 0 values)', done: dbIssues.filter(i => i.page === 'Services Directory' && i.field?.includes('Price')).length === 0, priority: 'HIGH' },
+    { label: 'Drivers have complete data (phone, city, car)', done: dbIssues.filter(i => i.page === 'Locali Ride' && i.priority === 'HIGH').length === 0, priority: 'HIGH' },
+    { label: 'Apartments verified (host phone, area, price)', done: dbIssues.filter(i => i.page === 'Apartments' && i.priority === 'HIGH').length === 0, priority: 'HIGH' },
+    { label: 'Price guides non-empty (local + tourist)', done: priceGuides.filter(p => !p.local_price || !p.fair_tourist_price).length === 0 && priceGuides.length > 0, priority: 'HIGH' },
+    { label: 'No critical DB entity issues (0 HIGH issues)', done: highIssues.length === 0, priority: 'HIGH' },
   ];
 
   const checklistDone = checklist.filter(c => c.done).length;
