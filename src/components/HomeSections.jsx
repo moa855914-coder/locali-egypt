@@ -108,6 +108,8 @@ const SECTIONS = [
       { label: 'Airport Items', labelRu: 'Таможня', labelDe: 'Zoll & Gepäck', labelFr: 'Douane', icon: Package, path: '/airport-items', color: 'bg-amber-500/10 text-amber-500' },
       { label: 'Book a Tour', labelRu: 'Туры', labelDe: 'Tours buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
       { label: 'Bazaars', labelRu: 'Базары', labelDe: 'Basare', labelFr: 'Bazars', icon: ShoppingBag, path: '/bazaars', color: 'bg-orange-500/10 text-orange-600' },
+      { label: 'Water Sports', labelRu: 'Водные виды спорта', labelDe: 'Wassersport', labelFr: 'Sports nautiques', icon: Waves, path: '/water-sports', color: 'bg-blue-500/10 text-blue-600' },
+      { label: 'Museums', labelRu: 'Музеи', labelDe: 'Museen', labelFr: 'Musées', icon: Building2, path: '/museums', color: 'bg-purple-500/10 text-purple-600' },
       { label: 'Guides', labelRu: 'Гиды', labelDe: 'Reiseführer', labelFr: 'Guides', icon: Users, path: '/guides', color: 'bg-blue-500/10 text-blue-600' },
       { label: 'About', labelRu: 'О нас', labelDe: 'Über uns', labelFr: 'À propos', icon: CheckSquare, path: '/about', color: 'bg-gray-500/10 text-gray-500' },
       { label: 'Tour Operators', labelRu: 'Туроператоры', labelDe: 'Reiseveranstalter', labelFr: 'Voyagistes', icon: Building2, path: '/tour-operators', color: 'bg-indigo-500/10 text-indigo-600' },

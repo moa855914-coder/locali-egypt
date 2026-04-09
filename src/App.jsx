@@ -75,6 +75,9 @@ import HorseRidingExperiences from './pages/HorseRidingExperiences';
 import TempleTrips from './pages/TempleTrips';
 import Restaurants from './pages/Restaurants';
 import BeachClubs from './pages/BeachClubs';
+import BazaarsMarkets from './pages/BazaarsMarkets';
+import WaterSports from './pages/WaterSports';
+import Museums from './pages/Museums';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -142,6 +145,9 @@ const AuthenticatedApp = () => {
         <Route path="/temple-trips" element={<TempleTrips />} />
         <Route path="/restaurants" element={<Restaurants />} />
         <Route path="/beach-clubs" element={<BeachClubs />} />
+        <Route path="/bazaars" element={<BazaarsMarkets />} />
+        <Route path="/water-sports" element={<WaterSports />} />
+        <Route path="/museums" element={<Museums />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/my-trips" element={<MyTrips />} />
         <Route path="/long-stay" element={<LongStay />} />
