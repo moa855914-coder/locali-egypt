@@ -20,7 +20,7 @@ import WomenSafety from './pages/WomenSafety';
 import Deals from './pages/Deals';
 import CityPrices from './pages/city/CityPrices';
 import EgyptSafeNow from './pages/EgyptSafeNow';
-import EgyptVsDubai from './pages/EgyptVsDubai.jsx';
+import EgyptVsDubai from './pages/EgyptVsDubai';
 import LastMinuteEgypt from './pages/LastMinuteEgypt';
 import Nightlife from './pages/Nightlife';
 import RemoteWork from './pages/RemoteWork';
