@@ -95,7 +95,7 @@ const STATIC_CHECKS = [
   { id: 's17', page: 'Home Sections', section: 'Russian labels', field: 'labelRu populated', value: 'Каталог услуг', check: 'content', priority: 'LOW' },
   { id: 's18', page: 'Home Sections', section: 'German labels', field: 'labelDe populated', value: 'Dienste', check: 'content', priority: 'LOW' },
   { id: 's19', page: 'Cost Calculator', section: 'Sharm El Sheikh prices', field: 'Budget hotel price', value: 600, check: 'price_hotel_budget', priority: 'LOW' },
-  { id: 's20', page: 'Price Guide', section: 'Taxi fares', field: 'Airport transfer', value: 250, check: 'price_taxi_airport', priority: 'MEDIUM' },
+  { id: 's20', page: 'Price Guide', section: 'Taxi fares', field: 'Airport transfer', value: 250, check: 'price_taxi_airport', priority: 'LOW' },
 ];
 
 const STATIC_PRICE_MAPS = {
