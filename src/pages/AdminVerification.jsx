@@ -74,11 +74,11 @@ const STATIC_CHECKS = [
   { id: 's2', page: 'Emergency Page', section: 'Emergency Numbers', field: 'Ambulance', value: '123', check: 'number', priority: 'HIGH' },
   { id: 's3', page: 'Emergency Page', section: 'Emergency Numbers', field: 'Fire', value: '180', check: 'number', priority: 'HIGH' },
   // BookingPage tours
-  { id: 's4', page: 'Book Tours', section: 'Red Sea Snorkeling', field: 'Price', value: 850, check: 'price_snorkeling', priority: 'MEDIUM' },
-  { id: 's5', page: 'Book Tours', section: 'Ras Mohammed Diving', field: 'Price', value: 1200, check: 'price_diving', priority: 'MEDIUM' },
-  { id: 's6', page: 'Book Tours', section: 'Hot Air Balloon', field: 'Price', value: 2500, check: 'price_hot_air_balloon', priority: 'MEDIUM' },
-  { id: 's7', page: 'Book Tours', section: 'Sinai Sunrise Trek', field: 'Price', value: 950, check: 'price_activity', priority: 'MEDIUM' },
-  { id: 's8', page: 'Book Tours', section: 'Abu Simbel Day Trip', field: 'Price', value: 1800, check: 'price_activity', priority: 'MEDIUM' },
+  { id: 's4', page: 'Book Tours', section: 'Red Sea Snorkeling', field: 'Price', value: 850, check: 'price_snorkeling', priority: 'LOW' },
+  { id: 's5', page: 'Book Tours', section: 'Ras Mohammed Diving', field: 'Price', value: 1200, check: 'price_diving', priority: 'LOW' },
+  { id: 's6', page: 'Book Tours', section: 'Hot Air Balloon', field: 'Price', value: 2500, check: 'price_hot_air_balloon', priority: 'LOW' },
+  { id: 's7', page: 'Book Tours', section: 'Sinai Sunrise Trek', field: 'Price', value: 950, check: 'price_activity', priority: 'LOW' },
+  { id: 's8', page: 'Book Tours', section: 'Abu Simbel Day Trip', field: 'Price', value: 1800, check: 'price_activity', priority: 'LOW' },
   // Verified Drivers sample
   { id: 's9', page: 'Locali Ride', section: 'Ahmed Hassan — Hurghada Airport route', field: 'Price', value: 250, check: 'price_driver_route', priority: 'LOW' },
   { id: 's10', page: 'Locali Ride', section: 'Sharm Airport → Naama Bay', field: 'Price', value: 200, check: 'price_driver_route', priority: 'LOW' },
@@ -86,7 +86,7 @@ const STATIC_CHECKS = [
   { id: 's11', page: 'Apartments', section: 'Seaview Studio Sharm', field: 'Price/night', value: 1200, check: 'price_apartment', priority: 'LOW' },
   { id: 's12', page: 'Apartments', section: 'Budget Studio Hurghada', field: 'Price/night', value: 450, check: 'price_apartment', priority: 'LOW' },
   // Hotels
-  { id: 's13', page: 'Hotels — El Gouna', section: 'Hotel pricing range', field: 'Min price check', value: 1500, check: 'price_hotel_mid', priority: 'MEDIUM' },
+  { id: 's13', page: 'Hotels — El Gouna', section: 'Hotel pricing range', field: 'Min price check', value: 1500, check: 'price_hotel_mid', priority: 'LOW' },
   // NationalityGuide
   { id: 's14', page: 'Nationality Guide', section: 'Russian — Exchange Rate', field: 'Content', value: 'Al Ahly Bank Exchange', check: 'content', priority: 'LOW' },
   { id: 's15', page: 'Nationality Guide', section: 'German — Dr. Fischer Medical', field: 'Hours', value: '8:00–20:00', check: 'hours', priority: 'LOW' },
@@ -583,9 +583,9 @@ export default function AdminVerification() {
 
       if (a.description) {
         const dc = validateContent(a.description, 'Description');
-        push({ ...base, field: 'Description', reason: dc.reason, priority: 'MEDIUM' }, dc.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Description', reason: dc.reason, priority: 'LOW' }, dc.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Description', reason: 'Empty description', priority: 'MEDIUM' }, 'issue');
+        push({ ...base, field: 'Description', reason: 'Empty description', priority: 'LOW' }, 'issue');
       }
     });
 
@@ -603,8 +603,8 @@ export default function AdminVerification() {
     // ── Scam Reports ──
     scamReports.forEach(s => {
       const base = { page: 'Scam Map', section: s.title };
-      if (!s.title || String(s.title).trim().length < 3) push({ ...base, field: 'Title', reason: 'Missing/invalid', priority: 'MEDIUM' }, 'issue');
-      if (!s.description || String(s.description).trim().length < 3) push({ ...base, field: 'Description', reason: 'Missing/invalid', priority: 'MEDIUM' }, 'issue');
+      if (!s.title || String(s.title).trim().length < 3) push({ ...base, field: 'Title', reason: 'Missing/invalid', priority: 'LOW' }, 'issue');
+      if (!s.description || String(s.description).trim().length < 3) push({ ...base, field: 'Description', reason: 'Missing/invalid', priority: 'LOW' }, 'issue');
     });
 
     // ── Static checks ──
