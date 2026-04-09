@@ -519,14 +519,14 @@ export default function AdminVerification() {
       // Phone (if provided)
       if (s.phone) {
         const r = validateEgyptPhone(s.phone);
-        push({ ...base, field: 'Phone', reason: r.reason, priority: 'MEDIUM' }, r.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Phone', reason: r.reason, priority: 'LOW' }, r.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'MEDIUM' }, 'issue');
+        push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'LOW' }, 'issue');
       }
 
       // Name check
       const nameCheck = validateContent(s.name, 'Name');
-      if (!nameCheck.valid) push({ ...base, field: 'Name', reason: nameCheck.reason, priority: 'MEDIUM' }, 'issue');
+      if (!nameCheck.valid) push({ ...base, field: 'Name', reason: nameCheck.reason, priority: 'LOW' }, 'issue');
       // Description (optional)
       if (s.description && !validateContent(s.description, 'Description').valid) {
         push({ ...base, field: 'Description', reason: 'Invalid description', priority: 'LOW' }, 'issue');
@@ -545,7 +545,7 @@ export default function AdminVerification() {
       // Phone
       if (d.whatsapp) {
         const r = validateEgyptPhone(d.whatsapp);
-        if (!r.valid) push({ ...base, field: 'WhatsApp', reason: r.reason, priority: 'MEDIUM' }, 'issue');
+        if (!r.valid) push({ ...base, field: 'WhatsApp', reason: r.reason, priority: 'LOW' }, 'issue');
       }
 
       // Routes (if any)
@@ -559,7 +559,7 @@ export default function AdminVerification() {
       } else ok.push({ ...base, field: 'Car Model', priority: 'LOW' });
 
       if (!d.cities_covered?.length) {
-        push({ ...base, field: 'Cities Covered', reason: 'No cities set', priority: 'MEDIUM' }, 'issue');
+        push({ ...base, field: 'Cities Covered', reason: 'No cities set', priority: 'LOW' }, 'issue');
       } else ok.push({ ...base, field: 'Cities Covered', priority: 'LOW' });
     });
 
@@ -575,7 +575,7 @@ export default function AdminVerification() {
       }
 
       const priceCheck = validatePrice(a.price_per_night_egp, 'apartment');
-      if (!priceCheck.valid) push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'MEDIUM' }, 'issue');
+      if (!priceCheck.valid) push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'LOW' }, 'issue');
 
       if (!a.area) {
         push({ ...base, field: 'Area', reason: 'Area missing', priority: 'LOW' }, 'issue');
