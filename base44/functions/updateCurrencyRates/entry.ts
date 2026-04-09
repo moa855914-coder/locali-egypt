@@ -8,10 +8,11 @@ Deno.serve(async (req) => {
 
     // Fetch live rates from internet
     const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
-      prompt: `Get today's official exchange rates to Egyptian Pound (EGP) from Central Bank of Egypt, XE.com, or Google Finance. 
-Return ONLY a JSON object with these exact keys: USD, EUR, GBP, RUB, PLN, CAD, AUD, SAR. 
-Each value is a number: how many EGP does 1 unit of that currency buy.
-Example: {"USD": 49.85, "EUR": 54.20, "GBP": 62.90, "RUB": 0.555, "PLN": 12.15, "CAD": 36.20, "AUD": 31.50, "SAR": 13.30}`,
+      model: 'gemini_3_flash',
+      prompt: `Search Google Finance or XE.com RIGHT NOW for today's live Egyptian Pound (EGP) exchange rates. Date: ${new Date().toISOString().split('T')[0]}.
+Return ONLY a JSON object with these exact keys and their CURRENT real values (do NOT use example/placeholder numbers):
+USD, EUR, GBP, RUB, PLN, CAD, AUD, SAR
+Each value = how many EGP does 1 unit of that currency buy today. Current USD/EGP rate is approximately 50-51 EGP. Return accurate current data only.`,
       add_context_from_internet: true,
       response_json_schema: {
         type: 'object',

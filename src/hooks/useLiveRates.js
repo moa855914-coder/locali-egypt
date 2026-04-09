@@ -3,9 +3,9 @@ import { base44 } from '@/api/base44Client';
 
 // Fallback rates (updated April 2026)
 export const FALLBACK_RATES = {
-  usd: 49.85, eur: 54.20, gbp: 62.90,
-  rub: 0.555, pln: 12.15, cad: 36.20,
-  aud: 31.50, sar: 13.30,
+  usd: 53.37, eur: 62.56, gbp: 71.96,
+  rub: 0.681, pln: 14.64, cad: 38.60,
+  aud: 37.81, sar: 14.22,
 };
 
 /**

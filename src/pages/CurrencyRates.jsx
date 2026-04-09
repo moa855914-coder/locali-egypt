@@ -75,19 +75,31 @@ export default function CurrencyRates() {
   const [calcCurrency, setCalcCurrency] = useState('EUR');
 
   const { rates: dbRates, isLoading: loading, rateDate, alert: rateAlert, refetch } = useLiveRates();
+  const [refreshing, setRefreshing] = useState(false);
 
-  const rates = [
-    { currency: 'USD 🇺🇸', symbol: '$', rate: dbRates.usd },
-    { currency: 'EUR 🇪🇺', symbol: '€', rate: dbRates.eur },
-    { currency: 'GBP 🇬🇧', symbol: '£', rate: dbRates.gbp },
-    { currency: 'RUB 🇷🇺', symbol: '₽', rate: dbRates.rub },
-    { currency: 'PLN 🇵🇱', symbol: 'zł', rate: dbRates.pln },
-    { currency: 'CAD 🇨🇦', symbol: 'CA$', rate: dbRates.cad },
-    { currency: 'AUD 🇦🇺', symbol: 'A$', rate: dbRates.aud },
-    { currency: 'SAR 🇸🇦', symbol: 'SR', rate: dbRates.sar },
-  ];
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await base44.functions.invoke('updateCurrencyRates', {});
+      await refetch();
+    } catch(e) {
+      await refetch();
+    }
+    setRefreshing(false);
+  };
 
   const lastUpdated = rateDate ? `${rateDate} · Updated daily 8am` : null;
+
+  const rates = [
+    { currency: 'USD 🇺🇸', rate: dbRates.usd },
+    { currency: 'EUR 🇪🇺', rate: dbRates.eur },
+    { currency: 'GBP 🇬🇧', rate: dbRates.gbp },
+    { currency: 'RUB 🇷🇺', rate: dbRates.rub },
+    { currency: 'PLN 🇵🇱', rate: dbRates.pln },
+    { currency: 'CAD 🇨🇦', rate: dbRates.cad },
+    { currency: 'AUD 🇦🇺', rate: dbRates.aud },
+    { currency: 'SAR 🇸🇦', rate: dbRates.sar },
+  ];
 
   const CALCULATOR_CURRENCIES = [
     { symbol: '$', code: 'USD', rate: dbRates.usd },
@@ -121,10 +133,10 @@ export default function CurrencyRates() {
       {/* Live rates grid */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-extrabold">Live Rates → Egyptian Pound (EGP)</h2>
-        <button onClick={() => refetch()} disabled={loading}
-          className="flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-xs font-bold hover:border-accent transition-colors disabled:opacity-50">
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-          {loading ? 'Updating...' : 'Refresh'}
+        <button onClick={handleRefresh} disabled={loading || refreshing}
+        className="flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-xs font-bold hover:border-accent transition-colors disabled:opacity-50">
+          <RefreshCw className={`w-3.5 h-3.5 ${(loading || refreshing) ? 'animate-spin' : ''}`} />
+          {(loading || refreshing) ? 'Updating...' : 'Refresh'}
         </button>
       </div>
 
