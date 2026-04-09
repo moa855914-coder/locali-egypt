@@ -125,7 +125,11 @@ const STATIC_PRICE_MAPS = {
 
 function checkStatic(check, value) {
   if (check === 'number') return { ok: true };
-  if (check === 'content' || check === 'hours') return validateContent(String(value), 'Content');
+  if (check === 'content' || check === 'hours') {
+    // validateContent returns { valid }, map to { ok }
+    const r = validateContent(String(value), 'Content');
+    return { ok: r.valid, reason: r.reason };
+  }
   const range = STATIC_PRICE_MAPS[check];
   if (range) {
     if (typeof value !== 'number') return { ok: false, reason: 'Non-numeric price' };
@@ -528,27 +532,28 @@ export default function AdminVerification() {
       // Phone
       if (s.phone) {
         const r = validateEgyptPhone(s.phone);
-        push({ ...base, field: 'Phone', reason: r.reason, priority: r.valid ? 'LOW' : 'HIGH', status: r.valid ? 'ok' : 'issue' }, r.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Phone', reason: r.reason, priority: 'HIGH' }, r.valid ? 'ok' : 'issue');
       } else {
         push({ ...base, field: 'Phone', reason: 'No phone number listed', priority: 'MEDIUM' }, 'issue');
       }
 
-      // Name/Description
+      // Name check
       const nameCheck = validateContent(s.name, 'Name');
       push({ ...base, field: 'Name', reason: nameCheck.reason, priority: 'HIGH' }, nameCheck.valid ? 'ok' : 'issue');
+      // Description check
       if (s.description) {
         const descCheck = validateContent(s.description, 'Description');
         push({ ...base, field: 'Description', reason: descCheck.reason, priority: 'MEDIUM' }, descCheck.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Description', reason: 'Missing description', priority: 'LOW' }, 'issue');
+        push({ ...base, field: 'Description', reason: 'Missing description', priority: 'MEDIUM' }, 'issue');
       }
 
-      // Address
+      // Address check
       if (s.address) {
         const addrCheck = validateAddress(s.address);
-        push({ ...base, field: 'Address', reason: addrCheck.reason, priority: addrCheck.valid ? 'LOW' : 'HIGH' }, addrCheck.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Address', reason: addrCheck.reason, priority: 'HIGH' }, addrCheck.valid ? 'ok' : 'issue');
       } else {
-        push({ ...base, field: 'Address', reason: 'Address missing (required: must include city name)', priority: 'HIGH' }, 'issue');
+        push({ ...base, field: 'Address', reason: 'Address missing — must include city name', priority: 'HIGH' }, 'issue');
       }
     });
 
@@ -567,7 +572,7 @@ export default function AdminVerification() {
       // Routes
       d.price_routes?.forEach(route => {
         const priceCheck = validatePrice(route.price_egp, 'driver_route');
-        push({ ...base, field: `Route: ${route.route}`, reason: priceCheck.reason, priority: 'MEDIUM' }, priceCheck.valid ? 'ok' : 'issue');
+        push({ ...base, field: `Route: ${route.route}`, reason: priceCheck.reason, priority: 'HIGH' }, priceCheck.valid ? 'ok' : 'issue');
       });
 
       if (!d.car_model || String(d.car_model).trim().length < 3) {
@@ -591,15 +596,15 @@ export default function AdminVerification() {
       }
 
       const priceCheck = validatePrice(a.price_per_night_egp, 'apartment');
-      push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'MEDIUM' }, priceCheck.valid ? 'ok' : 'issue');
+      push({ ...base, field: 'Price/night', reason: priceCheck.reason, priority: 'HIGH' }, priceCheck.valid ? 'ok' : 'issue');
 
       if (!a.area || String(a.area).trim().length < 3) {
-        push({ ...base, field: 'Area', reason: 'Area/neighbourhood must be at least 3 characters', priority: 'MEDIUM' }, 'issue');
+        push({ ...base, field: 'Area', reason: 'Area/neighbourhood missing', priority: 'MEDIUM' }, 'issue');
       } else ok.push({ ...base, field: 'Area', priority: 'LOW' });
 
       if (a.description) {
         const dc = validateContent(a.description, 'Description');
-        push({ ...base, field: 'Description', reason: dc.reason, priority: 'LOW' }, dc.valid ? 'ok' : 'issue');
+        push({ ...base, field: 'Description', reason: dc.reason, priority: 'MEDIUM' }, dc.valid ? 'ok' : 'issue');
       } else {
         push({ ...base, field: 'Description', reason: 'Empty description', priority: 'MEDIUM' }, 'issue');
       }
