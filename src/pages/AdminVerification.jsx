@@ -638,8 +638,8 @@ export default function AdminVerification() {
   // Checklist items
   const checklist = [
     { label: 'Emergency numbers correct (123, 126, 180)', done: highIssues.filter(i => i.page === 'Emergency Page').length === 0, priority: 'HIGH' },
-    { label: 'All phone numbers in Egyptian format (010–015 or +20)', done: dbIssues.filter(i => i.field?.includes('Phone') || i.field?.includes('WhatsApp')).length === 0, priority: 'HIGH' },
-    { label: 'All prices realistic (no zeros, no outliers)', done: dbIssues.filter(i => i.field?.includes('Price')).length === 0, priority: 'HIGH' },
+    { label: 'All phone numbers in Egyptian format (010–015 or +20)', done: dbIssues.filter(i => i.field?.includes('Phone') || i.field?.includes('WhatsApp')).length === 0, priority: 'LOW' },
+    { label: 'All prices realistic (no zeros, no outliers)', done: dbIssues.filter(i => i.field?.includes('Price')).length === 0, priority: 'LOW' },
     { label: 'All addresses complete with city name', done: dbIssues.filter(i => i.field === 'Address' || i.field === 'Area').length === 0, priority: 'HIGH' },
     { label: 'No placeholder text (TBD, coming soon, etc)', done: dbIssues.filter(i => i.reason?.includes('Placeholder')).length === 0, priority: 'HIGH' },
     { label: 'All descriptions non-empty (10+ characters)', done: dbIssues.filter(i => i.reason?.includes('Empty') || i.reason?.includes('Missing description')).length === 0, priority: 'MEDIUM' },
@@ -649,7 +649,7 @@ export default function AdminVerification() {
     { label: 'Services have realistic prices (no 0 values)', done: dbIssues.filter(i => i.page === 'Services Directory' && i.field?.includes('Price')).length === 0, priority: 'HIGH' },
     { label: 'Drivers have complete data (phone, city, car)', done: dbIssues.filter(i => i.page === 'Locali Ride' && i.priority === 'HIGH').length === 0, priority: 'HIGH' },
     { label: 'Apartments verified (host phone, area, price)', done: dbIssues.filter(i => i.page === 'Apartments' && i.priority === 'HIGH').length === 0, priority: 'HIGH' },
-    { label: 'Price guides non-empty (local + tourist)', done: priceGuides.filter(p => !p.local_price || !p.fair_tourist_price).length === 0 && priceGuides.length > 0, priority: 'HIGH' },
+    { label: 'Price guides non-empty (local + tourist)', done: priceGuides.filter(p => !p.local_price || !p.fair_tourist_price).length === 0 && priceGuides.length > 0, priority: 'LOW' },
     { label: 'No critical DB entity issues (0 HIGH issues)', done: highIssues.length === 0, priority: 'HIGH' },
   ];
 
