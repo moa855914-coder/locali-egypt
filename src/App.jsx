@@ -70,6 +70,8 @@ import DataSources from './pages/DataSources';
 import TripPlanner from './pages/TripPlanner';
 import MyTrips from './pages/MyTrips';
 import Methodology from './pages/Methodology';
+import BoatTrips from './pages/BoatTrips';
+import HorseRidingExperiences from './pages/HorseRidingExperiences';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -132,6 +134,8 @@ const AuthenticatedApp = () => {
         <Route path="/verified-contacts" element={<VerifiedContacts />} />
         <Route path="/data-sources" element={<DataSources />} />
         <Route path="/methodology" element={<Methodology />} />
+        <Route path="/boat-trips" element={<BoatTrips />} />
+        <Route path="/horse-riding" element={<HorseRidingExperiences />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/my-trips" element={<MyTrips />} />
         <Route path="/long-stay" element={<LongStay />} />
