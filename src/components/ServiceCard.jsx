@@ -8,7 +8,7 @@ export default function ServiceCard({ service }) {
   return (
     <Link
       to={`/service/${service.id}`}
-      className="group block bg-card rounded-2xl border border-border/50 overflow-hidden hover:shadow-lg hover:shadow-accent/5 transition-all duration-300"
+      className="group block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
     >
       {service.photos?.[0] && (
         <div className="relative aspect-[16/10] overflow-hidden">

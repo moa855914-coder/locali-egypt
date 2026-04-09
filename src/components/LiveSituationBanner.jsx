@@ -31,7 +31,7 @@ export default function LiveSituationBanner() {
   const textClass = overallStatus === 'green' ? 'text-success' : overallStatus === 'yellow' ? 'text-amber-600' : 'text-red-500';
 
   return (
-    <div className="bg-card border border-border/50 rounded-2xl overflow-hidden">
+    <div className="bg-white border-2 border-border/40 rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
       <div className={`flex items-center justify-between px-4 py-3 border-b ${headerClass}`}>
         <div className="flex items-center gap-2">
           <div className={`w-2 h-2 rounded-full animate-pulse ${dotClass}`} />

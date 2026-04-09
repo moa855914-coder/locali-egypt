@@ -14,7 +14,7 @@ export default function HeroSection({ lang, onOpenChat }) {
         alt="Egyptian market street"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background" />
       
       <div className="relative px-4 pt-12 pb-16 max-w-7xl mx-auto">
         <motion.div
@@ -22,7 +22,7 @@ export default function HeroSection({ lang, onOpenChat }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]">
+          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             {t('hero_title', lang)}
             <br />
             <span className="text-accent">{t('hero_subtitle', lang)}</span>
@@ -41,7 +41,7 @@ export default function HeroSection({ lang, onOpenChat }) {
           <div className="max-w-lg">
             <button
               onClick={onOpenChat}
-              className="w-full flex items-center gap-4 px-5 py-4 bg-card/95 backdrop-blur-sm rounded-2xl border border-accent/40 shadow-2xl hover:border-accent hover:bg-card transition-all group text-left"
+              className="w-full flex items-center gap-4 px-5 py-4 bg-white/98 backdrop-blur-sm rounded-2xl border-2 border-accent/60 shadow-[0_8px_24px_rgba(0,0,0,0.25)] hover:border-accent hover:bg-white transition-all group text-left btn-3d"
             >
               <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <Bot className="w-5 h-5 text-accent-foreground" />

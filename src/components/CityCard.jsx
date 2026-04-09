@@ -6,7 +6,7 @@ export default function CityCard({ city, lang }) {
   return (
     <Link
       to={`/city/${city.id}`}
-      className="group relative flex-shrink-0 w-[260px] md:w-auto md:flex-1 aspect-[3/4] md:aspect-[3/2] rounded-2xl overflow-hidden"
+      className="group relative flex-shrink-0 w-[260px] md:w-auto md:flex-1 aspect-[3/4] md:aspect-[3/2] rounded-2xl overflow-hidden card-3d"
     >
       <img
         src={city.image}
@@ -21,7 +21,7 @@ export default function CityCard({ city, lang }) {
             {city.region}
           </span>
         </div>
-        <h3 className="text-xl font-extrabold text-white tracking-tight">
+        <h3 className="text-xl font-extrabold text-white tracking-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
           {getCityName(city, lang)}
         </h3>
       </div>

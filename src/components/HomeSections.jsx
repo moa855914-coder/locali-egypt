@@ -152,10 +152,10 @@ export default function HomeSections({ lang }) {
                   to={item.path}
                   className="flex flex-col items-center gap-2 group"
                 >
-                  <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:shadow-md ${item.isAI ? 'ring-2 ring-violet-400/40' : ''}`}>
+                  <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center transition-all duration-200 group-hover:scale-110 group-hover:shadow-xl border border-white/60 shadow-[0_4px_8px_rgba(0,0,0,0.12)] ${item.isAI ? 'ring-2 ring-violet-400/60' : ''}`} style={{boxShadow:'0 4px 8px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.08)'}}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[10px] font-semibold text-center text-muted-foreground leading-tight max-w-[56px]">
+                  <span className="text-[10px] font-bold text-center text-foreground leading-tight max-w-[56px]">
                     {getLabel(item, lang)}
                   </span>
                 </Link>

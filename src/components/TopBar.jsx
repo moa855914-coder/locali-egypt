@@ -20,11 +20,11 @@ export default function TopBar({ lang, onLangChange }) {
   const isAdmin = user?.role === 'admin';
 
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-border/50 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-xl border-b-2 border-border/60 shadow-[0_2px_12px_rgba(0,0,0,0.10)]">
       <div className="flex items-center justify-between px-4 py-3 max-w-7xl mx-auto">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2" onClick={() => setMobileOpen(false)}>
-          <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center shadow-[0_2px_6px_rgba(0,0,0,0.25)]">
             <Shield className="w-4 h-4 text-accent-foreground" strokeWidth={2.5} />
           </div>
           <span className="text-lg font-extrabold tracking-tight text-foreground">Locali</span>
@@ -62,7 +62,7 @@ export default function TopBar({ lang, onLangChange }) {
           )}
           <Link
             to="/emergency"
-            className="hidden md:flex items-center gap-1.5 bg-red-500 text-white px-3 py-2 rounded-lg text-sm font-bold hover:bg-red-600 transition-colors"
+            className="hidden md:flex items-center gap-1.5 bg-red-500 text-white px-3 py-2 rounded-lg text-sm font-bold hover:bg-red-600 transition-colors btn-3d"
           >
             <Phone className="w-3.5 h-3.5" />
             SOS
