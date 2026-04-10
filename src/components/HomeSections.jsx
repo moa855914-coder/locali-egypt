@@ -39,7 +39,6 @@ const SECTIONS = [
       { label: 'Scam Alerts', labelRu: 'Предупреждения', labelDe: 'Betrugs-Warnungen', icon: AlertTriangle, path: '/scam-map', color: 'bg-orange-500/10 text-orange-500' },
       { label: 'Is Egypt Safe?', labelRu: 'Безопасен ли Египет?', labelDe: 'Ist Ägypten sicher?', icon: ShieldCheck, path: '/egypt-safe-now', color: 'bg-success/10 text-success' },
       { label: 'Health & Hygiene', labelRu: 'Здоровье', labelDe: 'Gesundheit', icon: Heart, path: '/services?category=medical', color: 'bg-rose-500/10 text-rose-500' },
-      { label: 'Pharmacies', labelRu: 'Аптеки', labelDe: 'Apotheken', icon: Pill, path: '/services?category=medical', color: 'bg-cyan-500/10 text-cyan-600' },
     ],
   },
   {
