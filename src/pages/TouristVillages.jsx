@@ -9,12 +9,12 @@ const VILLAGES = [
     name: 'El Gouna',
     nameAr: 'الجونة',
     city: 'hurghada',
-    region: 'البحر الأحمر',
+    region: 'Red Sea',
     type: 'resort_town',
-    typeLabel: 'مدينة سياحية متكاملة',
-    description: 'مدينة سياحية فاخرة مستقلة تماماً تبعد 22 كم شمال الغردقة. صممها أبوالعينين ولها قنوات مائية داخلية وبحيرات ومارينا. تُعتبر الأفضل في مصر للكيت سيرف والغوص.',
-    distance: '22 كم شمال الغردقة',
-    address: 'طريق الغردقة – الغردقة، البحر الأحمر',
+    typeLabel: 'Full Resort Town',
+    description: 'Upscale self-contained resort town 22 km north of Hurghada. Designed by Abu Al-Einain with internal waterways, lakes, and a marina. Considered the best destination in Egypt for kite surfing and diving.',
+    distance: '22 km north of Hurghada',
+    address: 'Hurghada–Hurghada Road, Red Sea',
     google_maps: 'https://maps.google.com/?q=El+Gouna+Hurghada+Egypt',
     coords: { lat: 27.3867, lng: 33.6753 },
     rating: 4.9,
@@ -26,28 +26,28 @@ const VILLAGES = [
     nightlife: true,
     remote_work: true,
     hotels: ['Sheraton Miramar', 'Steigenberger Golf Resort', 'Three Corners Rihana Inn', 'Movenpick Resort'],
-    best_for: ['كيت سيرف', 'غوص', 'حياة ليلية', 'عمل عن بعد', 'عائلات'],
+    best_for: ['Kite Surfing', 'Diving', 'Nightlife', 'Remote Work', 'Families'],
     avg_hotel_egp: '3,000–15,000',
     highlights: [
-      'قنوات مائية داخلية وبحيرات خاصة',
-      'مارينا فاخرة ويخوت خاصة',
-      'مستشفى دولي وخدمات راقية',
-      'مطار خاص (GMB)',
-      'محمية طبيعية — شعاب مرجانية محمية',
+      'Internal waterways & private lagoons',
+      'Luxury marina with private yachts',
+      'International hospital & premium services',
+      'Private airport (GMB)',
+      'Natural reserve — protected coral reefs',
     ],
     image_url: 'https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d?w=600&q=80',
   },
   {
     id: 'sahl-hasheesh',
-    name: 'سهل حشيش',
+    name: 'Sahl Hasheesh',
     nameAr: 'سهل حشيش',
     city: 'hurghada',
-    region: 'البحر الأحمر',
+    region: 'Red Sea',
     type: 'resort_village',
-    typeLabel: 'قرية سياحية راقية',
-    description: 'قرية سياحية فاخرة تبعد 18 كم جنوب الغردقة. تمتد على شاطئ رملي طبيعي نقي. تضم فنادق 5 نجوم وفيلات خاصة وكورنيش تجاري.',
-    distance: '18 كم جنوب الغردقة',
-    address: 'طريق الغردقة–الغردقة الجنوبية، البحر الأحمر',
+    typeLabel: 'Upscale Resort Village',
+    description: 'Luxury resort village 18 km south of Hurghada. Stretches along a pristine natural sandy beach. Home to 5-star hotels, private villas, and a commercial promenade.',
+    distance: '18 km south of Hurghada',
+    address: 'Hurghada–South Hurghada Road, Red Sea',
     google_maps: 'https://maps.google.com/?q=Sahl+Hasheesh+Hurghada+Egypt',
     coords: { lat: 27.1167, lng: 33.9167 },
     rating: 4.8,
@@ -59,27 +59,27 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Oberoi Sahl Hasheesh', 'Rixos Premium', 'Baron Palace', 'Jaz Grand Marsa'],
-    best_for: ['شهر العسل', 'راحة وهدوء', 'غوص', 'عائلات'],
+    best_for: ['Honeymoon', 'Relaxation', 'Diving', 'Families'],
     avg_hotel_egp: '4,000–18,000',
     highlights: [
-      'شاطئ رملي طبيعي خاص نادر في المنطقة',
-      'فيلات فاخرة مع بحيرات سباحة خاصة',
-      'كورنيش تجاري داخلي',
-      'أهدأ من الغردقة وأقل ازدحاماً',
+      'Rare natural private sandy beach in the region',
+      'Luxury villas with private swimming pools',
+      'Internal commercial promenade',
+      'Quieter and less crowded than Hurghada city',
     ],
     image_url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&q=80',
   },
   {
     id: 'makadi-bay',
-    name: 'مكادي باي',
+    name: 'Makadi Bay',
     nameAr: 'مكادي باي',
     city: 'hurghada',
-    region: 'البحر الأحمر',
+    region: 'Red Sea',
     type: 'resort_village',
-    typeLabel: 'قرية سياحية هادئة',
-    description: 'قرية سياحية هادئة وفاخرة تبعد 30 كم جنوب الغردقة. مشهورة بالهدوء التام والشعاب المرجانية الرائعة مباشرة من الشاطئ.',
-    distance: '30 كم جنوب الغردقة',
-    address: 'طريق الغردقة–الغردقة الجنوبية، البحر الأحمر',
+    typeLabel: 'Quiet Luxury Village',
+    description: 'Quiet, upscale resort village 30 km south of Hurghada. Famous for total tranquility and stunning coral reefs directly accessible from the beach.',
+    distance: '30 km south of Hurghada',
+    address: 'Hurghada–South Hurghada Road, Red Sea',
     google_maps: 'https://maps.google.com/?q=Makadi+Bay+Hurghada+Egypt',
     coords: { lat: 26.9667, lng: 33.9833 },
     rating: 4.7,
@@ -91,27 +91,27 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Hyatt Ziva Makadi Bay', 'Iberotel Palace', 'Jaz Makadina', 'Aldiana Club Makadi'],
-    best_for: ['شهر العسل', 'راحة وهدوء', 'غطس من الشاطئ مباشرة', 'عائلات'],
+    best_for: ['Honeymoon', 'Relaxation', 'Shore Diving', 'Families'],
     avg_hotel_egp: '3,500–16,000',
     highlights: [
-      'شعاب مرجانية تبدأ من الشاطئ مباشرة',
-      'لا ضجيج — هادئة ومعزولة',
-      'رياضات مائية متكاملة',
-      'مناسبة جداً للأزواج',
+      'Coral reefs starting directly from the beach',
+      'No noise — quiet and secluded',
+      'Full water sports facilities',
+      'Very suitable for couples',
     ],
     image_url: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&q=80',
   },
   {
     id: 'soma-bay',
-    name: 'سوما باي',
+    name: 'Soma Bay',
     nameAr: 'سوما باي',
     city: 'hurghada',
-    region: 'البحر الأحمر',
+    region: 'Red Sea',
     type: 'resort_village',
-    typeLabel: 'قرية سياحية متميزة',
-    description: 'شبه جزيرة سياحية مستقلة تبعد 45 كم جنوب الغردقة. تمتد على 10 كم² وتضم ملاعب جولف وسبا عالمي ورياضات مائية.',
-    distance: '45 كم جنوب الغردقة',
-    address: 'سوما باي، البحر الأحمر',
+    typeLabel: 'Distinguished Resort Peninsula',
+    description: 'Self-contained resort peninsula 45 km south of Hurghada. Spans 10 km² and features golf courses, a world-class spa, and water sports.',
+    distance: '45 km south of Hurghada',
+    address: 'Soma Bay, Red Sea',
     google_maps: 'https://maps.google.com/?q=Soma+Bay+Hurghada+Egypt',
     coords: { lat: 26.8667, lng: 34.0333 },
     rating: 4.8,
@@ -123,13 +123,13 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Robinson Club', 'Breakers Soma Bay', 'Kempinski Hotel Soma Bay', 'Sheraton Soma Bay'],
-    best_for: ['جولف', 'سبا وعلاج', 'كيت سيرف', 'شهر العسل'],
+    best_for: ['Golf', 'Spa & Wellness', 'Kite Surfing', 'Honeymoon'],
     avg_hotel_egp: '4,000–20,000',
     highlights: [
-      'ملعب جولف دولي 18 حفرة',
-      'سبا "The Cascades" الأفضل في مصر',
-      'شبه جزيرة معزولة — خصوصية تامة',
-      'مركز كيت سيرف رسمي',
+      '18-hole international golf course',
+      '"The Cascades" Spa — best in Egypt',
+      'Secluded peninsula — total privacy',
+      'Official kite surfing center',
     ],
     image_url: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&q=80',
   },
@@ -137,15 +137,15 @@ const VILLAGES = [
   // ─── Marsa Alam Region ─────────────────────────────────────────────
   {
     id: 'marsa-alam',
-    name: 'مرسى علم',
+    name: 'Marsa Alam',
     nameAr: 'مرسى علم',
     city: 'marsa-alam',
-    region: 'البحر الأحمر الجنوبي',
+    region: 'South Red Sea',
     type: 'resort_town',
-    typeLabel: 'مدينة سياحية صاعدة',
-    description: 'وجهة سياحية صاعدة في جنوب البحر الأحمر تبعد 220 كم جنوب الغردقة. تشتهر بأفضل مواقع الغوص في مصر وأهدأ شعاب مرجانية في العالم.',
-    distance: '220 كم جنوب الغردقة',
-    address: 'طريق الغردقة–مرسى علم، البحر الأحمر',
+    typeLabel: 'Rising Resort Town',
+    description: "Emerging tourist destination in southern Red Sea, 220 km south of Hurghada. Famous for Egypt's best diving spots and the world's most pristine coral reefs.",
+    distance: '220 km south of Hurghada',
+    address: 'Hurghada–Marsa Alam Road, Red Sea',
     google_maps: 'https://maps.google.com/?q=Marsa+Alam+Egypt',
     coords: { lat: 25.0667, lng: 34.8833 },
     rating: 4.8,
@@ -157,27 +157,27 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Shams Alam Beach Resort', 'Brayka Bay Resort', 'Lahami Bay Resort', 'Desert Rose Resort'],
-    best_for: ['غوص عالمي المستوى', 'مشاهدة الأخليات', 'هدوء وطبيعة', 'سفاري سباحة'],
+    best_for: ['World-class Diving', 'Dugong Watching', 'Nature & Quiet', 'Snorkel Safari'],
     avg_hotel_egp: '2,000–9,000',
     highlights: [
-      'أفضل مواقع مشاهدة الأخليات (Dugong) في العالم',
-      'شعاب مرجانية بكر لم تتأثر بالسياحة الكثيفة',
-      'مطار دولي (RMF)',
-      'رؤية تحت الماء أوضح من الغردقة وشرم',
+      'Best dugong watching sites in the world',
+      'Virgin coral reefs untouched by mass tourism',
+      'International airport (RMF)',
+      'Clearer underwater visibility than Hurghada or Sharm',
     ],
     image_url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80',
   },
   {
     id: 'hamata',
-    name: 'حماطة',
+    name: 'Hamata',
     nameAr: 'حماطة',
     city: 'marsa-alam',
-    region: 'البحر الأحمر الجنوبي',
+    region: 'South Red Sea',
     type: 'eco_village',
-    typeLabel: 'قرية بيئية هادئة',
-    description: 'قرية بيئية صغيرة في أقصى جنوب البحر الأحمر المصري. للغواصين المحترفين وعشاق الطبيعة البكر.',
-    distance: '350 كم جنوب الغردقة',
-    address: 'حماطة، البحر الأحمر الجنوبي',
+    typeLabel: 'Quiet Eco Village',
+    description: 'Small eco village at the far south of Egypt's Red Sea coast. For experienced divers and lovers of unspoiled nature.',
+    distance: '350 km south of Hurghada',
+    address: 'Hamata, South Red Sea',
     google_maps: 'https://maps.google.com/?q=Hamata+Egypt',
     coords: { lat: 23.95, lng: 35.65 },
     rating: 4.7,
@@ -188,25 +188,25 @@ const VILLAGES = [
     family_friendly: false,
     nightlife: false,
     remote_work: false,
-    hotels: ['Hamata Diving Village', 'Lahami Bay (قريب)'],
-    best_for: ['غوص بكر', 'عزلة وهدوء', 'طبيعة خام'],
+    hotels: ['Hamata Diving Village', 'Lahami Bay (nearby)'],
+    best_for: ['Virgin Diving', 'Seclusion & Quiet', 'Raw Nature'],
     avg_hotel_egp: '800–3,000',
-    highlights: ['شعاب مرجانية لا يُصدق', 'تقريباً بدون سياحة كثيفة', 'جزر دهلك القريبة'],
+    highlights: ['Incredible coral reefs', 'Almost no mass tourism', 'Nearby Dahlak Islands'],
     image_url: 'https://images.unsplash.com/photo-1682687218904-be316a0e6de3?w=600&q=80',
   },
 
   // ─── Sharm El Sheikh Region ────────────────────────────────────────
   {
     id: 'naama-bay',
-    name: 'نعمة باي',
+    name: 'Naama Bay',
     nameAr: 'نعمة باي',
     city: 'sharm-el-sheikh',
-    region: 'جنوب سيناء',
+    region: 'South Sinai',
     type: 'resort_district',
-    typeLabel: 'قلب شرم الشيخ السياحي',
-    description: 'الحي السياحي الأشهر في شرم الشيخ. الكورنيش الرئيسي به أكبر تجمع للمطاعم والنوادي الليلية والمتاجر ومراكز الغوص في سيناء.',
-    distance: 'مركز شرم الشيخ',
-    address: 'نعمة باي، شرم الشيخ، جنوب سيناء',
+    typeLabel: 'Heart of Sharm El Sheikh',
+    description: 'The most famous tourist district in Sharm El Sheikh. The main promenade has the largest concentration of restaurants, nightclubs, shops, and diving centers in Sinai.',
+    distance: 'Sharm El Sheikh center',
+    address: 'Naama Bay, Sharm El Sheikh, South Sinai',
     google_maps: 'https://maps.google.com/?q=Naama+Bay+Sharm+El+Sheikh+Egypt',
     coords: { lat: 27.9105, lng: 34.3295 },
     rating: 4.6,
@@ -218,27 +218,27 @@ const VILLAGES = [
     nightlife: true,
     remote_work: true,
     hotels: ['Hyatt Regency Sharm', 'Hilton Sharm Dreams', 'Le Méridien Villas', 'Ibis Styles'],
-    best_for: ['حياة ليلية', 'غوص', 'تسوق', 'مطاعم متنوعة'],
+    best_for: ['Nightlife', 'Diving', 'Shopping', 'Diverse Dining'],
     avg_hotel_egp: '2,500–12,000',
     highlights: [
-      'أشهر كورنيش في شرم الشيخ',
-      'عشرات مراكز الغوص المعتمدة',
-      'مطاعم دولية متنوعة',
-      'حياة ليلية نشطة',
+      'Most famous promenade in Sharm El Sheikh',
+      'Dozens of certified diving centers',
+      'Diverse international restaurants',
+      'Active nightlife',
     ],
     image_url: 'https://images.unsplash.com/photo-1503917988258-f87a78e3c995?w=600&q=80',
   },
   {
     id: 'nabq',
-    name: 'نبق',
+    name: 'Nabq Bay',
     nameAr: 'نبق',
     city: 'sharm-el-sheikh',
-    region: 'جنوب سيناء',
+    region: 'South Sinai',
     type: 'resort_village',
-    typeLabel: 'قرية سياحية هادئة',
-    description: 'قرية سياحية هادئة شمال شرم الشيخ. تقع بجوار محمية نبق الطبيعية وتتميز بشواطئ خاصة وأجواء عائلية هادئة بعيداً عن صخب نعمة باي.',
-    distance: '18 كم شمال شرم الشيخ',
-    address: 'نبق، شرم الشيخ، جنوب سيناء',
+    typeLabel: 'Quiet Family Village',
+    description: 'Quiet resort village north of Sharm El Sheikh. Located next to Nabq Nature Reserve with private beaches and a calm family atmosphere away from Naama Bay's noise.',
+    distance: '18 km north of Sharm El Sheikh',
+    address: 'Nabq, Sharm El Sheikh, South Sinai',
     google_maps: 'https://maps.google.com/?q=Nabq+Bay+Sharm+El+Sheikh+Egypt',
     coords: { lat: 28.0333, lng: 34.4167 },
     rating: 4.5,
@@ -250,26 +250,26 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Coral Sea Aqua Club', 'Maritim Jolie Ville', 'Tropitel Naama Bay', 'Blue Reef Resort'],
-    best_for: ['عائلات', 'هدوء', 'مشي طبيعي', 'شنورك'],
+    best_for: ['Families', 'Peace & Quiet', 'Nature Walks', 'Snorkeling'],
     avg_hotel_egp: '2,000–8,000',
     highlights: [
-      'بجوار محمية نبق الطبيعية',
-      'شاطئ غابات المانغروف النادرة',
-      'أسعار أقل من نعمة باي',
+      'Adjacent to Nabq Nature Reserve',
+      'Beach with rare mangrove forests',
+      'Lower prices than Naama Bay',
     ],
     image_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80',
   },
   {
     id: 'sharks-bay',
-    name: 'خليج الحوت',
-    nameAr: 'خليج الحوت (Sharks Bay)',
+    name: 'Sharks Bay',
+    nameAr: 'خليج الحوت',
     city: 'sharm-el-sheikh',
-    region: 'جنوب سيناء',
+    region: 'South Sinai',
     type: 'resort_village',
-    typeLabel: 'قرية غوص هادئة',
-    description: 'خليج صغير هادئ بين نعمة باي والمطار. مشهور بين الغواصين بجماله الطبيعي وهدوئه التام. مناسب من يريد هدوء مع قرب من كل شيء.',
-    distance: '5 كم جنوب نعمة باي',
-    address: 'خليج الحوت، شرم الشيخ، جنوب سيناء',
+    typeLabel: 'Quiet Diving Bay',
+    description: 'Small, quiet bay between Naama Bay and the airport. Popular among divers for its natural beauty and total tranquility. Ideal for those wanting peace while staying close to everything.',
+    distance: '5 km south of Naama Bay',
+    address: 'Sharks Bay, Sharm El Sheikh, South Sinai',
     google_maps: 'https://maps.google.com/?q=Sharks+Bay+Sharm+El+Sheikh+Egypt',
     coords: { lat: 27.8667, lng: 34.3 },
     rating: 4.6,
@@ -281,22 +281,22 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Sharks Bay Umbi Diving Village', 'Sol Sharm Hotel'],
-    best_for: ['غوص', 'هدوء', 'شنورك مباشر من الشاطئ'],
+    best_for: ['Diving', 'Quiet Escape', 'Direct Shore Snorkeling'],
     avg_hotel_egp: '1,500–6,000',
-    highlights: ['شعاب مرجانية مباشرة من الشاطئ', 'هادئ وبعيد عن صخب نعمة باي', 'مناسب للغواصين المحترفين'],
+    highlights: ['Coral reefs directly from the beach', 'Quiet and away from Naama Bay noise', 'Suitable for experienced divers'],
     image_url: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=600&q=80',
   },
   {
     id: 'dahab',
-    name: 'دهب',
+    name: 'Dahab',
     nameAr: 'دهب',
     city: 'sharm-el-sheikh',
-    region: 'جنوب سيناء',
+    region: 'South Sinai',
     type: 'beach_village',
-    typeLabel: 'قرية شاطئية كاجوال',
-    description: 'قرية شاطئية بوهيمية فريدة تبعد 90 كم شمال شرم الشيخ. الجنة الحقيقية للغواصين وعشاق الرياح والتسلق على جبل سيناء. أجواء مريحة وأسعار في متناول الجميع.',
-    distance: '90 كم شمال شرم الشيخ',
-    address: 'دهب، جنوب سيناء',
+    typeLabel: 'Casual Beach Village',
+    description: 'Unique bohemian beach village 90 km north of Sharm El Sheikh. True paradise for divers, wind sports lovers, and those climbing Mount Sinai. Relaxed vibes and very affordable prices.',
+    distance: '90 km north of Sharm El Sheikh',
+    address: 'Dahab, South Sinai',
     google_maps: 'https://maps.google.com/?q=Dahab+Egypt',
     coords: { lat: 28.5, lng: 34.5167 },
     rating: 4.8,
@@ -307,15 +307,15 @@ const VILLAGES = [
     family_friendly: false,
     nightlife: true,
     remote_work: true,
-    hotels: ['Nesima Resort', 'Daniela Village', 'Kempinski Soma Bay (قريب)', 'بنسيونات محلية'],
-    best_for: ['غوص البلوهول الشهير', 'كيت سيرف وويند سيرف', 'ميزانية محدودة', 'رحلات بر سيناء', 'عمل عن بعد'],
+    hotels: ['Nesima Resort', 'Daniela Village', 'Local guesthouses'],
+    best_for: ['Blue Hole Diving', 'Kite & Wind Surfing', 'Budget Travel', 'Sinai Desert Trips', 'Remote Work'],
     avg_hotel_egp: '400–4,000',
     highlights: [
-      'The Blue Hole — أشهر موقع غوص في العالم',
-      'Canyon & Islands — مواقع غوص استثنائية',
-      'أسعار أوروبية تنزل 60-80% هنا',
-      'كافيهات تطل على البحر',
-      'باص يومي من شرم بـ 100 جنيه',
+      'The Blue Hole — most famous dive site in the world',
+      'Canyon & Islands — exceptional dive spots',
+      'European prices drop 60–80% here',
+      'Seafront cafes & chill atmosphere',
+      'Daily bus from Sharm for ~100 EGP',
     ],
     image_url: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80',
   },
@@ -323,15 +323,15 @@ const VILLAGES = [
   // ─── North Coast ───────────────────────────────────────────────────
   {
     id: 'marina',
-    name: 'مارينا العلمين',
-    nameAr: 'مارينا',
+    name: 'Marina El Alamein',
+    nameAr: 'مارينا العلمين',
     city: 'north-coast',
-    region: 'الساحل الشمالي',
+    region: 'North Coast',
     type: 'resort_village',
-    typeLabel: 'قرية صيفية راقية',
-    description: 'أشهر قرية سياحية على الساحل الشمالي المصري. تبعد 120 كم غرب الإسكندرية. ملجأ المصريين صيفاً بشواطئ رملية بيضاء وأجواء حيوية ليلية.',
-    distance: '120 كم غرب الإسكندرية / 340 كم غرب القاهرة',
-    address: 'مارينا، الساحل الشمالي، مطروح',
+    typeLabel: 'Upscale Summer Village',
+    description: 'The most famous resort village on Egypt's North Coast, 120 km west of Alexandria. A summer haven for Egyptians with white sandy beaches and vibrant nightlife.',
+    distance: '120 km west of Alexandria / 340 km west of Cairo',
+    address: 'Marina, North Coast, Matrouh',
     google_maps: 'https://maps.google.com/?q=Marina+North+Coast+Egypt',
     coords: { lat: 30.8333, lng: 28.9667 },
     rating: 4.3,
@@ -343,27 +343,27 @@ const VILLAGES = [
     nightlife: true,
     remote_work: false,
     hotels: ['Marassi Hotels', 'Hacienda Bay', 'Palm Hills North Coast'],
-    best_for: ['صيف مصري', 'عائلات', 'شباب', 'حياة ليلية صيفية'],
+    best_for: ['Egyptian Summer', 'Families', 'Young Travelers', 'Summer Nightlife'],
     avg_hotel_egp: '3,000–15,000',
     highlights: [
-      'أفضل شواطئ رملية في مصر',
-      'مياه المتوسط الفيروزية',
-      'مولات وترفيه متكامل',
-      'أنشط صيفاً (يونيو–أغسطس)',
+      'Best sandy beaches in Egypt',
+      'Turquoise Mediterranean waters',
+      'Malls and full entertainment',
+      'Peak season: June–August',
     ],
     image_url: 'https://images.unsplash.com/photo-1499678329028-101435549a4e?w=600&q=80',
   },
   {
     id: 'ain-sokhna',
-    name: 'العين السخنة',
+    name: 'Ain Sokhna',
     nameAr: 'العين السخنة',
     city: 'suez',
-    region: 'خليج السويس',
+    region: 'Gulf of Suez',
     type: 'resort_area',
-    typeLabel: 'منتجع قريب من القاهرة',
-    description: 'أقرب منتجع بحري للقاهرة — يبعد فقط 120 كم. تقع على خليج السويس وتحتضن عشرات القرى السياحية. وجهة عطلة نهاية الأسبوع للقاهريين.',
-    distance: '120 كم جنوب شرق القاهرة',
-    address: 'العين السخنة، خليج السويس، محافظة السويس',
+    typeLabel: 'Closest Resort to Cairo',
+    description: 'The closest beach resort to Cairo — only 120 km away. Located on the Gulf of Suez with dozens of resort villages. Popular weekend getaway for Cairenes.',
+    distance: '120 km southeast of Cairo',
+    address: 'Ain Sokhna, Gulf of Suez, Suez Governorate',
     google_maps: 'https://maps.google.com/?q=Ain+Sokhna+Egypt',
     coords: { lat: 29.5667, lng: 32.3333 },
     rating: 4.2,
@@ -375,36 +375,36 @@ const VILLAGES = [
     nightlife: false,
     remote_work: false,
     hotels: ['Stella di Mare', 'Porto Sokhna', 'Pyramids Hills', 'La Sirena'],
-    best_for: ['قرب من القاهرة', 'عائلات', 'عطل قصيرة', 'استرخاء'],
+    best_for: ['Close to Cairo', 'Families', 'Short Breaks', 'Relaxation'],
     avg_hotel_egp: '1,500–8,000',
     highlights: [
-      'قريب جداً من القاهرة (ساعة ونصف)',
-      'عشرات القرى السياحية المتنوعة',
-      'مياه خليج السويس دافئة',
-      'موسم ممتد طول السنة',
+      'Very close to Cairo (1.5 hours)',
+      'Dozens of diverse resort villages',
+      'Warm Gulf of Suez waters',
+      'Year-round season',
     ],
     image_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
   },
 ];
 
 const REGIONS = [
-  { id: 'all', label: 'الكل' },
-  { id: 'hurghada', label: '🌊 الغردقة' },
-  { id: 'sharm-el-sheikh', label: '🤿 شرم الشيخ' },
-  { id: 'marsa-alam', label: '🐠 مرسى علم' },
-  { id: 'north-coast', label: '🏖️ الساحل الشمالي' },
-  { id: 'suez', label: '🌅 السخنة' },
+  { id: 'all', label: 'All' },
+  { id: 'hurghada', label: '🌊 Hurghada' },
+  { id: 'sharm-el-sheikh', label: '🤿 Sharm El Sheikh' },
+  { id: 'marsa-alam', label: '🐠 Marsa Alam' },
+  { id: 'north-coast', label: '🏖️ North Coast' },
+  { id: 'suez', label: '🌅 Ain Sokhna' },
 ];
 
-const PRICE_LABELS = { budget: 'اقتصادي', moderate: 'متوسط', premium: 'راقي', luxury: 'فاخر' };
+const PRICE_LABELS = { budget: 'Budget', moderate: 'Moderate', premium: 'Premium', luxury: 'Luxury' };
 const PRICE_COLORS = { budget: 'bg-success/10 text-success', moderate: 'bg-blue-500/10 text-blue-600', premium: 'bg-amber-500/10 text-amber-700', luxury: 'bg-purple-500/10 text-purple-700' };
 
 const FEATURE_ICONS = [
-  { key: 'diving', label: 'غوص', icon: '🤿' },
-  { key: 'kite_surf', label: 'كيت سيرف', icon: '🪁' },
-  { key: 'family_friendly', label: 'عائلي', icon: '👨‍👩‍👧' },
-  { key: 'nightlife', label: 'حياة ليلية', icon: '🎉' },
-  { key: 'remote_work', label: 'عمل عن بعد', icon: '💻' },
+  { key: 'diving', label: 'Diving', icon: '🤿' },
+  { key: 'kite_surf', label: 'Kite Surf', icon: '🪁' },
+  { key: 'family_friendly', label: 'Family Friendly', icon: '👨‍👩‍👧' },
+  { key: 'nightlife', label: 'Nightlife', icon: '🎉' },
+  { key: 'remote_work', label: 'Remote Work', icon: '💻' },
 ];
 
 function VillageCard({ v }) {
@@ -467,22 +467,22 @@ function VillageCard({ v }) {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-1">
             <DollarSign className="w-3.5 h-3.5 text-accent" />
-            <span className="text-xs text-muted-foreground">متوسط الفندق:</span>
-            <span className="text-xs font-bold text-accent">{v.avg_hotel_egp} EGP/ليلة</span>
+            <span className="text-xs text-muted-foreground">Avg. hotel:</span>
+            <span className="text-xs font-bold text-accent">{v.avg_hotel_egp} EGP/night</span>
           </div>
         </div>
 
         {/* Expand/Collapse */}
         <button onClick={() => setExpanded(!expanded)}
           className="text-[11px] text-accent font-bold mb-2 hover:underline">
-          {expanded ? '▲ أقل تفاصيل' : '▼ تفاصيل أكثر + فنادق'}
+          {expanded ? '▲ Less details' : '▼ More details + Hotels'}
         </button>
 
         {expanded && (
           <div className="space-y-3 mt-2 border-t border-border/30 pt-3">
             {/* Highlights */}
             <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">أبرز المميزات</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">Highlights</p>
               <ul className="space-y-1">
                 {v.highlights.map((h, i) => (
                   <li key={i} className="flex items-start gap-1.5 text-xs text-muted-foreground">
@@ -494,7 +494,7 @@ function VillageCard({ v }) {
 
             {/* Best for */}
             <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">الأفضل لـ</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">Best For</p>
               <div className="flex flex-wrap gap-1">
                 {v.best_for.map((b, i) => (
                   <span key={i} className="text-[10px] bg-accent/10 text-accent px-2 py-0.5 rounded-full">{b}</span>
@@ -504,7 +504,7 @@ function VillageCard({ v }) {
 
             {/* Hotels */}
             <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">فنادق بارزة</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1.5">Notable Hotels</p>
               <div className="flex flex-wrap gap-1">
                 {v.hotels.map((h, i) => (
                   <span key={i} className="text-[10px] bg-secondary px-2 py-0.5 rounded-full">{h}</span>
@@ -518,7 +518,7 @@ function VillageCard({ v }) {
         <a href={v.google_maps} target="_blank" rel="noopener noreferrer"
           className="mt-3 flex items-center justify-center gap-2 w-full bg-success/10 border border-success/20 text-success rounded-xl py-2 text-xs font-bold hover:bg-success/20 transition-all">
           <MapPin className="w-3.5 h-3.5" />
-          عرض على خريطة جوجل
+          View on Google Maps
           <ExternalLink className="w-3 h-3" />
         </a>
       </div>
@@ -532,13 +532,13 @@ export default function TouristVillages() {
   const [filter, setFilter] = useState('all');
 
   useSEO({
-    title: 'القرى السياحية في مصر 2026 — الغردقة، شرم الشيخ، مرسى علم، الساحل الشمالي',
-    description: 'دليل شامل لأفضل القرى والمنتجعات السياحية في مصر 2026. معلومات كاملة، عناوين، خرائط، فنادق وأسعار.',
+    title: 'Tourist Villages in Egypt 2026 — Hurghada, Sharm El Sheikh, Marsa Alam, North Coast',
+    description: 'Complete guide to the best tourist villages and resorts in Egypt 2026. Full info, addresses, maps, hotels and prices.',
   });
 
   const filtered = VILLAGES.filter(v => {
     const matchRegion = region === 'all' || v.city === region;
-    const matchSearch = !search || v.name.includes(search) || v.nameAr.includes(search) || v.region.includes(search);
+    const matchSearch = !search || v.name.toLowerCase().includes(search.toLowerCase()) || v.region.toLowerCase().includes(search.toLowerCase());
     const matchFilter =
       filter === 'all' ? true :
       filter === 'diving' ? v.diving :
@@ -557,18 +557,18 @@ export default function TouristVillages() {
           <Sun className="w-6 h-6 text-blue-500" />
         </div>
         <div>
-          <h1 className="text-2xl md:text-3xl font-black tracking-tight">القرى السياحية في مصر</h1>
-          <p className="text-sm text-muted-foreground">دليل شامل · {VILLAGES.length} وجهة · محدث أبريل 2026</p>
+          <h1 className="text-2xl md:text-3xl font-black tracking-tight">Tourist Villages in Egypt</h1>
+          <p className="text-sm text-muted-foreground">Complete guide · {VILLAGES.length} destinations · Updated April 2026</p>
         </div>
       </div>
 
       {/* Stats bar */}
       <div className="grid grid-cols-4 gap-2 mb-6">
         {[
-          { label: 'قرى وتشعبات', value: VILLAGES.length, color: 'text-blue-500' },
-          { label: 'مواقع غوص', value: VILLAGES.filter(v => v.diving).length, color: 'text-cyan-500' },
-          { label: 'عائلي', value: VILLAGES.filter(v => v.family_friendly).length, color: 'text-success' },
-          { label: 'كيت سيرف', value: VILLAGES.filter(v => v.kite_surf).length, color: 'text-amber-500' },
+          { label: 'Villages & Resorts', value: VILLAGES.length, color: 'text-blue-500' },
+          { label: 'Dive Sites', value: VILLAGES.filter(v => v.diving).length, color: 'text-cyan-500' },
+          { label: 'Family Friendly', value: VILLAGES.filter(v => v.family_friendly).length, color: 'text-success' },
+          { label: 'Kite Surfing', value: VILLAGES.filter(v => v.kite_surf).length, color: 'text-amber-500' },
         ].map((s, i) => (
           <div key={i} className="bg-card rounded-xl border border-border/50 p-3 text-center">
             <p className={`text-xl font-black ${s.color}`}>{s.value}</p>
@@ -582,16 +582,15 @@ export default function TouristVillages() {
         <Search className="absolute right-3 top-3 w-4 h-4 text-muted-foreground" />
         <input
           type="text"
-          placeholder="ابحث عن قرية سياحية..."
+          placeholder="Search destinations..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full bg-card border border-border/50 rounded-xl px-4 py-2.5 pr-10 text-sm outline-none focus:border-accent/50 text-right"
-          dir="rtl"
+          className="w-full bg-card border border-border/50 rounded-xl px-4 py-2.5 pr-10 text-sm outline-none focus:border-accent/50"
         />
       </div>
 
       {/* Region filter */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-4" dir="rtl">
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-4">
         {REGIONS.map(r => (
           <button key={r.id} onClick={() => setRegion(r.id)}
             className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all ${region === r.id ? 'bg-accent text-accent-foreground border-accent' : 'bg-card border-border text-muted-foreground'}`}>
@@ -601,14 +600,14 @@ export default function TouristVillages() {
       </div>
 
       {/* Feature filter */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-6" dir="rtl">
+      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-6">
         {[
-          { id: 'all', label: 'الكل' },
-          { id: 'diving', label: '🤿 غوص' },
-          { id: 'kite', label: '🪁 كيت سيرف' },
-          { id: 'family', label: '👨‍👩‍👧 عائلي' },
-          { id: 'budget', label: '💚 اقتصادي' },
-          { id: 'luxury', label: '⭐ فاخر' },
+          { id: 'all', label: 'All' },
+          { id: 'diving', label: '🤿 Diving' },
+          { id: 'kite', label: '🪁 Kite Surf' },
+          { id: 'family', label: '👨‍👩‍👧 Family' },
+          { id: 'budget', label: '💚 Budget' },
+          { id: 'luxury', label: '⭐ Luxury' },
         ].map(f => (
           <button key={f.id} onClick={() => setFilter(f.id)}
             className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${filter === f.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-card border-border text-muted-foreground'}`}>
@@ -618,15 +617,15 @@ export default function TouristVillages() {
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-muted-foreground mb-4" dir="rtl">
-        عرض {filtered.length} من {VILLAGES.length} وجهة
+      <p className="text-xs text-muted-foreground mb-4">
+        Showing {filtered.length} of {VILLAGES.length} destinations
       </p>
 
       {/* Grid */}
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-muted-foreground">
           <Sun className="w-10 h-10 mx-auto mb-3 opacity-30" />
-          <p>لا توجد نتائج لهذا البحث</p>
+          <p>No results found</p>
         </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-5">
@@ -636,9 +635,9 @@ export default function TouristVillages() {
 
       {/* Tip */}
       <div className="mt-8 bg-accent/10 border border-accent/20 rounded-2xl p-4 text-center">
-        <p className="text-sm font-bold mb-1">💡 نصيحة Locali Egypt</p>
+        <p className="text-sm font-bold mb-1">💡 Locali Egypt Tip</p>
         <p className="text-xs text-muted-foreground leading-relaxed">
-          استخدم كود <strong>LOCALI</strong> عند الحجز مع أي مرشد أو شركة تور محلية للحصول على خصم 10%
+          Use code <strong>LOCALI</strong> when booking with any local guide or tour company for a 10% discount.
         </p>
       </div>
     </div>
