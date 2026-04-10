@@ -101,7 +101,7 @@ const SAMPLE_HORSES = [
     description: 'Desert ride through Nubian landscape, visit traditional village. Sunset views over Nile. Nubian tea.',
     photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: null,
-    booking_url: 'https://www.viator.com/Aswan-tours/Horseback-Riding/d4776-g217/',
+    booking_url: 'https://www.viator.com/Egypt/d798-ttd',
     is_featured: false,
     status: 'approved',
   },

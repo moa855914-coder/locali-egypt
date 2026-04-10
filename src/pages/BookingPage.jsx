@@ -190,7 +190,7 @@ function TourCard({ tour }) {
       {/* CTA */}
       <div className="px-4 pb-4 space-y-2">
         <a
-          href={tour.viator_url}
+          href="https://www.viator.com/Egypt/d798-ttd"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"

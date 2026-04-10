@@ -432,7 +432,7 @@ function OperatorCard({ op }) {
               <div key={i} className="bg-secondary/50 rounded-xl p-3">
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <p className="font-bold text-sm">{pkg.name}</p>
-                  <a href={`https://www.viator.com/Egypt-tours/d722/?sortOrder=TOP_RATED&text=${encodeURIComponent(pkg.name)}`}
+                  <a href="https://www.viator.com/Egypt/d798-ttd"
                     target="_blank" rel="noopener noreferrer"
                     className="text-[10px] font-bold text-accent hover:underline shrink-0">
                     Check price →
@@ -456,7 +456,7 @@ function OperatorCard({ op }) {
         )}
 
         {/* CTAs */}
-        <a href={`https://www.viator.com/Egypt-tours/d722/?sortOrder=TOP_RATED&text=${encodeURIComponent(op.company_name)}`}
+        <a href="https://www.viator.com/Egypt/d798-ttd"
           target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity mb-2">
           Check availability on Viator (Viator) →

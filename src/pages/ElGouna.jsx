@@ -117,7 +117,7 @@ function HotelCard({ h }) {
 }
 
 function ActivityCard({ a }) {
-  const viatorUrl = `https://www.viator.com/El-Gouna-tours/d97451/?sortOrder=TOP_RATED&text=${encodeURIComponent(a.name)}`;
+  const viatorUrl = 'https://www.viator.com/Egypt/d798-ttd';
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-3">
       <div className="flex items-start justify-between gap-2 mb-1">

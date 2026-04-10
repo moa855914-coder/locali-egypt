@@ -40,7 +40,7 @@ const CITIES = [
 
 function RestaurantCard({ r }) {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${r.maps_query}`;
-  const viatorUrl = `https://www.viator.com/search?text=${r.viator_search}`;
+  const viatorUrl = 'https://www.viator.com/Egypt/d798-ttd';
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
       {r.photo && <img src={r.photo} alt={r.name} className="w-full h-36 object-cover" />}
