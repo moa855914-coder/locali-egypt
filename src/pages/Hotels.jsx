@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { ShieldCheck, Star, Globe, ExternalLink } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import { HOTELS_BY_CITY } from '../lib/elGounaContent';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 const CITY_LABELS = {
   'el-gouna': '🌊 El Gouna',
@@ -25,11 +26,12 @@ function FeaturePill({ label }) {
 }
 
 function HotelCard({ hotel, city }) {
+  const [open, setOpen] = useState(false);
   const bookingComUrl = `https://www.booking.com/search.html?ss=${encodeURIComponent(hotel.name + ' ' + (city || ''))}`;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.name + ' ' + (city || '') + ' Egypt')}`;
 
   return (
-    <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border/50 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setOpen(true)}>
       {/* Header */}
       <div className="p-4 border-b border-border/30">
         <div className="flex items-start justify-between gap-2 mb-2">
@@ -104,6 +106,7 @@ function HotelCard({ hotel, city }) {
           Find on Google Maps
         </a>
       </div>
+      {open && <PlaceDetailModal place={{ name: hotel.name, description: hotel.desc, city, type: 'hotel' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

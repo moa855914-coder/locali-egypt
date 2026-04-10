@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Search, X, Plus, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -109,6 +110,7 @@ const SAMPLE_HORSES = [
 ];
 
 function ExperienceCard({ exp }) {
+  const [open, setOpen] = useState(false);
   const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
   const CITY_HORSE_VIATOR = {
     hurghada: 'https://www.viator.com/Hurghada-tours/Outdoor-Activities/d5323-g28/',
@@ -120,7 +122,7 @@ function ExperienceCard({ exp }) {
   const bookingUrl = CITY_HORSE_VIATOR[exp.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">
+    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer" onClick={() => setOpen(true)}>
       <div className="relative h-52 overflow-hidden">
         <img src={photos[0]} alt={exp.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -152,6 +154,7 @@ function ExperienceCard({ exp }) {
         <GoogleReviewsButton name={exp.title} className="mb-2" />
         <BookingButtons activity={exp.title} city={CITY_LABELS[exp.city] || exp.city} />
       </div>
+      {open && <PlaceDetailModal place={{ name: exp.title, description: exp.description, photo: photos[0], city: CITY_LABELS[exp.city] || exp.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

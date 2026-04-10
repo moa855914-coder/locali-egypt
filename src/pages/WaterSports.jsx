@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, MapPin, Star, Activity, AlertTriangle } from 'lucide-react';
+import { Star, Activity, AlertTriangle } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 // Real water sports prices verified from Viator, GetYourGuide, local operators — April 2026
 const WATER_SPORTS = {
@@ -33,8 +34,9 @@ const CITIES = [
 ];
 
 function SportCard({ s, city }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4">
+    <div className="bg-white rounded-2xl border border-gray-100 p-4 cursor-pointer hover:shadow-md transition-shadow" onClick={() => setOpen(true)}>
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="font-bold text-sm">{s.name}</h3>
@@ -44,14 +46,11 @@ function SportCard({ s, city }) {
             <span className="text-[10px] text-gray-400">({s.reviews} reviews)</span>
           </div>
         </div>
-        <div className="text-right">
-          <p className="text-lg font-black text-blue-600">{s.price_egp.toLocaleString()} EGP</p>
-          <p className="text-[10px] text-gray-500">{s.source}</p>
-        </div>
       </div>
       <p className="text-xs text-gray-600 mb-2">{s.desc}</p>
       <p className="text-[10px] text-gray-500 mb-3">⏱️ {s.duration}</p>
       <GoogleReviewsButton name={s.name} />
+      {open && <PlaceDetailModal place={{ name: s.name, description: s.desc, city: city || 'Egypt', type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

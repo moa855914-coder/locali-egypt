@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -116,6 +117,7 @@ const SAMPLE_BOATS = [
 
 function BoatCard({ boat }) {
   const [imgIdx, setImgIdx] = useState(0);
+  const [open, setOpen] = useState(false);
   const photos = boat.photos?.length ? boat.photos : ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'];
   const CITY_BOAT_VIATOR = {
     hurghada: 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
@@ -127,7 +129,7 @@ function BoatCard({ boat }) {
   const bookingUrl = CITY_BOAT_VIATOR[boat.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">
+    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer" onClick={() => setOpen(true)}>
       <div className="relative h-48 overflow-hidden">
         <img src={photos[imgIdx]} alt={boat.boat_name} className="w-full h-full object-cover" />
         <div className="absolute top-3 left-3 flex gap-2">
@@ -162,7 +164,7 @@ function BoatCard({ boat }) {
         <GoogleReviewsButton name={boat.boat_name} className="mb-2" />
         <BookingButtons activity={boat.boat_name} city={CITY_LABELS[boat.city] || boat.city} />
       </div>
-
+      {open && <PlaceDetailModal place={{ name: boat.boat_name, description: boat.description, photo: photos[0], city: CITY_LABELS[boat.city] || boat.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, MapPin, Star, Waves, Sun } from 'lucide-react';
+import { Star, Waves } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 // Real beach entry fees verified from local sources, Google Maps — April 2026
 const BEACH_CLUBS = {
@@ -28,8 +29,9 @@ const CITIES = [
 ];
 
 function BeachCard({ b }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4">
+    <div className="bg-white rounded-2xl border border-gray-100 p-4 cursor-pointer hover:shadow-md transition-shadow" onClick={() => setOpen(true)}>
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <div className="flex items-center gap-2">
@@ -54,6 +56,7 @@ function BeachCard({ b }) {
         {b.car_fee && <span className="text-xs text-gray-500">+ {b.car_fee} EGP car</span>}
       </div>
       <GoogleReviewsButton name={b.name} />
+      {open && <PlaceDetailModal place={{ name: b.name, description: b.desc, city: 'Egypt', type: 'place' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

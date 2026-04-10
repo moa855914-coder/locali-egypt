@@ -3,6 +3,7 @@ import { Search, MapPin, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
 import BookingButtons from '../components/BookingButtons';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 // Data sourced from Google Places / TripAdvisor — phone & prices link to verified external sources
 const SAMPLE_RESTAURANTS = {
@@ -40,16 +41,10 @@ const CITIES = [
 ];
 
 function RestaurantCard({ r }) {
+  const [open, setOpen] = useState(false);
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${r.maps_query}`;
-  const CITY_FOOD_VIATOR = {
-    hurghada: 'https://www.viator.com/Hurghada-tours/Food-and-Drink/d5323-g9/',
-    'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Food-and-Drink/d832-g9/',
-    luxor: 'https://www.viator.com/Luxor-tours/Food-and-Drink/d957-g9/',
-    aswan: 'https://www.viator.com/Aswan-tours/Food-and-Drink/d4776-g9/',
-  };
-  const viatorUrl = CITY_FOOD_VIATOR[r.city] || Object.values(CITY_FOOD_VIATOR)[0];
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all cursor-pointer" onClick={() => setOpen(true)}>
       {r.photo && <img src={r.photo} alt={r.name} className="w-full h-36 object-cover" />}
       <div className="p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -75,6 +70,7 @@ function RestaurantCard({ r }) {
         <BookingButtons activity={r.name + ' food tour'} city={r.city ? r.city.replace('-', ' ') : 'Egypt'} />
       </div>
       </div>
+      {open && <PlaceDetailModal place={{ name: r.name, description: r.desc, photo: r.photo, city: r.city ? r.city.replace('-', ' ') : 'Egypt', type: 'place' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

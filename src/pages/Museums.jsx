@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MapPin, Star, Clock, Users } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 // Real museum ticket prices from official Egyptian government sources — April 2026
 const MUSEUMS = [
@@ -78,8 +79,9 @@ const MUSEUMS = [
 ];
 
 function MuseumCard({ m }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setOpen(true)}>
       {m.photo && <img src={m.photo} alt={m.name} className="w-full h-40 object-cover" />}
       <div className="p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -92,7 +94,6 @@ function MuseumCard({ m }) {
           <p className="text-[10px] text-gray-400">{m.reviews} reviews</p>
         </div>
       </div>
-
       <div className="space-y-2 mb-3">
         <div className="bg-green-50 rounded-xl p-3">
           <p className="text-[10px] font-bold text-green-700 mb-1">💰 Ticket Prices (2026)</p>
@@ -102,7 +103,6 @@ function MuseumCard({ m }) {
             <p className="text-gray-500"><strong>Egyptian:</strong> {m.ticket_egyptian_adult} EGP</p>
           </div>
         </div>
-
         <div className="flex gap-2">
           <div className="flex-1 bg-blue-50 rounded-xl p-2 text-center">
             <Clock className="w-3 h-3 text-blue-600 mx-auto mb-0.5" />
@@ -113,7 +113,6 @@ function MuseumCard({ m }) {
             <p className="text-[10px] text-purple-600 font-bold">{m.duration}</p>
           </div>
         </div>
-
         <div>
           <p className="text-[10px] font-bold text-gray-700 mb-1">Highlights:</p>
           <div className="flex flex-wrap gap-1">
@@ -123,10 +122,10 @@ function MuseumCard({ m }) {
           </div>
         </div>
       </div>
-
       <p className="text-[10px] text-gray-400 mb-3">📌 Source: {m.source}</p>
       <GoogleReviewsButton name={m.name} />
       </div>
+      {open && <PlaceDetailModal place={{ name: m.name, description: m.highlights?.join('. '), photo: m.photo, city: m.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }

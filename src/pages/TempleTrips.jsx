@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, X, MapPin, Clock, Star, Info } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
+import PlaceDetailModal from '../components/PlaceDetailModal';
 
 // All prices verified from official Egyptian government & major booking platforms
 // Sources: Ministry of Tourism Egypt (mota.gov.eg), GetYourGuide, Viator, TripAdvisor — April 2026
@@ -242,10 +243,11 @@ const CITY_TEMPLE_VIATOR = {
 
 function ActivityCard({ act }) {
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
   const viatorUrl = CITY_TEMPLE_VIATOR[act.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
+    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden cursor-pointer" onClick={() => setOpen(true)}>
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex items-start gap-2">
@@ -303,6 +305,7 @@ function ActivityCard({ act }) {
           </div>
         )}
       </div>
+      {open && <PlaceDetailModal place={{ name: act.title, description: act.description, city: CITY_LABELS[act.city] || act.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }
