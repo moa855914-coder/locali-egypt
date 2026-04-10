@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import { generateTrackingCode } from '../lib/constants';
-import { Phone, ShieldCheck, Star, ExternalLink, Copy, Check, CreditCard } from 'lucide-react';
-import PaymentModal from '../components/PaymentModal';
-
-const WHATSAPP_BASE = 'https://wa.me/';
+import { ShieldCheck, Star, ExternalLink } from 'lucide-react';
 
 const TOURS = [
   {
@@ -15,10 +11,10 @@ const TOURS = [
     price_egp: 1200,
     price_usd: 23,
     duration: '8 hours',
-    phone: '201001234567',
     rating: 4.8,
     verified: true,
     highlights: ['Giftun Island reef', 'Lunch on boat', 'Equipment included', 'English-speaking guide'],
+    viator_url: 'https://www.viator.com/Hurghada-tours/Snorkeling/d5323-g12/',
   },
   {
     city: 'hurghada',
@@ -28,10 +24,10 @@ const TOURS = [
     price_egp: 1000,
     price_usd: 19,
     duration: '3 hours',
-    phone: '201009876543',
     rating: 4.6,
     verified: true,
     highlights: ['Sunset views', 'Bedouin camp', 'Tea ceremony', 'Photo stops'],
+    viator_url: 'https://www.viator.com/Hurghada-tours/4WD-ATV-and-Off-Road-Tours/d5323-g223/',
   },
   {
     city: 'sharm-el-sheikh',
@@ -41,10 +37,10 @@ const TOURS = [
     price_egp: 1800,
     price_usd: 34,
     duration: 'Full day',
-    phone: '201112345678',
     rating: 4.9,
     verified: true,
     highlights: ['2 dive sites', 'PADI certified', 'All equipment', 'Lunch included'],
+    viator_url: 'https://www.viator.com/Sharm-el-Sheikh-tours/Scuba-Diving/d832-g15/',
   },
   {
     city: 'sharm-el-sheikh',
@@ -54,10 +50,10 @@ const TOURS = [
     price_egp: 1400,
     price_usd: 26,
     duration: '8 hours (overnight)',
-    phone: '201123456789',
     rating: 4.7,
     verified: true,
     highlights: ['Sunrise at summit', 'Bedouin guide', 'Camel option', 'St. Catherine Monastery visit'],
+    viator_url: 'https://www.viator.com/Sharm-el-Sheikh-tours/Cultural-Tours/d832-g28/',
   },
   {
     city: 'luxor',
@@ -67,10 +63,10 @@ const TOURS = [
     price_egp: 1600,
     price_usd: 30,
     duration: '6 hours',
-    phone: '201234567890',
     rating: 4.9,
     verified: true,
     highlights: ['3 tombs included', 'Licensed Egyptologist', 'Private AC car', 'Skip-the-line entry'],
+    viator_url: 'https://www.viator.com/Luxor-tours/Historical-Historical-Tours/d957-g28/',
   },
   {
     city: 'luxor',
@@ -80,10 +76,10 @@ const TOURS = [
     price_egp: 5500,
     price_usd: 103,
     duration: '45–60 min flight',
-    phone: '201345678901',
     rating: 4.8,
     verified: true,
     highlights: ['ECAA certified', 'Insurance included', 'Hotel pickup', 'Certificate given'],
+    viator_url: 'https://www.viator.com/Luxor-tours/Air-Tours/d957-g11/',
   },
   {
     city: 'aswan',
@@ -93,10 +89,10 @@ const TOURS = [
     price_egp: 3200,
     price_usd: 60,
     duration: '8 hours',
-    phone: '201456789012',
     rating: 4.9,
     verified: true,
     highlights: ['Entry tickets included', 'AC transport', 'English guide', 'Dawn light photography'],
+    viator_url: 'https://www.viator.com/Aswan-tours/Historical-Historical-Tours/d4776-g28/',
   },
   {
     city: 'aswan',
@@ -106,10 +102,10 @@ const TOURS = [
     price_egp: 600,
     price_usd: 11,
     duration: '2 hours',
-    phone: '201567890123',
     rating: 4.5,
     verified: true,
     highlights: ['Botanical garden stop', 'Nubian music', 'Sunset views', 'Tea served'],
+    viator_url: 'https://www.viator.com/Aswan-tours/Cruises-Water-Tours/d4776-g63/',
   },
   {
     city: 'el-gouna',
@@ -119,10 +115,10 @@ const TOURS = [
     price_egp: 3000,
     price_usd: 56,
     duration: '3 hours',
-    phone: '201678901234',
     rating: 4.7,
     verified: true,
     highlights: ['IKO certified instructor', 'Equipment included', 'Calm lagoon', 'Video recording'],
+    viator_url: 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
   },
   {
     city: 'el-gouna',
@@ -132,10 +128,10 @@ const TOURS = [
     price_egp: 1200,
     price_usd: 23,
     duration: '4 hours',
-    phone: '201789012345',
     rating: 4.6,
     verified: true,
     highlights: ['Snorkeling stop', 'Island BBQ', 'Marine guide', 'Life jackets provided'],
+    viator_url: 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
   },
 ];
 
@@ -147,21 +143,8 @@ const CITY_LABELS = {
   'el-gouna': 'El Gouna',
 };
 
-function TourCard({ tour, lang }) {
-  const [code] = useState(() => generateTrackingCode(tour.city, 'TOUR'));
-  const [copied, setCopied] = useState(false);
-  const [showPayment, setShowPayment] = useState(false);
-
-  const whatsappMsg = encodeURIComponent(
-    `Hello! I'd like to book: "${tour.name}" via Locali Egypt.\nTracking Code: ${code}\nDuration: ${tour.duration}\nPrice: ${tour.price_egp} EGP (~$${tour.price_usd} USD)\nPlease confirm availability.`
-  );
-  const whatsappUrl = `${WHATSAPP_BASE}${tour.phone}?text=${whatsappMsg}`;
-
-  const copyCode = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+function TourCard({ tour }) {
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tour.name + ' ' + (CITY_LABELS[tour.city] || tour.city) + ' Egypt')}`;
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
@@ -204,40 +187,26 @@ function TourCard({ tour, lang }) {
         <span>⏱ {tour.duration}</span>
       </div>
 
-      {/* Tracking code */}
-      <div className="mx-4 mb-3 bg-secondary/60 rounded-xl px-3 py-2 flex items-center justify-between gap-2">
-        <div>
-          <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Your Tracking Code</p>
-          <p className="text-xs font-mono font-bold text-foreground">{code}</p>
-        </div>
-        <button onClick={copyCode} className="p-1.5 rounded-lg hover:bg-background transition-colors">
-          {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5 text-muted-foreground" />}
-        </button>
-      </div>
-
       {/* CTA */}
       <div className="px-4 pb-4 space-y-2">
-        <button
-          onClick={() => setShowPayment(true)}
-          className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
-        >
-          <CreditCard className="w-4 h-4" />
-          Book & Pay Now
-        </button>
         <a
-          href={whatsappUrl}
+          href={tour.viator_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-success/10 text-success border border-success/30 py-2.5 rounded-xl text-sm font-bold hover:bg-success/20 transition-colors"
+          className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
         >
-          <Phone className="w-4 h-4" />
-          WhatsApp Only
-          <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+          <ExternalLink className="w-4 h-4" />
+          Book on Viator
+        </a>
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors"
+        >
+          Find contact on Google Maps →
         </a>
       </div>
-      {showPayment && (
-        <PaymentModal tour={tour} trackingCode={code} onClose={() => setShowPayment(false)} />
-      )}
     </div>
   );
 }
@@ -257,13 +226,8 @@ export default function BookingPage() {
   return (
     <div className="px-4 py-8 max-w-4xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-1">Book Local Tours & Activities</h1>
-        <p className="text-sm text-muted-foreground">Verified operators · Real prices in EGP · WhatsApp booking · 7% commission supports this free platform</p>
-      </div>
-
-      {/* Info banner */}
-      <div className="bg-accent/10 border border-accent/20 rounded-2xl p-4 mb-6 text-xs text-muted-foreground leading-relaxed">
-        <strong className="text-foreground">How it works:</strong> Each booking generates a unique Tracking Code (LOC-XXX-XXXX). Copy it, send it to the operator via WhatsApp, and you're set. Your code ensures you get the quoted price — no surprise charges.
+        <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-1">Tours & Activities</h1>
+        <p className="text-sm text-muted-foreground">Verified operators · Real prices in EGP · Book securely on Viator</p>
       </div>
 
       {/* City filter */}
@@ -282,7 +246,7 @@ export default function BookingPage() {
       {/* Tours grid */}
       <div className="space-y-4">
         {filtered.map((tour, i) => (
-          <TourCard key={i} tour={tour} lang={lang} />
+          <TourCard key={i} tour={tour} />
         ))}
       </div>
 
