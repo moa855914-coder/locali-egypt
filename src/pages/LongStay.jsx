@@ -5,7 +5,7 @@ import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
 import SafeNextStep from '../components/SafeNextStep';
 import {
-  Home, Phone, CheckCircle2, Wifi, MapPin, ShieldCheck,
+  Home, CheckCircle2, Wifi, MapPin, ShieldCheck,
   Scale, Wrench, Building2, Car, BookOpen, GraduationCap,
   Heart, PawPrint, Dumbbell, ShoppingCart, Church, ChevronDown, ChevronRight,
   Users, Star, Clock, AlertTriangle, Plus, ArrowRight, Briefcase, ExternalLink
@@ -296,12 +296,10 @@ function OverviewTab({ city, setCity, category, setCategory, filtered, dbService
               {service.languages?.length > 0 && (
                 <div className="flex gap-1">{service.languages.map((lang, j) => <span key={j} className="text-[10px] bg-secondary px-2 py-0.5 rounded-full">{lang}</span>)}</div>
               )}
-              {service.contact_phone && (
-                <a href={`https://wa.me/${service.contact_phone.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 bg-success text-success-foreground px-3 py-1.5 rounded-xl text-xs font-bold">
-                  <Phone className="w-3 h-3" /> WhatsApp
-                </a>
-              )}
+              <a href={`https://www.google.com/maps/search/${encodeURIComponent(service.name + ' Egypt')}`} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 bg-secondary border border-border px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-secondary/80">
+                📍 Find on Google Maps →
+              </a>
             </div>
           </div>
         ))}
@@ -885,7 +883,6 @@ export default function LongStay() {
       <div className="mt-8 space-y-3">
         <SafeNextStep title="Remote Work Spots in Egypt" description="Best cafes and coworking spaces for digital nomads" to="/remote-work" />
         <SafeNextStep title="Egypt Cost Calculator" description="Budget your full stay accurately" to="/cost-calculator" />
-        <SafeNextStep title="Verified Private Drivers" description="Monthly driver rates for residents" to="/verified-drivers" />
       </div>
     </div>
   );

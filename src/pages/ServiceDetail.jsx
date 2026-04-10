@@ -1,7 +1,7 @@
 import { useParams, useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ArrowLeft, ShieldCheck, MapPin, Phone, Globe, Star } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, MapPin, Globe, Star } from 'lucide-react';
 import ScamGauge from '../components/ScamGauge';
 import SafeNextStep from '../components/SafeNextStep';
 import ReviewSection from '../components/ReviewSection';
@@ -80,12 +80,11 @@ export default function ServiceDetail() {
 
         {/* Contact */}
         <div className="flex gap-3">
-          {service.phone && (
-            <a href={`tel:${service.phone}`} className="flex-1 flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm min-h-[48px]">
-              <Phone className="w-4 h-4" />
-              Call
-            </a>
-          )}
+          <a href={`https://www.google.com/maps/search/${encodeURIComponent(service.name + ' Egypt')}`} target="_blank" rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 bg-secondary border border-border py-3 rounded-xl font-bold text-sm min-h-[48px]">
+            <MapPin className="w-4 h-4" />
+            📍 Find on Google Maps →
+          </a>
           {service.website && (
             <a href={service.website} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-card border border-border py-3 rounded-xl font-bold text-sm min-h-[48px]">
               <Globe className="w-4 h-4" />

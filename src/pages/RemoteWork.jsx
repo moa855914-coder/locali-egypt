@@ -120,7 +120,7 @@ export default function RemoteWork() {
 
             <p className="text-sm text-muted-foreground leading-relaxed mb-3">{spot.desc}</p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
               {spot.wifi_speed_mbps && (
                 <div className="bg-secondary rounded-xl p-2 text-center">
                   <p className="text-[10px] text-muted-foreground">WiFi Speed</p>
@@ -144,6 +144,10 @@ export default function RemoteWork() {
                 <p className="font-bold text-sm">{spot.power_outlets ? '✓' : '✗'} / {spot.ac ? '✓' : '✗'}</p>
               </div>
             </div>
+            <a href={`https://www.google.com/maps/search/${encodeURIComponent(spot.name + ' Egypt')}`} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full border border-border bg-secondary/50 hover:bg-secondary py-2.5 rounded-xl text-xs font-bold transition-colors">
+              📍 Find on Google Maps →
+            </a>
           </div>
         ))}
 
