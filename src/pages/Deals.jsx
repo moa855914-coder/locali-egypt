@@ -1,119 +1,120 @@
-import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
-import { CITIES, t, getCityName } from '../lib/constants';
-import { Sparkles, Clock, Percent } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+
+const VERIFIED_DEALS = [
+  {
+    title: 'Hurghada Tours & Activities',
+    desc: 'Snorkeling, island trips, boat tours, diving. Real-time availability & pricing.',
+    logo: '🤿',
+    source: 'GetYourGuide',
+    url: 'https://www.getyourguide.com/hurghada-l970/',
+    color: 'bg-red-50 border-red-200',
+    badge: 'bg-red-500',
+  },
+  {
+    title: 'Sharm El Sheikh Excursions',
+    desc: 'Ras Mohammed, Sinai, Coloured Canyon, Dahab day trips.',
+    logo: '🏔️',
+    source: 'Viator',
+    url: 'https://www.viator.com/Sharm-El-Sheikh/d4312-ttd/',
+    color: 'bg-blue-50 border-blue-200',
+    badge: 'bg-blue-500',
+  },
+  {
+    title: 'Luxor Temple Tours',
+    desc: 'Valley of the Kings, Karnak, West Bank — licensed Egyptologist guides.',
+    logo: '🏛️',
+    source: 'GetYourGuide',
+    url: 'https://www.getyourguide.com/luxor-l970/',
+    color: 'bg-amber-50 border-amber-200',
+    badge: 'bg-amber-500',
+  },
+  {
+    title: 'Aswan & Nile Experiences',
+    desc: 'Abu Simbel, Philae Temple, felucca cruises, Nubian village.',
+    logo: '🛶',
+    source: 'Viator',
+    url: 'https://www.viator.com/Aswan/d4776-ttd/',
+    color: 'bg-teal-50 border-teal-200',
+    badge: 'bg-teal-500',
+  },
+  {
+    title: 'Egypt Hotels — Best Rates',
+    desc: 'Hotels, resorts & apartments across Hurghada, Sharm, Luxor, Aswan.',
+    logo: '🏨',
+    source: 'Booking.com',
+    url: 'https://www.booking.com/country/eg.html',
+    color: 'bg-blue-50 border-blue-200',
+    badge: 'bg-blue-600',
+  },
+  {
+    title: 'Cairo Day Trips & Pyramids',
+    desc: 'Pyramids of Giza, Egyptian Museum, Old Cairo — half & full day tours.',
+    logo: '🔺',
+    source: 'GetYourGuide',
+    url: 'https://www.getyourguide.com/cairo-l97/',
+    color: 'bg-yellow-50 border-yellow-200',
+    badge: 'bg-yellow-600',
+  },
+  {
+    title: 'Dahab Diving & Snorkeling',
+    desc: 'Blue Hole, Canyon, Lighthouse Reef — day & multi-day dive packages.',
+    logo: '🌊',
+    source: 'Viator',
+    url: 'https://www.viator.com/Dahab/d23195-ttd/',
+    color: 'bg-cyan-50 border-cyan-200',
+    badge: 'bg-cyan-600',
+  },
+  {
+    title: 'El Gouna Activities',
+    desc: 'Kitesurfing, lagoon boat tours, golf, spa — Egypt\'s top resort town.',
+    logo: '🏝️',
+    source: 'GetYourGuide',
+    url: 'https://www.getyourguide.com/el-gouna-l97451/',
+    color: 'bg-emerald-50 border-emerald-200',
+    badge: 'bg-emerald-600',
+  },
+];
 
 export default function Deals() {
-  const { lang } = useOutletContext();
-  const [selectedCity, setSelectedCity] = useState('');
-
-  const { data: deals = [], isLoading } = useQuery({
-    queryKey: ['deals', selectedCity],
-    queryFn: () => {
-      if (selectedCity) {
-        return base44.entities.TouristDeal.filter({ city: selectedCity, is_active: true }, '-created_date', 30);
-      }
-      return base44.entities.TouristDeal.filter({ is_active: true }, '-created_date', 30);
-    },
-  });
-
   return (
-    <div className="px-4 py-6 max-w-3xl mx-auto">
-      <div className="flex items-center gap-3 mb-6">
+    <div className="px-4 py-8 max-w-3xl mx-auto">
+      <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center">
-          <Sparkles className="w-6 h-6 text-amber-600" />
+          <span className="text-2xl">🎟️</span>
         </div>
         <div>
-          <h1 className="text-2xl font-black tracking-tight">{t('deals', lang)}</h1>
-          <p className="text-sm text-muted-foreground">Exclusive offers for tourists</p>
+          <h1 className="text-2xl font-black tracking-tight">Deals & Activities</h1>
+          <p className="text-sm text-muted-foreground">Verified sources only — Booking.com · Viator · GetYourGuide</p>
         </div>
       </div>
 
-      {/* City Filter */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-6">
-        <button
-          onClick={() => setSelectedCity('')}
-          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-            !selectedCity ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
-          }`}
-        >
-          {t('all_cities', lang)}
-        </button>
-        {CITIES.map(city => (
-          <button
-            key={city.id}
-            onClick={() => setSelectedCity(city.id)}
-            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-              selectedCity === city.id ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
-            }`}
+      <div className="bg-blue-50 border border-blue-200 rounded-2xl px-4 py-3 mb-6 text-xs text-blue-700">
+        <strong>ℹ️ How this works:</strong> We only link to verified global booking platforms. Prices and availability are live — we do not mark them up or add codes.
+      </div>
+
+      <div className="space-y-3">
+        {VERIFIED_DEALS.map((deal, i) => (
+          <a
+            key={i}
+            href={deal.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`flex items-center gap-4 rounded-2xl border p-4 hover:shadow-md transition-all ${deal.color}`}
           >
-            {getCityName(city, lang)}
-          </button>
+            <div className="text-3xl shrink-0">{deal.logo}</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                <h3 className="font-bold text-sm">{deal.title}</h3>
+                <span className={`text-[10px] font-extrabold text-white px-2 py-0.5 rounded-full ${deal.badge}`}>
+                  {deal.source}
+                </span>
+              </div>
+              <p className="text-xs text-gray-600">{deal.desc}</p>
+            </div>
+            <ExternalLink className="w-4 h-4 text-gray-400 shrink-0" />
+          </a>
         ))}
       </div>
-
-      {/* Deals */}
-      {isLoading ? (
-        <div className="flex justify-center py-12">
-          <div className="w-8 h-8 border-4 border-border border-t-accent rounded-full animate-spin" />
-        </div>
-      ) : deals.length > 0 ? (
-        <div className="space-y-4">
-          {deals.map(deal => (
-            <div key={deal.id} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
-              {deal.photo && (
-                <img src={deal.photo} alt={deal.title} className="w-full h-40 object-cover" />
-              )}
-              <div className="p-5">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-bold">{deal.title}</h3>
-                  {deal.discount_percent && (
-                    <span className="flex items-center gap-1 bg-accent text-accent-foreground px-2 py-1 rounded-full text-xs font-bold shrink-0">
-                      <Percent className="w-3 h-3" />
-                      {deal.discount_percent}% OFF
-                    </span>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">{deal.description}</p>
-                <div className="flex items-center justify-between flex-wrap gap-3">
-                  <div className="flex items-center gap-4">
-                    {deal.deal_price && (
-                      <div>
-                        <span className="text-xl font-extrabold text-accent">{deal.deal_price} EGP</span>
-                        {deal.original_price && (
-                          <span className="text-sm text-muted-foreground line-through ml-2">{deal.original_price} EGP</span>
-                        )}
-                      </div>
-                    )}
-                    {deal.valid_until && (
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="w-3 h-3" />
-                        Until {new Date(deal.valid_until).toLocaleDateString()}
-                      </div>
-                    )}
-                  </div>
-                  <a
-                    href={`https://www.google.com/maps/search/${encodeURIComponent(deal.title + ' Egypt')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 bg-secondary border border-border px-4 py-2 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-all"
-                  >
-                    📍 View on Google Maps →
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-16">
-          <Sparkles className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-          <p className="font-medium text-muted-foreground">No active deals right now</p>
-          <p className="text-sm text-muted-foreground/60 mt-1">Check back soon for new offers</p>
-        </div>
-      )}
     </div>
   );
 }

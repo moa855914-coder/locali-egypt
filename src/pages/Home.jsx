@@ -5,7 +5,7 @@ import HeroSection from '../components/HeroSection';
 import CityCard from '../components/CityCard';
 import HomeSections from '../components/HomeSections';
 import HomeTips from '../components/HomeTips';
-import FlashDeals from '../components/FlashDeals';
+
 import { CITIES, t } from '../lib/constants';
 
 export default function Home() {
@@ -25,10 +25,7 @@ export default function Home() {
         <LiveSituationBanner />
       </section>
 
-      {/* Flash Deals */}
-      <section className="px-4 pt-4 max-w-7xl mx-auto">
-        <FlashDeals />
-      </section>
+
 
       {/* Quick Access */}
       <section className="px-4 py-6 max-w-7xl mx-auto">
