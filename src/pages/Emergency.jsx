@@ -13,51 +13,55 @@ const NATIONAL_EMERGENCY = [
 
 const CITY_HOSPITALS = {
   'Sharm El Sheikh': [
-    { name: 'Sharm International Hospital', phone: '+20 69 366 0893', type: 'General + Emergency', note: 'Main hospital. 24/7 emergency. English, Russian speaking. Verified: US Embassy list + African Dev. Bank.' },
-    { name: 'South Sinai Hospital', phone: '+20 69 366 6020', type: 'General + Emergency', note: '24/7 emergency line. English-speaking staff. Verified: southsinaihospital.com' },
-    { name: 'Hyperbaric Medical Center Sharm', phone: '+20 69 360 0922', type: 'Diving Emergencies', note: 'Decompression chamber. Know this address before diving.' },
+    { name: 'Sharm International Hospital', type: 'General + Emergency', note: 'Main hospital. 24/7 emergency. English, Russian speaking.' },
+    { name: 'South Sinai Hospital', type: 'General + Emergency', note: '24/7 emergency line. English-speaking staff.' },
+    { name: 'Hyperbaric Medical Center Sharm', type: 'Diving Emergencies', note: 'Decompression chamber. Know this address before diving.' },
   ],
   'Hurghada': [
-    { name: 'Hurghada General Hospital', phone: '+20 65 354 6740', type: 'General + Emergency', note: 'Main public hospital. 24/7. Verified: redseapages.com + egyptyello.com' },
-    { name: 'The Egyptian Hospital Hurghada', phone: '+20 111 050 6888', type: 'Private + Emergency 24/7', note: '283 Mohamed Said St., El Kawthar. WhatsApp available. Verified: Facebook الرسمي' },
-    { name: 'Hurghada Hyperbaric Center', phone: '+20 65 354 9150', type: 'Diving Emergencies', note: 'Specialist decompression chamber. 24/7 for dive emergencies.' },
+    { name: 'Hurghada General Hospital', type: 'General + Emergency', note: 'Main public hospital. 24/7.' },
+    { name: 'The Egyptian Hospital Hurghada', type: 'Private + Emergency 24/7', note: 'El Kawthar area. Private hospital.' },
+    { name: 'Hurghada Hyperbaric Center', type: 'Diving Emergencies', note: 'Specialist decompression chamber. 24/7 for dive emergencies.' },
   ],
   'Luxor': [
-    { name: 'Luxor International Hospital', phone: '+20 95 237 8999', type: 'General + Emergency', note: '24/7 emergency. Accepts travel insurance. English staff.' },
-    { name: 'Luxor German Hospital', phone: '+20 95 238 0192', type: 'Private Clinic', note: 'German-standard private clinic. English and German.' },
-    { name: 'Nile Valley Medical Center', phone: '+20 95 237 5000', type: 'General Medicine', note: 'Private clinic. Faster service, reasonable fees.' },
+    { name: 'Luxor International Hospital', type: 'General + Emergency', note: '24/7 emergency. Accepts travel insurance. English staff.' },
+    { name: 'Luxor German Hospital', type: 'Private Clinic', note: 'German-standard private clinic. English and German.' },
+    { name: 'Nile Valley Medical Center', type: 'General Medicine', note: 'Private clinic. Faster service, reasonable fees.' },
   ],
   'Aswan': [
-    { name: 'Aswan University Hospital', phone: '+20 97 231 7000', type: 'General + Emergency', note: 'Best-equipped hospital in southern Egypt. 24/7 emergency.' },
-    { name: 'Ibn Sina Private Hospital', phone: '+20 97 231 2222', type: 'Private Hospital', note: 'English-speaking staff. Accepts international insurance.' },
-    { name: 'Al Salam Hospital', phone: '+20 97 231 1000', type: 'General', note: 'Good private option. Central location near Corniche.' },
+    { name: 'Aswan University Hospital', type: 'General + Emergency', note: 'Best-equipped hospital in southern Egypt. 24/7 emergency.' },
+    { name: 'Ibn Sina Private Hospital', type: 'Private Hospital', note: 'English-speaking staff. Accepts international insurance.' },
+    { name: 'Al Salam Hospital', type: 'General', note: 'Good private option. Central location near Corniche.' },
   ],
 };
 
 const CITY_TOURIST_POLICE = {
-  'Sharm El Sheikh': { address: 'Near Naama Bay roundabout, Peace Road', phone: '+20 69 366 0311', note: 'Large presence in Naama Bay. Very accessible. Verified: sharm-el-sheikh.com + heroesofadventure.com' },
-  'Hurghada': { address: 'Near Sahl Hasheesh junction, main coastal road', phone: '+20 65 354 6984', note: 'Located between El Dahar and Marina. National line: 126' },
-  'Luxor': { address: 'Corniche road, near Luxor Temple', phone: '+20 95 237 6620', note: 'Staff at Valley of Kings, Karnak, and Luxor Temple daily.' },
-  'Aswan': { address: 'Corniche road, central Aswan', phone: '+20 97 231 2348', note: 'Friendly and accessible. Speak English.' },
+  'Sharm El Sheikh': { note: 'Large presence in Naama Bay. Very accessible. National line: 126' },
+  'Hurghada': { note: 'Located between El Dahar and Marina. National line: 126' },
+  'Luxor': { note: 'Staff at Valley of Kings, Karnak, and Luxor Temple daily. National line: 126' },
+  'Aswan': { note: 'Friendly and accessible. Speak English. National line: 126' },
 };
 
 const EMBASSIES = [
-  { country: '🇬🇧 UK Embassy Cairo', phone: '+20 2 2791 6000', emergency: '+20 2 2791 6000', city: 'Cairo' },
-  { country: '🇺🇸 US Embassy Cairo', phone: '+20 2 2797 3300', emergency: '+20 2 2797 3300', city: 'Cairo' },
-  { country: '🇩🇪 German Embassy Cairo', phone: '+20 2 2728 2000', emergency: '+20 2 2728 2000', city: 'Cairo' },
-  { country: '🇷🇺 Russian Embassy Cairo', phone: '+20 2 2748 9353', emergency: '+20 2 2748 9353', city: 'Cairo' },
-  { country: '🇫🇷 French Embassy Cairo', phone: '+20 2 3567 3200', emergency: '+20 2 3567 3200', city: 'Cairo' },
-  { country: '🇮🇹 Italian Embassy Cairo', phone: '+20 2 2735 8661', emergency: '+20 2 2735 8661', city: 'Cairo' },
-  { country: '🇵🇱 Polish Embassy Cairo', phone: '+20 2 2735 0823', emergency: '+20 2 2735 0823', city: 'Cairo' },
-  { country: '🇺🇦 Ukrainian Embassy Cairo', phone: '+20 2 2736 7574', emergency: '+20 2 2736 7574', city: 'Cairo' },
+  { country: '🇬🇧 UK Embassy Cairo', name: 'UK Embassy Cairo Egypt' },
+  { country: '🇺🇸 US Embassy Cairo', name: 'US Embassy Cairo Egypt' },
+  { country: '🇩🇪 German Embassy Cairo', name: 'German Embassy Cairo Egypt' },
+  { country: '🇷🇺 Russian Embassy Cairo', name: 'Russian Embassy Cairo Egypt' },
+  { country: '🇫🇷 French Embassy Cairo', name: 'French Embassy Cairo Egypt' },
+  { country: '🇮🇹 Italian Embassy Cairo', name: 'Italian Embassy Cairo Egypt' },
+  { country: '🇵🇱 Polish Embassy Cairo', name: 'Polish Embassy Cairo Egypt' },
+  { country: '🇺🇦 Ukrainian Embassy Cairo', name: 'Ukrainian Embassy Cairo Egypt' },
 ];
 
 const WHAT_TO_DO = [
   { situation: 'You were scammed or overcharged', steps: ['Call Tourist Police: 126', 'Note the location, time, and description of person', 'Request an official police report — needed for insurance', 'Save any receipts or messages as evidence'] },
   { situation: 'Medical emergency', steps: ['Call 123 for ambulance', 'Ask hotel to arrange transport — often fastest', 'Have your travel insurance number ready', 'Note: Hyperbaric centers in Sharm and Hurghada for diving injuries'] },
-  { situation: 'Lost passport', steps: ['Report to local police (122) for a crime report', 'Contact your embassy immediately (see numbers above)', 'Your embassy can issue emergency travel documents', 'Keep a photo of your passport ID page on your phone'] },
+  { situation: 'Lost passport', steps: ['Report to local police (122) for a crime report', 'Contact your embassy immediately (find on Google Maps below)', 'Your embassy can issue emergency travel documents', 'Keep a photo of your passport ID page on your phone'] },
   { situation: 'Card lost or stolen', steps: ['Call your bank immediately to freeze the card', 'Report to Tourist Police (126) for documentation', 'Use Western Union or MoneyGram for emergency cash', 'Most embassies can assist with emergency funds'] },
 ];
+
+function mapsUrl(name) {
+  return `https://www.google.com/maps/search/${encodeURIComponent(name + ' Egypt')}`;
+}
 
 export default function Emergency() {
   const { lang } = useOutletContext();
@@ -114,9 +118,10 @@ export default function Emergency() {
               <h3 className="font-bold text-sm">{hosp.name}</h3>
               <span className="text-[10px] font-bold bg-red-500/10 text-red-500 px-2 py-0.5 rounded-full shrink-0">{hosp.type}</span>
             </div>
-            <p className="text-xs text-muted-foreground mb-2">{hosp.note}</p>
-            <a href={`tel:${hosp.phone}`} className="flex items-center gap-2 text-accent font-bold text-sm hover:underline">
-              <Phone className="w-3.5 h-3.5" /> {hosp.phone}
+            <p className="text-xs text-muted-foreground mb-3">{hosp.note}</p>
+            <a href={mapsUrl(hosp.name)} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-600 font-bold text-xs hover:underline">
+              <MapPin className="w-3.5 h-3.5" /> 📍 Find on Google Maps →
             </a>
           </div>
         ))}
@@ -131,12 +136,11 @@ export default function Emergency() {
               <h3 className="font-bold text-sm">{city}</h3>
               <span className="text-xs font-bold text-blue-500">Call: 126 (free)</span>
             </div>
-            <div className="flex items-center gap-1 mb-1">
-              <MapPin className="w-3 h-3 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">{info.address}</p>
-            </div>
-            <p className="text-xs text-muted-foreground italic">{info.note}</p>
-            <a href={`tel:${info.phone}`} className="text-xs text-accent font-bold mt-1 block">{info.phone}</a>
+            <p className="text-xs text-muted-foreground mb-3 italic">{info.note}</p>
+            <a href={mapsUrl('Tourist Police ' + city)} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 text-blue-600 font-bold text-xs hover:underline">
+              <MapPin className="w-3.5 h-3.5" /> 📍 Find on Google Maps →
+            </a>
           </div>
         ))}
       </div>
@@ -166,10 +170,12 @@ export default function Emergency() {
       </h2>
       <div className="space-y-2 mb-8">
         {EMBASSIES.map((em) => (
-          <a key={em.country} href={`tel:${em.phone}`}
+          <a key={em.country} href={mapsUrl(em.name)} target="_blank" rel="noopener noreferrer"
             className="flex items-center justify-between bg-card rounded-xl border border-border/50 p-4 hover:bg-secondary/50 transition-all">
             <span className="font-semibold text-sm">{em.country}</span>
-            <span className="text-sm font-bold text-accent">{em.phone}</span>
+            <span className="text-xs font-bold text-blue-600 flex items-center gap-1">
+              <MapPin className="w-3 h-3" /> Find on Google Maps →
+            </span>
           </a>
         ))}
       </div>

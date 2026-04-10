@@ -3,7 +3,7 @@ import { useLiveRates } from '../hooks/useLiveRates';
 import { useSEO } from '../lib/seo';
 import { base44 } from '@/api/base44Client';
 import SafeNextStep from '../components/SafeNextStep';
-import { TrendingUp, RefreshCw, AlertTriangle, CheckCircle2, CreditCard, DollarSign, MapPin, Phone } from 'lucide-react';
+import { TrendingUp, RefreshCw, AlertTriangle, CheckCircle2, CreditCard, DollarSign, MapPin } from 'lucide-react';
 
 const OFFICIAL_RATES_FALLBACK = [
   { currency: 'USD 🇺🇸', symbol: '$', rate: 49.85, flag: '🇺🇸' },
@@ -17,42 +17,42 @@ const OFFICIAL_RATES_FALLBACK = [
 ];
 
 const BANK_HOTLINES = [
-  { name: 'Banque Misr', hotline: '19888', desc: 'خط ساخن 24/7 — الموقع الرسمي: banquemisr.com', verified: true },
-  { name: 'CIB Egypt', hotline: '19666', desc: 'خدمة عملاء — من أي خط داخل مصر', verified: true },
-  { name: 'NBE (National Bank of Egypt)', hotline: '19623', desc: 'البنك الأهلي المصري — 24/7', verified: true },
-  { name: 'QNB Egypt', hotline: '19700', desc: 'بنك قطر الوطني مصر', verified: true },
+  { name: 'Banque Misr', query: 'Banque Misr Egypt', desc: 'Official Egyptian state bank · banquemisr.com', verified: true },
+  { name: 'CIB Egypt', query: 'CIB Bank Egypt', desc: 'Commercial International Bank Egypt', verified: true },
+  { name: 'NBE (National Bank of Egypt)', query: 'National Bank of Egypt NBE', desc: 'البنك الأهلي المصري', verified: true },
+  { name: 'QNB Egypt', query: 'QNB Qatar National Bank Egypt', desc: 'Qatar National Bank Egypt', verified: true },
 ];
 
 const EXCHANGE_TIPS_BY_CITY = {
   'sharm-el-sheikh': [
-    { name: 'Banque Misr (Naama Bay) — ☎ 19888', type: 'Bank ATM', rating: '✅ Best', note: 'Official bank rate. Inside branch premises. Most reliable ATM in Naama Bay.' },
-    { name: 'CIB ATM (Naama Bay Mall) — ☎ 19666', type: 'Bank ATM', rating: '✅ Good', note: 'Low fees. Part of major Egyptian bank network.' },
-    { name: 'NBE — National Bank of Egypt — ☎ 19623', type: 'Bank', rating: '✅ Good', note: 'Official exchange desk. Good rates, slightly slower.' },
-    { name: 'Hotel reception exchange desk', type: 'Exchange', rating: '⚠️ Acceptable', note: '5–8% worse than bank rate. Use only for convenience.' },
-    { name: 'Airport kiosk', type: 'Exchange', rating: '❌ Avoid', note: 'Worst rate at the airport. Use only for emergency EGP on arrival.' },
-    { name: 'Street money changers', type: 'Unofficial', rating: '🚫 Never', note: 'Illegal. Common counterfeit notes. Not worth any "better rate" they claim.' },
+    { name: 'Banque Misr — Naama Bay', query: 'Banque Misr Naama Bay Sharm El Sheikh Egypt', type: 'Bank ATM', rating: '✅ Best', note: 'Official bank rate. Inside branch premises. Most reliable ATM in Naama Bay.' },
+    { name: 'CIB ATM — Naama Bay Mall', query: 'CIB Bank ATM Naama Bay Sharm El Sheikh', type: 'Bank ATM', rating: '✅ Good', note: 'Low fees. Part of major Egyptian bank network.' },
+    { name: 'NBE — National Bank of Egypt Sharm', query: 'National Bank of Egypt Sharm El Sheikh', type: 'Bank', rating: '✅ Good', note: 'Official exchange desk. Good rates, slightly slower.' },
+    { name: 'Hotel reception exchange desk', query: '', type: 'Exchange', rating: '⚠️ Acceptable', note: '5–8% worse than bank rate. Use only for convenience.' },
+    { name: 'Airport kiosk', query: '', type: 'Exchange', rating: '❌ Avoid', note: 'Worst rate at the airport. Use only for emergency EGP on arrival.' },
+    { name: 'Street money changers', query: '', type: 'Unofficial', rating: '🚫 Never', note: 'Illegal. Common counterfeit notes. Not worth any “better rate” they claim.' },
   ],
   hurghada: [
-    { name: 'Banque Misr (Marina area) — ☎ 19888', type: 'Bank ATM', rating: '✅ Best', note: 'Inside branch. Highest reliability, lowest ATM fees.' },
-    { name: 'CIB (Sahl Hasheesh) — ☎ 19666', type: 'Bank ATM', rating: '✅ Good', note: 'Consistent service. Good for large withdrawals.' },
-    { name: 'NBE (El Dahar) — ☎ 19623', type: 'Bank', rating: '✅ Good', note: 'Good official exchange rate at teller.' },
-    { name: 'QNB ATM (Marina road) — ☎ 19700', type: 'Bank ATM', rating: '✅ Good', note: 'Qatar National Bank. Good rates, reliable.' },
-    { name: 'Alex Bank (New Hurghada)', type: 'Bank ATM', rating: '✅ Good', note: 'Less queue than Banque Misr during peak hours.' },
-    { name: 'Airport exchange kiosk', type: 'Exchange', rating: '❌ Avoid', note: '8–12% worse than official rate. Same as all airports.' },
+    { name: 'Banque Misr — Marina area', query: 'Banque Misr Marina Hurghada Egypt', type: 'Bank ATM', rating: '✅ Best', note: 'Inside branch. Highest reliability, lowest ATM fees.' },
+    { name: 'CIB — Sahl Hasheesh', query: 'CIB Bank Sahl Hasheesh Hurghada Egypt', type: 'Bank ATM', rating: '✅ Good', note: 'Consistent service. Good for large withdrawals.' },
+    { name: 'NBE — El Dahar Hurghada', query: 'National Bank of Egypt El Dahar Hurghada', type: 'Bank', rating: '✅ Good', note: 'Good official exchange rate at teller.' },
+    { name: 'QNB ATM — Marina road', query: 'QNB Bank Marina Hurghada Egypt', type: 'Bank ATM', rating: '✅ Good', note: 'Qatar National Bank. Good rates, reliable.' },
+    { name: 'Alex Bank — New Hurghada', query: 'Alexandria Bank Hurghada Egypt', type: 'Bank ATM', rating: '✅ Good', note: 'Less queue than Banque Misr during peak hours.' },
+    { name: 'Airport exchange kiosk', query: '', type: 'Exchange', rating: '❌ Avoid', note: '8–12% worse than official rate. Same as all airports.' },
   ],
   luxor: [
-    { name: 'Banque Misr (Corniche) — ☎ 19888', type: 'Bank ATM', rating: '✅ Best', note: 'Main branch, reliable supply. Best on East Bank.' },
-    { name: 'NBE (Luxor Temple Road) — ☎ 19623', type: 'Bank', rating: '✅ Good', note: 'Official exchange desk. Good rates for large amounts.' },
-    { name: 'CIB (East Bank) — ☎ 19666', type: 'Bank ATM', rating: '✅ Good', note: 'Reliable. Lower risk of skimming.' },
-    { name: 'Hotel Corniche exchange', type: 'Exchange', rating: '⚠️ Acceptable', note: 'Add 5–8% buffer. Convenient if ATM has no cash.' },
-    { name: '⚠️ West Bank — NO ATMs', type: 'Warning', rating: '🚫 None', note: 'Zero reliable ATMs near Valley of Kings or Karnak West Bank. Withdraw everything before crossing the Nile.' },
+    { name: 'Banque Misr — Corniche Luxor', query: 'Banque Misr Corniche Luxor Egypt', type: 'Bank ATM', rating: '✅ Best', note: 'Main branch, reliable supply. Best on East Bank.' },
+    { name: 'NBE — Luxor Temple Road', query: 'National Bank of Egypt Luxor Temple Road', type: 'Bank', rating: '✅ Good', note: 'Official exchange desk. Good rates for large amounts.' },
+    { name: 'CIB — East Bank Luxor', query: 'CIB Bank Luxor Egypt', type: 'Bank ATM', rating: '✅ Good', note: 'Reliable. Lower risk of skimming.' },
+    { name: 'Hotel Corniche exchange', query: '', type: 'Exchange', rating: '⚠️ Acceptable', note: 'Add 5–8% buffer. Convenient if ATM has no cash.' },
+    { name: '⚠️ West Bank — NO ATMs', query: '', type: 'Warning', rating: '🚫 None', note: 'Zero reliable ATMs near Valley of Kings or Karnak West Bank. Withdraw everything before crossing the Nile.' },
   ],
   aswan: [
-    { name: 'Banque Misr (Corniche) — ☎ 19888', type: 'Bank ATM', rating: '✅ Best', note: 'Corniche area. Most reliable in Aswan.' },
-    { name: 'NBE (Train Station area) — ☎ 19623', type: 'Bank ATM', rating: '✅ Good', note: 'Good for immediate arrival needs from the train.' },
-    { name: 'Egyptian Arab Land Bank', type: 'Bank ATM', rating: '✅ Good', note: 'Less known but reliable. Usually shorter queues.' },
-    { name: '⚠️ Abu Simbel — ZERO ATMs', type: 'Warning', rating: '🚫 None', note: 'Bring ALL cash before leaving Aswan. Abu Simbel site has no banking infrastructure.' },
-    { name: 'Corniche exchange bureau', type: 'Exchange', rating: '⚠️ Acceptable', note: 'Count every note before leaving the desk. Shortchange errors "happen" regularly.' },
+    { name: 'Banque Misr — Corniche Aswan', query: 'Banque Misr Corniche Aswan Egypt', type: 'Bank ATM', rating: '✅ Best', note: 'Corniche area. Most reliable in Aswan.' },
+    { name: 'NBE — Train Station area', query: 'National Bank of Egypt Aswan Train Station', type: 'Bank ATM', rating: '✅ Good', note: 'Good for immediate arrival needs from the train.' },
+    { name: 'Egyptian Arab Land Bank', query: 'Egyptian Arab Land Bank Aswan Egypt', type: 'Bank ATM', rating: '✅ Good', note: 'Less known but reliable. Usually shorter queues.' },
+    { name: '⚠️ Abu Simbel — ZERO ATMs', query: '', type: 'Warning', rating: '🚫 None', note: 'Bring ALL cash before leaving Aswan. Abu Simbel site has no banking infrastructure.' },
+    { name: 'Corniche exchange bureau', query: '', type: 'Exchange', rating: '⚠️ Acceptable', note: 'Count every note before leaving the desk. Shortchange errors “happen” regularly.' },
   ],
 };
 
@@ -216,7 +216,7 @@ export default function CurrencyRates() {
       </div>
       <div className="space-y-2 mb-10">
         {(EXCHANGE_TIPS_BY_CITY[selectedCity] || []).map((place, i) => (
-          <div key={i} className={`rounded-2xl border p-4 ${place.rating.startsWith('🚫') ? 'bg-red-500/5 border-red-500/20' : place.rating.startsWith('❌') ? 'bg-red-500/5 border-red-500/10' : place.rating.startsWith('⚠️') ? 'bg-amber-500/5 border-amber-500/20' : 'bg-card border-border/50'}`}>
+          <div key={i} className={`rounded-2xl border p-4 ${place.rating.startsWith('�deab') ? 'bg-red-500/5 border-red-500/20' : place.rating.startsWith('❌') ? 'bg-red-500/5 border-red-500/10' : place.rating.startsWith('⚠️') ? 'bg-amber-500/5 border-amber-500/20' : 'bg-card border-border/50'}`}>
             <div className="flex items-start justify-between gap-2 mb-1">
               <div>
                 <p className="font-bold text-sm">{place.name}</p>
@@ -226,27 +226,33 @@ export default function CurrencyRates() {
                 {place.rating}
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">{place.note}</p>
+            <p className="text-xs text-muted-foreground mb-2">{place.note}</p>
+            {place.query && (
+              <a href={`https://www.google.com/maps/search/${encodeURIComponent(place.query)}`} target="_blank" rel="noopener noreferrer"
+                className="text-xs text-blue-600 font-bold hover:underline flex items-center gap-1">
+                📍 Find on Google Maps →
+              </a>
+            )}
           </div>
         ))}
       </div>
 
-      {/* Bank hotlines */}
+      {/* Bank locations */}
       <h2 className="text-xl font-extrabold mb-4 flex items-center gap-2">
-        <Phone className="w-5 h-5 text-accent" />
-        Bank Hotlines — Verified Numbers
+        <MapPin className="w-5 h-5 text-accent" />
+        Find Official Banks Near You
       </h2>
       <div className="grid grid-cols-2 gap-3 mb-10">
         {BANK_HOTLINES.map((b, i) => (
-          <a key={i} href={`tel:${b.hotline}`}
+          <a key={i} href={`https://www.google.com/maps/search/${encodeURIComponent(b.query)}`} target="_blank" rel="noopener noreferrer"
             className="bg-card rounded-2xl border border-border/50 p-4 flex items-center gap-3 hover:border-accent/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
-              <span className="text-xl font-black text-accent">{b.hotline}</span>
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0">
+              <MapPin className="w-5 h-5 text-blue-500" />
             </div>
             <div className="min-w-0">
               <p className="font-bold text-xs">{b.name}</p>
               <p className="text-[10px] text-muted-foreground truncate">{b.desc}</p>
-              {b.verified && <span className="text-[9px] text-success font-bold">✅ موثق</span>}
+              <span className="text-[9px] text-blue-600 font-bold">📍 Find on Google Maps →</span>
             </div>
           </a>
         ))}

@@ -24,7 +24,12 @@ const OPERATORS = [
     ],
     customerService: '888 (من خط Vodafone) أو 16888 (من أي خط)',
     customerServiceRaw: '888',
-    stores: ['Vodafone Store — Naama Bay Mall (Sharm)', 'Vodafone — Sahl Hasheesh Road (Hurghada)', 'Vodafone — Luxor Temple Road (Luxor)', 'Vodafone — Corniche Street (Aswan)'],
+    stores: [
+      { label: 'Vodafone Store Naama Bay Mall — Sharm', query: 'Vodafone Store Naama Bay Sharm El Sheikh Egypt' },
+      { label: 'Vodafone Store Sahl Hasheesh Road — Hurghada', query: 'Vodafone Store Hurghada Egypt' },
+      { label: 'Vodafone Store Luxor Temple Road — Luxor', query: 'Vodafone Store Luxor Egypt' },
+      { label: 'Vodafone Store Corniche — Aswan', query: 'Vodafone Store Aswan Egypt' },
+    ],
     topup: 'Top-up cards sold at supermarkets, pharmacies. Use Vodafone app for online recharge.',
   },
   {
@@ -47,7 +52,12 @@ const OPERATORS = [
     ],
     customerService: '110 (من خط Orange) أو 16110 (من أي خط)',
     customerServiceRaw: '16110',
-    stores: ['Orange Store — Old Market (Sharm)', 'Orange Store — Marina Road (Hurghada)', 'Orange Store — Corniche (Luxor)', 'Orange Store — Train Station Area (Aswan)'],
+    stores: [
+      { label: 'Orange Store Old Market — Sharm', query: 'Orange Store Sharm El Sheikh Egypt' },
+      { label: 'Orange Store Marina Road — Hurghada', query: 'Orange Store Hurghada Egypt' },
+      { label: 'Orange Store Corniche — Luxor', query: 'Orange Store Luxor Egypt' },
+      { label: 'Orange Store Train Station — Aswan', query: 'Orange Store Aswan Egypt' },
+    ],
     topup: 'Top-up at Orange stores, supermarkets, and the Orange app.',
   },
   {
@@ -70,7 +80,12 @@ const OPERATORS = [
     ],
     customerService: '110 (من خط e&)',
     customerServiceRaw: '110',
-    stores: ['e& Store — New Hurghada Mall', 'e& Store — Naama Bay (Sharm)', 'e& Store — Luxor City Center', 'e& Store — Aswan Corniche'],
+    stores: [
+      { label: 'e& Store New Hurghada Mall', query: 'Etisalat e& Store Hurghada Egypt' },
+      { label: 'e& Store Naama Bay — Sharm', query: 'Etisalat e& Store Sharm El Sheikh Egypt' },
+      { label: 'e& Store Luxor City Center', query: 'Etisalat e& Store Luxor Egypt' },
+      { label: 'e& Store Aswan Corniche', query: 'Etisalat e& Store Aswan Egypt' },
+    ],
     topup: 'Top-up at official e& stores and via the myetisalat app.',
   },
   {
@@ -92,7 +107,12 @@ const OPERATORS = [
     ],
     customerService: '111 أو 01555000111',
     customerServiceRaw: '111',
-    stores: ['WE — El Dahar (Hurghada)', 'WE — Nasr City Road (Sharm)', 'WE — Train Station (Luxor)', 'WE — Corniche (Aswan)'],
+    stores: [
+      { label: 'WE Store El Dahar — Hurghada', query: 'WE Telecom Egypt Store Hurghada' },
+      { label: 'WE Store Nasr City Road — Sharm', query: 'WE Telecom Egypt Store Sharm El Sheikh' },
+      { label: 'WE Store Train Station — Luxor', query: 'WE Telecom Egypt Store Luxor' },
+      { label: 'WE Store Corniche — Aswan', query: 'WE Telecom Egypt Store Aswan' },
+    ],
     topup: 'WE stores only — less convenient than competitors.',
   },
 ];
@@ -252,10 +272,13 @@ export default function SimCards() {
             <p className="text-xs font-bold mb-2 flex items-center gap-1">
               <MapPin className="w-3 h-3" /> Official Stores (tourist cities)
             </p>
-            <ul className="space-y-1">
+            <ul className="space-y-1.5">
               {activeOp.stores.map((s, i) => (
-                <li key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />{s}
+                <li key={i}>
+                  <a href={`https://www.google.com/maps/search/${encodeURIComponent(s.query)}`} target="_blank" rel="noopener noreferrer"
+                    className="text-xs text-blue-600 font-bold hover:underline flex items-center gap-1">
+                    📍 {s.label} →
+                  </a>
                 </li>
               ))}
             </ul>
@@ -264,7 +287,7 @@ export default function SimCards() {
           <div className="mt-3 bg-secondary/60 rounded-xl p-3 space-y-1">
             <p className="text-xs text-muted-foreground"><strong>Top-up:</strong> {activeOp.topup}</p>
             {activeOp.customerService && (
-              <p className="text-xs text-muted-foreground"><strong>Customer Service:</strong> <a href={`tel:${activeOp.customerServiceRaw}`} className="text-accent font-bold">{activeOp.customerService}</a></p>
+              <p className="text-xs text-muted-foreground"><strong>Customer Service:</strong> <span className="font-bold">{activeOp.customerService}</span></p>
             )}
           </div>
         </div>
