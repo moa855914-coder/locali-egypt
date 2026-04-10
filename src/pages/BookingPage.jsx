@@ -189,15 +189,13 @@ function TourCard({ tour }) {
 
       {/* CTA */}
       <div className="px-4 pb-4 space-y-2">
-        <a
-          href="https://www.viator.com/Egypt/d798-ttd"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => window.open('https://www.viator.com/Egypt/d798-ttd', '_blank')}
           className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
         >
           <ExternalLink className="w-4 h-4" />
           Book on Viator
-        </a>
+        </button>
         <a
           href={mapsUrl}
           target="_blank"
