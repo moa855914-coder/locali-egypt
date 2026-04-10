@@ -432,7 +432,7 @@ function OperatorCard({ op }) {
               <div key={i} className="bg-secondary/50 rounded-xl p-3">
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <p className="font-bold text-sm">{pkg.name}</p>
-                  <a href={`https://www.viator.com/search/${pkg.name.replace(/\s+/g, '+')}+Egypt`}
+                  <a href={`https://www.viator.com/search/${pkg.name.replace(/\s+/g, '+')}+${(op.cities_covered?.[0] || 'Egypt').replace(/\s+/g, '+')}+Egypt`}
                     target="_blank" rel="noopener noreferrer"
                     className="text-[10px] font-bold text-accent hover:underline shrink-0">
                     Check price →
@@ -456,10 +456,18 @@ function OperatorCard({ op }) {
         )}
 
         {/* CTAs */}
-        <a href={`https://www.viator.com/search/${op.company_name.replace(/\s+/g, '+')}+Egypt`}
+        <a href={{
+            'Hurghada': 'https://www.viator.com/Hurghada/d5323-ttd',
+            'Sharm El Sheikh': 'https://www.viator.com/Sharm-el-Sheikh/d832-ttd',
+            'Luxor': 'https://www.viator.com/Luxor/d957-ttd',
+            'Aswan': 'https://www.viator.com/Aswan/d4776-ttd',
+            'Cairo': 'https://www.viator.com/Cairo/d828-ttd',
+            'El Gouna': 'https://www.viator.com/Hurghada/d5323-ttd',
+            'Dahab': 'https://www.viator.com/Dahab/d4314-ttd',
+          }[op.cities_covered?.[0]] || 'https://www.viator.com/Egypt/d798-ttd'}
           target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity mb-2">
-          Check availability on Viator (Viator) →
+          Check availability on Viator →
         </a>
         <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(op.company_name + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"

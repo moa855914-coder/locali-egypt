@@ -232,8 +232,16 @@ const TYPES = [
 
 const CITY_LABELS = { aswan: 'Aswan', luxor: 'Luxor', hurghada: 'Hurghada', 'sharm-el-sheikh': 'Sharm El Sheikh' };
 
+const CITY_TEMPLE_VIATOR = {
+  luxor: 'https://www.viator.com/Luxor-tours/Historical-Historical-Tours/d957-g28/',
+  aswan: 'https://www.viator.com/Aswan-tours/Historical-Historical-Tours/d4776-g28/',
+  hurghada: 'https://www.viator.com/Hurghada-tours/Outdoor-Activities/d5323-g28/',
+  'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Cultural-Tours/d832-g28/',
+};
+
 function ActivityCard({ act }) {
   const [expanded, setExpanded] = useState(false);
+  const viatorUrl = CITY_TEMPLE_VIATOR[act.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden">
@@ -276,6 +284,11 @@ function ActivityCard({ act }) {
         <div className="mb-3">
           <GoogleReviewsButton name={act.title} />
         </div>
+        <a href={viatorUrl} target="_blank" rel="noopener noreferrer"
+          onClick={e => { e.preventDefault(); window.open(viatorUrl, '_blank'); }}
+          className="block text-center w-full bg-amber-500 text-white py-2.5 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all mb-2">
+          Book on Viator →
+        </a>
         <button onClick={() => setExpanded(!expanded)}
           className="text-[10px] font-bold text-accent underline mb-2">
           {expanded ? '▲ Less info' : '▼ Tips & Source'}

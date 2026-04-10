@@ -145,7 +145,7 @@ const CITY_LABELS = {
 
 function TourCard({ tour }) {
   const cityLabel = CITY_LABELS[tour.city] || tour.city;
-  const viatorUrl = `https://www.viator.com/search/${tour.name.replace(/\s+/g, '+')}+${cityLabel.replace(/\s+/g, '+')}+Egypt`;
+  const viatorUrl = tour.viator_url;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tour.name + ' ' + cityLabel + ' Egypt')}`;
 
   return (

@@ -116,8 +116,14 @@ const SAMPLE_BOATS = [
 function BoatCard({ boat }) {
   const [imgIdx, setImgIdx] = useState(0);
   const photos = boat.photos?.length ? boat.photos : ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'];
-  const cityLabel = CITY_LABELS[boat.city] || boat.city;
-  const bookingUrl = `https://www.viator.com/search/${boat.boat_name.replace(/\s+/g, '+')}+${cityLabel.replace(/\s+/g, '+')}+Egypt`;
+  const CITY_BOAT_VIATOR = {
+    hurghada: 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
+    'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Sailing-and-Boating/d832-g12/',
+    aswan: 'https://www.viator.com/Aswan-tours/Cruises-Water-Tours/d4776-g63/',
+    dahab: 'https://www.viator.com/Dahab/d4314-ttd',
+    'el-gouna': 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
+  };
+  const bookingUrl = CITY_BOAT_VIATOR[boat.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">

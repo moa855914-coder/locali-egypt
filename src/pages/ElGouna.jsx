@@ -116,8 +116,16 @@ function HotelCard({ h }) {
   );
 }
 
+const ACTIVITY_VIATOR = {
+  'Windsurfing/Kitesurfing School': 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
+  'Snorkeling Tour (lagoon)': 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
+  'Diving (1-2 dives)': 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
+  'Boat Rental (speed)': 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
+  'Quad Bike Safari': 'https://www.viator.com/Hurghada-tours/4WD-ATV-and-Off-Road-Tours/d5323-g223/',
+};
+
 function ActivityCard({ a }) {
-  const viatorUrl = `https://www.viator.com/search/${a.name.replace(/\s+/g, '+')}+El+Gouna+Egypt`;
+  const viatorUrl = ACTIVITY_VIATOR[a.name] || 'https://www.viator.com/Hurghada/d5323-ttd';
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-3">
       <div className="flex items-start justify-between gap-2 mb-1">

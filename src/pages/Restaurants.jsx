@@ -40,7 +40,13 @@ const CITIES = [
 
 function RestaurantCard({ r }) {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${r.maps_query}`;
-  const viatorUrl = `https://www.viator.com/search/${r.name.replace(/\s+/g, '+')}+Egypt`;
+  const CITY_FOOD_VIATOR = {
+    hurghada: 'https://www.viator.com/Hurghada-tours/Food-and-Drink/d5323-g9/',
+    'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Food-and-Drink/d832-g9/',
+    luxor: 'https://www.viator.com/Luxor-tours/Food-and-Drink/d957-g9/',
+    aswan: 'https://www.viator.com/Aswan-tours/Food-and-Drink/d4776-g9/',
+  };
+  const viatorUrl = CITY_FOOD_VIATOR[r.city] || Object.values(CITY_FOOD_VIATOR)[0];
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
       {r.photo && <img src={r.photo} alt={r.name} className="w-full h-36 object-cover" />}

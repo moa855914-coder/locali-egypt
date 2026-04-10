@@ -109,8 +109,14 @@ const SAMPLE_HORSES = [
 
 function ExperienceCard({ exp }) {
   const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
-  const cityLabel = CITY_LABELS[exp.city] || exp.city;
-  const bookingUrl = `https://www.viator.com/search/${exp.title.replace(/\s+/g, '+')}+${cityLabel.replace(/\s+/g, '+')}+Egypt`;
+  const CITY_HORSE_VIATOR = {
+    hurghada: 'https://www.viator.com/Hurghada-tours/Outdoor-Activities/d5323-g28/',
+    'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Outdoor-Activities/d832-g28/',
+    aswan: 'https://www.viator.com/Aswan-tours/Outdoor-Activities/d4776-g28/',
+    dahab: 'https://www.viator.com/Dahab/d4314-ttd',
+    'el-gouna': 'https://www.viator.com/Hurghada-tours/Outdoor-Activities/d5323-g28/',
+  };
+  const bookingUrl = CITY_HORSE_VIATOR[exp.city] || 'https://www.viator.com/Egypt/d798-ttd';
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">
