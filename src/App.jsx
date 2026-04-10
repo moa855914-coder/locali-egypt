@@ -55,6 +55,7 @@ import Bazaars from './pages/Bazaars';
 import ArabTourists from './pages/ArabTourists';
 import AskALocal from './pages/AskALocal';
 import VerifiedGuides from './pages/VerifiedGuides';
+import VerifiedDrivers from './pages/VerifiedDrivers';
 import About from './pages/About';
 import TourOperators from './pages/TourOperators';
 import Apartments from './pages/Apartments';
@@ -181,6 +182,7 @@ const AuthenticatedApp = () => {
         <Route path="/arab-tourists" element={<ArabTourists />} />
         <Route path="/ask-a-local" element={<AskALocal />} />
         <Route path="/guides" element={<VerifiedGuides />} />
+        <Route path="/drivers" element={<VerifiedDrivers />} />
         <Route path="/about" element={<About />} />
         <Route path="/tour-operators" element={<TourOperators />} />
         <Route path="/apartments" element={<Apartments />} />

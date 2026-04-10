@@ -3,7 +3,7 @@ import {
   Bot, DollarSign, Calculator, ShieldCheck, LayoutGrid,
   Phone, ShieldAlert, AlertTriangle, Home, Wifi, Utensils,
   Waves, Baby, Music, ShoppingBag, Star, Radio, TrendingUp,
-  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2, Anchor, Sailboat
+  CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2, Anchor, Car
 } from 'lucide-react';
 
 const SECTIONS = [
@@ -55,6 +55,7 @@ const SECTIONS = [
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels', icon: Hotel, path: '/services?category=long_stay', color: 'bg-slate-500/10 text-slate-500' },
       { label: 'Visa & Entry', labelRu: 'Виза и въезд', labelDe: 'Visum & Einreise', icon: CheckSquare, path: '/visa-entry', color: 'bg-purple-500/10 text-purple-500' },
       { label: 'Before You Land', labelRu: 'Перед прилётом', labelDe: 'Vor der Landung', icon: CheckSquare, path: '/before-you-land', color: 'bg-sky-500/10 text-sky-500' },
+      { label: 'Local Drivers', labelRu: 'Местные водители', labelDe: 'Lokale Fahrer', labelFr: 'Chauffeurs locaux', icon: Car, path: '/drivers', color: 'bg-green-500/10 text-green-600' },
     ],
   },
   {
