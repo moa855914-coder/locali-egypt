@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import { ShieldCheck, Star, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Star } from 'lucide-react';
+import BookingButtons from '../components/BookingButtons';
 
 const TOURS = [
   {
@@ -190,22 +191,8 @@ function TourCard({ tour }) {
       </div>
 
       {/* CTA */}
-      <div className="px-4 pb-4 space-y-2">
-        <button
-          onClick={() => window.open(viatorUrl, '_blank')}
-          className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Book on Viator
-        </button>
-        <a
-          href={mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors"
-        >
-          Find contact on Google Maps →
-        </a>
+      <div className="px-4 pb-4">
+        <BookingButtons activity={tour.name} city={cityLabel} />
       </div>
     </div>
   );

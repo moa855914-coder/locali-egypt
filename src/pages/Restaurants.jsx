@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, MapPin, Star, Phone } from 'lucide-react';
+import { Search, MapPin, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
+import BookingButtons from '../components/BookingButtons';
 
 // Data sourced from Google Places / TripAdvisor — phone & prices link to verified external sources
 const SAMPLE_RESTAURANTS = {
@@ -67,16 +68,11 @@ function RestaurantCard({ r }) {
       <p className="text-xs text-gray-600 mb-3">{r.desc}</p>
       <div className="space-y-2">
         <GoogleReviewsButton name={r.name} />
-        <div className="flex items-center justify-between gap-2">
-          <a href={viatorUrl} target="_blank" rel="noopener noreferrer"
-            className="text-xs font-bold text-accent hover:underline">
-            Check latest price →
-          </a>
-          <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
-            className="text-xs text-blue-500 hover:underline">
-            Find on Google Maps →
-          </a>
-        </div>
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
+          className="text-xs text-blue-500 hover:underline block text-center mb-1">
+          Find on Google Maps →
+        </a>
+        <BookingButtons activity={r.name + ' food tour'} city={r.city ? r.city.replace('-', ' ') : 'Egypt'} />
       </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { MapPin, Star, Waves, DollarSign, Users } from 'lucide-react';
+import { MapPin, Star, Waves } from 'lucide-react';
 import SafeNextStep from '../components/SafeNextStep';
+import BookingButtons from '../components/BookingButtons';
 
 // El Gouna — Premium resort 30km south of Hurghada
 // Prices verified from Booking.com, Expedia, TripAdvisor — April 2026
@@ -125,22 +126,18 @@ const ACTIVITY_VIATOR = {
 };
 
 function ActivityCard({ a }) {
-  const viatorUrl = ACTIVITY_VIATOR[a.name] || 'https://www.viator.com/Hurghada/d5323-ttd';
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-3">
       <div className="flex items-start justify-between gap-2 mb-1">
         <h3 className="font-bold text-sm">{a.name}</h3>
       </div>
       <p className="text-xs text-gray-600 mb-1">{a.desc}</p>
-      <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-2">
+      <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-3">
         <span>⏱ {a.duration}</span>
         <span>•</span>
         <span>{a.level}</span>
       </div>
-      <a href={viatorUrl} target="_blank" rel="noopener noreferrer"
-        className="block text-center text-xs font-bold text-accent hover:underline">
-        Check latest price →
-      </a>
+      <BookingButtons activity={a.name} city="El Gouna" musementCity="hurghada" />
     </div>
   );
 }

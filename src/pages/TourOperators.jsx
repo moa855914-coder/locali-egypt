@@ -456,19 +456,21 @@ function OperatorCard({ op }) {
         )}
 
         {/* CTAs */}
-        <a href={{
-            'Hurghada': 'https://www.viator.com/Hurghada/d5323-ttd',
-            'Sharm El Sheikh': 'https://www.viator.com/Sharm-el-Sheikh/d832-ttd',
-            'Luxor': 'https://www.viator.com/Luxor/d957-ttd',
-            'Aswan': 'https://www.viator.com/Aswan/d4776-ttd',
-            'Cairo': 'https://www.viator.com/Cairo/d828-ttd',
-            'El Gouna': 'https://www.viator.com/Hurghada/d5323-ttd',
-            'Dahab': 'https://www.viator.com/Dahab/d4314-ttd',
-          }[op.cities_covered?.[0]] || 'https://www.viator.com/Egypt/d798-ttd'}
-          target="_blank" rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity mb-2">
-          Check availability on Viator →
-        </a>
+        <div className="space-y-2 mb-2">
+          {(() => {
+            const city = op.cities_covered?.[0] || 'Egypt';
+            const viatorUrl = `https://www.viator.com/search/${op.company_name.replace(/\s+/g, '+')}+${city.replace(/\s+/g, '+')}+Egypt`;
+            const gygUrl = `https://www.getyourguide.com/s/?q=${encodeURIComponent(op.company_name + ' ' + city + ' Egypt')}`;
+            const musementSlug = city.toLowerCase().replace(/\s+/g, '-');
+            return (
+              <>
+                <button onClick={() => window.open(viatorUrl, '_blank')} className="w-full flex items-center justify-center bg-[#29C766] text-white py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">Book on Viator →</button>
+                <button onClick={() => window.open(gygUrl, '_blank')} className="w-full flex items-center justify-center bg-[#FF5533] text-white py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">Book on GetYourGuide →</button>
+                <button onClick={() => window.open(`https://www.musement.com/us/egypt/${musementSlug}/`, '_blank')} className="w-full flex items-center justify-center bg-[#5B2D8E] text-white py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">Book on Musement →</button>
+              </>
+            );
+          })()}
+        </div>
         <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(op.company_name + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors">

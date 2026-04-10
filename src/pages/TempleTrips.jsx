@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Search, X, MapPin, Clock, Star, ExternalLink, Info } from 'lucide-react';
+import { Search, X, MapPin, Clock, Star, Info } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
+import BookingButtons from '../components/BookingButtons';
 
 // All prices verified from official Egyptian government & major booking platforms
 // Sources: Ministry of Tourism Egypt (mota.gov.eg), GetYourGuide, Viator, TripAdvisor — April 2026
@@ -284,11 +285,7 @@ function ActivityCard({ act }) {
         <div className="mb-3">
           <GoogleReviewsButton name={act.title} />
         </div>
-        <a href={viatorUrl} target="_blank" rel="noopener noreferrer"
-          onClick={e => { e.preventDefault(); window.open(viatorUrl, '_blank'); }}
-          className="block text-center w-full bg-amber-500 text-white py-2.5 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all mb-2">
-          Book on Viator →
-        </a>
+        <BookingButtons activity={act.title} city={CITY_LABELS[act.city] || act.city} />
         <button onClick={() => setExpanded(!expanded)}
           className="text-[10px] font-bold text-accent underline mb-2">
           {expanded ? '▲ Less info' : '▼ Tips & Source'}

@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
+import BookingButtons from '../components/BookingButtons';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -159,10 +160,7 @@ function BoatCard({ boat }) {
         )}
 
         <GoogleReviewsButton name={boat.boat_name} className="mb-2" />
-        <a href={bookingUrl} target="_blank" rel="noopener noreferrer"
-          className="w-full block text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
-          Check latest price →
-        </a>
+        <BookingButtons activity={boat.boat_name} city={CITY_LABELS[boat.city] || boat.city} />
       </div>
 
     </div>
