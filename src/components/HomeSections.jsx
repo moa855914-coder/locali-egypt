@@ -50,6 +50,7 @@ const SECTIONS = [
     items: [
 
       { label: 'Long Stay', labelRu: 'Долгосрочное', labelDe: 'Langzeitaufenthalt', icon: Home, path: '/long-stay', color: 'bg-indigo-500/10 text-indigo-500' },
+      { label: 'Apartments', labelRu: 'Апартаменты', labelDe: 'Apartments', labelFr: 'Appartements', icon: Home, path: '/apartments', color: 'bg-violet-500/10 text-violet-500' },
       { label: 'SIM Cards', labelRu: 'SIM-карты', labelDe: 'SIM-Karten', icon: Wifi, path: '/sim-cards', color: 'bg-teal-500/10 text-teal-500' },
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels', icon: Hotel, path: '/services?category=long_stay', color: 'bg-slate-500/10 text-slate-500' },
       { label: 'Visa & Entry', labelRu: 'Виза и въезд', labelDe: 'Visum & Einreise', icon: CheckSquare, path: '/visa-entry', color: 'bg-purple-500/10 text-purple-500' },
