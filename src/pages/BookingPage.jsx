@@ -144,7 +144,9 @@ const CITY_LABELS = {
 };
 
 function TourCard({ tour }) {
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tour.name + ' ' + (CITY_LABELS[tour.city] || tour.city) + ' Egypt')}`;
+  const cityLabel = CITY_LABELS[tour.city] || tour.city;
+  const viatorUrl = `https://www.viator.com/search/${tour.name.replace(/\s+/g, '+')}+${cityLabel.replace(/\s+/g, '+')}+Egypt`;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(tour.name + ' ' + cityLabel + ' Egypt')}`;
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
@@ -190,7 +192,7 @@ function TourCard({ tour }) {
       {/* CTA */}
       <div className="px-4 pb-4 space-y-2">
         <button
-          onClick={() => window.open('https://www.viator.com/Egypt/d798-ttd', '_blank')}
+          onClick={() => window.open(viatorUrl, '_blank')}
           className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
         >
           <ExternalLink className="w-4 h-4" />

@@ -109,7 +109,8 @@ const SAMPLE_HORSES = [
 
 function ExperienceCard({ exp }) {
   const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
-  const bookingUrl = exp.booking_url || `https://www.getyourguide.com/egypt-l97/horseback-riding-tc193/`;
+  const cityLabel = CITY_LABELS[exp.city] || exp.city;
+  const bookingUrl = `https://www.viator.com/search/${exp.title.replace(/\s+/g, '+')}+${cityLabel.replace(/\s+/g, '+')}+Egypt`;
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">

@@ -117,7 +117,7 @@ function HotelCard({ h }) {
 }
 
 function ActivityCard({ a }) {
-  const viatorUrl = 'https://www.viator.com/Egypt/d798-ttd';
+  const viatorUrl = `https://www.viator.com/search/${a.name.replace(/\s+/g, '+')}+El+Gouna+Egypt`;
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-3">
       <div className="flex items-start justify-between gap-2 mb-1">
