@@ -329,7 +329,7 @@ const VILLAGES = [
     region: 'North Coast',
     type: 'resort_village',
     typeLabel: 'Upscale Summer Village',
-    description: 'The most famous resort village on Egypt's North Coast, 120 km west of Alexandria. A summer haven for Egyptians with white sandy beaches and vibrant nightlife.',
+    description: "The most famous resort village on Egypt's North Coast, 120 km west of Alexandria. A summer haven for Egyptians with white sandy beaches and vibrant nightlife.",
     distance: '120 km west of Alexandria / 340 km west of Cairo',
     address: 'Marina, North Coast, Matrouh',
     google_maps: 'https://maps.google.com/?q=Marina+North+Coast+Egypt',
