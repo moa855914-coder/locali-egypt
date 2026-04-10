@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Search, X, Copy, Check, Phone, Plus, Clock, Users, Star } from 'lucide-react';
+import { Search, X, Plus, Clock, Star } from 'lucide-react';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -106,71 +106,6 @@ const SAMPLE_HORSES = [
   },
 ];
 
-function DiscountModal({ exp, onClose }) {
-  const [copied, setCopied] = useState(false);
-  const code = exp.discount_code || 'LOCALI10';
-
-  const copy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-    if (exp.id && !exp.id.startsWith('s')) {
-      base44.entities.HorseRiding.update(exp.id, { discount_clicks: (exp.discount_clicks || 0) + 1 }).catch(() => {});
-    }
-  };
-
-  const whatsappMsg = encodeURIComponent(
-    `Hi! I found your horse riding experience "${exp.title}" on Locali Egypt. I want to book using the 10% discount code: ${code}. Please confirm availability.`
-  );
-  const waUrl = `https://wa.me/${exp.whatsapp}?text=${whatsappMsg}`;
-
-  const handleWA = () => {
-    if (exp.id && !exp.id.startsWith('s')) {
-      base44.entities.HorseRiding.update(exp.id, { whatsapp_clicks: (exp.whatsapp_clicks || 0) + 1 }).catch(() => {});
-    }
-    window.open(waUrl, '_blank');
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl relative" onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600">
-          <X className="w-5 h-5" />
-        </button>
-        <div className="text-center mb-5">
-          <div className="text-5xl mb-3">🐎</div>
-          <h3 className="text-xl font-black text-gray-900">Your Exclusive Discount</h3>
-          <p className="text-sm text-gray-500 mt-1">Exclusive for Locali Egypt users only</p>
-        </div>
-
-        <div className="bg-gradient-to-r from-amber-500 to-orange-400 rounded-2xl p-4 text-center mb-4">
-          <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Your Discount Code</p>
-          <p className="text-3xl font-black text-white tracking-widest">{code}</p>
-          <p className="text-white/80 text-xs mt-1">10% OFF — Show this to the provider</p>
-        </div>
-
-        <p className="text-xs text-gray-500 text-center mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5">
-          🐎 Use this code when contacting to get your <strong>10% discount</strong>
-        </p>
-
-        <div className="space-y-2">
-          <button onClick={copy}
-            className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-xl font-bold text-sm transition-all">
-            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy Code'}
-          </button>
-          <button onClick={handleWA}
-            className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold text-sm transition-all">
-            <Phone className="w-4 h-4" />
-            Book on WhatsApp (with code)
-          </button>
-        </div>
-        <p className="text-[10px] text-gray-400 text-center mt-3">✨ Exclusive for Locali Egypt users</p>
-      </div>
-    </div>
-  );
-}
-
 function ExperienceCard({ exp }) {
   const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
   const bookingUrl = exp.booking_url || `https://www.getyourguide.com/egypt-l97/horseback-riding-tc193/`;
@@ -227,7 +162,7 @@ function SubmitForm({ onClose }) {
   const submit = async () => {
     if (!form.title || !form.city || !form.experience_type || !form.price || !form.whatsapp) return;
     setLoading(true);
-    await base44.entities.HorseRiding.create({ ...form, price: parseFloat(form.price), discount_code: 'LOCALI10', status: 'pending' });
+    await base44.entities.HorseRiding.create({ ...form, price: parseFloat(form.price), status: 'pending' });
     setLoading(false);
     setDone(true);
   };
@@ -244,7 +179,7 @@ function SubmitForm({ onClose }) {
   return (
     <div className="space-y-3">
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800 font-medium">
-        🐎 By listing here, you agree to give a <strong>10% discount</strong> to users who provide the Locali code.
+        🐎 Submit your experience for review. Once approved it will be visible to tourists.
       </div>
       {[
         { label: 'Experience Title', key: 'title', type: 'text', placeholder: 'e.g. Sunset Beach Horse Ride' },

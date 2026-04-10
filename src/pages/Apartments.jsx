@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
   Home, ShieldCheck, Star, MapPin, Users, BedDouble,
-  Bath, Plus, X, Check, Tag, ChevronRight, CreditCard, AlertTriangle
+  Bath, Plus, X, Check, ChevronRight, AlertTriangle
 } from 'lucide-react';
 import { useSEO } from '../lib/seo';
 import { generateTrackingCode } from '../lib/constants';
@@ -389,10 +389,7 @@ export default function Apartments() {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-xl px-4 py-2.5 mb-6 text-xs">
-        <Tag className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-        <span className="font-bold text-amber-700">Use code <span className="font-mono bg-amber-500/20 px-1 rounded">LOCALI</span> for 10% off your first booking</span>
-      </div>
+
 
       <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-6">
         <button onClick={() => setCityFilter('')}

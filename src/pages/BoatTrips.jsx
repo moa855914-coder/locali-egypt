@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Anchor, Search, Filter, X, Copy, Check, Phone, ChevronDown, ChevronUp, Plus, Users, Clock, Star } from 'lucide-react';
+import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -112,74 +112,6 @@ const SAMPLE_BOATS = [
   },
 ];
 
-function DiscountModal({ boat, onClose }) {
-  const [copied, setCopied] = useState(false);
-  const code = boat.discount_code || 'LOCALI10';
-
-  const copy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-    if (boat.id && !boat.id.startsWith('s')) {
-      base44.entities.BoatTrip.update(boat.id, { discount_clicks: (boat.discount_clicks || 0) + 1 }).catch(() => {});
-    }
-  };
-
-  const whatsappMsg = encodeURIComponent(
-    `Hi! I found your boat "${boat.boat_name}" on Locali Egypt. I'd like to book using the 10% discount code: ${code}. Please confirm availability and price.`
-  );
-  const waUrl = `https://wa.me/${boat.whatsapp}?text=${whatsappMsg}`;
-
-  const handleWA = () => {
-    if (boat.id && !boat.id.startsWith('s')) {
-      base44.entities.BoatTrip.update(boat.id, { whatsapp_clicks: (boat.whatsapp_clicks || 0) + 1 }).catch(() => {});
-    }
-    window.open(waUrl, '_blank');
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="text-center mb-5">
-          <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-3">
-            <span className="text-3xl">🎁</span>
-          </div>
-          <h3 className="text-xl font-black text-gray-900">Your Exclusive Discount</h3>
-          <p className="text-sm text-gray-500 mt-1">For Locali Egypt users only</p>
-        </div>
-
-        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-4 text-center mb-4">
-          <p className="text-white/80 text-xs font-bold uppercase tracking-wider mb-1">Your Discount Code</p>
-          <p className="text-3xl font-black text-white tracking-widest">{code}</p>
-          <p className="text-white/80 text-xs mt-1">10% OFF — Show this to the boat owner</p>
-        </div>
-
-        <p className="text-xs text-gray-500 text-center mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5">
-          💬 Use this code when contacting the boat owner to get your <strong>10% discount</strong> on the total price.
-        </p>
-
-        <div className="space-y-2">
-          <button onClick={copy}
-            className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-xl font-bold text-sm transition-all">
-            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy Code'}
-          </button>
-          <button onClick={handleWA}
-            className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold text-sm transition-all">
-            <Phone className="w-4 h-4" />
-            Contact on WhatsApp (with code)
-          </button>
-        </div>
-
-        <p className="text-[10px] text-gray-400 text-center mt-3">✨ Exclusive for Locali Egypt users</p>
-        <button onClick={onClose} className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600">
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function BoatCard({ boat }) {
   const [imgIdx, setImgIdx] = useState(0);
   const photos = boat.photos?.length ? boat.photos : ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'];
@@ -222,6 +154,7 @@ function BoatCard({ boat }) {
           className="w-full block text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
           Check latest price →
         </a>
+
         <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(boat.boat_name + ' ' + (CITY_LABELS[boat.city] || boat.city) + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 border-2 border-blue-200 text-blue-600 hover:bg-blue-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
@@ -241,7 +174,7 @@ function SubmitForm({ onClose }) {
   const submit = async () => {
     if (!form.boat_name || !form.city || !form.boat_type || !form.price || !form.whatsapp) return;
     setLoading(true);
-    await base44.entities.BoatTrip.create({ ...form, price: parseFloat(form.price), capacity: parseInt(form.capacity), discount_code: 'LOCALI10', status: 'pending' });
+    await base44.entities.BoatTrip.create({ ...form, price: parseFloat(form.price), capacity: parseInt(form.capacity), status: 'pending' });
     setLoading(false);
     setDone(true);
   };
@@ -258,7 +191,7 @@ function SubmitForm({ onClose }) {
   return (
     <div className="space-y-3">
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800 font-medium">
-        ⚓ By submitting, you agree to offer a <strong>10% discount</strong> to users who provide the Locali code.
+        ⚓ Submit your boat listing for review. Once approved it will be visible to tourists.
       </div>
       {[
         { label: 'Boat Name', key: 'boat_name', type: 'text' },
