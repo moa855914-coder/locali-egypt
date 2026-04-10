@@ -6,6 +6,7 @@ const BEACHES = [
   {
     city: 'Hurghada',
     name: 'Sahl Hasheesh Private Beach',
+    photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
     type: 'Private Resort Beach',
     description: 'Pristine natural bay with crystal-clear water, fine sand, and excellent coral reef access just offshore. One of Egypt\'s most beautiful private beaches.',
     address: 'Sahl Hasheesh Bay, 17km south of Hurghada',
@@ -21,6 +22,7 @@ const BEACHES = [
   {
     city: 'Hurghada',
     name: 'Giftun Island Public Beach',
+    photo: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80',
     type: 'Day Trip Beach',
     description: 'National park island 30 min by boat from Hurghada Marina. Untouched coral reef, white sand, and world-class snorkeling.',
     address: 'Giftun Island — boat from Hurghada Marina',
@@ -36,6 +38,7 @@ const BEACHES = [
   {
     city: 'Hurghada',
     name: 'Makadi Bay Beach',
+    photo: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80',
     type: 'Resort Beach (Public Access)',
     description: 'Calm bay with shallow entry, perfect for families and non-swimmers. Beautiful sunset views toward the mountains.',
     address: 'Makadi Bay, 30km south of Hurghada center',
@@ -51,6 +54,7 @@ const BEACHES = [
   {
     city: 'Sharm El Sheikh',
     name: 'Ras Um Sid Beach',
+    photo: 'https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?w=800&q=80',
     type: 'Diving & Snorkeling Beach',
     description: 'Famous shore-diving site with a dramatic reef wall dropping to 40m. Accessible directly from the beach. World-class marine life.',
     address: 'Ras Um Sid headland, Sharm El Sheikh',
@@ -66,6 +70,7 @@ const BEACHES = [
   {
     city: 'Sharm El Sheikh',
     name: 'Naama Bay Public Beach',
+    photo: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=80',
     type: 'Public Beach',
     description: 'The main public beach in central Naama Bay. Lively, central, with cafes and water sports. Ideal for people watching and swimming.',
     address: 'Naama Bay promenade, central Sharm',
@@ -81,6 +86,7 @@ const BEACHES = [
   {
     city: 'Sharm El Sheikh',
     name: "Shark's Bay Beach",
+    photo: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=800&q=80',
     type: 'Semi-Private Beach',
     description: "Calm, shallow bay perfect for beginners and snorkelers. One of Sharm's best spots for seeing turtles from the shore.",
     address: "Shark's Bay, 5km north of Naama Bay",
@@ -96,6 +102,7 @@ const BEACHES = [
   {
     city: 'El Gouna',
     name: 'El Gouna Mangroovy Beach',
+    photo: 'https://images.unsplash.com/photo-1530053969600-caed2596d242?w=800&q=80',
     type: 'Kitesurfing & Lagoon Beach',
     description: 'World-famous kitesurfing spot with consistent wind and shallow flat water. IKO-certified schools on site. Also great for non-surfers.',
     address: 'Mangroovy Beach, El Gouna South',
@@ -111,6 +118,7 @@ const BEACHES = [
   {
     city: 'El Gouna',
     name: 'Zeytouna Beach (El Gouna)',
+    photo: 'https://images.unsplash.com/photo-1468413253897-a5e4f9f5f857?w=800&q=80',
     type: 'Private Island Beach',
     description: 'Beautiful private beach on a small island accessible by free ferry. White sand, turquoise water, stunning views of the lagoon.',
     address: 'Zeytouna Island — ferry from El Gouna marina',
@@ -136,6 +144,9 @@ function BeachCard({ beach }) {
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+      {beach.photo && (
+        <img src={beach.photo} alt={beach.name} className="w-full h-44 object-cover" />
+      )}
       <div className="p-4 border-b border-border/30">
         <div className="flex items-start justify-between gap-2 mb-2">
           <div className="flex-1">

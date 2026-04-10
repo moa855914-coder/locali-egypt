@@ -7,6 +7,7 @@ const BAZAARS = [
   {
     id: 1,
     name: 'Khan El-Khalili Bazaar',
+    photo: 'https://images.unsplash.com/photo-1539768942893-daf853ebf3fa?w=800&q=80',
     city: 'cairo',
     rating: 4.6,
     reviews: 8500,
@@ -19,6 +20,7 @@ const BAZAARS = [
   {
     id: 2,
     name: 'Aswan Bazaar (Souk)',
+    photo: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',
     city: 'aswan',
     rating: 4.7,
     reviews: 2200,
@@ -31,6 +33,7 @@ const BAZAARS = [
   {
     id: 3,
     name: 'Luxor Market (East Bank)',
+    photo: 'https://images.unsplash.com/photo-1590503578942-3b13c35e6ba0?w=800&q=80',
     city: 'luxor',
     rating: 4.3,
     reviews: 1100,
@@ -43,6 +46,7 @@ const BAZAARS = [
   {
     id: 4,
     name: 'Hurghada Bazaar',
+    photo: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&q=80',
     city: 'hurghada',
     rating: 4.1,
     reviews: 780,
@@ -74,7 +78,9 @@ const CITIES = [
 function BazaarCard({ b }) {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.name + ' ' + b.city + ' Egypt')}`;
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition-all">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
+      {b.photo && <img src={b.photo} alt={b.name} className="w-full h-40 object-cover" />}
+      <div className="p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="font-bold text-sm">{b.name}</h3>
@@ -107,6 +113,7 @@ function BazaarCard({ b }) {
           className="text-[10px] text-blue-500 hover:underline font-bold">
           Find contact on Google Maps →
         </a>
+      </div>
       </div>
     </div>
   );

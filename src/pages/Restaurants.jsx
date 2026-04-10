@@ -5,20 +5,20 @@ import SafeNextStep from '../components/SafeNextStep';
 // Data sourced from Google Places / TripAdvisor — phone & prices link to verified external sources
 const SAMPLE_RESTAURANTS = {
   hurghada: [
-    { name: 'Nino\'s Restaurant', cuisine: 'Italian/Seafood', rating: 4.9, reviews: 2697, address: 'Marina, Hurghada', maps_query: 'Ninos+Restaurant+Marina+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: '5-star fine dining overlooking marina. Authentic Italian + fresh seafood.' },
-    { name: 'Sofra Restaurant', cuisine: 'Egyptian/Middle Eastern', rating: 4.7, reviews: 1240, address: 'Downtown Hurghada', maps_query: 'Sofra+Restaurant+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: 'Traditional Egyptian food. Koshari, ful, falafel. Great value, local crowds.' },
-    { name: 'Sea Breeze Seafood', cuisine: 'Seafood', rating: 4.6, reviews: 980, address: 'Sigala Beach, Hurghada', maps_query: 'Sea+Breeze+Seafood+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: 'Fresh fish daily. Table with sea view. Popular with tourists & locals.' },
+    { name: 'Nino\'s Restaurant', photo: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80', cuisine: 'Italian/Seafood', rating: 4.9, reviews: 2697, address: 'Marina, Hurghada', maps_query: 'Ninos+Restaurant+Marina+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: '5-star fine dining overlooking marina. Authentic Italian + fresh seafood.' },
+    { name: 'Sofra Restaurant', photo: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80', cuisine: 'Egyptian/Middle Eastern', rating: 4.7, reviews: 1240, address: 'Downtown Hurghada', maps_query: 'Sofra+Restaurant+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: 'Traditional Egyptian food. Koshari, ful, falafel. Great value, local crowds.' },
+    { name: 'Sea Breeze Seafood', photo: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80', cuisine: 'Seafood', rating: 4.6, reviews: 980, address: 'Sigala Beach, Hurghada', maps_query: 'Sea+Breeze+Seafood+Hurghada+Egypt', viator_search: 'restaurants+hurghada', desc: 'Fresh fish daily. Table with sea view. Popular with tourists & locals.' },
   ],
   'sharm-el-sheikh': [
-    { name: 'Pasha Restaurant', cuisine: 'International/Egyptian', rating: 4.8, reviews: 1850, address: 'Naama Bay, Sharm El Sheikh', maps_query: 'Pasha+Restaurant+Naama+Bay+Sharm', viator_search: 'restaurants+sharm-el-sheikh', desc: 'Rooftop dining, Naama Bay views. Mix of Middle Eastern & international.' },
-    { name: 'Bedouin Restaurant', cuisine: 'Egyptian', rating: 4.5, reviews: 650, address: 'Old Sharm El Sheikh', maps_query: 'Bedouin+Restaurant+Old+Sharm', viator_search: 'restaurants+sharm-el-sheikh', desc: 'Local Egyptian cuisine, street food vibes. Grilled meats, fresh juices.' },
+    { name: 'Pasha Restaurant', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80', cuisine: 'International/Egyptian', rating: 4.8, reviews: 1850, address: 'Naama Bay, Sharm El Sheikh', maps_query: 'Pasha+Restaurant+Naama+Bay+Sharm', viator_search: 'restaurants+sharm-el-sheikh', desc: 'Rooftop dining, Naama Bay views. Mix of Middle Eastern & international.' },
+    { name: 'Bedouin Restaurant', photo: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80', cuisine: 'Egyptian', rating: 4.5, reviews: 650, address: 'Old Sharm El Sheikh', maps_query: 'Bedouin+Restaurant+Old+Sharm', viator_search: 'restaurants+sharm-el-sheikh', desc: 'Local Egyptian cuisine, street food vibes. Grilled meats, fresh juices.' },
   ],
   luxor: [
-    { name: 'Sofra Luxor', cuisine: 'Egyptian', rating: 4.7, reviews: 420, address: 'Corniche, Luxor', maps_query: 'Sofra+Restaurant+Luxor+Egypt', viator_search: 'restaurants+luxor', desc: 'Traditional Egyptian. Koshari, liver, mezze. Busy lunch spot.' },
-    { name: 'Sunset Restaurant Luxor', cuisine: 'International/Egyptian', rating: 4.6, reviews: 340, address: 'West Bank Corniche, Luxor', maps_query: 'Sunset+Restaurant+West+Bank+Luxor', viator_search: 'restaurants+luxor', desc: 'Nile view, sunset timing crucial. Mix of cuisines. Romantic setting.' },
+    { name: 'Sofra Luxor', photo: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=600&q=80', cuisine: 'Egyptian', rating: 4.7, reviews: 420, address: 'Corniche, Luxor', maps_query: 'Sofra+Restaurant+Luxor+Egypt', viator_search: 'restaurants+luxor', desc: 'Traditional Egyptian. Koshari, liver, mezze. Busy lunch spot.' },
+    { name: 'Sunset Restaurant Luxor', photo: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=80', cuisine: 'International/Egyptian', rating: 4.6, reviews: 340, address: 'West Bank Corniche, Luxor', maps_query: 'Sunset+Restaurant+West+Bank+Luxor', viator_search: 'restaurants+luxor', desc: 'Nile view, sunset timing crucial. Mix of cuisines. Romantic setting.' },
   ],
   aswan: [
-    { name: 'Nubian House Restaurant', cuisine: 'Nubian/Egyptian', rating: 4.8, reviews: 560, address: 'Corniche, Aswan', maps_query: 'Nubian+House+Restaurant+Aswan+Egypt', viator_search: 'restaurants+aswan', desc: 'Authentic Nubian dishes. River view. Family-run since 1995.' },
+    { name: 'Nubian House Restaurant', photo: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80', cuisine: 'Nubian/Egyptian', rating: 4.8, reviews: 560, address: 'Corniche, Aswan', maps_query: 'Nubian+House+Restaurant+Aswan+Egypt', viator_search: 'restaurants+aswan', desc: 'Authentic Nubian dishes. River view. Family-run since 1995.' },
   ],
 };
 
@@ -41,7 +41,9 @@ function RestaurantCard({ r }) {
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${r.maps_query}`;
   const viatorUrl = `https://www.viator.com/search?text=${r.viator_search}`;
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition-all">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-all">
+      {r.photo && <img src={r.photo} alt={r.name} className="w-full h-36 object-cover" />}
+      <div className="p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="font-bold text-sm">{r.name}</h3>
@@ -65,6 +67,7 @@ function RestaurantCard({ r }) {
           className="text-xs text-blue-500 hover:underline">
           Find contact on Google Maps →
         </a>
+      </div>
       </div>
     </div>
   );

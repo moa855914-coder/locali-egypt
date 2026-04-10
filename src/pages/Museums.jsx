@@ -6,6 +6,7 @@ import SafeNextStep from '../components/SafeNextStep';
 const MUSEUMS = [
   {
     name: 'Grand Egyptian Museum (GEM)',
+    photo: 'https://images.unsplash.com/photo-1589876568181-a1508b8ef473?w=800&q=80',
     city: 'cairo',
     rating: 4.9,
     reviews: 3200,
@@ -19,6 +20,7 @@ const MUSEUMS = [
   },
   {
     name: 'Egyptian Museum Cairo',
+    photo: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
     city: 'cairo',
     rating: 4.6,
     reviews: 2400,
@@ -32,6 +34,7 @@ const MUSEUMS = [
   },
   {
     name: 'Luxor Museum',
+    photo: 'https://images.unsplash.com/photo-1590859808308-3d2d9c515b1a?w=800&q=80',
     city: 'luxor',
     rating: 4.7,
     reviews: 1600,
@@ -45,6 +48,7 @@ const MUSEUMS = [
   },
   {
     name: 'Mummification Museum',
+    photo: 'https://images.unsplash.com/photo-1601661223202-fd5fb4798eee?w=800&q=80',
     city: 'luxor',
     rating: 4.5,
     reviews: 820,
@@ -58,6 +62,7 @@ const MUSEUMS = [
   },
   {
     name: 'Aswan Museum',
+    photo: 'https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?w=800&q=80',
     city: 'aswan',
     rating: 4.4,
     reviews: 480,
@@ -73,7 +78,9 @@ const MUSEUMS = [
 
 function MuseumCard({ m }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4">
+    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+      {m.photo && <img src={m.photo} alt={m.name} className="w-full h-40 object-cover" />}
+      <div className="p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
         <div>
           <h3 className="font-bold text-sm">{m.name}</h3>
@@ -117,6 +124,7 @@ function MuseumCard({ m }) {
       </div>
 
       <p className="text-[10px] text-gray-400">📌 Source: {m.source}</p>
+      </div>
     </div>
   );
 }
