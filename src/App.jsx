@@ -24,7 +24,7 @@ import EgyptVsDubai from './pages/EgyptVsDubai';
 import LastMinuteEgypt from './pages/LastMinuteEgypt';
 import Nightlife from './pages/Nightlife';
 import RemoteWork from './pages/RemoteWork';
-import RideSharing from './pages/RideSharing';
+
 import LongStay from './pages/LongStay';
 import CityScams from './pages/city/CityScams';
 import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
@@ -34,7 +34,7 @@ import SimCards from './pages/SimCards';
 import VisaEntry from './pages/VisaEntry';
 import CurrencyRates from './pages/CurrencyRates';
 import FeaturedLocals from './pages/FeaturedLocals';
-import TouristStories from './pages/TouristStories';
+
 import CityRestaurants from './pages/city/CityRestaurants';
 import CityThingsToDo from './pages/city/CityThingsToDo';
 import CityTransport from './pages/city/CityTransport';
@@ -58,8 +58,8 @@ import VerifiedGuides from './pages/VerifiedGuides';
 import About from './pages/About';
 import TourOperators from './pages/TourOperators';
 import Apartments from './pages/Apartments';
-import VerifiedDrivers from './pages/VerifiedDrivers';
-import LocaliRide from './pages/LocaliRide';
+
+
 import NationalityGuide from './pages/NationalityGuide';
 import AdminVerification from './pages/AdminVerification';
 import AdminDataPopulate from './pages/AdminDataPopulate';
@@ -132,8 +132,7 @@ const AuthenticatedApp = () => {
         <Route path="/last-minute-egypt" element={<LastMinuteEgypt />} />
         <Route path="/nightlife" element={<Nightlife />} />
         <Route path="/remote-work" element={<RemoteWork />} />
-        <Route path="/ride-sharing" element={<LocaliRide />} />
-        <Route path="/locali-ride" element={<LocaliRide />} />
+
         <Route path="/nationality-guide" element={<NationalityGuide />} />
         <Route path="/admin/verify" element={<AdminVerification />} />
         <Route path="/admin/populate" element={<AdminDataPopulate />} />
@@ -165,7 +164,7 @@ const AuthenticatedApp = () => {
         <Route path="/visa-entry" element={<VisaEntry />} />
         <Route path="/currency-rates" element={<CurrencyRates />} />
         <Route path="/featured-locals" element={<FeaturedLocals />} />
-        <Route path="/tourist-stories" element={<TouristStories />} />
+
         <Route path="/ai-assistant" element={<AIAssistant />} />
         <Route path="/live-situation" element={<LiveSituationPage />} />
         <Route path="/terms" element={<Terms />} />
@@ -185,7 +184,7 @@ const AuthenticatedApp = () => {
         <Route path="/about" element={<About />} />
         <Route path="/tour-operators" element={<TourOperators />} />
         <Route path="/apartments" element={<Apartments />} />
-        <Route path="/verified-drivers" element={<VerifiedDrivers />} />
+
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import {
   Bot, DollarSign, Calculator, ShieldCheck, LayoutGrid,
-  Phone, ShieldAlert, AlertTriangle, Car, Home, Wifi, Utensils,
+  Phone, ShieldAlert, AlertTriangle, Home, Wifi, Utensils,
   Waves, Baby, Music, ShoppingBag, Star, Radio, TrendingUp,
   CheckSquare, Pill, Hotel, Calendar, MessageSquare, Heart, Users, Package, Building2, Anchor, Sailboat
 } from 'lucide-react';
@@ -49,8 +49,7 @@ const SECTIONS = [
     groupDe: 'Transport & Unterkunft',
     color: 'text-blue-500',
     items: [
-      { label: 'Locali Ride', labelRu: 'Locali Ride', labelDe: 'Locali Ride', icon: Car, path: '/locali-ride', color: 'bg-accent/10 text-accent' },
-      { label: 'Private Drivers', labelRu: 'Частные водители', labelDe: 'Privatfahrer', labelFr: 'Chauffeurs privés', icon: ShieldCheck, path: '/verified-drivers', color: 'bg-success/10 text-success' },
+
       { label: 'Long Stay', labelRu: 'Долгосрочное', labelDe: 'Langzeitaufenthalt', icon: Home, path: '/long-stay', color: 'bg-indigo-500/10 text-indigo-500' },
       { label: 'SIM Cards', labelRu: 'SIM-карты', labelDe: 'SIM-Karten', icon: Wifi, path: '/sim-cards', color: 'bg-teal-500/10 text-teal-500' },
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels', icon: Hotel, path: '/services?category=long_stay', color: 'bg-slate-500/10 text-slate-500' },
@@ -86,7 +85,7 @@ const SECTIONS = [
     items: [
       { label: 'Live Situation', labelRu: 'Живая ситуация', labelDe: 'Live-Lage', icon: Radio, path: '/live-situation', color: 'bg-success/10 text-success' },
       { label: 'Arabic Phrases', labelRu: 'Арабские фразы', labelDe: 'Arabische Phrasen', icon: MessageSquare, path: '/phrases', color: 'bg-teal-500/10 text-teal-500' },
-      { label: 'Tourist Stories', labelRu: 'Истории туристов', labelDe: 'Reiseberichte', icon: Star, path: '/tourist-stories', color: 'bg-amber-500/10 text-amber-500' },
+
       { label: 'Remote Work', labelRu: 'Удалённая работа', labelDe: 'Remote-Arbeit', icon: Wifi, path: '/remote-work', color: 'bg-indigo-500/10 text-indigo-500' },
       { label: 'Egypt vs Dubai', labelRu: 'Египет vs Дубай', labelDe: 'Ägypten vs Dubai', icon: TrendingUp, path: '/egypt-vs-dubai', color: 'bg-sky-500/10 text-sky-500' },
       { label: 'Trip Decision', labelRu: 'Выбор поездки', labelDe: 'Reiseentscheidung', labelFr: 'Décision voyage', icon: CheckSquare, path: '/trip-decision', color: 'bg-violet-500/10 text-violet-500' },
