@@ -32,8 +32,8 @@ const QUICK_MESSAGES = [
 
 const SAMPLE_DRIVERS = [
   {
-    id: 'd1', full_name: 'Ahmed Hassan', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=120&h=120&fit=crop&crop=face',
+    id: 'd1', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['hurghada', 'el-gouna', 'luxor'],
     languages: ['Arabic', 'English', 'Russian'],
     car_model: 'Toyota Camry', car_color: 'White', car_year: 2022,
@@ -48,12 +48,12 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd2', full_name: 'Mohamed Ali', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face',
+    id: 'd2', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['sharm-el-sheikh'],
     languages: ['Arabic', 'English', 'German'],
     car_model: 'Hyundai Tucson', car_color: 'Silver', car_year: 2021,
-    description: 'Certified tourist transport driver. Fluent German. No hidden fees ever.',
+    description: 'Certified tourist transport driver. No hidden fees ever.',
     avg_rating: 4.8, review_count: 93, total_rides: 541, response_time: '< 5 min',
     price_routes: [
       { route: 'Sharm Airport → Naama Bay', price_egp: 200, duration_min: 20 },
@@ -63,8 +63,8 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd3', full_name: 'Youssef Mahmoud', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face',
+    id: 'd3', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['luxor', 'aswan'],
     languages: ['Arabic', 'English', 'French', 'Italian'],
     car_model: 'Kia Sportage', car_color: 'Black', car_year: 2023,
@@ -79,8 +79,8 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd4', full_name: 'Karim Saeed', is_verified: false, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face',
+    id: 'd4', full_name: 'Local Verified Driver', is_verified: false, status: 'approved',
+    photo_url: '',
     cities_covered: ['hurghada', 'el-gouna'],
     languages: ['Arabic', 'English', 'Russian', 'Polish'],
     car_model: 'Skoda Octavia', car_color: 'Grey', car_year: 2020,

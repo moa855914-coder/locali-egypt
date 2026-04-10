@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ShieldCheck, Star, Phone, Languages, MapPin, CreditCard, Plus, X, Check } from 'lucide-react';
+import { ShieldCheck, Star, Languages, MapPin, Plus, X, Check } from 'lucide-react';
 import { useSEO } from '../lib/seo';
 import { generateTrackingCode } from '../lib/constants';
 
 const SAMPLE_GUIDES = [
   {
     id: 'sample-1',
-    full_name: 'Ahmed Hassan',
+    full_name: 'Local Expert Guide',
     photo_url: '',
     license_id: 'LXR-2019-004821',
     city: 'luxor',
@@ -19,7 +19,6 @@ const SAMPLE_GUIDES = [
     description: 'Licensed Egyptologist with 14 years experience. I bring ancient history to life with stories not found in any guidebook.',
     price_half_day: 900,
     price_full_day: 1600,
-    phone_whatsapp: '201012345678',
     avg_rating: 4.9,
     review_count: 187,
     is_verified: true,
@@ -28,7 +27,7 @@ const SAMPLE_GUIDES = [
   },
   {
     id: 'sample-2',
-    full_name: 'Fatima El-Sayed',
+    full_name: 'Local Expert Guide',
     photo_url: '',
     license_id: 'SHM-2017-002344',
     city: 'sharm-el-sheikh',
@@ -38,7 +37,6 @@ const SAMPLE_GUIDES = [
     description: 'Born in Sinai. I know every desert trail, every Bedouin family, and every secret dive site from here to Dahab.',
     price_half_day: 850,
     price_full_day: 1500,
-    phone_whatsapp: '201098765432',
     avg_rating: 4.8,
     review_count: 134,
     is_verified: true,
@@ -47,7 +45,7 @@ const SAMPLE_GUIDES = [
   },
   {
     id: 'sample-3',
-    full_name: 'Khalid Omar',
+    full_name: 'Local Expert Guide',
     photo_url: '',
     license_id: 'HRG-2020-008876',
     city: 'hurghada',
@@ -57,7 +55,6 @@ const SAMPLE_GUIDES = [
     description: 'Hurghada native. I know where tourists get ripped off and how to avoid it. Every tour I lead is transparent on price.',
     price_half_day: 750,
     price_full_day: 1350,
-    phone_whatsapp: '201123456789',
     avg_rating: 4.7,
     review_count: 98,
     is_verified: true,
@@ -66,17 +63,16 @@ const SAMPLE_GUIDES = [
   },
   {
     id: 'sample-4',
-    full_name: 'Nadia Samir',
+    full_name: 'Local Expert Guide',
     photo_url: '',
     license_id: 'ASW-2016-001123',
     city: 'aswan',
     cities_covered: ['Aswan', 'Abu Simbel', 'Nubian Villages'],
     languages: ['Arabic', 'English', 'French', 'Nubian'],
     tour_types: ['Abu Simbel', 'Philae Temple', 'Nubian Village', 'Felucca Tours', 'High Dam', 'Kom Ombo'],
-    description: 'Nubian woman guide with deep roots in Aswan. My tours include access to private Nubian homes and genuine cultural experiences.',
+    description: 'Nubian guide with deep roots in Aswan. My tours include access to private Nubian homes and genuine cultural experiences.',
     price_half_day: 800,
     price_full_day: 1400,
-    phone_whatsapp: '201234567890',
     avg_rating: 4.9,
     review_count: 211,
     is_verified: true,
@@ -100,13 +96,8 @@ const CITY_SEO = {
 };
 
 function GuideCard({ guide }) {
-  const [code] = useState(() => generateTrackingCode(guide.city, 'GDE'));
-  const [showBook, setShowBook] = useState(false);
   const commission = Math.round((guide.price_full_day || 1500) * 0.07);
-
-  const whatsappMsg = encodeURIComponent(
-    `Hello ${guide.full_name}! I found your profile on Locali Egypt.\nTracking Code: ${code}\nI'd like to book: Full-Day Tour\nPrice: ${guide.price_full_day} EGP\nPlease confirm availability.`
-  );
+  const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(guide.full_name + ' guide ' + (CITY_LABELS[guide.city] || guide.city) + ' Egypt')}`;
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
@@ -173,17 +164,16 @@ function GuideCard({ guide }) {
           </div>
         </div>
 
-        <p className="text-[9px] text-muted-foreground mb-3 text-center">7% Locali Egypt commission: {commission} EGP · Tracking: {code}</p>
+        <p className="text-[9px] text-muted-foreground mb-3 text-center">Book via Viator or contact through Google Maps · 7% Locali fee: {commission} EGP</p>
 
         {/* CTA */}
         <a
-          href={`https://wa.me/${guide.phone_whatsapp}?text=${whatsappMsg}`}
+          href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-success/10 text-success border border-success/30 py-3 rounded-xl text-sm font-bold hover:bg-success/20 transition-colors"
+          className="flex items-center justify-center gap-2 w-full bg-secondary border border-border py-3 rounded-xl text-sm font-bold hover:bg-secondary/80 transition-colors"
         >
-          <Phone className="w-4 h-4" />
-          Book via WhatsApp
+          📍 View on Google Maps →
         </a>
       </div>
     </div>

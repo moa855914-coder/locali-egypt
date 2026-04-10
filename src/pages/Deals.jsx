@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { CITIES, t, getCityName } from '../lib/constants';
-import { Sparkles, Clock, Percent, Phone } from 'lucide-react';
+import { Sparkles, Clock, Percent } from 'lucide-react';
 
 export default function Deals() {
   const { lang } = useOutletContext();
@@ -94,17 +94,14 @@ export default function Deals() {
                       </div>
                     )}
                   </div>
-                  {deal.whatsapp && (
-                    <a
-                      href={`https://wa.me/${deal.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi! I saw your deal "${deal.title}" on Locali Egypt and I'm interested.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
-                    >
-                      <Phone className="w-3.5 h-3.5" />
-                      WhatsApp
-                    </a>
-                  )}
+                  <a
+                    href={`https://www.google.com/maps/search/${encodeURIComponent(deal.title + ' Egypt')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 bg-secondary border border-border px-4 py-2 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-all"
+                  >
+                    📍 View on Google Maps →
+                  </a>
                 </div>
               </div>
             </div>

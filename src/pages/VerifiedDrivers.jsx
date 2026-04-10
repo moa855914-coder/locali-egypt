@@ -3,8 +3,8 @@ import { useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
-  Car, ShieldCheck, Star, MapPin, Globe, Languages,
-  Phone, Plus, X, Check, CreditCard, AlertTriangle, Lock, User
+  Car, ShieldCheck, Star, MapPin, Languages,
+  Plus, X, Check, AlertTriangle, Lock, User
 } from 'lucide-react';
 import { useSEO } from '../lib/seo';
 import { generateTrackingCode } from '../lib/constants';
@@ -22,8 +22,8 @@ const LANG_FLAGS = { English: '🇬🇧', Russian: '🇷🇺', German: '🇩🇪
 
 const SAMPLE_DRIVERS = [
   {
-    id: 'd1', full_name: 'Ahmed Hassan', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=120&h=120&fit=crop&crop=face',
+    id: 'd1', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['hurghada', 'el-gouna', 'luxor'],
     languages: ['Arabic', 'English', 'Russian'],
     car_model: 'Toyota Camry 2022', car_color: 'White',
@@ -37,12 +37,12 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd2', full_name: 'Mohamed Ali', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&h=120&fit=crop&crop=face',
+    id: 'd2', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['sharm-el-sheikh', 'hurghada'],
     languages: ['Arabic', 'English', 'German'],
     car_model: 'Hyundai Tucson 2021', car_color: 'Silver',
-    description: 'Certified tourist transport driver. I speak fluent German. Specialist in Sinai tours and Sharm El Sheikh airport runs. No hidden fees ever.',
+    description: 'Certified tourist transport driver. Specialist in Sinai tours and Sharm El Sheikh airport runs. No hidden fees ever.',
     avg_rating: 4.8, review_count: 93, total_rides: 541,
     price_routes: [
       { route: 'Sharm Airport → Naama Bay', price_egp: 200, duration_min: 20 },
@@ -52,8 +52,8 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd3', full_name: 'Youssef Mahmoud', is_verified: true, status: 'approved',
-    photo_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&h=120&fit=crop&crop=face',
+    id: 'd3', full_name: 'Local Verified Driver', is_verified: true, status: 'approved',
+    photo_url: '',
     cities_covered: ['luxor', 'aswan'],
     languages: ['Arabic', 'English', 'French', 'Italian'],
     car_model: 'Kia Sportage 2023', car_color: 'Black',
@@ -68,7 +68,7 @@ const SAMPLE_DRIVERS = [
     ],
   },
   {
-    id: 'd4', full_name: 'Karim Saeed', is_verified: false, status: 'approved',
+    id: 'd4', full_name: 'Local Verified Driver', is_verified: false, status: 'approved',
     photo_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&crop=face',
     cities_covered: ['hurghada', 'el-gouna'],
     languages: ['Arabic', 'English', 'Russian', 'Polish'],

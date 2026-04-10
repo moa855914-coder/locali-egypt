@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useSEO } from '../lib/seo';
 import SafeNextStep from '../components/SafeNextStep';
-import { Users, Star, Shield, Phone, Globe, CheckCircle2, MapPin, MessageCircle } from 'lucide-react';
+import { Users, Star, Shield, Globe } from 'lucide-react';
 
 const SERVICE_LABELS = {
   driver: { label: 'Driver', emoji: '🚗' },
@@ -25,99 +25,93 @@ const CITY_LABELS = {
 const SAMPLE_LOCALS = [
   {
     id: 'sample-1',
-    name: 'Ahmed Hassan',
+    name: 'Local Expert Driver',
     city: 'hurghada',
     service_type: 'driver',
     languages: ['English', 'German', 'Arabic'],
-    description: 'Licensed driver with 14 years of experience covering Hurghada and the Red Sea coast. Honest fixed prices, punctual, and genuinely helpful with local tips. Safe vehicle, non-smoking.',
-    phone_whatsapp: '+20 100 123 4567',
+    description: 'Licensed driver covering Hurghada and the Red Sea coast. Honest fixed prices, punctual, and genuinely helpful with local tips. Safe vehicle, non-smoking.',
     is_verified: true,
     avg_rating: 4.9,
     review_count: 87,
     price_range: '150–300 EGP per trip',
     specialties: ['Airport transfers', 'Full day city tours', 'Desert road trips', 'Luggage handling'],
     years_experience: 14,
-    photo_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
   {
     id: 'sample-2',
-    name: 'Mohamed Fathy',
+    name: 'Local Expert Guide',
     city: 'luxor',
     service_type: 'guide',
     languages: ['English', 'French', 'Italian', 'Arabic'],
-    description: 'Government-licensed Egyptologist with 20 years guiding at Valley of Kings, Karnak, and Luxor Temple. University degree in Egyptology from Luxor University. Passionate, patient, and deeply knowledgeable.',
-    phone_whatsapp: '+20 122 987 6543',
+    description: 'Government-licensed Egyptologist with 20 years guiding at Valley of Kings, Karnak, and Luxor Temple. University degree in Egyptology. Passionate, patient, and deeply knowledgeable.',
     is_verified: true,
     avg_rating: 5.0,
     review_count: 214,
     price_range: '1,000–1,500 EGP per day',
     specialties: ['Valley of the Kings', 'Karnak', 'Hot air balloon coordination', 'Hieroglyphic explanations', 'Photography spots'],
     years_experience: 20,
-    photo_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
   {
     id: 'sample-3',
-    name: 'Ibrahim Nour',
+    name: 'Local Expert Driver',
     city: 'aswan',
     service_type: 'driver',
     languages: ['English', 'Russian', 'Arabic'],
-    description: 'Trusted Aswan driver and Abu Simbel specialist. Only driver I\'ve met who will tell you honestly if a tour isn\'t worth the money. Knows the convoy schedule better than anyone.',
-    phone_whatsapp: '+20 111 456 7890',
+    description: 'Trusted Aswan driver and Abu Simbel specialist. Knows the convoy schedule and will honestly advise on tours. No hidden fees.',
     is_verified: true,
     avg_rating: 4.8,
     review_count: 63,
     price_range: '600–900 EGP Abu Simbel trip',
     specialties: ['Abu Simbel private transport', 'Philae Temple tours', 'Nubian village access', 'Airport transfers'],
     years_experience: 11,
-    photo_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
   {
     id: 'sample-4',
-    name: 'Khaled Sayed',
+    name: 'Local Expert Instructor',
     city: 'sharm-el-sheikh',
     service_type: 'dive_instructor',
     languages: ['English', 'German', 'Russian', 'Arabic'],
     description: 'PADI Divemaster with 500+ dives on Red Sea reefs. Specializes in beginner instruction and underwater photography coaching. Never rushes, always safety-first.',
-    phone_whatsapp: '+20 106 321 0987',
     is_verified: true,
     avg_rating: 4.9,
     review_count: 142,
     price_range: '800–1,200 EGP per dive day',
     specialties: ['Beginner diving', 'PADI Open Water course', 'Underwater photography', 'Night dives', 'Ras Mohammed reef trips'],
     years_experience: 8,
-    photo_url: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
   {
     id: 'sample-5',
-    name: 'Youssef Ali',
+    name: 'Local Expert Operator',
     city: 'hurghada',
     service_type: 'tour_operator',
     languages: ['English', 'Polish', 'Arabic'],
-    description: 'Honest tour operator specializing in Giftun Island, Dolphin House, and desert safaris. Posts real prices upfront — no hidden fees, no commission games. Popular with Eastern European tourists.',
-    phone_whatsapp: '+20 115 678 2345',
+    description: 'Honest tour operator specializing in Giftun Island, Dolphin House, and desert safaris. Posts real prices upfront — no hidden fees, no commission games.',
     is_verified: true,
     avg_rating: 4.7,
     review_count: 98,
     price_range: '350–750 EGP per activity',
     specialties: ['Giftun Island day trips', 'Dolphin House snorkeling', 'Desert 4WD safaris', 'Group bookings'],
     years_experience: 9,
-    photo_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
   {
     id: 'sample-6',
-    name: 'Fatima Rashid',
+    name: 'Local Expert Translator',
     city: 'luxor',
     service_type: 'translator',
     languages: ['English', 'German', 'Spanish', 'Arabic'],
-    description: 'Certified translator and cultural liaison. Excellent for business negotiations, medical appointments, and navigating government offices. Female travelers especially welcome her for added comfort.',
-    phone_whatsapp: '+20 120 234 5678',
+    description: 'Certified translator and cultural liaison. Excellent for business negotiations, medical appointments, and navigating government offices.',
     is_verified: true,
     avg_rating: 4.8,
     review_count: 44,
     price_range: '400–600 EGP per half day',
     specialties: ['Medical translation', 'Legal/document translation', 'Cultural mediation', 'Female traveler support'],
     years_experience: 7,
-    photo_url: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&crop=face',
+    photo_url: '',
   },
 ];
 
@@ -189,13 +183,11 @@ function LocalCard({ local }) {
         {local.price_range && (
           <p className="text-xs font-semibold text-muted-foreground">{local.price_range}</p>
         )}
-        {local.phone_whatsapp && (
-          <a href={`https://wa.me/${local.phone_whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 bg-success text-success-foreground px-3 py-1.5 rounded-xl text-xs font-bold">
-            <MessageCircle className="w-3.5 h-3.5" />
-            WhatsApp
-          </a>
-        )}
+        <a href={`https://www.google.com/maps/search/${encodeURIComponent((local.name || '') + ' ' + (CITY_LABELS[local.city] || local.city || '') + ' Egypt')}`}
+          target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-1.5 bg-secondary border border-border px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-colors">
+          📍 View on Google Maps →
+        </a>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import { Waves, Star, Clock, DollarSign, CheckCircle2, Phone, ExternalLink } from 'lucide-react';
-import { generateTrackingCode } from '../lib/constants';
+import { Waves, Star, Clock } from 'lucide-react';
 import { useState } from 'react';
 
 const BEACHES = [
@@ -17,7 +16,6 @@ const BEACHES = [
     best_time: 'October–April (calm, 22–26°C water)',
     rating: 4.8,
     review: 'Best beach I found near Hurghada. The coral is incredible and the water is perfectly clear.',
-    phone: '201001234567',
     verified: true,
   },
   {
@@ -33,7 +31,6 @@ const BEACHES = [
     best_time: 'Year-round — protected from wind',
     rating: 4.9,
     review: 'The fish were swimming right next to me! Absolutely magical snorkeling experience.',
-    phone: '201009876543',
     verified: true,
   },
   {
@@ -49,7 +46,6 @@ const BEACHES = [
     best_time: 'September–May',
     rating: 4.5,
     review: 'Super calm water. Perfect for our kids — they played for hours.',
-    phone: '201012345678',
     verified: false,
   },
   {
@@ -65,7 +61,6 @@ const BEACHES = [
     best_time: 'Year-round — exceptional visibility',
     rating: 4.9,
     review: 'Shore diving access to a world-class wall. I saw a turtle on my first dive.',
-    phone: '201112345678',
     verified: true,
   },
   {
@@ -81,14 +76,13 @@ const BEACHES = [
     best_time: 'October–April',
     rating: 4.3,
     review: 'Perfect central location, always buzzing with energy. Water sports are well priced.',
-    phone: null,
     verified: false,
   },
   {
     city: 'Sharm El Sheikh',
-    name: 'Shark\'s Bay Beach',
+    name: "Shark's Bay Beach",
     type: 'Semi-Private Beach',
-    description: 'Calm, shallow bay perfect for beginners and snorkelers. One of Sharm\'s best spots for seeing turtles from the shore.',
+    description: "Calm, shallow bay perfect for beginners and snorkelers. One of Sharm's best spots for seeing turtles from the shore.",
     address: "Shark's Bay, 5km north of Naama Bay",
     hours: '8am – 6pm',
     entry_egp: 100,
@@ -97,7 +91,6 @@ const BEACHES = [
     best_time: 'Year-round — turtles most active morning',
     rating: 4.7,
     review: 'We saw two sea turtles feeding in the morning! Worth every penny.',
-    phone: '201123456789',
     verified: true,
   },
   {
@@ -113,7 +106,6 @@ const BEACHES = [
     best_time: 'November–April (wind season)',
     rating: 4.8,
     review: 'Perfect wind every single day. Best kitesurfing conditions in the Red Sea.',
-    phone: '201678901234',
     verified: true,
   },
   {
@@ -129,7 +121,6 @@ const BEACHES = [
     best_time: 'October–May',
     rating: 4.9,
     review: 'Felt like we had our own private island. Stunning place.',
-    phone: '201789012345',
     verified: true,
   },
 ];
@@ -141,11 +132,7 @@ const CITY_COLORS = {
 };
 
 function BeachCard({ beach }) {
-  const [code] = useState(() => generateTrackingCode(beach.city, 'BCH'));
-  const whatsappMsg = encodeURIComponent(
-    `Hello! I'm interested in visiting: "${beach.name}" via Locali Egypt.\nTracking Code: ${code}\nCan you confirm availability and current entry fee?`
-  );
-  const whatsappUrl = `https://wa.me/${beach.phone}?text=${whatsappMsg}`;
+  const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(beach.name + ' Egypt')}`;
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
@@ -184,16 +171,10 @@ function BeachCard({ beach }) {
       </div>
 
       <div className="p-4">
-        {beach.phone ? (
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full bg-success text-success-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity">
-            <Phone className="w-4 h-4" />
-            Book / Enquire via WhatsApp
-            <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-          </a>
-        ) : (
-          <p className="text-center text-xs text-muted-foreground py-2">Free public access — no booking required</p>
-        )}
+        <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full bg-secondary border border-border py-3 rounded-xl text-sm font-bold hover:bg-secondary/80 transition-colors">
+          📍 View on Google Maps →
+        </a>
       </div>
     </div>
   );
