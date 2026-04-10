@@ -23,55 +23,55 @@ const CITY_LABELS = { hurghada: 'Hurghada', 'sharm-el-sheikh': 'Sharm El Sheikh'
 const TYPE_LABELS = { yacht: '⛵ Yacht', speedboat: '🚤 Speedboat', fishing_boat: '🎣 Fishing Boat', sailboat: '🌊 Sailboat', catamaran: '🛥️ Catamaran' };
 const PRICE_TYPE_LABELS = { per_hour: '/hr', per_trip: '/trip', per_person: '/person' };
 
-// Real operator data — sourced from GetYourGuide, Viator, TripAdvisor (April 2026)
+// Verified sources: GetYourGuide, Viator, TripAdvisor — contact via booking platforms only
 const SAMPLE_BOATS = [
   {
     id: 's1',
     boat_name: 'Royal Luxury Catamaran — Orange Bay (GetYourGuide #1)',
     city: 'hurghada',
     boat_type: 'catamaran',
-    price: 2950,
+    price: null,
     price_type: 'per_person',
     capacity: 30,
     duration_hours: 8,
-    description: 'Hurghada\'s #1 rated cruise — 4.9/5 on GetYourGuide with 8,200+ reviews. Full day: Orange Bay snorkeling (2 stops), buffet lunch, soft drinks, hotel pickup. Source: GetYourGuide',
+    description: 'Hurghada\'s #1 rated cruise — 4.9/5 on GetYourGuide with 8,200+ reviews. Full day: Orange Bay snorkeling (2 stops), buffet lunch, soft drinks, hotel pickup.',
     photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'],
-    whatsapp: '201001234567',
-    discount_code: 'LOCALI10',
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/hurghada-l970/boat-tours-tc45/',
     is_featured: true,
     status: 'approved',
     includes: 'Snorkeling gear, buffet lunch, soft drinks, hotel pickup',
   },
   {
     id: 's2',
-    boat_name: 'Ras Mohamed Catamaran — Sharm El Sheikh (Viator)',
+    boat_name: 'Ras Mohamed Catamaran — Sharm El Sheikh',
     city: 'sharm-el-sheikh',
     boat_type: 'catamaran',
-    price: 3200,
+    price: null,
     price_type: 'per_person',
     capacity: 25,
     duration_hours: 6,
-    description: 'Full-day catamaran to Ras Mohamed (Shark Reef & Yolanda Reef). 4.8/5 on Viator, 450+ reviews. Lunch & drinks included. Source: Viator (April 2026)',
-    photos: ['https://source.unsplash.com/cUuGRMqKXJo/800x500'],
-    whatsapp: '201012334455',
-    discount_code: 'LOCALI10',
+    description: 'Full-day catamaran to Ras Mohamed (Shark Reef & Yolanda Reef). 4.8/5 on Viator, 450+ reviews. Lunch & drinks included.',
+    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.viator.com/Sharm-El-Sheikh-tours/Sailing-and-Boating/d4312-g12/',
     is_featured: true,
     status: 'approved',
     includes: 'Snorkeling gear, lunch, soft drinks, guide',
   },
   {
     id: 's3',
-    boat_name: 'Dolphin House & Giftun Island — Hurghada (GetYourGuide)',
+    boat_name: 'Dolphin House & Giftun Island — Hurghada',
     city: 'hurghada',
     boat_type: 'catamaran',
-    price: 2100,
+    price: null,
     price_type: 'per_person',
     capacity: 25,
     duration_hours: 7,
-    description: 'See wild dolphins at Dolphin House, snorkel at Giftun Island. 4.6/5 on GetYourGuide (2,100+ reviews). Hotel pickup included. Source: GetYourGuide (April 2026)',
-    photos: ['https://source.unsplash.com/I5j46lqAo-o/800x500'],
-    whatsapp: '201001234567',
-    discount_code: 'LOCALI10',
+    description: 'See wild dolphins at Dolphin House, snorkel at Giftun Island. 4.6/5 on GetYourGuide (2,100+ reviews). Hotel pickup included.',
+    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/hurghada-l970/dolphin-house-tc45/',
     is_featured: false,
     status: 'approved',
     includes: 'Snorkeling gear, lunch, drinks, hotel transfer',
@@ -81,14 +81,14 @@ const SAMPLE_BOATS = [
     boat_name: 'El Gouna Lagoon Speedboat — Islands & Canals',
     city: 'el-gouna',
     boat_type: 'speedboat',
-    price: 1950,
+    price: null,
     price_type: 'per_person',
     capacity: 8,
     duration_hours: 3,
-    description: 'Explore El Gouna\'s lagoon system. Visit islands, beaches, canals. 4.4/5 on GetYourGuide (280+ reviews). Source: GetYourGuide (April 2026)',
+    description: 'Explore El Gouna\'s lagoon system. Visit islands, beaches, canals. 4.4/5 on GetYourGuide (280+ reviews).',
     photos: ['https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800'],
-    whatsapp: '201113344556',
-    discount_code: 'LOCALI10',
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/el-gouna-l97451/',
     is_featured: false,
     status: 'approved',
     includes: 'Life jackets, water, professional guide',
@@ -98,68 +98,17 @@ const SAMPLE_BOATS = [
     boat_name: 'Nile Felucca Sunset Sail — Aswan',
     city: 'aswan',
     boat_type: 'sailboat',
-    price: 950,
+    price: null,
     price_type: 'per_hour',
     capacity: 8,
     duration_hours: 2,
-    description: 'Authentic Nubian felucca at sunset between islands. Traditional sailing, Nubian tea, local music. Source: Local Aswan operators (April 2026)',
-    photos: ['https://source.unsplash.com/sK7jkzNOrIc/800x500'],
-    whatsapp: '201014455667',
-    discount_code: 'LOCALI10',
+    description: 'Authentic Nubian felucca at sunset between islands. Traditional sailing, Nubian tea, local music.',
+    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.viator.com/Aswan-tours/Sailing-and-Boating/d4776-g12/',
     is_featured: false,
     status: 'approved',
     includes: 'Nubian tea, traditional music, licensed guide',
-  },
-  {
-    id: 's6',
-    boat_name: 'Dahab Blue Hole Snorkel — South Sinai',
-    city: 'dahab',
-    boat_type: 'speedboat',
-    price: 1200,
-    price_type: 'per_trip',
-    capacity: 6,
-    duration_hours: 3,
-    description: 'Speedboat to the famous Blue Hole — iconic snorkel/dive site. Explore coral canyon, spot sea turtles. Small group (6 max). Source: Local Dahab operators',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
-    whatsapp: '201215566778',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Snorkeling gear, water, professional guide',
-  },
-  {
-    id: 's7',
-    boat_name: 'Hurghada Sunset Cruise — Red Sea Romance',
-    city: 'hurghada',
-    boat_type: 'catamaran',
-    price: 1800,
-    price_type: 'per_person',
-    capacity: 20,
-    duration_hours: 2,
-    description: 'Romantic sunset sailing along Red Sea coast. Open bar, appetizers, DJ music. 4.7/5 on GetYourGuide (1,200+ reviews). Source: GetYourGuide',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
-    whatsapp: '201113344556',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Open bar, appetizers, DJ',
-  },
-  {
-    id: 's8',
-    boat_name: 'Sharm Reef Adventure — Coral Gardens',
-    city: 'sharm-el-sheikh',
-    boat_type: 'speedboat',
-    price: 1500,
-    price_type: 'per_person',
-    capacity: 12,
-    duration_hours: 4,
-    description: 'Half-day speedboat to pristine coral reefs. 2 snorkel stops, marine biologist guide. 4.5/5 on Viator (650+ reviews). Source: Viator (April 2026)',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
-    whatsapp: '201212334455',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Snorkeling gear, fruit, water, guide',
   },
 ];
 
@@ -232,13 +181,12 @@ function DiscountModal({ boat, onClose }) {
 }
 
 function BoatCard({ boat }) {
-  const [showModal, setShowModal] = useState(false);
   const [imgIdx, setImgIdx] = useState(0);
   const photos = boat.photos?.length ? boat.photos : ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'];
+  const bookingUrl = boat.booking_url || `https://www.getyourguide.com/egypt-l97/boat-tours-tc45/`;
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">
-      {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <img src={photos[imgIdx]} alt={boat.boat_name} className="w-full h-full object-cover" />
         <div className="absolute top-3 left-3 flex gap-2">
@@ -249,19 +197,11 @@ function BoatCard({ boat }) {
             {TYPE_LABELS[boat.boat_type] || boat.boat_type}
           </span>
         </div>
-        <div className="absolute top-3 right-3 bg-green-500 text-white text-xs font-black px-2 py-1 rounded-full">
-          10% OFF
-        </div>
       </div>
 
-      {/* Content */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-1">
           <h3 className="font-extrabold text-base text-gray-900 leading-tight">{boat.boat_name}</h3>
-          <div className="text-right shrink-0">
-            <p className="font-black text-blue-600 text-lg">{boat.price?.toLocaleString()} EGP</p>
-            <p className="text-[10px] text-gray-400">{PRICE_TYPE_LABELS[boat.price_type] || ''}</p>
-          </div>
         </div>
 
         <p className="text-xs text-gray-400 mb-2 flex items-center gap-1">
@@ -278,20 +218,17 @@ function BoatCard({ boat }) {
           </p>
         )}
 
-        <button onClick={() => setShowModal(true)}
-          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
-          🎁 Unlock 10% Discount
-        </button>
-        <a
-          href={`https://wa.me/${boat.whatsapp}?text=${encodeURIComponent('Hi! I saw your boat "' + boat.boat_name + '" on Locali Egypt and I\'d like to ask about availability.')}`}
+        <a href={bookingUrl} target="_blank" rel="noopener noreferrer"
+          className="w-full block text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
+          Check latest price →
+        </a>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(boat.boat_name + ' ' + (CITY_LABELS[boat.city] || boat.city) + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 border-2 border-green-500 text-green-600 hover:bg-green-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
-          <Phone className="w-4 h-4" />
-          WhatsApp Direct
+          className="w-full flex items-center justify-center gap-2 border-2 border-blue-200 text-blue-600 hover:bg-blue-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
+          Find contact on Google Maps →
         </a>
       </div>
 
-      {showModal && <DiscountModal boat={boat} onClose={() => setShowModal(false)} />}
     </div>
   );
 }

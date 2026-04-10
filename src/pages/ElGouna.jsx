@@ -84,6 +84,8 @@ const EL_GOUNA_DATA = {
 };
 
 function HotelCard({ h }) {
+  const bookingUrl = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(h.name + ' El Gouna Egypt')}`;
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.name + ' El Gouna Egypt')}`;
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -97,10 +99,14 @@ function HotelCard({ h }) {
         </div>
       </div>
       <p className="text-xs text-gray-600 mb-2">{h.desc}</p>
-      <div className="bg-blue-50 rounded-xl px-3 py-2 mb-2">
-        <p className="font-bold text-blue-600 text-sm">{h.price_per_night.toLocaleString()} EGP/night</p>
-        <p className="text-[10px] text-blue-600">~${(h.price_per_night / 50).toFixed(0)}/night</p>
-      </div>
+      <a href={bookingUrl} target="_blank" rel="noopener noreferrer"
+        className="block bg-blue-50 border border-blue-200 rounded-xl px-3 py-2 mb-2 text-sm font-bold text-blue-600 hover:bg-blue-100 transition-all">
+        Check latest price on Booking.com →
+      </a>
+      <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
+        className="text-[10px] text-blue-500 hover:underline block mb-2">
+        Find contact on Google Maps →
+      </a>
       <div className="flex flex-wrap gap-1">
         {h.amenities.map((a, i) => (
           <span key={i} className="text-[9px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full">{a}</span>
@@ -111,18 +117,22 @@ function HotelCard({ h }) {
 }
 
 function ActivityCard({ a }) {
+  const viatorUrl = `https://www.viator.com/El-Gouna-tours/d97451/?sortOrder=TOP_RATED&text=${encodeURIComponent(a.name)}`;
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-3">
       <div className="flex items-start justify-between gap-2 mb-1">
         <h3 className="font-bold text-sm">{a.name}</h3>
-        <p className="font-bold text-accent text-sm">{a.price.toLocaleString()} EGP</p>
       </div>
       <p className="text-xs text-gray-600 mb-1">{a.desc}</p>
-      <div className="flex items-center gap-2 text-[10px] text-gray-500">
+      <div className="flex items-center gap-2 text-[10px] text-gray-500 mb-2">
         <span>⏱ {a.duration}</span>
         <span>•</span>
         <span>{a.level}</span>
       </div>
+      <a href={viatorUrl} target="_blank" rel="noopener noreferrer"
+        className="block text-center text-xs font-bold text-accent hover:underline">
+        Check latest price →
+      </a>
     </div>
   );
 }

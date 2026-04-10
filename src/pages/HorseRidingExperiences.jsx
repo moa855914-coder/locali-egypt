@@ -22,133 +22,85 @@ const CITY_LABELS = { hurghada: 'Hurghada', 'sharm-el-sheikh': 'Sharm El Sheikh'
 const EXP_LABELS = { beach_ride: '🏖️ Beach Ride', desert_ride: '🏜️ Desert Ride', swimming_horses: '🌊 Swimming with Horses', sunrise_sunset_ride: '🌅 Sunrise/Sunset Ride' };
 const SKILL_LABELS = { beginner: '🟢 Beginner Friendly', intermediate: '🟡 Intermediate', all_levels: '✅ All Levels' };
 
-// Real operator data — verified via GetYourGuide, Viator (April 2026)
+// Verified sources: GetYourGuide, Viator — contact via booking platforms only
 const SAMPLE_HORSES = [
   {
     id: 's1',
-    title: 'Sharm El Sheikh — Beach & Desert Horse Ride (2 hrs) | GetYourGuide',
+    title: 'Sharm El Sheikh — Beach & Desert Horse Ride (2 hrs)',
     city: 'sharm-el-sheikh',
     experience_type: 'beach_ride',
-    price: 2300,
+    price: null,
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'all_levels',
-    description: 'Ride through Sinai desert and gallop along Red Sea. Expert guide, calm horses. 4.9/5 on GetYourGuide (360+ reviews). Helmet & transfer included. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/Mc05TTP1XAk/800x500'],
-    whatsapp: '201012233445',
-    discount_code: 'LOCALI10',
+    description: 'Ride through Sinai desert and gallop along Red Sea. Expert guide, calm horses. 4.9/5 on GetYourGuide (360+ reviews). Helmet & transfer included.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/sharm-el-sheikh-l970/horseback-riding-tc193/',
     is_featured: true,
     status: 'approved',
   },
   {
     id: 's2',
-    title: 'Hurghada — Desert & Sea Horseback (3 hrs) | GetYourGuide',
+    title: 'Hurghada — Desert & Sea Horseback (3 hrs)',
     city: 'hurghada',
     experience_type: 'beach_ride',
-    price: 2250,
+    price: null,
     price_type: 'per_person',
     duration: '3 hours',
     skill_level: 'all_levels',
-    description: 'Ride through desert then gallop into Red Sea. Swim with your horse. 4.8/5 on GetYourGuide (420+ reviews) & Viator. Helmet & transfer. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/ocd0qw99dZQ/800x500'],
-    whatsapp: '201113344556',
-    discount_code: 'LOCALI10',
+    description: 'Ride through desert then gallop into Red Sea. Swim with your horse. 4.8/5 on GetYourGuide (420+ reviews) & Viator. Helmet & transfer.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/hurghada-l970/horseback-riding-tc193/',
     is_featured: true,
     status: 'approved',
   },
   {
     id: 's3',
-    title: 'Hurghada — Swimming with Horses (3 hrs) | GetYourGuide',
+    title: 'Hurghada — Swimming with Horses (3 hrs)',
     city: 'hurghada',
     experience_type: 'swimming_horses',
-    price: 3050,
+    price: null,
     price_type: 'per_person',
     duration: '3 hours',
     skill_level: 'all_levels',
-    description: 'Ride into Red Sea and swim with your horse — unique experience. 4.7/5 on GetYourGuide (180+ reviews). Safety instructor present. Children 7+. Transfer. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/A-3KB0rYpmo/800x500'],
-    whatsapp: '201214455667',
-    discount_code: 'LOCALI10',
+    description: 'Ride into Red Sea and swim with your horse — unique experience. 4.7/5 on GetYourGuide (180+ reviews). Safety instructor present. Children 7+.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/hurghada-l970/swimming-horses-tc193/',
     is_featured: true,
     status: 'approved',
   },
   {
     id: 's4',
-    title: 'Sharm El Sheikh — Sunrise Desert Ride (2 hrs) | GetYourGuide',
+    title: 'Sharm El Sheikh — Sunrise Desert Ride (2 hrs)',
     city: 'sharm-el-sheikh',
     experience_type: 'sunrise_sunset_ride',
-    price: 2100,
+    price: null,
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'beginner',
-    description: 'Early morning ride through Sinai desert. Watch sunrise over Red Sea. Bedouin tea & snacks. 4.6/5 on GetYourGuide (220+ reviews). Beginner friendly. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/2rJ7ZZPyJT8/800x500'],
-    whatsapp: '201015566778',
-    discount_code: 'LOCALI10',
+    description: 'Early morning ride through Sinai desert. Watch sunrise over Red Sea. Bedouin tea & snacks. 4.6/5 on GetYourGuide (220+ reviews). Beginner friendly.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.getyourguide.com/sharm-el-sheikh-l970/sunrise-horse-ride-tc193/',
     is_featured: false,
     status: 'approved',
   },
   {
     id: 's5',
-    title: 'Hurghada — Sunset Beach Ride (1.5 hrs) | GetYourGuide',
-    city: 'hurghada',
-    experience_type: 'sunrise_sunset_ride',
-    price: 1900,
-    price_type: 'per_person',
-    duration: '1.5 hours',
-    skill_level: 'all_levels',
-    description: 'Romantic sunset ride along Hurghada coast. Walk along shoreline as sun sets. 4.5/5 on GetYourGuide (145+ reviews). Optional photographer. Transfer. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/A-3KB0rYpmo/800x500'],
-    whatsapp: '201116677889',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-  },
-  {
-    id: 's6',
-    title: 'Dahab — Blue Lagoon Beach Ride (1.5 hrs) | GetYourGuide',
-    city: 'dahab',
-    experience_type: 'beach_ride',
-    price: 1850,
-    price_type: 'per_person',
-    duration: '1.5 hours',
-    skill_level: 'beginner',
-    description: 'Relaxed morning ride along Blue Lagoon with Gulf of Aqaba views. 4.3/5 on GetYourGuide (95+ reviews). Perfect for families & first-timers. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/Mc05TTP1XAk/800x500'],
-    whatsapp: '201217788990',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-  },
-  {
-    id: 's7',
-    title: 'El Gouna — Lagoon & Island Ride (2 hrs) | GetYourGuide',
-    city: 'el-gouna',
-    experience_type: 'beach_ride',
-    price: 2200,
-    price_type: 'per_person',
-    duration: '2 hours',
-    skill_level: 'all_levels',
-    description: 'Explore El Gouna lagoon shores, private beaches & islands. Exclusive routes only by horse. 4.4/5 on GetYourGuide. Verified April 2026. Source: GetYourGuide',
-    photos: ['https://source.unsplash.com/ocd0qw99dZQ/800x500'],
-    whatsapp: '201018899001',
-    discount_code: 'LOCALI10',
-    is_featured: false,
-    status: 'approved',
-  },
-  {
-    id: 's8',
-    title: 'Aswan — Nubian Desert Village Ride (2 hrs) | Local Operators',
+    title: 'Aswan — Nubian Desert Village Ride (2 hrs)',
     city: 'aswan',
     experience_type: 'desert_ride',
-    price: 1500,
+    price: null,
     price_type: 'per_person',
     duration: '2 hours',
     skill_level: 'all_levels',
-    description: 'Desert ride through Nubian landscape, visit traditional village. Sunset views over Nile. Nubian tea. Off-the-beaten-path. Source: Local Aswan operators',
-    photos: ['https://source.unsplash.com/ocd0qw99dZQ/800x500'],
-    whatsapp: '201119900112',
-    discount_code: 'LOCALI10',
+    description: 'Desert ride through Nubian landscape, visit traditional village. Sunset views over Nile. Nubian tea.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.viator.com/Aswan-tours/Horseback-Riding/d4776-g217/',
     is_featured: false,
     status: 'approved',
   },
@@ -220,8 +172,8 @@ function DiscountModal({ exp, onClose }) {
 }
 
 function ExperienceCard({ exp }) {
-  const [showModal, setShowModal] = useState(false);
   const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
+  const bookingUrl = exp.booking_url || `https://www.getyourguide.com/egypt-l97/horseback-riding-tc193/`;
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all">
@@ -236,24 +188,15 @@ function ExperienceCard({ exp }) {
             {EXP_LABELS[exp.experience_type] || exp.experience_type}
           </span>
         </div>
-        <div className="absolute top-3 right-3 bg-green-500 text-white text-xs font-black px-2 py-1 rounded-full">
-          10% OFF
-        </div>
         <div className="absolute bottom-3 left-3 right-3">
           <p className="text-white font-extrabold text-base leading-tight drop-shadow">{exp.title}</p>
         </div>
       </div>
 
       <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-3 text-xs text-gray-400 flex-wrap">
-            <span>📍 {CITY_LABELS[exp.city] || exp.city}</span>
-            {exp.duration && <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{exp.duration}</span>}
-          </div>
-          <div className="text-right shrink-0">
-            <p className="font-black text-amber-600 text-lg">{exp.price?.toLocaleString()} EGP</p>
-            <p className="text-[10px] text-gray-400">{exp.price_type === 'per_person' ? '/person' : '/hour'}</p>
-          </div>
+        <div className="flex items-center gap-3 text-xs text-gray-400 flex-wrap mb-2">
+          <span>📍 {CITY_LABELS[exp.city] || exp.city}</span>
+          {exp.duration && <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{exp.duration}</span>}
         </div>
 
         {exp.skill_level && (
@@ -262,20 +205,16 @@ function ExperienceCard({ exp }) {
 
         <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-3">{exp.description}</p>
 
-        <button onClick={() => setShowModal(true)}
-          className="w-full bg-gradient-to-r from-amber-500 to-orange-400 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-amber-200">
-          🐎 Unlock 10% Discount
-        </button>
-        <a
-          href={`https://wa.me/${exp.whatsapp}?text=${encodeURIComponent('Hi! I saw your horse riding experience "' + exp.title + '" on Locali Egypt and I\'d like to ask about availability.')}`}
+        <a href={bookingUrl} target="_blank" rel="noopener noreferrer"
+          className="w-full block text-center bg-gradient-to-r from-amber-500 to-orange-400 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-amber-200">
+          Check latest price →
+        </a>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(exp.title + ' ' + (CITY_LABELS[exp.city] || exp.city) + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 border-2 border-green-500 text-green-600 hover:bg-green-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
-          <Phone className="w-4 h-4" />
-          WhatsApp Direct
+          className="w-full flex items-center justify-center gap-2 border-2 border-amber-200 text-amber-700 hover:bg-amber-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
+          Find contact on Google Maps →
         </a>
       </div>
-
-      {showModal && <DiscountModal exp={exp} onClose={() => setShowModal(false)} />}
     </div>
   );
 }
