@@ -189,7 +189,6 @@ function BookRideModal({ driver, route, onClose }) {
 // ─── Driver Card ──────────────────────────────────────────────────────────────
 function DriverCard({ driver }) {
   const [selectedRoute, setSelectedRoute] = useState(null);
-  const [showBooking, setShowBooking] = useState(false);
 
   return (
     <div className={`bg-card rounded-2xl border overflow-hidden ${driver.is_verified ? 'border-accent/30' : 'border-border/50'}`}>
@@ -272,22 +271,19 @@ function DriverCard({ driver }) {
       {/* CTA */}
       <div className="p-4 space-y-2">
         <button
-          onClick={() => { if (selectedRoute) setShowBooking(true); }}
+          onClick={() => {}}
           disabled={!selectedRoute}
           className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm disabled:opacity-40 transition-opacity">
-          <CreditCard className="w-4 h-4" />
-          {selectedRoute ? `Book — ${selectedRoute.price_egp.toLocaleString()} EGP` : 'Select a Route Above'}
+          {selectedRoute ? `Request Ride — ${selectedRoute.price_egp.toLocaleString()} EGP` : 'Select a Route Above'}
         </button>
         {selectedRoute && (
           <p className="text-[10px] text-center text-muted-foreground">
-            10% Locali fee ({Math.round(selectedRoute.price_egp * 0.1).toLocaleString()} EGP) · Driver gets {Math.round(selectedRoute.price_egp * 0.9).toLocaleString()} EGP
+            ✅ Fixed price. Pay cash directly to driver after the trip.
           </p>
         )}
       </div>
 
-      {showBooking && selectedRoute && (
-        <BookRideModal driver={driver} route={selectedRoute} onClose={() => { setShowBooking(false); setSelectedRoute(null); }} />
-      )}
+
     </div>
   );
 }

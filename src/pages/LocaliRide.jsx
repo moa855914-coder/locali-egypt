@@ -615,11 +615,11 @@ function DriverCard({ driver, onBook }) {
         <button onClick={() => selectedRoute && onBook(driver, selectedRoute)} disabled={!selectedRoute}
           className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm disabled:opacity-40">
           <Car className="w-4 h-4" />
-          {selectedRoute ? `Book Ride — ${selectedRoute.price_egp.toLocaleString()} EGP` : 'Select a Route Above'}
+          {selectedRoute ? `Request Ride — ${selectedRoute.price_egp.toLocaleString()} EGP` : 'Select a Route Above'}
         </button>
         {selectedRoute && (
           <p className="text-[10px] text-center text-muted-foreground mt-1.5">
-            Locali fee (10%): {Math.round(selectedRoute.price_egp * 0.1)} EGP · Driver gets {Math.round(selectedRoute.price_egp * 0.9).toLocaleString()} EGP
+            ✅ Fixed price. Pay cash directly to driver after the trip.
           </p>
         )}
       </div>

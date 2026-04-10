@@ -19,62 +19,7 @@ const CITY_LABELS = {
 
 const AMENITY_OPTIONS = ['WiFi', 'AC', 'Kitchen', 'Washing Machine', 'Balcony', 'Pool Access', 'Sea View', 'Nile View', 'Parking', 'TV', 'Hot Water', 'Elevator', 'Security'];
 
-const SAMPLE_APARTMENTS = [
-  {
-    id: 's1', title: 'Seaview Studio — Naama Bay', city: 'sharm-el-sheikh', area: 'Naama Bay',
-    description: 'Bright studio with direct sea view balcony. Walking distance to beach and restaurants. Air-conditioned, fast WiFi, fully equipped kitchen.',
-    price_per_night_egp: 1200, capacity: 2, bedrooms: 0, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Kitchen', 'Balcony', 'Sea View', 'Security'],
-    min_nights: 2, avg_rating: 4.7, review_count: 38, is_verified: true, is_featured: true,
-    rules: 'No smoking inside. Quiet hours after 11pm. No parties.',
-    host_name: 'Mohamed',
-  },
-  {
-    id: 's2', title: '2-Bedroom Apartment — Sahl Hasheesh', city: 'sharm-el-sheikh', area: 'Sahl Hasheesh',
-    description: 'Spacious 2-bed apartment in the upscale Sahl Hasheesh resort compound. Pool access included. Perfect for families or groups.',
-    price_per_night_egp: 2200, capacity: 4, bedrooms: 2, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Kitchen', 'Pool Access', 'Parking', 'Washing Machine'],
-    min_nights: 3, avg_rating: 4.8, review_count: 22, is_verified: true, is_featured: false,
-    rules: 'Families and couples only. Check-in from 3pm.',
-    host_name: 'Aisha',
-  },
-  {
-    id: 's3', title: 'Marina View 1BR — Hurghada', city: 'hurghada', area: 'Marina',
-    description: 'Modern 1-bedroom apartment with marina view. Walking distance to dive centers, restaurants and nightlife. Recently renovated.',
-    price_per_night_egp: 900, capacity: 2, bedrooms: 1, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Kitchen', 'Balcony', 'TV', 'Hot Water'],
-    min_nights: 2, avg_rating: 4.5, review_count: 61, is_verified: true, is_featured: true,
-    rules: 'No smoking. No pets. ID required at check-in.',
-    host_name: 'Omar',
-  },
-  {
-    id: 's4', title: 'Budget Studio — El Dahar', city: 'hurghada', area: 'El Dahar',
-    description: 'Clean, affordable studio for budget travelers. 10 min walk to the beach. Simple but everything you need for a great stay.',
-    price_per_night_egp: 450, capacity: 2, bedrooms: 0, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Hot Water', 'TV'],
-    min_nights: 2, avg_rating: 4.2, review_count: 94, is_verified: false, is_featured: false,
-    rules: 'Quiet hours after midnight.',
-    host_name: 'Khalid',
-  },
-  {
-    id: 's5', title: 'West Bank Guesthouse Room — Luxor', city: 'luxor', area: 'West Bank',
-    description: 'Traditional Egyptian house on the Luxor West Bank with Nile glimpses from the roof terrace. 5 min walk to Valley of the Kings ferry.',
-    price_per_night_egp: 600, capacity: 2, bedrooms: 1, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Balcony', 'Hot Water'],
-    min_nights: 1, avg_rating: 4.9, review_count: 47, is_verified: true, is_featured: false,
-    rules: 'Respect local culture. Remove shoes inside.',
-    host_name: 'Fatima',
-  },
-  {
-    id: 's6', title: 'Corniche Nile View Apartment — Aswan', city: 'aswan', area: 'Corniche',
-    description: 'Stunning Nile and Elephantine Island views from every window. Newly furnished. Walking distance to felucca docks and Nubian restaurants.',
-    price_per_night_egp: 800, capacity: 3, bedrooms: 1, bathrooms: 1,
-    amenities: ['WiFi', 'AC', 'Kitchen', 'Nile View', 'Balcony', 'TV'],
-    min_nights: 2, avg_rating: 4.8, review_count: 29, is_verified: true, is_featured: true,
-    rules: 'No parties. Respect Nubian neighborhood rules.',
-    host_name: 'Ahmed',
-  },
-];
+const SAMPLE_APARTMENTS = [];
 
 function BookingModal({ apt, onClose }) {
   const [form, setForm] = useState({ checkin: '', checkout: '', guests: 1, name: '', email: '', note: '' });
@@ -198,7 +143,6 @@ function BookingModal({ apt, onClose }) {
 }
 
 function AptCard({ apt }) {
-  const [showBooking, setShowBooking] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const usdPrice = Math.round(apt.price_per_night_egp / 50);
 
@@ -267,21 +211,18 @@ function AptCard({ apt }) {
           )}
         </>
       )}
-      <div className="p-4">
-        <div className="bg-secondary/50 rounded-xl px-3 py-2 mb-3 flex items-center justify-between">
-          <div>
-            <p className="text-[9px] font-bold text-muted-foreground uppercase">10% Platform Fee</p>
-            <p className="text-[10px] text-muted-foreground">Host paid after you confirm arrival</p>
-          </div>
-          <span className="text-[10px] font-bold text-accent">Locali Protected</span>
-        </div>
-        <button onClick={() => setShowBooking(true)}
-          className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-          <CreditCard className="w-4 h-4" />
-          Book Now
-        </button>
+      <div className="p-4 space-y-2">
+        <a href={`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(apt.title + ' ' + (apt.city || '') + ' Egypt')}`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors">
+          Check availability on Booking.com →
+        </a>
+        <a href={`https://www.airbnb.com/s/${encodeURIComponent((apt.city || 'Egypt') + ' Egypt')}/homes`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors">
+          Search on Airbnb →
+        </a>
       </div>
-      {showBooking && <BookingModal apt={apt} onClose={() => setShowBooking(false)} />}
     </div>
   );
 }

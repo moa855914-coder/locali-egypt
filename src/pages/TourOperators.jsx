@@ -6,104 +6,8 @@ import { ShieldCheck, Star, Languages, MapPin, Clock, Users, DollarSign, Plus, X
 import { useSEO } from '../lib/seo';
 import { generateTrackingCode } from '../lib/constants';
 
-// ─── Sample operators (shown until DB has real data) ────────────────────────
-const SAMPLE_OPERATORS = [
-  {
-    id: 's1',
-    company_name: 'Red Sea Discovery Tours',
-    license_number: 'HRG-OPR-2018-003421',
-    description: 'Hurghada\'s longest-running licensed tour operator. Specialising in Red Sea water activities, desert safaris, and Luxor day trips. All guides hold Ministry of Tourism certification.',
-    cities_covered: ['Hurghada', 'El Gouna', 'Luxor'],
-    languages: ['English', 'Russian', 'German', 'Arabic'],
-    avg_rating: 4.8,
-    review_count: 312,
-    is_verified: true,
-    interests_tags: ['beach', 'adventure', 'culture'],
-    refund_policy: 'Full refund 48h before. 50% refund 24h before. No refund same day.',
-    tour_packages: [
-      { name: 'Giftun Island Full Day', duration: '8 hours', included: 'Snorkeling equipment, lunch on boat, marine guide, hotel pickup', price_egp: 950, min_group: 1, max_group: 20 },
-      { name: 'Quad Bike Desert Sunset', duration: '3 hours', included: 'Quad bike, Bedouin camp, tea, insurance', price_egp: 650, min_group: 2, max_group: 12 },
-      { name: 'Luxor Day Trip from Hurghada', duration: '14 hours', included: 'AC transport, Egyptologist guide, 3 temples, lunch, entry tickets', price_egp: 2200, min_group: 2, max_group: 15 },
-      { name: '3-Day Hurghada Highlights', duration: '3 days', included: 'All day trips, hotel transfers, guides, meals on tours', price_egp: 4500, min_group: 1, max_group: 8 },
-    ],
-  },
-  {
-    id: 's2',
-    company_name: 'Pharaoh\'s Path Luxor',
-    license_number: 'LXR-OPR-2015-001198',
-    description: 'Specialist in Upper Egypt cultural tours. Based in Luxor since 2005. All guides are licensed Egyptologists. Expert in private and small-group experiences to lesser-known archaeological sites.',
-    cities_covered: ['Luxor', 'Aswan', 'Abu Simbel'],
-    languages: ['English', 'French', 'Italian', 'Arabic'],
-    avg_rating: 4.9,
-    review_count: 478,
-    is_verified: true,
-    interests_tags: ['culture', 'history', 'family'],
-    refund_policy: 'Full refund 72h before. 50% 48h before. No refund within 24h.',
-    tour_packages: [
-      { name: 'Private Valley of the Kings', duration: '6 hours', included: '3 tombs, Egyptologist guide, AC car, entry tickets, water', price_egp: 1800, min_group: 1, max_group: 8 },
-      { name: 'West Bank Full Day', duration: '8 hours', included: 'Valley of Kings, Hatshepsut, Colossi, Deir el-Medina, lunch, guide', price_egp: 2400, min_group: 1, max_group: 10 },
-      { name: 'Luxor + Aswan 4-Day Tour', duration: '4 days', included: 'Hotel, all guides, transport, most entry tickets, breakfast', price_egp: 12000, min_group: 2, max_group: 8 },
-      { name: 'Abu Simbel Sunrise', duration: '12 hours', included: 'Dawn convoy AC vehicle, guide, Abu Simbel entry, breakfast', price_egp: 2800, min_group: 1, max_group: 12 },
-    ],
-  },
-  {
-    id: 's3',
-    company_name: 'Sinai Stars Travel',
-    license_number: 'SHM-OPR-2016-002876',
-    description: 'Sharm El Sheikh and South Sinai specialists. Unique access to Bedouin trails and private desert routes. PADI dive packages, St Catherine tours, and Mt Sinai sunrise hikes.',
-    cities_covered: ['Sharm El Sheikh', 'Dahab', 'South Sinai'],
-    languages: ['English', 'Russian', 'Polish', 'Arabic'],
-    avg_rating: 4.7,
-    review_count: 203,
-    is_verified: true,
-    interests_tags: ['adventure', 'beach', 'culture'],
-    refund_policy: 'Full refund 48h before. No refund within 24h for trekking tours.',
-    tour_packages: [
-      { name: 'Mt Sinai Sunrise Trek', duration: '8 hours', included: 'Night hike guide, camel option, Bedouin tea, certificate', price_egp: 1100, min_group: 2, max_group: 20 },
-      { name: 'Ras Mohammed Diving', duration: '7 hours', included: '2 dives, PADI guide, full equipment, lunch, boat', price_egp: 1500, min_group: 2, max_group: 10 },
-      { name: 'Coloured Canyon + Bedouin', duration: '6 hours', included: 'Jeep, Bedouin guide, canyon walk, lunch in desert', price_egp: 900, min_group: 2, max_group: 16 },
-      { name: '5-Day Sinai Highlights', duration: '5 days', included: 'Hotel, all guides, transport, Ras Mohammed, St Catherine, Mt Sinai', price_egp: 9500, min_group: 1, max_group: 8 },
-    ],
-  },
-  {
-    id: 's4',
-    company_name: 'Nubian Spirit Aswan',
-    license_number: 'ASW-OPR-2017-000944',
-    description: 'Aswan\'s leading Nubian-owned tour operator. Deep cultural access, family-friendly programs, and genuine community connections. Specialists in Lake Nasser, Abu Simbel, and Nubian village immersions.',
-    cities_covered: ['Aswan', 'Abu Simbel', 'Lake Nasser'],
-    languages: ['Arabic', 'English', 'French', 'Nubian'],
-    avg_rating: 4.9,
-    review_count: 156,
-    is_verified: true,
-    interests_tags: ['culture', 'family', 'history'],
-    refund_policy: 'Full refund 48h before. For Abu Simbel: 72h notice required due to convoy booking.',
-    tour_packages: [
-      { name: 'Nubian Village Immersion', duration: '4 hours', included: 'Felucca to village, family home visit, Nubian lunch, craft demo', price_egp: 700, min_group: 1, max_group: 12 },
-      { name: 'Aswan Full Day Classic', duration: '8 hours', included: 'Philae, High Dam, Quarry, Elephantine Island, guide, lunch', price_egp: 1600, min_group: 1, max_group: 15 },
-      { name: 'Lake Nasser Sunset Cruise', duration: '3 hours', included: 'Private felucca, Nubian musician, sunset, tea and snacks', price_egp: 900, min_group: 1, max_group: 8 },
-      { name: 'Aswan + Abu Simbel 3 Days', duration: '3 days', included: 'Hotel, all guides, transport, Abu Simbel convoy, Philae, meals', price_egp: 8500, min_group: 2, max_group: 10 },
-    ],
-  },
-  {
-    id: 's5',
-    company_name: 'El Gouna Active Tours',
-    license_number: 'EGO-OPR-2019-005512',
-    description: 'El Gouna\'s premier activity operator. IKO-certified kite courses, PADI diving, Giftun Island trips, and custom multi-day Red Sea packages. All instructors certified, all equipment maintained.',
-    cities_covered: ['El Gouna', 'Hurghada', 'Red Sea'],
-    languages: ['English', 'German', 'Italian', 'Arabic'],
-    avg_rating: 4.8,
-    review_count: 89,
-    is_verified: true,
-    interests_tags: ['beach', 'adventure'],
-    refund_policy: 'Full refund 24h before for water sports. Weather cancellations: full refund.',
-    tour_packages: [
-      { name: 'IKO Kite Beginner Course', duration: '3 days', included: 'IKO certification, equipment, theory + beach + water sessions', price_egp: 6500, min_group: 1, max_group: 4 },
-      { name: 'PADI Open Water Course', duration: '4 days', included: 'PADI certification, all dives, equipment, manual, exam', price_egp: 5200, min_group: 1, max_group: 4 },
-      { name: 'El Gouna Island Boat Tour', duration: '4 hours', included: 'Speedboat, snorkeling, BBQ on island, guide', price_egp: 800, min_group: 2, max_group: 12 },
-      { name: 'Active Week Package', duration: '7 days', included: 'Kite 3 days + diving 2 days + island tour + equipment all week', price_egp: 14500, min_group: 1, max_group: 4 },
-    ],
-  },
-];
+// ─── Sample operators ────────────────────────────────────────────────────────
+const SAMPLE_OPERATORS = [];
 
 const PLATFORM_RULES = [
   {
@@ -528,10 +432,11 @@ function OperatorCard({ op }) {
               <div key={i} className="bg-secondary/50 rounded-xl p-3">
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <p className="font-bold text-sm">{pkg.name}</p>
-                  <div className="text-right shrink-0">
-                    <p className="font-extrabold text-accent text-sm">{pkg.price_egp?.toLocaleString()} EGP</p>
-                    <p className="text-[9px] text-muted-foreground">7% commission: {commission(pkg)} EGP</p>
-                  </div>
+                  <a href={`https://www.viator.com/Egypt-tours/d722/?sortOrder=TOP_RATED&text=${encodeURIComponent(pkg.name)}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-[10px] font-bold text-accent hover:underline shrink-0">
+                    Check price →
+                  </a>
                 </div>
                 <div className="flex items-center gap-3 text-[10px] text-muted-foreground mb-1">
                   <span className="flex items-center gap-1"><Clock className="w-2.5 h-2.5" />{pkg.duration}</span>
@@ -550,56 +455,19 @@ function OperatorCard({ op }) {
           </div>
         )}
 
-        {/* Tracking + CTA */}
-        <div className="bg-secondary/60 rounded-xl px-3 py-2 flex items-center justify-between gap-2 mb-3">
-          <div>
-            <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">Booking Code</p>
-            <p className="text-xs font-mono font-bold">{code}</p>
-          </div>
-          <span className="text-[9px] text-muted-foreground">7% commission tracked</span>
-        </div>
-
-        <button onClick={() => setShowRequest(true)}
-          className="w-full bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-          Request Custom Program
-        </button>
+        {/* CTAs */}
+        <a href={`https://www.viator.com/Egypt-tours/d722/?sortOrder=TOP_RATED&text=${encodeURIComponent(op.company_name)}`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 bg-accent text-accent-foreground py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity mb-2">
+          Check availability on Viator (Viator) →
+        </a>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(op.company_name + ' Egypt')}`}
+          target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors">
+          Find on Google Maps →
+        </a>
       </div>
 
-      {/* Request modal */}
-      {showRequest && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card w-full max-w-sm rounded-2xl border border-border p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-extrabold text-sm">Request Custom Program</h3>
-              <button onClick={() => setShowRequest(false)}><X className="w-4 h-4 text-muted-foreground" /></button>
-            </div>
-            {sent ? (
-              <div className="text-center py-4">
-                <Check className="w-8 h-8 text-success mx-auto mb-2" />
-                <p className="text-sm font-bold text-success">Request sent!</p>
-                <p className="text-xs text-muted-foreground">The operator will reply within the platform.</p>
-              </div>
-            ) : (
-              <>
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-2 mb-3 text-[10px] text-amber-700">
-                  All communication stays within Locali Egypt. Do not share personal contact details.
-                </div>
-                <p className="text-xs text-muted-foreground mb-2">Describe your ideal program (dates, group size, interests, budget):</p>
-                <textarea value={requestMsg} onChange={e => setRequestMsg(e.target.value)} rows={4}
-                  placeholder="E.g. 2 adults + 1 child, 5 days, mix of history and beach, budget ~15,000 EGP total..."
-                  className="w-full bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none resize-none mb-3" />
-                <div className="bg-secondary/50 rounded-xl p-2 mb-3 text-[10px] text-muted-foreground">
-                  Booking Code: <span className="font-mono font-bold">{code}</span> (7% commission tracked)
-                </div>
-                <button onClick={handleRequest} disabled={!requestMsg.trim()}
-                  className="w-full bg-accent text-accent-foreground py-2.5 rounded-xl font-bold text-sm disabled:opacity-40">
-                  Send Request
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
