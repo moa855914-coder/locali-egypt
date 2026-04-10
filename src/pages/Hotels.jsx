@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { ShieldCheck, Star, Globe, ExternalLink } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import { HOTELS_BY_CITY } from '../lib/elGounaContent';
 
 const CITY_LABELS = {
@@ -92,6 +93,7 @@ function HotelCard({ hotel, city }) {
           <ExternalLink className="w-4 h-4" />
           Book on Booking.com
         </a>
+        <GoogleReviewsButton name={hotel.name} />
         <a
           href={mapsUrl}
           target="_blank"
@@ -99,7 +101,7 @@ function HotelCard({ hotel, city }) {
           className="flex items-center justify-center gap-2 w-full border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors"
         >
           <Globe className="w-3.5 h-3.5" />
-          Find contact on Google Maps
+          Find on Google Maps
         </a>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, MapPin, Star, ShoppingBag, AlertTriangle } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
 
 // Real bazaar & market data verified from local sources — April 2026
@@ -107,13 +108,8 @@ function BazaarCard({ b }) {
         <p className="text-[10px] font-bold text-blue-700 mb-1">💡 Pro Tip</p>
         <p className="text-[10px] text-blue-600">{b.tips}</p>
       </div>
-      <div className="flex items-center justify-between mt-2">
-        <div className="text-[10px] text-gray-500">⏰ Best time: <strong>{b.best_time}</strong></div>
-        <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
-          className="text-[10px] text-blue-500 hover:underline font-bold">
-          Find contact on Google Maps →
-        </a>
-      </div>
+      <div className="text-[10px] text-gray-500 mb-2">⏰ Best time: <strong>{b.best_time}</strong></div>
+      <GoogleReviewsButton name={b.name} />
       </div>
     </div>
   );

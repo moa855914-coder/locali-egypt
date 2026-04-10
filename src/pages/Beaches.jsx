@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
 import { Waves, Star, Clock } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import { useState } from 'react';
 
 const BEACHES = [
@@ -181,9 +182,10 @@ function BeachCard({ beach }) {
         <p className="text-xs text-muted-foreground italic">"{beach.review}"</p>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 space-y-2">
+        <GoogleReviewsButton name={beach.name} />
         <a href={mapsUrl} target="_blank" rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full bg-secondary border border-border py-3 rounded-xl text-sm font-bold hover:bg-secondary/80 transition-colors">
+          className="flex items-center justify-center gap-2 w-full bg-secondary border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-colors">
           📍 View on Google Maps →
         </a>
       </div>

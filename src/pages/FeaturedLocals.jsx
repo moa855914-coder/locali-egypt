@@ -179,14 +179,14 @@ function LocalCard({ local }) {
         </div>
       )}
 
-      <div className="flex items-center justify-between pt-3 border-t border-border/30">
+      <div className="pt-3 border-t border-border/30 space-y-2">
         {local.price_range && (
           <p className="text-xs font-semibold text-muted-foreground">{local.price_range}</p>
         )}
         <a href={`https://www.google.com/maps/search/${encodeURIComponent((local.name || '') + ' ' + (CITY_LABELS[local.city] || local.city || '') + ' Egypt')}`}
           target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 bg-secondary border border-border px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-colors">
-          📍 View on Google Maps →
+          className="flex items-center justify-center gap-1.5 w-full bg-secondary border border-border px-3 py-2 rounded-xl text-xs font-bold hover:bg-secondary/80 transition-colors">
+          ⭐ See reviews on Google →
         </a>
       </div>
     </div>
@@ -299,7 +299,7 @@ export default function FeaturedLocals() {
       </div>
 
       <div className="mt-6 space-y-3">
-        <SafeNextStep title="Real Experiences from Tourists" description="Honest stories — good and bad — from real visitors" to="/tourist-stories" />
+
         <SafeNextStep title="Scam Map" description="See where scams actually happen, city by city" to="/scam-map" />
       </div>
     </div>

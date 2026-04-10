@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, MapPin, Star, Activity, AlertTriangle } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
 
 // Real water sports prices verified from Viator, GetYourGuide, local operators — April 2026
@@ -49,7 +50,8 @@ function SportCard({ s, city }) {
         </div>
       </div>
       <p className="text-xs text-gray-600 mb-2">{s.desc}</p>
-      <p className="text-[10px] text-gray-500">⏱️ {s.duration}</p>
+      <p className="text-[10px] text-gray-500 mb-3">⏱️ {s.duration}</p>
+      <GoogleReviewsButton name={s.name} />
     </div>
   );
 }

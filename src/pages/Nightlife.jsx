@@ -5,6 +5,7 @@ import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
 import SafeNextStep from '../components/SafeNextStep';
 import { Music, Shield, MapPin, Star } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import ReviewSection from '../components/ReviewSection';
 
 const STATIC_VENUES = {
@@ -143,6 +144,9 @@ export default function Nightlife() {
                     {venue.tags.map((tag, j) => <span key={j} className="text-[10px] bg-secondary px-2 py-0.5 rounded-full capitalize">{tag}</span>)}
                   </div>
                 )}
+                <div className="mt-3">
+                  <GoogleReviewsButton name={venue.name} />
+                </div>
                 {venue.id && (
                   <button onClick={() => setExpandedVenue(isOpen ? null : key)}
                     className="text-xs font-bold text-accent hover:underline">

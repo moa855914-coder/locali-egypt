@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Search, X, Phone, MapPin, Clock, Star, ExternalLink, Info } from 'lucide-react';
+import { Search, X, MapPin, Clock, Star, ExternalLink, Info } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 
 // All prices verified from official Egyptian government & major booking platforms
 // Sources: Ministry of Tourism Egypt (mota.gov.eg), GetYourGuide, Viator, TripAdvisor — April 2026
@@ -272,6 +273,9 @@ function ActivityCard({ act }) {
           <p className="text-[10px] text-blue-600">{act.ticket_price}</p>
         </div>
 
+        <div className="mb-3">
+          <GoogleReviewsButton name={act.title} />
+        </div>
         <button onClick={() => setExpanded(!expanded)}
           className="text-[10px] font-bold text-accent underline mb-2">
           {expanded ? '▲ Less info' : '▼ Tips & Source'}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Star, Clock, Users } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
 
 // Real museum ticket prices from official Egyptian government sources — April 2026
@@ -123,7 +124,8 @@ function MuseumCard({ m }) {
         </div>
       </div>
 
-      <p className="text-[10px] text-gray-400">📌 Source: {m.source}</p>
+      <p className="text-[10px] text-gray-400 mb-3">📌 Source: {m.source}</p>
+      <GoogleReviewsButton name={m.name} />
       </div>
     </div>
   );

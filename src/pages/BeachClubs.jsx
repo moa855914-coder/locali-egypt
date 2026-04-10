@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Search, MapPin, Star, Waves, Sun } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import SafeNextStep from '../components/SafeNextStep';
 
 // Real beach entry fees verified from local sources, Google Maps — April 2026
@@ -44,7 +45,7 @@ function BeachCard({ b }) {
         </div>
       </div>
       <p className="text-xs text-gray-600 mb-3">{b.desc}</p>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-3">
         {b.entry_egp === 0 ? (
           <span className="text-sm font-bold text-green-600">✓ Free Entry</span>
         ) : (
@@ -52,6 +53,7 @@ function BeachCard({ b }) {
         )}
         {b.car_fee && <span className="text-xs text-gray-500">+ {b.car_fee} EGP car</span>}
       </div>
+      <GoogleReviewsButton name={b.name} />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
+import GoogleReviewsButton from '../components/GoogleReviewsButton';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -150,15 +151,10 @@ function BoatCard({ boat }) {
           </p>
         )}
 
+        <GoogleReviewsButton name={boat.boat_name} className="mb-2" />
         <a href={bookingUrl} target="_blank" rel="noopener noreferrer"
           className="w-full block text-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-2xl font-extrabold text-sm hover:opacity-90 transition-all shadow-md shadow-blue-200">
           Check latest price →
-        </a>
-
-        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(boat.boat_name + ' ' + (CITY_LABELS[boat.city] || boat.city) + ' Egypt')}`}
-          target="_blank" rel="noopener noreferrer"
-          className="w-full flex items-center justify-center gap-2 border-2 border-blue-200 text-blue-600 hover:bg-blue-50 py-2.5 rounded-2xl font-bold text-sm transition-all mt-2">
-          Find contact on Google Maps →
         </a>
       </div>
 
