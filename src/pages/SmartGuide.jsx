@@ -44,7 +44,7 @@ const CATEGORIES = [
   { id: 'practical', label: '📋 Practical Info' },
 ];
 
-export default function SmartGuide() {
+export default function LocaliAI() {
   const { lang } = useOutletContext();
   const [catFilter, setCatFilter] = useState('all');
   const [search, setSearch] = useState('');
