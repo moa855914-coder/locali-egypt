@@ -18,4 +18,11 @@
     "hooks": "@/hooks"
   },
   "iconLibrary": "lucide"
+}/* إخفاء السكرول بار مع الحفاظ على الحركة */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
