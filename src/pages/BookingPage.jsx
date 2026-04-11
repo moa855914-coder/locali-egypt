@@ -15,7 +15,7 @@ const TOURS = [
     rating: 4.8,
     verified: true,
     highlights: ['Giftun Island reef', 'Lunch on boat', 'Equipment included', 'English-speaking guide'],
-    viator_url: 'https://www.viator.com/Hurghada-tours/Snorkeling/d5323-g12/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Hurghada-tours/Snorkeling/d5323-g12/',
   },
   {
     city: 'hurghada',
@@ -28,7 +28,7 @@ const TOURS = [
     rating: 4.6,
     verified: true,
     highlights: ['Sunset views', 'Bedouin camp', 'Tea ceremony', 'Photo stops'],
-    viator_url: 'https://www.viator.com/Hurghada-tours/4WD-ATV-and-Off-Road-Tours/d5323-g223/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Hurghada-tours/4WD-ATV-and-Off-Road-Tours/d5323-g223/',
   },
   {
     city: 'sharm-el-sheikh',
@@ -41,7 +41,7 @@ const TOURS = [
     rating: 4.9,
     verified: true,
     highlights: ['2 dive sites', 'PADI certified', 'All equipment', 'Lunch included'],
-    viator_url: 'https://www.viator.com/Sharm-el-Sheikh-tours/Scuba-Diving/d832-g15/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Sharm-el-Sheikh-tours/Scuba-Diving/d832-g15/',
   },
   {
     city: 'sharm-el-sheikh',
@@ -54,7 +54,7 @@ const TOURS = [
     rating: 4.7,
     verified: true,
     highlights: ['Sunrise at summit', 'Bedouin guide', 'Camel option', 'St. Catherine Monastery visit'],
-    viator_url: 'https://www.viator.com/Sharm-el-Sheikh-tours/Cultural-Tours/d832-g28/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Sharm-el-Sheikh-tours/Cultural-Tours/d832-g28/',
   },
   {
     city: 'luxor',
@@ -67,7 +67,7 @@ const TOURS = [
     rating: 4.9,
     verified: true,
     highlights: ['3 tombs included', 'Licensed Egyptologist', 'Private AC car', 'Skip-the-line entry'],
-    viator_url: 'https://www.viator.com/Luxor-tours/Historical-Historical-Tours/d957-g28/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Luxor-tours/Historical-Historical-Tours/d957-g28/',
   },
   {
     city: 'luxor',
@@ -80,7 +80,7 @@ const TOURS = [
     rating: 4.8,
     verified: true,
     highlights: ['ECAA certified', 'Insurance included', 'Hotel pickup', 'Certificate given'],
-    viator_url: 'https://www.viator.com/Luxor-tours/Air-Tours/d957-g11/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Luxor-tours/Air-Tours/d957-g11/',
   },
   {
     city: 'aswan',
@@ -93,7 +93,7 @@ const TOURS = [
     rating: 4.9,
     verified: true,
     highlights: ['Entry tickets included', 'AC transport', 'English guide', 'Dawn light photography'],
-    viator_url: 'https://www.viator.com/Aswan-tours/Historical-Historical-Tours/d4776-g28/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Aswan-tours/Historical-Historical-Tours/d4776-g28/',
   },
   {
     city: 'aswan',
@@ -106,7 +106,7 @@ const TOURS = [
     rating: 4.5,
     verified: true,
     highlights: ['Botanical garden stop', 'Nubian music', 'Sunset views', 'Tea served'],
-    viator_url: 'https://www.viator.com/Aswan-tours/Cruises-Water-Tours/d4776-g63/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Aswan-tours/Cruises-Water-Tours/d4776-g63/',
   },
   {
     city: 'el-gouna',
@@ -119,7 +119,7 @@ const TOURS = [
     rating: 4.7,
     verified: true,
     highlights: ['IKO certified instructor', 'Equipment included', 'Calm lagoon', 'Video recording'],
-    viator_url: 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
   },
   {
     city: 'el-gouna',
@@ -132,7 +132,7 @@ const TOURS = [
     rating: 4.6,
     verified: true,
     highlights: ['Snorkeling stop', 'Island BBQ', 'Marine guide', 'Life jackets provided'],
-    viator_url: 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fwww.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
   },
 ];
 
