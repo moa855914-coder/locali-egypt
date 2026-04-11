@@ -21,7 +21,7 @@ const SECTIONS = [
       { label: 'Services Directory', labelRu: 'Каталог услуг', labelDe: 'Dienste', icon: LayoutGrid, path: '/services', color: 'bg-blue-500/10 text-blue-500' },
       { label: 'Cost Calculator', labelRu: 'Калькулятор', labelDe: 'Kostenrechner', icon: Calculator, path: '/cost-calculator', color: 'bg-emerald-500/10 text-emerald-600' },
       { label: 'Real Prices', labelRu: 'Реальные цены', labelDe: 'Echte Preise', icon: DollarSign, path: '/price-checker', color: 'bg-accent/10 text-accent' },
-      { label: 'Smart AI Guide', labelRu: 'AI Гид', labelDe: 'AI Guide', icon: Bot, path: '/ai-assistant', color: 'bg-violet-500/10 text-violet-500', isAI: true },
+      { label: 'Locali AI', labelRu: 'AI Гид', labelDe: 'AI Guide', icon: Bot, path: '/ai-assistant', color: 'bg-violet-500/10 text-violet-500', isAI: true },
 
       { label: 'Book a Tour', labelRu: 'Забронировать', labelDe: 'Tour buchen', labelFr: 'Réserver', icon: Calendar, path: '/book', color: 'bg-green-500/10 text-green-600' },
       { label: 'Hotels', labelRu: 'Отели', labelDe: 'Hotels buchen', labelFr: 'Hôtels', icon: Building2, path: '/hotels', color: 'bg-blue-500/10 text-blue-600' },
