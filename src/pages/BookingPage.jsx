@@ -119,7 +119,7 @@ const TOURS = [
     rating: 4.7,
     verified: true,
     highlights: ['IKO certified instructor', 'Equipment included', 'Calm lagoon', 'Video recording'],
-    viator_url: 'https://www.viator.com/Hurghada-tours/Water-Sports/d5323-g208/',
+    viator_url: 'https://tp.media/r?marker=718338&trs=517548&p=3965&u=https%3A%2F%2Fgetyourguide.com&campaign_id=108/Hurghada-tours/Water-Sports/d5323-g208/',
   },
   {
     city: 'el-gouna',
