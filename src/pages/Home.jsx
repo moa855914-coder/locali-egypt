@@ -3,6 +3,7 @@ import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight, Users } from 'lucide-react';
+import CityLivePanel from '../components/CityLivePanel';
 import LiveTrustBadge from '../components/LiveTrustBadge';
 
 const CITIES = [
@@ -150,8 +151,11 @@ export default function Home() {
               </button>
             ))}
           </div>
-          {/* Fade hint */}
           <div className="absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+        </div>
+        {/* City Live Panel */}
+        <div className="mt-3">
+          <CityLivePanel cityId={selectedCity} />
         </div>
       </div>
 
