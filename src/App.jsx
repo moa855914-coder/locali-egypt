@@ -86,6 +86,7 @@ import TravelTips from './pages/TravelTips';
 import SuperAgent from './pages/SuperAgent';
 import AdminCMS from './pages/AdminCMS';
 import AdminHomeCMS from './pages/AdminHomeCMS';
+import AdminLocalPersonas from './pages/AdminLocalPersonas';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -161,6 +162,7 @@ const AuthenticatedApp = () => {
         <Route path="/super-agent" element={<SuperAgent />} />
         <Route path="/admin/cms" element={<AdminCMS />} />
         <Route path="/admin/home-cms" element={<AdminHomeCMS />} />
+        <Route path="/admin/personas" element={<AdminLocalPersonas />} />
         <Route path="/airport-items" element={<AirportItems />} />
         <Route path="/el-gouna" element={<ElGouna />} />
         <Route path="/nationality-guide" element={<NationalityGuide />} />
