@@ -26,9 +26,9 @@ const CORE_ACTIONS = [
   },
   {
     icon: AlertTriangle,
-    label: 'Scam Alerts',
-    micro: 'Tourists get overcharged here every day',
-    to: '/scam-map',
+    label: 'Pricing Insights',
+    micro: 'Community-verified price transparency',
+    to: '/price-insights',
     highlight: false,
     color: 'bg-red-50 text-red-800',
     iconBg: 'bg-red-100',
