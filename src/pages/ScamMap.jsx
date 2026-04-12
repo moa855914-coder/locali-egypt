@@ -3,7 +3,8 @@ import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { CITIES, SCAM_CATEGORIES, t, getCityName } from '../lib/constants';
-import { AlertTriangle, Plus, ChevronUp, ChevronDown, MapPin } from 'lucide-react';
+import { AlertTriangle, Plus, ChevronUp, ChevronDown, MapPin, List, Map } from 'lucide-react';
+import ScamHeatMap from '../components/ScamHeatMap';
 import ScamGauge from '../components/ScamGauge';
 import SafeNextStep from '../components/SafeNextStep';
 
@@ -12,6 +13,7 @@ export default function ScamMap() {
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [showReportForm, setShowReportForm] = useState(false);
+  const [viewMode, setViewMode] = useState('list');
 
   const { data: reports = [], isLoading, refetch } = useQuery({
     queryKey: ['scamReports', selectedCity, selectedCategory],
@@ -114,11 +116,33 @@ export default function ScamMap() {
         </div>
       </div>
 
+      {/* View Toggle */}
+      <div className="flex items-center gap-2 mb-4">
+        <button
+          onClick={() => setViewMode('list')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            viewMode === 'list' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+          }`}
+        >
+          <List className="w-3.5 h-3.5" /> List View
+        </button>
+        <button
+          onClick={() => setViewMode('map')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            viewMode === 'map' ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'
+          }`}
+        >
+          <Map className="w-3.5 h-3.5" /> Heat Map
+        </button>
+      </div>
+
       {/* Reports */}
       {isLoading ? (
         <div className="flex justify-center py-12">
           <div className="w-8 h-8 border-4 border-border border-t-accent rounded-full animate-spin" />
         </div>
+      ) : viewMode === 'map' ? (
+        <ScamHeatMap reports={reports} />
       ) : reports.length > 0 ? (
         <div className="space-y-3">
           {reports.map(report => (
