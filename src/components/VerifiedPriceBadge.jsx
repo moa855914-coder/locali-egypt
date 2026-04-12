@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { ShieldCheck, AlertTriangle, TrendingUp, Clock } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, TrendingUp } from 'lucide-react';
+import LiveTrustBadge from './LiveTrustBadge';
 
 /**
  * Reusable component to display a verified price range from the PriceEntry system.
@@ -59,17 +60,8 @@ export default function VerifiedPriceBadge({ category, city, titleMatch, classNa
         <p className="text-xs text-muted-foreground mt-1 italic">"{entry.notes}"</p>
       )}
 
-      <div className="flex items-center gap-3 mt-2 pt-2 border-t border-border/50">
-        <div className="flex items-center gap-1">
-          <ShieldCheck className="w-3 h-3 text-success" />
-          <span className="text-[10px] font-bold text-success capitalize">{entry.source_label?.replace('_', ' ')}</span>
-        </div>
-        {daysAgo !== null && (
-          <div className={`flex items-center gap-1 ${isStale ? 'text-amber-500' : 'text-muted-foreground'}`}>
-            <Clock className="w-3 h-3" />
-            <span className="text-[10px]">{daysAgo === 0 ? 'Updated today' : `${daysAgo}d ago`}</span>
-          </div>
-        )}
+      <div className="mt-2 pt-2 border-t border-border/50">
+        <LiveTrustBadge lastUpdated={entry.last_verified_date} reportCount={120} />
       </div>
     </div>
   );

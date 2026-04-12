@@ -3,6 +3,7 @@ import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight, Users } from 'lucide-react';
+import LiveTrustBadge from '../components/LiveTrustBadge';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada', emoji: '🤿' },
@@ -183,13 +184,16 @@ export default function Home() {
       </div>
 
       {/* ── 4. TRUST STRIP ── */}
-      <div className="flex items-center justify-between bg-card border border-border rounded-2xl px-4 py-3 mb-6">
-        {TRUST_ITEMS.map((t, i) => (
-          <div key={i} className="flex flex-col items-center text-center gap-1">
-            <span className="text-lg">{t.icon}</span>
-            <p className="text-[10px] font-bold text-muted-foreground leading-tight">{t.text}</p>
-          </div>
-        ))}
+      <div className="bg-card border border-border rounded-2xl px-4 py-3 mb-6 space-y-2">
+        <LiveTrustBadge lastUpdated={new Date().toISOString()} reportCount={2000} label="travelers" />
+        <div className="flex items-center justify-between">
+          {TRUST_ITEMS.map((t, i) => (
+            <div key={i} className="flex flex-col items-center text-center gap-1">
+              <span className="text-lg">{t.icon}</span>
+              <p className="text-[10px] font-bold text-muted-foreground leading-tight">{t.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ── 5. SMART HELP (AI / Ask a Local) ── */}

@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { CITIES, SCAM_CATEGORIES, t, getCityName } from '../lib/constants';
 import { AlertTriangle, Plus, ChevronUp, ChevronDown, MapPin, List, Map } from 'lucide-react';
 import ScamHeatMap from '../components/ScamHeatMap';
+import LiveTrustBadge from '../components/LiveTrustBadge';
 import ScamGauge from '../components/ScamGauge';
 import SafeNextStep from '../components/SafeNextStep';
 
@@ -40,6 +41,7 @@ export default function ScamMap() {
           <div>
             <h1 className="text-2xl font-black tracking-tight">{t('scam_map', lang)}</h1>
             <p className="text-sm text-muted-foreground">{reports.length} reports</p>
+            <LiveTrustBadge records={reports} label="verified reports" className="mt-1" />
           </div>
         </div>
         <button

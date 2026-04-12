@@ -275,6 +275,7 @@ Reply with ONLY a suggested range like "100-200 EGP" or "same" if current is acc
         <div>
           <h1 className="text-2xl font-black tracking-tight">Price Manager</h1>
           <p className="text-sm text-gray-500">{entries.length} prices · admin-controlled</p>
+          <p className="text-[11px] text-emerald-600 font-semibold mt-0.5">● Live data — changes reflect instantly to users</p>
         </div>
         <div className="flex gap-2">
           <button onClick={handleAIScan} disabled={aiLoading}

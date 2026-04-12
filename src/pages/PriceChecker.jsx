@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { CITIES, t, getCityName } from '../lib/constants';
 import { DollarSign, Search, TrendingDown, TrendingUp, AlertTriangle } from 'lucide-react';
 import SafeNextStep from '../components/SafeNextStep';
+import LiveTrustBadge from '../components/LiveTrustBadge';
 
 const PRICE_CATEGORIES = ['transport', 'food', 'accommodation', 'activities', 'shopping', 'telecom', 'medical'];
 
@@ -39,6 +40,7 @@ export default function PriceChecker() {
         <div>
           <h1 className="text-2xl font-black tracking-tight">{t('price_checker', lang)}</h1>
           <p className="text-sm text-muted-foreground">Know before you pay</p>
+          <LiveTrustBadge records={prices} reportCount={240} className="mt-1" />
         </div>
       </div>
 
