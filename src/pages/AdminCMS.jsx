@@ -643,6 +643,9 @@ export default function AdminCMS() {
         {/* Footer links */}
         {sidebarOpen && (
           <div className="p-3 border-t border-border space-y-1">
+            <button onClick={() => navigate('/admin/home-cms')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 transition-colors rounded-xl">
+              <span>🏠</span> Home Page CMS
+            </button>
             <button onClick={() => navigate('/admin/verify')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs text-muted-foreground hover:bg-secondary transition-colors">
               <Shield className="w-3.5 h-3.5" /> Verification Queue
             </button>

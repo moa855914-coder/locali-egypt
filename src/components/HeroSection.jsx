@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 import { t } from '../lib/constants';
 import AddServiceModal from './AddServiceModal';
 
-export default function HeroSection({ lang, onOpenChat }) {
+export default function HeroSection({ lang, onOpenChat, titleOverride, subtitleOverride, descOverride, imageOverride }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <div className="relative overflow-hidden">
       <img
-        src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
+        src={imageOverride || "https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"}
         alt="Egypt pyramids desert landscape"
         className="absolute inset-0 w-full h-full object-cover"
       />
@@ -25,12 +25,12 @@ export default function HeroSection({ lang, onOpenChat }) {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.95] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-            {t('hero_title', lang)}
+            {titleOverride || t('hero_title', lang)}
             <br />
-            <span style={{ color: '#D8B58A' }}>{t('hero_subtitle', lang)}</span>
+            <span style={{ color: '#D8B58A' }}>{subtitleOverride || t('hero_subtitle', lang)}</span>
           </h1>
           <p className="mt-4 text-sm md:text-base text-white/75 max-w-md leading-relaxed">
-            {t('hero_desc', lang)}
+            {descOverride || t('hero_desc', lang)}
           </p>
         </motion.div>
 

@@ -1,4 +1,4 @@
-import { useOutletContext, Link } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import QuickFunnel from '../components/QuickFunnel';
 import LiveSituationBanner from '../components/LiveSituationBanner';
 import HeroSection from '../components/HeroSection';
@@ -6,32 +6,38 @@ import CityCard from '../components/CityCard';
 import HomeSections from '../components/HomeSections';
 import HomeTips from '../components/HomeTips';
 import { CITIES, t } from '../lib/constants';
-
-const CITY_PILLS = [
-  { id: 'hurghada', label: '🌊 Hurghada', path: '/city-guide/hurghada' },
-  { id: 'sharm', label: '⛰️ Sharm', path: '/city-guide/sharm' },
-  { id: 'luxor', label: '👑 Luxor', path: '/city-guide/luxor' },
-  { id: 'aswan', label: '🏛️ Aswan', path: '/city-guide/aswan' },
-  { id: 'el-gouna', label: '🏝️ El Gouna', path: '/city-guide/el-gouna' },
-];
+import useHomeContent from '../hooks/useHomeContent';
+import {
+  DynamicBanners, DynamicCityPills, DynamicFeatureCards,
+  DynamicTipCards, DynamicTextBlocks, DynamicImageBlocks
+} from '../components/DynamicHomeSections';
 
 export default function Home() {
   const { lang, openAIChat } = useOutletContext();
+  const { hasDB, hero, cityPills, featureCards, tipCards, banners, textBlocks, imageBlocks, ctaButtons } = useHomeContent();
+
+  // Hero props: DB overrides static hero if available
+  const heroOverride = hasDB && hero ? {
+    titleOverride: hero.title,
+    subtitleOverride: hero.subtitle,
+    descOverride: hero.description,
+    imageOverride: hero.image_url,
+  } : {};
 
   return (
     <div>
-      <HeroSection lang={lang} onOpenChat={openAIChat} />
+      <HeroSection lang={lang} onOpenChat={openAIChat} {...heroOverride} />
 
-      {/* City Guide Pills */}
+      {/* DB Banners (shown just below hero) */}
+      {banners.length > 0 && (
+        <section className="px-4 pt-4 max-w-7xl mx-auto">
+          <DynamicBanners banners={banners} />
+        </section>
+      )}
+
+      {/* City Guide Pills — DB driven if available, else static */}
       <section className="px-4 pt-4 max-w-7xl mx-auto">
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
-          {CITY_PILLS.map(c => (
-            <Link key={c.id} to={c.path}
-              className="shrink-0 px-4 py-2 bg-white border border-gray-200 rounded-full text-xs font-bold text-gray-700 hover:border-accent hover:text-accent transition-all shadow-sm">
-              {c.label}
-            </Link>
-          ))}
-        </div>
+        <DynamicCityPills cityPills={cityPills} />
       </section>
 
       {/* Quick Funnel */}
@@ -44,7 +50,28 @@ export default function Home() {
         <LiveSituationBanner />
       </section>
 
-      {/* Journey Sections */}
+      {/* DB Feature Cards (if any) */}
+      {featureCards.length > 0 && (
+        <section className="px-4 py-4 max-w-7xl mx-auto">
+          <DynamicFeatureCards featureCards={featureCards} />
+        </section>
+      )}
+
+      {/* DB Text Blocks */}
+      {textBlocks.length > 0 && (
+        <section className="px-4 py-4 max-w-7xl mx-auto">
+          <DynamicTextBlocks textBlocks={textBlocks} />
+        </section>
+      )}
+
+      {/* DB Image Blocks */}
+      {imageBlocks.length > 0 && (
+        <section className="px-4 py-4 max-w-7xl mx-auto">
+          <DynamicImageBlocks imageBlocks={imageBlocks} />
+        </section>
+      )}
+
+      {/* Journey Sections (static, always shown) */}
       <section className="px-4 py-6 max-w-7xl mx-auto">
         <HomeSections lang={lang} />
       </section>
@@ -61,7 +88,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tips */}
+      {/* DB Tip Cards */}
+      {tipCards.length > 0 && (
+        <section className="px-4 py-4 max-w-7xl mx-auto">
+          <DynamicTipCards tipCards={tipCards} />
+        </section>
+      )}
+
+      {/* Tips (static, always shown) */}
       <section className="px-4 py-6 max-w-7xl mx-auto">
         <HomeTips lang={lang} />
       </section>
