@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck } from 'lucide-react';
+import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck, Plus } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import { t } from '../lib/constants';
 import { useAuth } from '../lib/AuthContext';
+import AddServiceModal from './AddServiceModal';
 
 const NAV_LINKS = [
   { path: '/services', labelKey: 'services', icon: Search },
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 
 export default function TopBar({ lang, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
@@ -60,6 +62,14 @@ export default function TopBar({ lang, onLangChange }) {
               Admin
             </Link>
           )}
+          <button
+            onClick={() => setShowModal(true)}
+            className="hidden md:flex items-center gap-1.5 text-white px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
+            style={{ background: '#2E7D8A' }}
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Add Service
+          </button>
           <Link
             to="/emergency"
             className="hidden md:flex items-center gap-1.5 bg-red-500 text-white px-3 py-2 rounded-lg text-sm font-bold hover:bg-red-600 transition-colors btn-3d"
@@ -76,9 +86,19 @@ export default function TopBar({ lang, onLangChange }) {
         </div>
       </div>
 
+      <AddServiceModal open={showModal} onClose={() => setShowModal(false)} />
+
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-border/50 bg-background px-4 py-3 space-y-1">
+          <button
+            onClick={() => { setMobileOpen(false); setShowModal(true); }}
+            className="w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold text-white mb-2"
+            style={{ background: '#2E7D8A' }}
+          >
+            <Plus className="w-4 h-4" />
+            Add Your Service Free
+          </button>
           {NAV_LINKS.map(({ path, labelKey, icon: Icon }) => (
             <Link
               key={path}

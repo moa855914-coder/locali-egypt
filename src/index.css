@@ -8,41 +8,42 @@
   :root {
     --font-inter: 'Inter', sans-serif;
 
-    --background: 40 30% 97%;
-    --foreground: 215 70% 8%;
+    /* Desert Luxury Palette */
+    --background: 36 40% 97%;        /* warm off-white */
+    --foreground: 20 40% 15%;        /* deep brown #3A2A1E */
     --card: 0 0% 100%;
-    --card-foreground: 215 70% 8%;
+    --card-foreground: 20 40% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 215 70% 8%;
-    --primary: 215 70% 8%;
-    --primary-foreground: 40 30% 97%;
-    --secondary: 40 20% 92%;
-    --secondary-foreground: 215 70% 8%;
-    --muted: 40 20% 92%;
-    --muted-foreground: 215 30% 35%;
-    --accent: 32 100% 48%;
+    --popover-foreground: 20 40% 15%;
+    --primary: 20 40% 15%;           /* deep brown */
+    --primary-foreground: 36 40% 97%;
+    --secondary: 36 35% 93%;         /* warm beige #F5E9DA */
+    --secondary-foreground: 20 40% 15%;
+    --muted: 36 30% 91%;
+    --muted-foreground: 20 20% 45%;
+    --accent: 186 50% 36%;           /* ocean blue #2E7D8A */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 90% 50%;
     --destructive-foreground: 0 0% 100%;
     --success: 145 60% 28%;
     --success-foreground: 0 0% 100%;
-    --border: 40 15% 82%;
-    --input: 40 15% 82%;
-    --ring: 32 100% 48%;
-    --chart-1: 32 100% 48%;
-    --chart-2: 145 60% 28%;
-    --chart-3: 215 70% 8%;
+    --border: 36 20% 86%;
+    --input: 36 20% 86%;
+    --ring: 186 50% 36%;
+    --chart-1: 186 50% 36%;
+    --chart-2: 36 55% 64%;           /* desert sand #D8B58A */
+    --chart-3: 20 40% 15%;
     --chart-4: 0 90% 50%;
-    --chart-5: 200 80% 40%;
+    --chart-5: 44 60% 54%;           /* gold #C9A24A */
     --radius: 0.85rem;
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 70% 8%;
-    --sidebar-primary: 215 70% 8%;
-    --sidebar-primary-foreground: 40 30% 97%;
-    --sidebar-accent: 40 20% 92%;
-    --sidebar-accent-foreground: 215 70% 8%;
-    --sidebar-border: 40 15% 82%;
-    --sidebar-ring: 32 100% 48%;
+    --sidebar-foreground: 20 40% 15%;
+    --sidebar-primary: 20 40% 15%;
+    --sidebar-primary-foreground: 36 40% 97%;
+    --sidebar-accent: 36 35% 93%;
+    --sidebar-accent-foreground: 20 40% 15%;
+    --sidebar-border: 36 20% 86%;
+    --sidebar-ring: 186 50% 36%;
   }
 
   .dark {
