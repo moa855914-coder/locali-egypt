@@ -2,18 +2,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, ShieldCheck, Star, Calendar, Bot } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { path: '/', icon: Home, label: 'Home', labelRu: 'Главная', labelDe: 'Start', labelAr: 'الرئيسية' },
-  { path: '/safety-guide', icon: ShieldCheck, label: 'Safety', labelRu: 'Безопасность', labelDe: 'Sicher', labelAr: 'الأمان' },
-  { path: '/book', icon: Calendar, label: 'Book', labelRu: 'Бронь', labelDe: 'Buchen', labelAr: 'احجز', isPrimary: true },
-  { path: '/temple-trips', icon: Star, label: 'Explore', labelRu: 'Активности', labelDe: 'Erleben', labelAr: 'استكشف' },
-  { path: '/ai-assistant', icon: Bot, label: 'AI Help', labelRu: 'AI', labelDe: 'AI', labelAr: 'مساعد AI', isAI: true },
+  { path: '/', icon: Home,
+    labels: { en: 'Home', ru: 'Главная', de: 'Start', fr: 'Accueil', es: 'Inicio', ar: 'الرئيسية', zh: '首页' } },
+  { path: '/safety-guide', icon: ShieldCheck,
+    labels: { en: 'Safety', ru: 'Безопасность', de: 'Sicher', fr: 'Sécurité', es: 'Seguridad', ar: 'الأمان', zh: '安全' } },
+  { path: '/book', icon: Calendar, isPrimary: true,
+    labels: { en: 'Book', ru: 'Бронь', de: 'Buchen', fr: 'Réserver', es: 'Reservar', ar: 'احجز', zh: '预订' } },
+  { path: '/temple-trips', icon: Star,
+    labels: { en: 'Explore', ru: 'Активности', de: 'Erleben', fr: 'Explorer', es: 'Explorar', ar: 'استكشف', zh: '探索' } },
+  { path: '/ai-assistant', icon: Bot, isAI: true,
+    labels: { en: 'AI Help', ru: 'AI', de: 'AI', fr: 'AI', es: 'AI', ar: 'مساعد AI', zh: 'AI助手' } },
 ];
 
 function getLabel(item, lang) {
-  if (lang === 'ru') return item.labelRu || item.label;
-  if (lang === 'de') return item.labelDe || item.label;
-  if (lang === 'ar') return item.labelAr || item.label;
-  return item.label;
+  return item.labels?.[lang] || item.labels?.en || '';
 }
 
 export default function BottomNav({ lang }) {

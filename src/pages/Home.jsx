@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { t } from '../lib/constants';
 import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
@@ -18,6 +19,7 @@ const CORE_ACTIONS = [
   {
     icon: DollarSign,
     label: 'Price Checker',
+    labelKey: 'price_checker',
     micro: 'Know the real price before you pay',
     to: '/price-checker',
     highlight: true,
@@ -27,15 +29,17 @@ const CORE_ACTIONS = [
   {
     icon: AlertTriangle,
     label: 'Pricing Insights',
+    labelKey: 'pricing_insights',
     micro: 'Community-verified price transparency',
     to: '/price-insights',
     highlight: false,
-    color: 'bg-red-50 text-red-800',
-    iconBg: 'bg-red-100',
+    color: 'bg-amber-50 text-amber-800',
+    iconBg: 'bg-amber-100',
   },
   {
     icon: ShieldCheck,
     label: 'Verified Services',
+    labelKey: 'verified_services',
     micro: 'Book trusted drivers and services',
     to: '/services',
     highlight: false,
@@ -51,7 +55,7 @@ const TRUST_ITEMS = [
 ];
 
 export default function Home() {
-  const { openAIChat } = useOutletContext();
+  const { openAIChat, lang = 'en' } = useOutletContext();
   const [selectedCity, setSelectedCity] = useState('hurghada');
   const [aiInput, setAiInput] = useState('');
 
@@ -107,7 +111,7 @@ export default function Home() {
           >
             <span className="flex items-center gap-2">
               <DollarSign className="w-5 h-5" />
-              Check Real Prices
+              {t('check_prices', lang)}
             </span>
             <ChevronRight className="w-5 h-5 opacity-70" />
           </Link>
@@ -133,7 +137,7 @@ export default function Home() {
 
       {/* ── 2. CITY SELECTION ── */}
       <div className="mb-6">
-        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Select your city</p>
+        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">{t('select_city', lang)}</p>
         <div className="relative">
           <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
             {CITIES.map((city) => (
@@ -155,13 +159,13 @@ export default function Home() {
         </div>
         {/* City Live Panel */}
         <div className="mt-3">
-          <CityLivePanel cityId={selectedCity} />
+          <CityLivePanel cityId={selectedCity} lang={lang} />
         </div>
       </div>
 
       {/* ── 3. CORE ACTIONS ── */}
       <div className="mb-6">
-        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-3">What do you need?</p>
+        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-3">{t('services', lang)}</p>
         <div className="space-y-3">
           {CORE_ACTIONS.map((action) => {
             const Icon = action.icon;
@@ -177,7 +181,7 @@ export default function Home() {
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`font-extrabold text-sm ${action.highlight ? '' : ''}`}>{action.label}</p>
+                  <p className={`font-extrabold text-sm ${action.highlight ? '' : ''}`}>{t(action.labelKey, lang) || action.label}</p>
                   <p className={`text-xs mt-0.5 ${action.highlight ? 'opacity-80' : 'opacity-60'}`}>{action.micro}</p>
                 </div>
                 <ChevronRight className="w-4 h-4 opacity-40 shrink-0" />
@@ -204,8 +208,8 @@ export default function Home() {
       <div className="bg-card border border-border rounded-2xl p-4 mb-6">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h3 className="font-extrabold text-sm">Ask a Local</h3>
-            <p className="text-xs text-muted-foreground">Ask locals in your language</p>
+            <h3 className="font-extrabold text-sm">{t('ask_local', lang)}</h3>
+            <p className="text-xs text-muted-foreground">{t('ask_local', lang)}</p>
           </div>
           <Link to="/ask-a-local" className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 hover:bg-accent/20 active:scale-95 transition-all">
             <Users className="w-4 h-4 text-accent" />
@@ -216,7 +220,7 @@ export default function Home() {
             value={aiInput}
             onChange={e => setAiInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && openAIChat()}
-            placeholder="e.g. Is the taxi price fair?"
+            placeholder={t('search_placeholder', lang)}
             className="flex-1 bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none border border-transparent focus:border-accent/30"
           />
           <button

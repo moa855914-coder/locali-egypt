@@ -5,18 +5,18 @@ import FloatingAIChat from './FloatingAIChat';
 import TopBar from './TopBar';
 import BottomNav from './BottomNav';
 import useLanguage from '../hooks/useLanguage';
+import useTranslate, { isRTL } from '../hooks/useTranslate';
 
 export default function Layout() {
   const { lang, changeLang } = useLanguage();
   const [openChat, setOpenChat] = useState(false);
-
-  const isRTL = lang === 'ar';
+  const { tx } = useTranslate(lang);
 
   return (
-    <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-background" dir={isRTL(lang) ? 'rtl' : 'ltr'}>
       <TopBar lang={lang} onLangChange={changeLang} />
       <main className="pb-24">
-        <Outlet context={{ lang, changeLang, openAIChat: () => setOpenChat(true) }} />
+        <Outlet context={{ lang, changeLang, tx, openAIChat: () => setOpenChat(true) }} />
       </main>
       <BottomNav lang={lang} />
       <FloatingAIChat externalOpen={openChat} onExternalOpenHandled={() => setOpenChat(false)} />

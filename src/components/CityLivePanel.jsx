@@ -2,12 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
+import { t } from '../lib/constants';
 
 const STATUS_COLOR = { green: 'bg-emerald-500', yellow: 'bg-amber-400', red: 'bg-red-500' };
 const STATUS_LABEL = { green: 'Safe to visit', yellow: 'Some caution', red: 'Check alerts' };
 const STATUS_TEXT_COLOR = { green: 'text-emerald-600', yellow: 'text-amber-600', red: 'text-red-600' };
 
-export default function CityLivePanel({ cityId }) {
+export default function CityLivePanel({ cityId, lang = 'en' }) {
   const { data, isLoading } = useQuery({
     queryKey: ['liveCity', cityId],
     queryFn: () => base44.entities.LiveSituation.filter({ city: cityId }, '-updated_date', 1),
@@ -54,13 +55,13 @@ export default function CityLivePanel({ cityId }) {
             <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-60 ${STATUS_COLOR[status]}`} />
             <span className={`relative inline-flex rounded-full h-2 w-2 ${STATUS_COLOR[status]}`} />
           </span>
-          <span className="text-[11px] font-extrabold text-emerald-600">Live</span>
+          <span className="text-[11px] font-extrabold text-emerald-600">{t('live', lang)}</span>
           {updatedText && (
             <span className="text-[10px] text-muted-foreground">· Updated {updatedText}</span>
           )}
         </div>
         <span className={`text-[10px] font-bold ${STATUS_TEXT_COLOR[status]}`}>
-          {STATUS_LABEL[status]}
+          {status === 'green' ? t('safe_to_visit', lang) : status === 'yellow' ? t('some_caution', lang) : t('check_alerts', lang)}
         </span>
       </div>
 
@@ -101,7 +102,7 @@ export default function CityLivePanel({ cityId }) {
         to={`/city/${cityId}`}
         className="flex items-center justify-between bg-secondary rounded-xl px-3 py-2.5 hover:bg-muted transition-colors"
       >
-        <span className="text-xs font-bold text-foreground">Check prices & scams in this city</span>
+        <span className="text-xs font-bold text-foreground">{t('check_prices', lang)}</span>
         <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
       </Link>
     </div>
