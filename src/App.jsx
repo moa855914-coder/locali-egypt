@@ -83,6 +83,7 @@ import Museums from './pages/Museums';
 import UnifiedSearch from './pages/UnifiedSearch';
 import PlaceSearch from './pages/PlaceSearch';
 import TravelTips from './pages/TravelTips';
+import SuperAgent from './pages/SuperAgent';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -155,6 +156,7 @@ const AuthenticatedApp = () => {
         <Route path="/listings" element={<UnifiedSearch />} />
         <Route path="/place-search" element={<PlaceSearch />} />
         <Route path="/travel-tips" element={<TravelTips />} />
+        <Route path="/super-agent" element={<SuperAgent />} />
         <Route path="/airport-items" element={<AirportItems />} />
         <Route path="/el-gouna" element={<ElGouna />} />
         <Route path="/nationality-guide" element={<NationalityGuide />} />
