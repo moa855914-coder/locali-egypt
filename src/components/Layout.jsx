@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import FloatingAIChat from './FloatingAIChat';
 import TopBar from './TopBar';
+import BottomNav from './BottomNav';
 import useLanguage from '../hooks/useLanguage';
 
 export default function Layout() {
@@ -14,9 +15,10 @@ export default function Layout() {
   return (
     <div className="min-h-screen bg-background" dir={isRTL ? 'rtl' : 'ltr'}>
       <TopBar lang={lang} onLangChange={changeLang} />
-      <main>
+      <main className="pb-24">
         <Outlet context={{ lang, changeLang, openAIChat: () => setOpenChat(true) }} />
       </main>
+      <BottomNav lang={lang} />
       <FloatingAIChat externalOpen={openChat} onExternalOpenHandled={() => setOpenChat(false)} />
       <Footer lang={lang} />
     </div>

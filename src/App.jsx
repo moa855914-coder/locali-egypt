@@ -59,6 +59,7 @@ import VerifiedDrivers from './pages/VerifiedDrivers';
 import About from './pages/About';
 import TourOperators from './pages/TourOperators';
 import Apartments from './pages/Apartments';
+import CityGuide from './pages/CityGuide';
 
 
 import NationalityGuide from './pages/NationalityGuide';
@@ -186,7 +187,7 @@ const AuthenticatedApp = () => {
         <Route path="/about" element={<About />} />
         <Route path="/tour-operators" element={<TourOperators />} />
         <Route path="/apartments" element={<Apartments />} />
-
+        <Route path="/city-guide/:cityId" element={<CityGuide />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

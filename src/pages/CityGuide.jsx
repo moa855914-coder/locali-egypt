@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapPin, ExternalLink, Utensils, Waves, Music, Baby, Globe, ShoppingBag, Coffee, ShoppingCart, Ship } from 'lucide-react';
 import { CITY_GUIDE } from '../lib/cityGuideContent';
-import { Helmet } from 'react-helmet';
 
 const TABS = [
   { id: 'beaches', label: 'Beaches', icon: Waves },
@@ -16,21 +15,19 @@ const TABS = [
   { id: 'day_trips', label: 'Day Trips', icon: Globe },
 ];
 
-function PlaceCard({ place, type }) {
+function PlaceCard({ place }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-md transition-all">
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-sm text-gray-900 leading-tight">{place.name}</h3>
-          {place.cuisine && (
-            <p className="text-[10px] font-bold text-accent mt-0.5">{place.cuisine} {place.price}</p>
-          )}
-          {place.free !== undefined && (
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${place.free ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
-              {place.free ? '✅ Free' : '🎟️ Paid'}{place.note ? ` — ${place.note}` : ''}
-            </span>
-          )}
-        </div>
+      <div className="flex-1 min-w-0 mb-2">
+        <h3 className="font-bold text-sm text-gray-900 leading-tight">{place.name}</h3>
+        {place.cuisine && (
+          <p className="text-[10px] font-bold text-accent mt-0.5">{place.cuisine} {place.price}</p>
+        )}
+        {place.free !== undefined && (
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${place.free ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
+            {place.free ? '✅ Free' : '🎟️ Paid'}{place.note ? ` — ${place.note}` : ''}
+          </span>
+        )}
       </div>
       <p className="text-xs text-gray-500 leading-relaxed mb-3">{place.description}</p>
       <div className="flex flex-wrap gap-2">
@@ -74,7 +71,7 @@ function TabContent({ city, activeTab }) {
     <div>
       <p className="text-xs text-gray-500 mb-4 italic">{SECTION_INTROS[activeTab]}</p>
       <div className="grid md:grid-cols-2 gap-3">
-        {items.map((place, i) => <PlaceCard key={i} place={place} type={activeTab} />)}
+        {items.map((place, i) => <PlaceCard key={i} place={place} />)}
       </div>
     </div>
   );
@@ -98,81 +95,72 @@ export default function CityGuide() {
   const activeTabConfig = TABS.find(t => t.id === activeTab);
 
   return (
-    <>
-      <Helmet>
-        <title>{city.meta_title}</title>
-        <meta name="description" content={city.meta_description} />
-        <meta property="og:title" content={city.meta_title} />
-        <meta property="og:description" content={city.meta_description} />
-      </Helmet>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero */}
+      <div className="relative h-64 md:h-80 overflow-hidden">
+        <img src={city.hero} alt={`${city.name} Egypt`} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="absolute bottom-6 left-4 right-4 max-w-3xl mx-auto">
+          <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-1">
+            <MapPin className="w-3 h-3" /> Egypt Travel Guide
+          </p>
+          <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
+            {city.emoji} {city.name}, Egypt
+          </h1>
+          <p className="text-white/80 text-sm mt-1">Things to do · Restaurants · Beaches · Activities · Day Trips</p>
+        </div>
+      </div>
 
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero */}
-        <div className="relative h-64 md:h-80 overflow-hidden">
-          <img src={city.hero} alt={`${city.name} Egypt`} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-6 left-4 right-4 max-w-3xl mx-auto">
-            <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-1">
-              <MapPin className="w-3 h-3" /> Egypt Travel Guide
-            </p>
-            <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">
-              {city.emoji} {city.name}, Egypt
-            </h1>
-            <p className="text-white/80 text-sm mt-1">Things to do · Restaurants · Beaches · Activities · Day Trips</p>
-          </div>
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        {/* Intro */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-6">
+          <h2 className="font-extrabold text-base text-gray-900 mb-2">About {city.name}, Egypt</h2>
+          <p className="text-sm text-gray-600 leading-relaxed">{city.intro}</p>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          {/* Intro */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 mb-6">
-            <h2 className="font-extrabold text-base text-gray-900 mb-2">About {city.name}, Egypt</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">{city.intro}</p>
-          </div>
+        {/* Tab navigation */}
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-5">
+          {TABS.map(tab => {
+            const Icon = tab.icon;
+            return (
+              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 shrink-0 px-3 py-2 rounded-xl text-xs font-bold border transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'}`}>
+                <Icon className="w-3.5 h-3.5" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-          {/* Tab navigation */}
-          <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-5">
-            {TABS.map(tab => {
-              const Icon = tab.icon;
-              return (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 shrink-0 px-3 py-2 rounded-xl text-xs font-bold border transition-all ${activeTab === tab.id ? 'bg-primary text-primary-foreground border-primary' : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'}`}>
-                  <Icon className="w-3.5 h-3.5" />
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+        {/* Active tab header */}
+        <div className="flex items-center gap-2 mb-4">
+          {activeTabConfig && <activeTabConfig.icon className="w-5 h-5 text-accent" />}
+          <h2 className="font-extrabold text-lg text-gray-900">
+            {activeTabConfig?.label} in {city.name}, Egypt
+          </h2>
+        </div>
 
-          {/* Active tab header */}
-          <div className="flex items-center gap-2 mb-4">
-            {activeTabConfig && <activeTabConfig.icon className="w-5 h-5 text-accent" />}
-            <h2 className="font-extrabold text-lg text-gray-900">
-              {activeTabConfig?.label} in {city.name}, Egypt
-            </h2>
-          </div>
+        {/* Tab content */}
+        <TabContent city={city} activeTab={activeTab} />
 
-          {/* Tab content */}
-          <TabContent city={city} activeTab={activeTab} />
-
-          {/* SEO footer */}
-          <div className="mt-10 bg-white rounded-2xl border border-gray-100 p-5">
-            <h3 className="font-extrabold text-sm text-gray-900 mb-2">Complete Guide: Things To Do in {city.name} Egypt</h3>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              This guide covers the best things to do in {city.name}, Egypt — including top beaches, best cafes in {city.name},
-              recommended restaurants for every budget, water sports, nightlife, family activities, and day trips.
-              All places include Google Maps links. Updated April 2026.
-            </p>
-            <div className="flex flex-wrap gap-2 mt-3">
-              {TABS.map(t => (
-                <button key={t.id} onClick={() => setActiveTab(t.id)}
-                  className="text-[10px] font-bold text-blue-600 hover:underline">
-                  {t.label} in {city.name} ·
-                </button>
-              ))}
-            </div>
+        {/* SEO footer */}
+        <div className="mt-10 bg-white rounded-2xl border border-gray-100 p-5">
+          <h3 className="font-extrabold text-sm text-gray-900 mb-2">Complete Guide: Things To Do in {city.name} Egypt</h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            This guide covers the best things to do in {city.name}, Egypt — including top beaches, best cafes in {city.name},
+            recommended restaurants for every budget, water sports, nightlife, family activities, and day trips.
+            All places include Google Maps links. Updated April 2026.
+          </p>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {TABS.map(t => (
+              <button key={t.id} onClick={() => setActiveTab(t.id)}
+                className="text-[10px] font-bold text-blue-600 hover:underline">
+                {t.label} in {city.name} ·
+              </button>
+            ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
