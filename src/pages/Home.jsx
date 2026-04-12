@@ -76,31 +76,43 @@ export default function Home() {
     <div className="max-w-lg mx-auto px-4 pb-24">
 
       {/* ── 1. HERO ── */}
-      <div className="pt-8 pb-6">
-        <div className="inline-flex items-center gap-1.5 bg-accent/10 text-accent rounded-full px-3 py-1 text-[11px] font-bold mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-          Egypt's #1 Tourist Safety Platform
+      <div className="-mx-4 relative mb-6">
+        {/* Background image */}
+        <img
+          src="https://media.base44.com/images/public/69c689e2d4aa000453950c3f/1b2cecb1f_generated_image.png"
+          alt="Local life in Egypt"
+          className="w-full h-72 object-cover object-center"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
+        {/* Content */}
+        <div className="absolute inset-0 flex flex-col justify-end px-5 pb-5">
+          <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-sm text-white rounded-full px-3 py-1 text-[11px] font-bold mb-3 w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Egypt's #1 Tourist Safety Platform
+          </div>
+          <h1 className="text-3xl font-black tracking-tight leading-tight text-white mb-1.5">
+            Navigate Egypt.<br />
+            <span style={{ color: '#D8B58A' }}>Like a Local.</span>
+          </h1>
+          <p className="text-sm text-white/80 leading-relaxed mb-4">
+            Avoid scams, know real prices, and book verified services safely in Egypt.
+          </p>
+          {/* Primary CTA */}
+          <Link
+            to="/price-checker"
+            className="flex items-center justify-between bg-accent text-accent-foreground px-5 py-3.5 rounded-2xl font-black text-base shadow-lg shadow-black/30 hover:opacity-95 transition-opacity mb-3"
+          >
+            <span className="flex items-center gap-2">
+              <DollarSign className="w-5 h-5" />
+              Check Real Prices
+            </span>
+            <ChevronRight className="w-5 h-5 opacity-70" />
+          </Link>
         </div>
-        <h1 className="text-3xl font-black tracking-tight leading-tight text-foreground mb-2">
-          Navigate Egypt.<br />
-          <span className="text-accent">Like a Local.</span>
-        </h1>
-        <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-          Avoid scams, know real prices, and book verified services safely in Egypt.
-        </p>
+      </div>
 
-        {/* Primary CTA */}
-        <Link
-          to="/price-checker"
-          className="flex items-center justify-between w-full bg-accent text-accent-foreground px-5 py-4 rounded-2xl font-black text-base shadow-lg shadow-accent/20 hover:opacity-95 transition-opacity mb-4"
-        >
-          <span className="flex items-center gap-2">
-            <DollarSign className="w-5 h-5" />
-            Check Real Prices
-          </span>
-          <ChevronRight className="w-5 h-5 opacity-70" />
-        </Link>
-
+      <div className="pb-2">
         {/* AI Search (secondary) */}
         <button
           onClick={openAIChat}
