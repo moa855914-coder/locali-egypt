@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck, Plus, ChevronDown, Car, Hotel, Bot, Map, Globe, Compass } from 'lucide-react';
+import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck, Plus, ChevronDown, Car, Hotel, Bot, Map, Globe, Compass, Database } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from './LanguageSwitcher';
 import { t } from '../lib/constants';
@@ -196,13 +196,22 @@ export default function TopBar({ lang, onLangChange }) {
         <div className="flex items-center gap-3">
           <LanguageSwitcher lang={lang} onChange={onLangChange} />
           {isAdmin && (
-            <Link
-              to="/admin/verify"
-              className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              Admin
-            </Link>
+            <>
+              <Link
+                to="/admin/cms"
+                className="hidden md:flex items-center gap-1.5 bg-amber-500 text-white px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
+              >
+                <Database className="w-3.5 h-3.5" />
+                CMS
+              </Link>
+              <Link
+                to="/admin/verify"
+                className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                Admin
+              </Link>
+            </>
           )}
           <button
             onClick={() => setShowModal(true)}
@@ -262,16 +271,7 @@ export default function TopBar({ lang, onLangChange }) {
                 />
               ))}
 
-              {isAdmin && (
-                <Link
-                  to="/admin/verify"
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-primary bg-primary/8 border border-primary/20"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  Admin Dashboard
-                </Link>
-              )}
+
             </div>
           </motion.div>
         )}
