@@ -1,104 +1,229 @@
-import { useOutletContext } from 'react-router-dom';
-import QuickFunnel from '../components/QuickFunnel';
-import LiveSituationBanner from '../components/LiveSituationBanner';
-import HeroSection from '../components/HeroSection';
-import CityCard from '../components/CityCard';
-import HomeSections from '../components/HomeSections';
-import HomeTips from '../components/HomeTips';
-import { CITIES, t } from '../lib/constants';
-import useHomeContent from '../hooks/useHomeContent';
-import {
-  DynamicBanners, DynamicCityPills, DynamicFeatureCards,
-  DynamicTipCards, DynamicTextBlocks, DynamicImageBlocks
-} from '../components/DynamicHomeSections';
+import { useState } from 'react';
+import { useOutletContext, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
+import { Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight } from 'lucide-react';
+
+const CITIES = [
+  { id: 'hurghada', label: 'Hurghada', emoji: '🤿' },
+  { id: 'sharm-el-sheikh', label: 'Sharm', emoji: '🐠' },
+  { id: 'luxor', label: 'Luxor', emoji: '🏛️' },
+  { id: 'aswan', label: 'Aswan', emoji: '🛶' },
+  { id: 'el-gouna', label: 'El Gouna', emoji: '🌊' },
+];
+
+const CORE_ACTIONS = [
+  {
+    icon: DollarSign,
+    label: 'Price Checker',
+    micro: 'Know the real price before you pay',
+    to: '/price-checker',
+    highlight: true,
+    color: 'bg-accent text-accent-foreground',
+    iconBg: 'bg-white/20',
+  },
+  {
+    icon: AlertTriangle,
+    label: 'Scam Alerts',
+    micro: 'Tourists get overcharged here every day',
+    to: '/scam-map',
+    highlight: false,
+    color: 'bg-red-50 text-red-800',
+    iconBg: 'bg-red-100',
+  },
+  {
+    icon: ShieldCheck,
+    label: 'Verified Services',
+    micro: 'Book trusted drivers and services',
+    to: '/services',
+    highlight: false,
+    color: 'bg-emerald-50 text-emerald-800',
+    iconBg: 'bg-emerald-100',
+  },
+];
+
+const TRUST_ITEMS = [
+  { icon: '👥', text: '2,000+ travelers' },
+  { icon: '📋', text: 'Real tourist reports' },
+  { icon: '✅', text: 'Verified services' },
+];
 
 export default function Home() {
-  const { lang, openAIChat } = useOutletContext();
-  const { hasDB, hero, cityPills, featureCards, tipCards, banners, textBlocks, imageBlocks, ctaButtons } = useHomeContent();
+  const { openAIChat } = useOutletContext();
+  const [selectedCity, setSelectedCity] = useState('hurghada');
+  const [aiInput, setAiInput] = useState('');
 
-  // Hero props: DB overrides static hero if available
-  const heroOverride = hasDB && hero ? {
-    titleOverride: hero.title,
-    subtitleOverride: hero.subtitle,
-    descOverride: hero.description,
-    imageOverride: hero.image_url,
-  } : {};
+  const { data: liveData } = useQuery({
+    queryKey: ['liveInfo'],
+    queryFn: async () => {
+      const [rates, situation] = await Promise.all([
+        base44.entities.CurrencyRate.list('-created_date', 1),
+        base44.entities.LiveSituation.filter({ city: 'global' }, '-created_date', 1),
+      ]);
+      return {
+        usd: rates?.[0]?.usd,
+        status: situation?.[0]?.status || 'green',
+        statusText: situation?.[0]?.recommendation || 'Normal',
+      };
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const statusColor = liveData?.status === 'red' ? 'text-red-600' : liveData?.status === 'yellow' ? 'text-amber-500' : 'text-emerald-600';
+  const statusDot = liveData?.status === 'red' ? 'bg-red-500' : liveData?.status === 'yellow' ? 'bg-amber-500' : 'bg-emerald-500';
 
   return (
-    <div>
-      <HeroSection lang={lang} onOpenChat={openAIChat} {...heroOverride} />
+    <div className="max-w-lg mx-auto px-4 pb-24">
 
-      {/* DB Banners (shown just below hero) */}
-      {banners.length > 0 && (
-        <section className="px-4 pt-4 max-w-7xl mx-auto">
-          <DynamicBanners banners={banners} />
-        </section>
-      )}
-
-      {/* City Guide Pills — DB driven if available, else static */}
-      <section className="px-4 pt-4 max-w-7xl mx-auto">
-        <DynamicCityPills cityPills={cityPills} />
-      </section>
-
-      {/* Quick Funnel */}
-      <section className="px-4 pt-4 max-w-7xl mx-auto">
-        <QuickFunnel lang={lang} />
-      </section>
-
-      {/* Live Situation Banner */}
-      <section className="px-4 pt-4 max-w-7xl mx-auto">
-        <LiveSituationBanner />
-      </section>
-
-      {/* DB Feature Cards (if any) */}
-      {featureCards.length > 0 && (
-        <section className="px-4 py-4 max-w-7xl mx-auto">
-          <DynamicFeatureCards featureCards={featureCards} />
-        </section>
-      )}
-
-      {/* DB Text Blocks */}
-      {textBlocks.length > 0 && (
-        <section className="px-4 py-4 max-w-7xl mx-auto">
-          <DynamicTextBlocks textBlocks={textBlocks} />
-        </section>
-      )}
-
-      {/* DB Image Blocks */}
-      {imageBlocks.length > 0 && (
-        <section className="px-4 py-4 max-w-7xl mx-auto">
-          <DynamicImageBlocks imageBlocks={imageBlocks} />
-        </section>
-      )}
-
-      {/* Journey Sections (static, always shown) */}
-      <section className="px-4 py-6 max-w-7xl mx-auto">
-        <HomeSections lang={lang} />
-      </section>
-
-      {/* Cities */}
-      <section className="py-6 max-w-7xl mx-auto">
-        <div className="px-4 mb-4">
-          <h2 className="text-xl font-extrabold tracking-tight">{t('explore_cities', lang)}</h2>
+      {/* ── 1. HERO ── */}
+      <div className="pt-8 pb-6">
+        <div className="inline-flex items-center gap-1.5 bg-accent/10 text-accent rounded-full px-3 py-1 text-[11px] font-bold mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+          Egypt's #1 Tourist Safety Platform
         </div>
-        <div className="flex gap-4 overflow-x-auto hide-scrollbar px-4 md:grid md:grid-cols-4 md:overflow-visible">
-          {CITIES.map((city) => (
-            <CityCard key={city.id} city={city} lang={lang} />
-          ))}
+        <h1 className="text-3xl font-black tracking-tight leading-tight text-foreground mb-2">
+          Navigate Egypt.<br />
+          <span className="text-accent">Like a Local.</span>
+        </h1>
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+          Avoid scams, know real prices, and book verified services safely in Egypt.
+        </p>
+
+        {/* Primary CTA */}
+        <Link
+          to="/price-checker"
+          className="flex items-center justify-between w-full bg-accent text-accent-foreground px-5 py-4 rounded-2xl font-black text-base shadow-lg shadow-accent/20 hover:opacity-95 transition-opacity mb-4"
+        >
+          <span className="flex items-center gap-2">
+            <DollarSign className="w-5 h-5" />
+            Check Real Prices
+          </span>
+          <ChevronRight className="w-5 h-5 opacity-70" />
+        </Link>
+
+        {/* AI Search (secondary) */}
+        <button
+          onClick={openAIChat}
+          className="w-full flex items-center gap-3 px-4 py-3 bg-card border border-border rounded-xl hover:border-accent/40 transition-all text-left"
+        >
+          <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+            <Bot className="w-4 h-4 text-accent" />
+          </div>
+          <span className="text-sm text-muted-foreground flex-1">Ask your Egypt guide…</span>
+          <div className="flex items-center gap-1 bg-accent/10 rounded-full px-2 py-0.5">
+            <Sparkles className="w-3 h-3 text-accent" />
+            <span className="text-[10px] font-bold text-accent">AI</span>
+          </div>
+        </button>
+      </div>
+
+      {/* ── 2. CITY SELECTION ── */}
+      <div className="mb-6">
+        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Select your city</p>
+        <div className="relative">
+          <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+            {CITIES.map((city) => (
+              <button
+                key={city.id}
+                onClick={() => setSelectedCity(city.id)}
+                className={`shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all ${
+                  selectedCity === city.id
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card border-border text-foreground'
+                }`}
+              >
+                <span>{city.emoji}</span>
+                {city.label}
+              </button>
+            ))}
+          </div>
+          {/* Fade hint */}
+          <div className="absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
         </div>
-      </section>
+      </div>
 
-      {/* DB Tip Cards */}
-      {tipCards.length > 0 && (
-        <section className="px-4 py-4 max-w-7xl mx-auto">
-          <DynamicTipCards tipCards={tipCards} />
-        </section>
-      )}
+      {/* ── 3. CORE ACTIONS ── */}
+      <div className="mb-6">
+        <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider mb-3">What do you need?</p>
+        <div className="space-y-3">
+          {CORE_ACTIONS.map((action) => {
+            const Icon = action.icon;
+            const cityParam = selectedCity ? `?city=${selectedCity}` : '';
+            const href = action.to + (action.to === '/price-checker' || action.to === '/scam-map' ? cityParam : '');
+            return (
+              <Link
+                key={action.label}
+                to={href}
+                className={`flex items-center gap-4 p-4 rounded-2xl ${action.color} ${action.highlight ? 'shadow-md shadow-accent/15' : 'border border-current/10'} transition-all active:scale-[0.98]`}
+              >
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${action.iconBg}`}>
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={`font-extrabold text-sm ${action.highlight ? '' : ''}`}>{action.label}</p>
+                  <p className={`text-xs mt-0.5 ${action.highlight ? 'opacity-80' : 'opacity-60'}`}>{action.micro}</p>
+                </div>
+                <ChevronRight className="w-4 h-4 opacity-40 shrink-0" />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Tips (static, always shown) */}
-      <section className="px-4 py-6 max-w-7xl mx-auto">
-        <HomeTips lang={lang} />
-      </section>
+      {/* ── 4. TRUST STRIP ── */}
+      <div className="flex items-center justify-between bg-card border border-border rounded-2xl px-4 py-3 mb-6">
+        {TRUST_ITEMS.map((t, i) => (
+          <div key={i} className="flex flex-col items-center text-center gap-1">
+            <span className="text-lg">{t.icon}</span>
+            <p className="text-[10px] font-bold text-muted-foreground leading-tight">{t.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ── 5. SMART HELP (AI / Ask a Local) ── */}
+      <div className="bg-card border border-border rounded-2xl p-4 mb-6">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <h3 className="font-extrabold text-sm">Ask a Local</h3>
+            <p className="text-xs text-muted-foreground">Get answers from locals in your language</p>
+          </div>
+          <Link to="/ask-a-local" className="text-[10px] font-bold text-accent hover:underline shrink-0">Browse locals →</Link>
+        </div>
+        <div className="flex gap-2">
+          <input
+            value={aiInput}
+            onChange={e => setAiInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && openAIChat()}
+            placeholder="e.g. Is the taxi price fair?"
+            className="flex-1 bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none border border-transparent focus:border-accent/30"
+          />
+          <button
+            onClick={openAIChat}
+            className="w-10 h-10 bg-accent text-accent-foreground rounded-xl flex items-center justify-center shrink-0"
+          >
+            <Bot className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* ── 6. LIVE INFO ── */}
+      <div className="flex gap-3">
+        <div className="flex-1 bg-card border border-border rounded-2xl px-4 py-3 flex items-center gap-2">
+          <span className="text-base">💵</span>
+          <div>
+            <p className="text-[10px] text-muted-foreground font-medium">USD → EGP</p>
+            <p className="font-extrabold text-sm">{liveData?.usd ? `${liveData.usd}` : '—'}</p>
+          </div>
+        </div>
+        <div className="flex-1 bg-card border border-border rounded-2xl px-4 py-3 flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full shrink-0 ${statusDot}`} />
+          <div>
+            <p className="text-[10px] text-muted-foreground font-medium">Travel Status</p>
+            <p className={`font-extrabold text-sm ${statusColor}`}>{liveData?.statusText?.split('.')[0] || 'Normal'}</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
