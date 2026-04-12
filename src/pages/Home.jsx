@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight, Users } from 'lucide-react';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada', emoji: '🤿' },
@@ -185,9 +185,11 @@ export default function Home() {
         <div className="flex items-start justify-between mb-3">
           <div>
             <h3 className="font-extrabold text-sm">Ask a Local</h3>
-            <p className="text-xs text-muted-foreground">Get answers from locals in your language</p>
+            <p className="text-xs text-muted-foreground">Ask locals in your language</p>
           </div>
-          <Link to="/ask-a-local" className="text-[10px] font-bold text-accent hover:underline shrink-0">Browse locals →</Link>
+          <Link to="/ask-a-local" className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 hover:bg-accent/20 active:scale-95 transition-all">
+            <Users className="w-4 h-4 text-accent" />
+          </Link>
         </div>
         <div className="flex gap-2">
           <input
