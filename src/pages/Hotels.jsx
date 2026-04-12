@@ -4,6 +4,7 @@ import { ShieldCheck, Star, Globe, ExternalLink } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import { HOTELS_BY_CITY } from '../lib/elGounaContent';
 import PlaceDetailModal from '../components/PlaceDetailModal';
+import WhereToStay from '../components/WhereToStay';
 
 const CITY_LABELS = {
   'el-gouna': '🌊 El Gouna',
@@ -150,6 +151,8 @@ export default function Hotels() {
           <HotelCard key={i} hotel={hotel} city={cityFilter} />
         ))}
       </div>
+
+      <WhereToStay city={cityFilter} />
 
       <div className="mt-8 bg-secondary/50 rounded-2xl p-4 text-center text-xs text-muted-foreground">
         Want to list your hotel here?{' '}
