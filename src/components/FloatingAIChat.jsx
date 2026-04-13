@@ -324,12 +324,11 @@ export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) 
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={onKey}
                 placeholder="Ask about restaurants, rides, prices…"
-                disabled={loading || !initialized}
-                className="flex-1 px-3 py-2 bg-secondary/50 border border-border/50 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 disabled:opacity-50 placeholder:text-muted-foreground/60"
+                className="flex-1 px-3 py-2 bg-secondary/50 border border-border/50 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 placeholder:text-muted-foreground/60"
               />
               <button
                 onClick={() => send()}
-                disabled={!input.trim() || loading || !initialized}
+                disabled={!input.trim() || loading}
                 className="w-9 h-9 bg-accent text-accent-foreground rounded-xl flex items-center justify-center shrink-0 disabled:opacity-40 hover:opacity-90 transition-opacity"
               >
                 <Send className="w-3.5 h-3.5" />
