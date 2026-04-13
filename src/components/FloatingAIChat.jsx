@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import ChatCurrencyTicker from './ChatCurrencyTicker';
 import { base44 } from '@/api/base44Client';
 import { Bot, X, Send, Sparkles, Minimize2 } from 'lucide-react';
@@ -75,8 +75,59 @@ function Bubble({ message }) {
   );
 }
 
+const SNAP_MARGIN = 16;
+
+function useDraggable() {
+  const getSaved = () => {
+    try { return JSON.parse(sessionStorage.getItem('ai_btn_pos')); } catch { return null; }
+  };
+  const getDefault = () => ({ x: window.innerWidth - 72, y: window.innerHeight - 100 });
+
+  const [pos, setPos] = useState(() => getSaved() || getDefault());
+  const dragging = useRef(false);
+  const startOffset = useRef({ x: 0, y: 0 });
+  const moved = useRef(false);
+
+  const snapToEdge = useCallback((x, y) => {
+    const btnSize = 56;
+    const midX = window.innerWidth / 2;
+    const snappedX = x + btnSize / 2 < midX ? SNAP_MARGIN : window.innerWidth - btnSize - SNAP_MARGIN;
+    const clampedY = Math.max(80, Math.min(y, window.innerHeight - btnSize - SNAP_MARGIN));
+    return { x: snappedX, y: clampedY };
+  }, []);
+
+  const onPointerDown = useCallback((e) => {
+    dragging.current = true;
+    moved.current = false;
+    startOffset.current = { x: e.clientX - pos.x, y: e.clientY - pos.y };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  }, [pos]);
+
+  const onPointerMove = useCallback((e) => {
+    if (!dragging.current) return;
+    moved.current = true;
+    const x = Math.max(0, Math.min(e.clientX - startOffset.current.x, window.innerWidth - 56));
+    const y = Math.max(80, Math.min(e.clientY - startOffset.current.y, window.innerHeight - 56));
+    setPos({ x, y });
+  }, []);
+
+  const onPointerUp = useCallback((e) => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    if (moved.current) {
+      const snapped = snapToEdge(pos.x, pos.y);
+      setPos(snapped);
+      sessionStorage.setItem('ai_btn_pos', JSON.stringify(snapped));
+    }
+    return !moved.current; // returns true if it was a tap
+  }, [pos, snapToEdge]);
+
+  return { pos, onPointerDown, onPointerMove, onPointerUp, wasDrag: () => moved.current };
+}
+
 export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) {
   const [open, setOpen] = useState(false);
+  const { pos, onPointerDown, onPointerMove, onPointerUp, wasDrag } = useDraggable();
 
   useEffect(() => {
     if (externalOpen) {
@@ -133,16 +184,19 @@ export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) 
 
   return (
     <>
-      {/* Floating button */}
-      <div className="fixed bottom-6 right-4 z-50 flex flex-col items-end gap-2">
-        {!open && (
-          <div className="bg-card border border-border shadow-lg rounded-2xl px-3 py-1.5 text-xs font-medium text-muted-foreground animate-bounce-once">
-            Ask your smart guide! 🇪🇬
-          </div>
-        )}
+      {/* Draggable floating button */}
+      <div
+        style={{ position: 'fixed', left: pos.x, top: pos.y, zIndex: 9999, touchAction: 'none' }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={(e) => {
+          const wasTap = onPointerUp(e);
+          if (!wasDrag()) setOpen(o => !o);
+        }}
+      >
         <button
-          onClick={() => setOpen(o => !o)}
-          className="w-14 h-14 rounded-2xl bg-accent text-accent-foreground shadow-xl flex items-center justify-center hover:opacity-90 transition-all active:scale-95"
+          className="w-14 h-14 rounded-2xl bg-accent text-accent-foreground flex items-center justify-center select-none"
+          style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.25), 0 0 0 4px hsl(var(--accent)/0.2)' }}
           aria-label="Open AI Assistant"
         >
           {open ? <X className="w-5 h-5" /> : <Bot className="w-6 h-6" />}
