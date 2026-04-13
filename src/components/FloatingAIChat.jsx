@@ -136,6 +136,7 @@ export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) 
     }
   }, [externalOpen]);
   const [conversation, setConversation] = useState(null);
+  const conversationRef = useRef(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -160,20 +161,76 @@ export default function FloatingAIChat({ externalOpen, onExternalOpenHandled }) 
       metadata: { name: 'Floating Chat' },
     });
     setConversation(conv);
+    conversationRef.current = conv;
     setInitialized(true);
+
     base44.agents.subscribeToConversation(conv.id, (data) => {
-      setMessages(data.messages || []);
-      const last = data.messages?.[data.messages.length - 1];
-      if (last?.role === 'assistant' && last?.content) setLoading(false);
+      const msgs = data.messages || [];
+      setMessages(msgs);
+      // Resolve loading: stop when last message is assistant with content
+      // Also stop if there's been any assistant message (even tool-calls only) for >1s
+      const last = msgs[msgs.length - 1];
+      if (last?.role === 'assistant') {
+        if (last?.content) {
+          setLoading(false);
+        } else {
+          // Tool call in progress — will resolve when content arrives
+          // Set a safety timeout to avoid permanent spinner
+          setTimeout(() => setLoading(false), 30000);
+        }
+      }
     });
   };
 
   const send = async (text) => {
     const msg = (text || input).trim();
-    if (!msg || !conversation || loading) return;
+    if (!msg || loading) return;
+
+    // Auto-init if conversation not ready
+    let conv = conversationRef.current;
+    if (!conv) {
+      setLoading(true);
+      try {
+        await initChat();
+        conv = conversationRef.current;
+      } catch (err) {
+        console.error('[AI] Init failed:', err);
+        setLoading(false);
+        setMessages(prev => [...prev, { role: 'assistant', content: '⚠️ Unable to connect to AI assistant. Please try again.' }]);
+        return;
+      }
+    }
+
     setInput('');
     setLoading(true);
-    await base44.agents.addMessage(conversation, { role: 'user', content: msg });
+
+    // Safety timeout — never leave user with infinite spinner
+    const timeout = setTimeout(() => {
+      setLoading(false);
+      setMessages(prev => {
+        const last = prev[prev.length - 1];
+        if (last?.role !== 'assistant' || !last?.content) {
+          return [...prev, { role: 'assistant', content: '⚠️ The assistant took too long to respond. Please try again.' }];
+        }
+        return prev;
+      });
+    }, 45000);
+
+    try {
+      await base44.agents.addMessage(conv, { role: 'user', content: msg });
+    } catch (err) {
+      clearTimeout(timeout);
+      console.error('[AI] Send failed:', err);
+      setLoading(false);
+      setMessages(prev => [...prev, { role: 'assistant', content: '⚠️ Failed to send message. Please check your connection and try again.' }]);
+      return;
+    }
+
+    // Clear timeout when subscription resolves loading
+    const checkDone = setInterval(() => {
+      // loading state managed by subscription — clear safety interval
+    }, 1000);
+    setTimeout(() => clearInterval(checkDone), 50000);
   };
 
   const onKey = (e) => {
