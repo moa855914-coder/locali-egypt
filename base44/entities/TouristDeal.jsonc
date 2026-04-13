@@ -53,6 +53,11 @@
     "whatsapp": {
       "type": "string",
       "title": "WhatsApp Number (e.g. 201001234567)"
+    },
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [

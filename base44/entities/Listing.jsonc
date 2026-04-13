@@ -123,6 +123,11 @@
         "luxury"
       ],
       "title": "Price Range"
+    },
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [

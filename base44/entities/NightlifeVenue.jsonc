@@ -72,12 +72,10 @@
       "title": "Verified",
       "default": false
     },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "title": "Tags"
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [

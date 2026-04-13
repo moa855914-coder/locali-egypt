@@ -105,6 +105,11 @@
       "type": "integer",
       "title": "Total Rides Completed",
       "default": 0
+    },
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [

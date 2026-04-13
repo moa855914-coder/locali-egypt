@@ -99,6 +99,11 @@
       "type": "integer",
       "title": "WhatsApp Clicks",
       "default": 0
+    },
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [

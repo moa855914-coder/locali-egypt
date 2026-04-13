@@ -150,6 +150,11 @@
       "type": "integer",
       "title": "Discount Code Claims",
       "default": 0
+    },
+    "main_image": {
+      "type": "string",
+      "format": "uri",
+      "title": "Main Image"
     }
   },
   "required": [
