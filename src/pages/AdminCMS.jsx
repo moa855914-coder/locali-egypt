@@ -9,6 +9,8 @@ import {
   Database, Plus, Pencil, Trash2, Search, Save, X, RefreshCw,
   Shield, ChevronRight, AlertCircle, CheckCircle2, Loader2, ToggleLeft
 } from 'lucide-react';
+import ImageUpload from '../components/ImageUpload';
+import MultiImageUpload from '../components/MultiImageUpload';
 import { useNavigate } from 'react-router-dom';
 
 // Entity registry — name maps to SDK entity + field config
@@ -25,6 +27,8 @@ const ENTITIES = [
       { key: 'address', label: 'Address', type: 'text' },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'website', label: 'Website', type: 'text' },
+      { key: 'photos', label: 'Photos', type: 'multi_image' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'price_range', label: 'Price Range', type: 'select', options: ['budget','moderate','premium'] },
       { key: 'avg_rating', label: 'Avg Rating', type: 'number' },
       { key: 'scam_score', label: 'Scam Score (0-100)', type: 'number' },
@@ -49,6 +53,7 @@ const ENTITIES = [
       { key: 'google_maps_link', label: 'Google Maps URL', type: 'text' },
       { key: 'website', label: 'Website', type: 'text' },
       { key: 'image', label: 'Image URL', type: 'text' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'price_range', label: 'Price Range', type: 'select', options: ['budget','moderate','premium','luxury'] },
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
@@ -68,7 +73,7 @@ const ENTITIES = [
       { key: 'deal_price', label: 'Deal Price (EGP)', type: 'number' },
       { key: 'valid_until', label: 'Valid Until', type: 'date' },
       { key: 'whatsapp', label: 'WhatsApp', type: 'text' },
-      { key: 'photo', label: 'Photo URL', type: 'text' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'is_active', label: 'Active', type: 'boolean' },
     ],
     displayFields: ['title', 'city', 'discount_percent', 'deal_price', 'is_active'],
@@ -83,6 +88,7 @@ const ENTITIES = [
       { key: 'fair_tourist_price', label: 'Fair Tourist Price (EGP)', type: 'number', required: true },
       { key: 'scam_price', label: 'Scam Price (EGP)', type: 'number' },
       { key: 'notes', label: 'Notes', type: 'textarea' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
     ],
     displayFields: ['item', 'category', 'city', 'local_price', 'fair_tourist_price'],
   },
@@ -141,6 +147,7 @@ const ENTITIES = [
       { key: 'commission_rate', label: 'Commission Rate %', type: 'number' },
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
       { key: 'status', label: 'Status', type: 'select', options: ['pending','approved','suspended'] },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
     ],
     displayFields: ['full_name', 'car_model', 'avg_rating', 'is_verified', 'status'],
   },
@@ -159,6 +166,7 @@ const ENTITIES = [
       { key: 'years_experience', label: 'Years Experience', type: 'number' },
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
       { key: 'status', label: 'Status', type: 'select', options: ['pending','approved','rejected'] },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
     ],
     displayFields: ['full_name', 'city', 'avg_rating', 'is_verified', 'status'],
   },
@@ -176,6 +184,8 @@ const ENTITIES = [
       { key: 'bathrooms', label: 'Bathrooms', type: 'number' },
       { key: 'min_nights', label: 'Min Nights', type: 'number' },
       { key: 'rules', label: 'House Rules', type: 'textarea' },
+      { key: 'photos', label: 'Photos', type: 'multi_image' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'avg_rating', label: 'Avg Rating', type: 'number' },
       { key: 'commission_rate', label: 'Commission Rate %', type: 'number' },
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
@@ -211,6 +221,8 @@ const ENTITIES = [
       { key: 'duration_hours', label: 'Duration (hours)', type: 'number' },
       { key: 'description', label: 'Description', type: 'textarea' },
       { key: 'includes', label: 'Includes', type: 'textarea' },
+      { key: 'photos', label: 'Photos', type: 'multi_image' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'whatsapp', label: 'WhatsApp', type: 'text', required: true },
       { key: 'discount_code', label: 'Discount Code', type: 'text' },
       { key: 'is_featured', label: 'Featured', type: 'boolean' },
@@ -228,6 +240,8 @@ const ENTITIES = [
       { key: 'price_type', label: 'Price Type', type: 'select', options: ['per_person','per_hour'] },
       { key: 'duration', label: 'Duration', type: 'text', required: true },
       { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'photos', label: 'Photos', type: 'multi_image' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
       { key: 'whatsapp', label: 'WhatsApp', type: 'text', required: true },
       { key: 'skill_level', label: 'Skill Level', type: 'select', options: ['beginner','intermediate','all_levels'] },
       { key: 'discount_code', label: 'Discount Code', type: 'text' },
@@ -250,6 +264,7 @@ const ENTITIES = [
       { key: 'dress_code', label: 'Dress Code', type: 'text' },
       { key: 'phone', label: 'Phone', type: 'text' },
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
     ],
     displayFields: ['name', 'city', 'type', 'price_range', 'is_verified'],
   },
@@ -275,6 +290,25 @@ const ENTITIES = [
 // Generic field renderer
 function FieldInput({ field, value, onChange }) {
   const baseClass = "w-full text-sm rounded-lg border border-border bg-background px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent/50";
+
+  if (field.type === 'image') {
+    return (
+      <ImageUpload
+        value={value || ''}
+        onChange={onChange}
+        label={`Upload ${field.label}`}
+      />
+    );
+  }
+
+  if (field.type === 'multi_image') {
+    return (
+      <MultiImageUpload
+        value={value || []}
+        onChange={onChange}
+      />
+    );
+  }
 
   if (field.type === 'boolean') {
     return (
