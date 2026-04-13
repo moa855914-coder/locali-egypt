@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Star, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
 import DiscountClaim from './DiscountClaim';
+import SmartImage from './SmartImage';
 
 export default function ServiceCard({ service }) {
   const priceLabel = { budget: '€', moderate: '€€', premium: '€€€' };
@@ -10,26 +11,27 @@ export default function ServiceCard({ service }) {
       to={`/service/${service.id}`}
       className="group block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
     >
-      {service.photos?.[0] && (
-        <div className="relative aspect-[16/10] overflow-hidden">
-          <img
-            src={service.photos[0]}
-            alt={service.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          {service.is_verified && (
-            <div className="absolute top-3 left-3 flex items-center gap-1 bg-success text-success-foreground px-2 py-1 rounded-full">
-              <ShieldCheck className="w-3 h-3" />
-              <span className="text-[10px] font-bold">VERIFIED</span>
-            </div>
-          )}
-          {service.is_featured && (
-            <div className="absolute top-3 right-3 bg-accent text-accent-foreground px-2 py-1 rounded-full">
-              <span className="text-[10px] font-bold">FEATURED</span>
-            </div>
-          )}
-        </div>
-      )}
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <SmartImage
+          place={service}
+          width={600}
+          height={375}
+          className="w-full h-full transition-transform duration-500 group-hover:scale-105"
+          alt={service.name}
+        />
+        {service.is_verified && (
+          <div className="absolute top-3 left-3 flex items-center gap-1 bg-success text-success-foreground px-2 py-1 rounded-full">
+            <ShieldCheck className="w-3 h-3" />
+            <span className="text-[10px] font-bold">VERIFIED</span>
+          </div>
+        )}
+        {service.is_featured && (
+          <div className="absolute top-3 right-3 bg-accent text-accent-foreground px-2 py-1 rounded-full">
+            <span className="text-[10px] font-bold">FEATURED</span>
+          </div>
+        )}
+      </div>
+
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-2">
           <h3 className="font-bold text-foreground truncate">{service.name}</h3>
@@ -66,10 +68,8 @@ export default function ServiceCard({ service }) {
           )}
         </div>
 
-        {/* Discount code */}
         <DiscountClaim businessName={service.name} compact />
 
-        {/* Verified upsell for unverified listings */}
         {!service.is_verified && (
           <div className="mt-2 flex items-center gap-1.5 bg-secondary/60 rounded-xl px-3 py-1.5">
             <BadgeCheck className="w-3 h-3 text-muted-foreground shrink-0" />
@@ -79,6 +79,6 @@ export default function ServiceCard({ service }) {
           </div>
         )}
       </div>
-      </Link>
-      );
-      }
+    </Link>
+  );
+}

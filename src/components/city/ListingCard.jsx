@@ -1,10 +1,18 @@
-import { Star, MapPin, Tag } from 'lucide-react';
+import { Star, MapPin } from 'lucide-react';
+import SmartImage from '../SmartImage';
 
 const PRICE_LABEL = { '€': 'Budget', '€€': 'Mid-range', '€€€': 'Premium' };
 
 export default function ListingCard({ listing }) {
   return (
-    <div className="bg-card rounded-2xl border border-border/50 p-5 hover:shadow-md transition-shadow">
+    <div className="bg-card rounded-2xl border border-border/50 overflow-hidden hover:shadow-md transition-shadow">
+      <SmartImage
+        place={{ id: listing.id || listing.name, name: listing.name, category: listing.category, image: listing.image }}
+        width={600} height={220}
+        className="w-full h-36"
+        alt={listing.name}
+      />
+      <div className="p-5">
       <div className="flex items-start justify-between gap-3 mb-2">
         <h3 className="font-bold text-base leading-tight">{listing.name}</h3>
         <span className="text-xs font-bold text-accent shrink-0">{listing.price}</span>
@@ -28,6 +36,7 @@ export default function ListingCard({ listing }) {
             {tag}
           </span>
         ))}
+      </div>
       </div>
     </div>
   );
