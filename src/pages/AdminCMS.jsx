@@ -686,6 +686,9 @@ export default function AdminCMS() {
             <button onClick={() => navigate('/admin/prices')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-green-700 bg-green-50 hover:bg-green-100 transition-colors">
               <span>💰</span> Price Manager
             </button>
+            <button onClick={() => navigate('/admin/bulk-populate')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">
+              <span>⚡</span> Bulk Populator
+            </button>
             <button onClick={() => navigate('/admin/verify')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs text-muted-foreground hover:bg-secondary transition-colors">
               <Shield className="w-3.5 h-3.5" /> Verification Queue
             </button>
