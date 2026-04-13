@@ -86,6 +86,7 @@ import TravelTips from './pages/TravelTips';
 import SuperAgent from './pages/SuperAgent';
 import AdminCMS from './pages/AdminCMS';
 import AdminBulkPopulate from './pages/AdminBulkPopulate';
+import AdminElGounaFix from './pages/AdminElGounaFix';
 import AdminHomeCMS from './pages/AdminHomeCMS';
 import AdminLocalPersonas from './pages/AdminLocalPersonas';
 import AdminPriceManager from './pages/AdminPriceManager';
@@ -165,6 +166,7 @@ const AuthenticatedApp = () => {
         <Route path="/super-agent" element={<SuperAgent />} />
         <Route path="/admin/cms" element={<AdminCMS />} />
         <Route path="/admin/bulk-populate" element={<AdminBulkPopulate />} />
+        <Route path="/admin/el-gouna-fix" element={<AdminElGounaFix />} />
         <Route path="/admin/home-cms" element={<AdminHomeCMS />} />
         <Route path="/admin/personas" element={<AdminLocalPersonas />} />
         <Route path="/admin/prices" element={<AdminPriceManager />} />
