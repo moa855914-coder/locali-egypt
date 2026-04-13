@@ -127,7 +127,8 @@
     "main_image": {
       "type": "string",
       "format": "uri",
-      "title": "Main Image"
+      "title": "Main Image",
+      "ui:widget": "file"
     }
   },
   "required": [
