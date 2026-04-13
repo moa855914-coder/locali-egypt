@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
 import DiscountClaim from './DiscountClaim';
 import SmartImage from './SmartImage';
+import AdminImageUploadOverlay from './AdminImageUploadOverlay';
 
-export default function ServiceCard({ service }) {
+export default function ServiceCard({ service: initialService }) {
+  const [service, setService] = useState(initialService);
   const priceLabel = { budget: '€', moderate: '€€', premium: '€€€' };
 
   return (
@@ -11,7 +14,12 @@ export default function ServiceCard({ service }) {
       to={`/service/${service.id}`}
       className="group block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <AdminImageUploadOverlay
+        entityName="Service"
+        recordId={service.id}
+        onUploaded={(url) => setService(prev => ({ ...prev, main_image: url }))}
+        className="relative aspect-[16/10] overflow-hidden"
+      >
         <SmartImage
           place={service}
           width={600}
@@ -30,7 +38,7 @@ export default function ServiceCard({ service }) {
             <span className="text-[10px] font-bold">FEATURED</span>
           </div>
         )}
-      </div>
+      </AdminImageUploadOverlay>
 
       <div className="p-4">
         <div className="flex items-start justify-between gap-2 mb-2">
