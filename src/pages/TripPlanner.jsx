@@ -109,50 +109,21 @@ export default function TripPlanner() {
       ? interests.map(i => INTERESTS.find(x => x.id === i)?.label).join(', ')
       : 'general tourism';
 
-    const prompt = `You are Locali Egypt — the most trusted local travel guide for Egypt.
-    
-Create a detailed day-by-day travel itinerary for:
-- Destination: ${cityLabel}, Egypt
-- Duration: ${days} days
-- Travelers: ${travelers} person(s)
-- Budget level: ${budgetLabel} (${budgetDesc} per person per day)
-- Interests: ${interestLabels}
+    const prompt = `Create a ${days}-day Egypt travel itinerary for ${cityLabel}.
+Budget: ${budgetLabel} (${budgetDesc}/day). Travelers: ${travelers}. Interests: ${interestLabels}.
 
-Format the itinerary as:
+For each day write:
+**Day X — [Theme]**
+- Morning/Afternoon/Evening: activity + price in EGP
+- 💡 Tip: practical local advice
 
-**${cityLabel} — ${days}-Day Itinerary (${budgetLabel} Budget)**
-*Best for: ${interestLabels}*
+End with:
+**💰 Budget Summary** (accommodation, food, activities totals in EGP)
+**🚫 Top 3 Scams to Avoid**
 
-For each day use this format:
-**Day X — [Theme/Focus]**
-- Morning: [activity with real local price in EGP]
-- Afternoon: [activity with real local price in EGP]  
-- Evening: [activity/restaurant with real local price in EGP]
-- 💡 Local tip: [specific practical tip]
-- ⚠️ Watch out: [scam or safety note if relevant]
+Keep it concise. Use real April 2026 prices. 1 EUR ≈ 54 EGP.`;
 
-After the days, add:
-
-**💰 Budget Breakdown (per person)**
-- Accommodation (${days} nights): [range in EGP and EUR]
-- Food (${days} days): [range in EGP and EUR]
-- Activities & transport: [range in EGP and EUR]
-- Total estimated: [range in EGP and EUR]
-- Current rate: 1 EUR ≈ 54 EGP
-
-**✅ Top 3 Things To Book in Advance**
-[List 3 things]
-
-**🚫 Top 3 Scams To Avoid in ${cityLabel}**
-[List 3 specific local scams with how to avoid them]
-
-**📞 Emergency Numbers for ${cityLabel}**
-- Tourist Police: 126
-- Ambulance: 123
-
-Use real, accurate prices based on April 2026 data. Be specific and practical, not generic. Include local restaurant names, specific sites, and honest cost estimates.`;
-
-    const result = await base44.integrations.Core.InvokeLLM({ prompt, model: 'claude_sonnet_4_6' });
+    const result = await base44.integrations.Core.InvokeLLM({ prompt });
     const plan = {
       text: result,
       city: cityLabel,
@@ -320,7 +291,7 @@ Use real, accurate prices based on April 2026 data. Be specific and practical, n
           {loading && (
             <div className="bg-accent/5 border border-accent/20 rounded-2xl p-4 text-center">
               <p className="text-sm font-bold text-accent mb-1">✨ Crafting your perfect Egypt trip...</p>
-              <p className="text-xs text-muted-foreground">Using local knowledge, real prices, and scam alerts. Takes ~20 seconds.</p>
+              <p className="text-xs text-muted-foreground">Using local knowledge and real prices. Usually takes 10–15 seconds.</p>
             </div>
           )}
         </div>
