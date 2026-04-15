@@ -3,6 +3,7 @@ import { useOutletContext } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { ShieldCheck, Star, Languages, MapPin, Plus, X, Check } from 'lucide-react';
+import ImageUpload from '../components/ImageUpload';
 import { useSEO } from '../lib/seo';
 import { generateTrackingCode } from '../lib/constants';
 
@@ -185,7 +186,7 @@ function RegistrationForm({ onClose }) {
   const [form, setForm] = useState({
     full_name: '', license_id: '', city: 'luxor',
     languages: '', tour_types: '', price_half_day: '', price_full_day: '',
-    phone_whatsapp: '', description: '', years_experience: '',
+    phone_whatsapp: '', description: '', years_experience: '', photo_url: '',
   });
   const queryClient = useQueryClient();
 
@@ -268,6 +269,10 @@ function RegistrationForm({ onClose }) {
                 placeholder="Tell tourists about your experience and what makes your tours special..."
                 className="w-full bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none resize-none"
               />
+            </div>
+            <div>
+              <label className="text-xs font-bold mb-1 block">Profile Photo (optional)</label>
+              <ImageUpload value={form.photo_url} onChange={url => setForm(p => ({ ...p, photo_url: url || '' }))} label="Upload Your Photo" />
             </div>
             <p className="text-[10px] text-muted-foreground">By submitting, you agree that Locali Egypt earns a 7% commission on all bookings made through this platform.</p>
             <button type="submit" disabled={createGuide.isPending}

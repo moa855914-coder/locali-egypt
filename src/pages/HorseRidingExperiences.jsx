@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImageUpload from '../components/ImageUpload';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Search, X, Plus, Clock, Star } from 'lucide-react';
@@ -160,7 +161,7 @@ function ExperienceCard({ exp }) {
 }
 
 function SubmitForm({ onClose }) {
-  const [form, setForm] = useState({ title: '', city: '', experience_type: '', price: '', price_type: 'per_person', duration: '', description: '', whatsapp: '', skill_level: 'all_levels' });
+  const [form, setForm] = useState({ title: '', city: '', experience_type: '', price: '', price_type: 'per_person', duration: '', description: '', whatsapp: '', skill_level: 'all_levels', main_image: '' });
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -219,6 +220,10 @@ function SubmitForm({ onClose }) {
         <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} rows={3}
           placeholder="Describe the horse riding experience..."
           className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" />
+      </div>
+      <div>
+        <label className="text-xs font-bold text-gray-600 mb-1 block">Main Photo (optional)</label>
+        <ImageUpload value={form.main_image} onChange={url => setForm(p => ({ ...p, main_image: url || '' }))} label="Upload Experience Photo" />
       </div>
       <button onClick={submit} disabled={loading}
         className="w-full bg-amber-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-amber-600 transition-all disabled:opacity-50">

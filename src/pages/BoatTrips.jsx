@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImageUpload from '../components/ImageUpload';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
@@ -170,7 +171,7 @@ function BoatCard({ boat }) {
 }
 
 function SubmitForm({ onClose }) {
-  const [form, setForm] = useState({ boat_name: '', city: '', boat_type: '', price: '', price_type: 'per_trip', capacity: '', duration_hours: '', description: '', whatsapp: '' });
+  const [form, setForm] = useState({ boat_name: '', city: '', boat_type: '', price: '', price_type: 'per_trip', capacity: '', duration_hours: '', description: '', whatsapp: '', main_image: '' });
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -229,6 +230,10 @@ function SubmitForm({ onClose }) {
         <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} rows={3}
           placeholder="Describe your boat trip experience..."
           className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none" />
+      </div>
+      <div>
+        <label className="text-xs font-bold text-gray-600 mb-1 block">Main Photo (optional)</label>
+        <ImageUpload value={form.main_image} onChange={url => setForm(p => ({ ...p, main_image: url || '' }))} label="Upload Boat Photo" />
       </div>
       <button onClick={submit} disabled={loading}
         className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-600 transition-all disabled:opacity-50">

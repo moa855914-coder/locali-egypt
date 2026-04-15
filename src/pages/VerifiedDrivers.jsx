@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Car, ShieldCheck, MapPin, Plus, X, Check, AlertTriangle, User, Flag, Phone } from 'lucide-react';
+import ImageUpload from '../components/ImageUpload';
 
 const CITY_OPTIONS = [
   { id: 'hurghada', label: '🌊 Hurghada' },
@@ -147,7 +148,7 @@ function DriverCard({ driver }) {
 function RegisterForm({ onClose }) {
   const [form, setForm] = useState({
     full_name: '', city: '', whatsapp: '', car_model: '',
-    years_experience: '', languages: [], description: '',
+    years_experience: '', languages: [], description: '', photo_url: '',
   });
   const [done, setDone] = useState(false);
   const queryClient = useQueryClient();
@@ -222,6 +223,11 @@ function RegisterForm({ onClose }) {
               <textarea rows={3} value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
                 placeholder="Your experience, areas covered, specialties..."
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none resize-none focus:ring-2 focus:ring-green-400" />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold mb-1 block">Profile Photo (optional)</label>
+              <ImageUpload value={form.photo_url} onChange={url => setForm(p => ({ ...p, photo_url: url || '' }))} label="Upload Your Photo" />
             </div>
 
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2">
