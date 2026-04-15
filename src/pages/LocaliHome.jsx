@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { Grid3X3, LayoutList, Plus, User, Shield } from 'lucide-react';
-import PlaceCard from '../components/locali/PlaceCard';
+import PlaceCard from '../components/locali/PlaceCard.jsx';
 import SearchFilters from '../components/locali/SearchFilters';
 import PlaceForm from '../components/locali/PlaceForm';
 import { useAuth } from '@/lib/AuthContext';

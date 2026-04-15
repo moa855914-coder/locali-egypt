@@ -1,37 +1,30 @@
-import { Link } from 'react-router-dom';
 import { MapPin, Star, MessageCircle } from 'lucide-react';
+import PlaceImageGrid from './PlaceImageGrid';
 
 const CITY_LABELS = {
   hurghada: 'Hurghada', 'sharm-el-sheikh': 'Sharm El Sheikh', cairo: 'Cairo',
   luxor: 'Luxor', aswan: 'Aswan', 'el-gouna': 'El Gouna', dahab: 'Dahab', alexandria: 'Alexandria'
 };
 
-const CATEGORY_ICONS = {
-  hotel: '🏨', apartment: '🏠', experience: '🎯', service: '🛎️'
-};
+const CATEGORY_ICONS = { hotel: '🏨', apartment: '🏠', experience: '🎯', service: '🛎️' };
 
 const UNIT_LABELS = {
   per_night: '/ night', per_service: '/ service', per_person: '/ person'
 };
 
 export default function PlaceCard({ place }) {
-  const image = place.main_image || place.images?.[0];
   const whatsappMsg = encodeURIComponent(
     `Hi! I'm interested in "${place.title}" (${place.price} EGP ${UNIT_LABELS[place.price_unit] || '/ night'}). Location: ${place.address || place.city}. Please share more details.`
   );
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all group">
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-        {image ? (
-          <img src={image} alt={place.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-rose-50 to-orange-50">
-            {CATEGORY_ICONS[place.category] || '🏠'}
-          </div>
-        )}
-        <div className="absolute top-3 left-3 flex gap-1.5">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all">
+      {/* Airbnb-style image grid */}
+      <div className="relative">
+        <PlaceImageGrid place={place} className="rounded-none" />
+
+        {/* Badges overlay */}
+        <div className="absolute top-3 left-3 flex gap-1.5 z-10">
           <span className="bg-white/90 backdrop-blur-sm text-xs font-bold px-2.5 py-1 rounded-full capitalize">
             {CATEGORY_ICONS[place.category]} {place.category}
           </span>
@@ -39,8 +32,9 @@ export default function PlaceCard({ place }) {
             <span className="bg-rose-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">★ Featured</span>
           )}
         </div>
+
         {!place.is_available && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
             <span className="bg-white text-gray-800 font-bold text-sm px-4 py-2 rounded-full">Not Available</span>
           </div>
         )}
