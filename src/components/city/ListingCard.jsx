@@ -16,7 +16,7 @@ export default function ListingCard({ listing: initialListing }) {
         className="relative"
       >
         <SmartImage
-          place={{ id: listing.id || listing.name, name: listing.name, category: listing.category, image: listing.main_image || listing.image }}
+          place={{ id: listing.id || listing.name, name: listing.name, category: listing.category, main_image: listing.main_image, image: listing.image }}
           width={600} height={220}
           className="w-full h-36"
           alt={listing.name}

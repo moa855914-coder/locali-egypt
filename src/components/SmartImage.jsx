@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { getStockImageUrl, getCategoryGradient, CATEGORY_EMOJI } from '../lib/imageSystem';
 
 export default function SmartImage({ place = {}, width = 600, height = 400, className = '', alt }) {
-  const realUrl = place.image || place.photo || place.photos?.[0] || null;
+  const realUrl = place.main_image || place.image || place.photo || place.photos?.[0] || null;
   const identifier = place.id || place.name || 'place';
   const stockUrl = getStockImageUrl(identifier, place.category, { width, height });
 
