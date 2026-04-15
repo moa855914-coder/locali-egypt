@@ -30,9 +30,14 @@ export default function ImageUpload({ value, onChange, label = 'Upload Image', c
       return;
     }
     setLoading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    onChange(file_url);
-    setLoading(false);
+    try {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      onChange(file_url);
+    } catch (err) {
+      setError('Upload failed. Please check your connection and try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDrop = (e) => {
