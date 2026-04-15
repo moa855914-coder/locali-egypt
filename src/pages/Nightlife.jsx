@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
 import SafeNextStep from '../components/SafeNextStep';
-import { Music, Shield, MapPin, Star } from 'lucide-react';
+import { Music, Shield, MapPin, Star, Plus } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import ReviewSection from '../components/ReviewSection';
+import AdminNightlifeForm from '../components/AdminNightlifeForm';
+import { useAuth } from '@/lib/AuthContext';
 
 const STATIC_VENUES = {
   'sharm-el-sheikh': [
@@ -42,6 +44,10 @@ export default function Nightlife() {
   const [city, setCity] = useState('sharm-el-sheikh');
   const [typeFilter, setTypeFilter] = useState('all');
   const [expandedVenue, setExpandedVenue] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const isAdmin = user?.role === 'admin';
 
   useSEO({
     title: 'Nightlife in Sharm El Sheikh & Hurghada 2025 — Bars, Beach Clubs & Yacht Trips',
@@ -66,7 +72,15 @@ export default function Nightlife() {
           <Music className="w-6 h-6 text-purple-500" />
         </div>
         <div>
-          <h1 className="text-2xl md:text-3xl font-black tracking-tight">Nightlife & Luxury</h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl md:text-3xl font-black tracking-tight">Nightlife & Luxury</h1>
+            {isAdmin && (
+              <button onClick={() => setShowForm(true)}
+                className="flex items-center gap-1.5 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold hover:opacity-90">
+                <Plus className="w-3.5 h-3.5" /> Add Venue
+              </button>
+            )}
+          </div>
           <p className="text-sm text-muted-foreground">Bars, beach clubs, yacht trips & VIP services</p>
         </div>
       </div>
@@ -100,6 +114,13 @@ export default function Nightlife() {
           </button>
         ))}
       </div>
+
+      {showForm && (
+        <AdminNightlifeForm
+          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['nightlife']); }}
+          onClose={() => setShowForm(false)}
+        />
+      )}
 
       {/* Venue listings */}
       <div className="space-y-4 mb-10">

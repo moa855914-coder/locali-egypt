@@ -1,18 +1,29 @@
 import { useState, useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { CITIES, SERVICE_CATEGORIES, t, getCityName } from '../lib/constants';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
+import AdminServiceForm from '../components/AdminServiceForm';
+import { useAuth } from '@/lib/AuthContext';
+
+// Categories that support manual admin creation
+const ADMIN_CATEGORIES = ['medical', 'transport', 'kids_family', 'sim_internet'];
 
 export default function Services() {
   const { lang } = useOutletContext();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
   const urlParams = new URLSearchParams(window.location.search);
   const [selectedCity, setSelectedCity] = useState(urlParams.get('city') || '');
   const [selectedCategory, setSelectedCategory] = useState(urlParams.get('category') || '');
   const [search, setSearch] = useState(urlParams.get('q') || '');
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+
+  const isAdmin = user?.role === 'admin';
+  const canAdd = isAdmin && (ADMIN_CATEGORIES.includes(selectedCategory) || !selectedCategory);
 
   const { data: services = [], isLoading } = useQuery({
     queryKey: ['allServices', selectedCity, selectedCategory],
@@ -40,7 +51,15 @@ export default function Services() {
 
   return (
     <div className="px-4 py-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-black tracking-tight mb-1">{t('services', lang)}</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-2xl font-black tracking-tight">{t('services', lang)}</h1>
+        {canAdd && (
+          <button onClick={() => setShowForm(true)}
+            className="flex items-center gap-1.5 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold hover:opacity-90 transition-opacity">
+            <Plus className="w-3.5 h-3.5" /> Add Listing
+          </button>
+        )}
+      </div>
       <p className="text-sm text-muted-foreground mb-6">Find trusted services across Egypt</p>
 
       {/* Search */}
@@ -109,6 +128,14 @@ export default function Services() {
           </button>
         ))}
       </div>
+
+      {showForm && (
+        <AdminServiceForm
+          category={selectedCategory || 'medical'}
+          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['allServices']); }}
+          onClose={() => setShowForm(false)}
+        />
+      )}
 
       {/* Results */}
       {isLoading ? (

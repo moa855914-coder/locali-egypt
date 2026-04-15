@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
 import SafeNextStep from '../components/SafeNextStep';
-import { Laptop, Wifi, Zap, MapPin, CheckCircle2, Clock } from 'lucide-react';
+import { Laptop, Wifi, Zap, MapPin, CheckCircle2, Clock, Plus } from 'lucide-react';
+import AdminRemoteWorkForm from '../components/AdminRemoteWorkForm';
+import { useAuth } from '@/lib/AuthContext';
 
 
 
@@ -41,6 +43,10 @@ const WIFI_STYLES = {
 
 export default function RemoteWork() {
   const [city, setCity] = useState('hurghada');
+  const [showForm, setShowForm] = useState(false);
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const isAdmin = user?.role === 'admin';
 
   useSEO({
     title: 'Remote Work in Egypt 2025 — Best Cafes, Coworking Spaces & WiFi Speeds',
@@ -62,7 +68,15 @@ export default function RemoteWork() {
           <Laptop className="w-6 h-6 text-blue-500" />
         </div>
         <div>
-          <h1 className="text-2xl md:text-3xl font-black tracking-tight">Remote Work in Egypt</h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl md:text-3xl font-black tracking-tight">Remote Work in Egypt</h1>
+            {isAdmin && (
+              <button onClick={() => setShowForm(true)}
+                className="flex items-center gap-1.5 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold hover:opacity-90">
+                <Plus className="w-3.5 h-3.5" /> Add Spot
+              </button>
+            )}
+          </div>
           <p className="text-sm text-muted-foreground">Best cafes, coworking spaces & WiFi speeds — 2025</p>
         </div>
       </div>
@@ -95,6 +109,13 @@ export default function RemoteWork() {
           </button>
         ))}
       </div>
+
+      {showForm && (
+        <AdminRemoteWorkForm
+          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['remote-work']); }}
+          onClose={() => setShowForm(false)}
+        />
+      )}
 
       {/* Spots */}
       <div className="space-y-4 mb-10">
