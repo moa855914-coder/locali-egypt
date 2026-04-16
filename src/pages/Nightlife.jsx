@@ -45,6 +45,7 @@ export default function Nightlife() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [expandedVenue, setExpandedVenue] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const isAdmin = user?.role === 'admin';
@@ -115,10 +116,11 @@ export default function Nightlife() {
         ))}
       </div>
 
-      {showForm && (
+      {(showForm || editingRecord) && (
         <AdminNightlifeForm
-          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['nightlife']); }}
-          onClose={() => setShowForm(false)}
+          record={editingRecord}
+          onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['nightlife']); }}
+          onClose={() => { setShowForm(false); setEditingRecord(null); }}
         />
       )}
 
@@ -157,6 +159,12 @@ export default function Nightlife() {
                     </span>
                     {venue.entry_fee > 0 && <span className="text-[10px] text-muted-foreground">Entry: {venue.entry_fee} EGP</span>}
                     {venue.entry_fee === 0 && <span className="text-[10px] text-success">Free entry</span>}
+                    {isAdmin && venue.id && (
+                      <button onClick={() => setEditingRecord(venue)}
+                        className="text-[10px] font-bold bg-accent/10 text-accent px-2 py-0.5 rounded-full hover:bg-accent/20 transition-colors">
+                        ✏️ Edit
+                      </button>
+                    )}
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-2">{venue.desc || venue.description}</p>

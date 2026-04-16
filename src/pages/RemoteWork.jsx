@@ -44,6 +44,7 @@ const WIFI_STYLES = {
 export default function RemoteWork() {
   const [city, setCity] = useState('hurghada');
   const [showForm, setShowForm] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const isAdmin = user?.role === 'admin';
@@ -110,17 +111,18 @@ export default function RemoteWork() {
         ))}
       </div>
 
-      {showForm && (
+      {(showForm || editingRecord) && (
         <AdminRemoteWorkForm
-          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['remote-work']); }}
-          onClose={() => setShowForm(false)}
+          record={editingRecord}
+          onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['remote-work']); }}
+          onClose={() => { setShowForm(false); setEditingRecord(null); }}
         />
       )}
 
       {/* Spots */}
       <div className="space-y-4 mb-10">
         {allSpots.map((spot, i) => (
-          <div key={i} className="bg-card rounded-2xl border border-border/50 p-5">
+          <div key={spot.id || i} className="bg-card rounded-2xl border border-border/50 p-5">
             <div className="flex items-start justify-between gap-3 mb-2">
               <div>
                 <div className="flex items-center gap-2 mb-1">
@@ -132,14 +134,22 @@ export default function RemoteWork() {
                   <span className="text-xs text-muted-foreground">{spot.location}</span>
                 </div>
               </div>
-              {spot.wifi_reliability && (
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${WIFI_STYLES[spot.wifi_reliability]}`}>
-                  WiFi: {spot.wifi_reliability}
-                </span>
-              )}
+              <div className="flex items-center gap-2 shrink-0">
+                {spot.wifi_reliability && (
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${WIFI_STYLES[spot.wifi_reliability]}`}>
+                    WiFi: {spot.wifi_reliability}
+                  </span>
+                )}
+                {isAdmin && spot.id && (
+                  <button onClick={() => setEditingRecord(spot)}
+                    className="text-[10px] font-bold bg-accent/10 text-accent px-2 py-0.5 rounded-full hover:bg-accent/20 transition-colors">
+                    ✏️ Edit
+                  </button>
+                )}
+              </div>
             </div>
 
-            <p className="text-sm text-muted-foreground leading-relaxed mb-3">{spot.desc}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-3">{spot.desc || spot.description}</p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
               {spot.wifi_speed_mbps && (

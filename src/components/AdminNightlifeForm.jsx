@@ -6,7 +6,7 @@ import { base44 } from '@/api/base44Client';
 import { X, Loader2 } from 'lucide-react';
 import ImageUpload from './ImageUpload';
 
-const CITIES = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan'];
+const CITIES = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan', 'el-gouna'];
 const TYPES = ['bar', 'beach_club', 'nightclub', 'rooftop', 'yacht', 'vip_lounge'];
 const PRICE_RANGES = ['budget', 'moderate', 'premium', 'luxury'];
 const SAFETY = ['safe', 'moderate', 'use_caution'];
