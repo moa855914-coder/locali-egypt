@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { MapPin, Star, Waves, ChevronDown, ChevronUp, Phone, ExternalLink } from 'lucide-react';
 import SafeNextStep from '../components/SafeNextStep';
 import BookingButtons from '../components/BookingButtons';
+import ElGounaServices from '../components/elgouna/ElGounaServices';
 
 const EL_GOUNA = {
   overview: `El Gouna is a privately-owned, purpose-built resort town on the Red Sea coast, 30km north of Hurghada. Often called "The Venice of the Red Sea", it's built across a network of lagoons and islands with crystal-clear water. It's Egypt's most upscale, safe, and well-maintained tourist destination — think clean streets, no haggling, modern infrastructure, and over 100 restaurants. Popular with European expats, kitesurfers, divers, and luxury travelers who want beach life without the chaos of Hurghada.`,
@@ -596,6 +597,7 @@ export default function ElGouna() {
     { id: 'activities', label: '🏄 Activities' },
     { id: 'nightlife', label: '🎉 Nightlife' },
     { id: 'transport', label: '🚗 Getting Around' },
+    { id: 'services', label: '📍 Local Services' },
     { id: 'tips', label: '💡 Tips & Warnings' },
   ];
 
@@ -719,6 +721,12 @@ export default function ElGouna() {
               </div>
             ))}
           </div>
+        </Section>
+      )}
+
+      {activeTab === 'services' && (
+        <Section title="📍 Local Services & Places">
+          <ElGounaServices />
         </Section>
       )}
 

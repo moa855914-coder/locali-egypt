@@ -7,7 +7,7 @@ import { base44 } from '@/api/base44Client';
 import { X, Loader2 } from 'lucide-react';
 import ImageUpload from './ImageUpload';
 
-const CITIES = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan'];
+const CITIES = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan', 'el-gouna'];
 const PRICE_RANGES = ['budget', 'moderate', 'premium'];
 
 export default function AdminServiceForm({ category, onSave, onClose, record }) {
