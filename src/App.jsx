@@ -92,6 +92,7 @@ import AdminLocalPersonas from './pages/AdminLocalPersonas';
 import AdminPriceManager from './pages/AdminPriceManager';
 import PriceInsights from './pages/PriceInsights';
 import LocaliHome from './pages/LocaliHome';
+import HiddenGems from './pages/HiddenGems';
 import LocaliHostDashboard from './pages/LocaliHostDashboard';
 import LocaliAdminPanel from './pages/LocaliAdminPanel';
 
@@ -210,6 +211,7 @@ const AuthenticatedApp = () => {
         <Route path="/apartments" element={<Apartments />} />
         <Route path="/city-guide/:cityId" element={<CityGuide />} />
         <Route path="/locali" element={<LocaliHome />} />
+        <Route path="/hidden-gems" element={<HiddenGems />} />
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
         <Route path="*" element={<PageNotFound />} />
