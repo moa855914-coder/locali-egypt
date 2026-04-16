@@ -1,18 +1,28 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
+import { Star, ShieldCheck, MapPin, BadgeCheck, Pencil } from 'lucide-react';
 import DiscountClaim from './DiscountClaim';
 import SmartImage from './SmartImage';
 import AdminImageUploadOverlay from './AdminImageUploadOverlay';
 
-export default function ServiceCard({ service: initialService }) {
+export default function ServiceCard({ service: initialService, isAdmin, onEdit }) {
   const [service, setService] = useState(initialService);
   const priceLabel = { budget: '€', moderate: '€€', premium: '€€€' };
 
   return (
+    <div className="relative group">
+    {isAdmin && (
+      <button
+        onClick={(e) => { e.preventDefault(); onEdit?.(); }}
+        className="absolute top-2 right-2 z-10 bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-700 hover:bg-accent hover:text-accent-foreground p-1.5 rounded-lg shadow-sm transition-all opacity-0 group-hover:opacity-100"
+        title="Edit listing"
+      >
+        <Pencil className="w-3.5 h-3.5" />
+      </button>
+    )}
     <Link
       to={`/service/${service.id}`}
-      className="group block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
+      className="block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
     >
       <AdminImageUploadOverlay
         entityName="Service"
@@ -88,5 +98,6 @@ export default function ServiceCard({ service: initialService }) {
         )}
       </div>
     </Link>
+    </div>
   );
 }

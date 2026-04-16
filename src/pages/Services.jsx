@@ -8,8 +8,8 @@ import ServiceCard from '../components/ServiceCard';
 import AdminServiceForm from '../components/AdminServiceForm';
 import { useAuth } from '@/lib/AuthContext';
 
-// Categories that support manual admin creation
-const ADMIN_CATEGORIES = ['medical', 'transport', 'kids_family', 'sim_internet'];
+// All categories support manual admin creation
+const ADMIN_CATEGORIES = ['medical', 'transport', 'kids_family', 'sim_internet', 'nightlife', 'remote_work', 'long_stay', 'restaurant', 'activities', 'other'];
 
 export default function Services() {
   const { lang } = useOutletContext();
@@ -23,7 +23,8 @@ export default function Services() {
   const [showForm, setShowForm] = useState(false);
 
   const isAdmin = user?.role === 'admin';
-  const canAdd = isAdmin && (ADMIN_CATEGORIES.includes(selectedCategory) || !selectedCategory);
+  const canAdd = isAdmin;
+  const [editingRecord, setEditingRecord] = useState(null);
 
   const { data: services = [], isLoading } = useQuery({
     queryKey: ['allServices', selectedCity, selectedCategory],
@@ -129,11 +130,12 @@ export default function Services() {
         ))}
       </div>
 
-      {showForm && (
+      {(showForm || editingRecord) && (
         <AdminServiceForm
-          category={selectedCategory || 'medical'}
-          onSave={() => { setShowForm(false); queryClient.invalidateQueries(['allServices']); }}
-          onClose={() => setShowForm(false)}
+          category={selectedCategory || editingRecord?.category || 'medical'}
+          record={editingRecord}
+          onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['allServices']); }}
+          onClose={() => { setShowForm(false); setEditingRecord(null); }}
         />
       )}
 
@@ -144,7 +146,7 @@ export default function Services() {
         </div>
       ) : filtered.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map(s => <ServiceCard key={s.id} service={s} />)}
+          {filtered.map(s => <ServiceCard key={s.id} service={s} isAdmin={isAdmin} onEdit={() => setEditingRecord(s)} />)}
         </div>
       ) : (
         <div className="text-center py-16">
