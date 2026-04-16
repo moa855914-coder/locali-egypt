@@ -269,6 +269,21 @@ const ENTITIES = [
     displayFields: ['name', 'city', 'type', 'price_range', 'is_verified'],
   },
   {
+    name: 'LongStayService', label: 'Long Stay Services', icon: '🏠',
+    fields: [
+      { key: 'name', label: 'Service Name', type: 'text', required: true },
+      { key: 'city', label: 'City', type: 'select', options: ['sharm-el-sheikh','hurghada','luxor','aswan','el-gouna'] },
+      { key: 'category', label: 'Category', type: 'select', options: ['apartment','cleaning','maintenance','grocery_delivery','laundry','internet','other'] },
+      { key: 'description', label: 'Description', type: 'textarea' },
+      { key: 'price_info', label: 'Price Info', type: 'text' },
+      { key: 'contact_phone', label: 'Phone / WhatsApp', type: 'text' },
+      { key: 'website', label: 'Website', type: 'text' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
+      { key: 'is_verified', label: 'Verified', type: 'boolean' },
+    ],
+    displayFields: ['name', 'city', 'category', 'price_info', 'is_verified'],
+  },
+  {
     name: 'RemoteWorkSpot', label: 'Remote Work Spots', icon: '💻',
     fields: [
       { key: 'name', label: 'Name', type: 'text', required: true },

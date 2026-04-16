@@ -1,6 +1,5 @@
 /**
- * AdminServiceForm — Generic admin-only "Add / Edit" modal for Service entity records.
- * Used by Medical, Transport, Kids & Family, SIM & Internet pages.
+ * AdminLongStayForm — Admin-only add/edit modal for LongStayService entity.
  */
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
@@ -8,13 +7,13 @@ import { X, Loader2 } from 'lucide-react';
 import ImageUpload from './ImageUpload';
 
 const CITIES = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan', 'el-gouna'];
-const PRICE_RANGES = ['budget', 'moderate', 'premium'];
+const CATEGORIES = ['apartment', 'cleaning', 'maintenance', 'grocery_delivery', 'laundry', 'internet', 'other'];
 
-export default function AdminServiceForm({ category, onSave, onClose, record }) {
+export default function AdminLongStayForm({ onSave, onClose, record }) {
   const [form, setForm] = useState(record ? { ...record } : {
-    name: '', description: '', address: '', phone: '', website: '',
-    city: 'hurghada', category, price_range: 'moderate',
-    avg_rating: '', main_image: '', is_verified: false,
+    name: '', description: '', city: 'hurghada', category: 'apartment',
+    price_info: '', contact_phone: '', website: '',
+    is_verified: false, main_image: '', languages: [],
   });
   const [saving, setSaving] = useState(false);
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
@@ -22,11 +21,11 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
   const handleSave = async () => {
     if (!form.name || !form.city) return;
     setSaving(true);
-    const data = { ...form, avg_rating: parseFloat(form.avg_rating) || 0 };
+    const data = { ...form };
     if (record?.id) {
-      await base44.entities.Service.update(record.id, data);
+      await base44.entities.LongStayService.update(record.id, data);
     } else {
-      await base44.entities.Service.create(data);
+      await base44.entities.LongStayService.create(data);
     }
     setSaving(false);
     onSave();
@@ -36,7 +35,7 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-white w-full sm:max-w-lg max-h-[95vh] sm:rounded-3xl rounded-t-3xl flex flex-col overflow-hidden shadow-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-          <h2 className="font-black text-lg">{record?.id ? 'Edit Listing' : 'Add New Listing'}</h2>
+          <h2 className="font-black text-lg">{record?.id ? 'Edit Service' : 'Add New Service'}</h2>
           <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200">
             <X className="w-4 h-4" />
           </button>
@@ -45,7 +44,7 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
         <div className="overflow-y-auto flex-1 px-5 py-5 space-y-4">
           <div>
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Name *</label>
-            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="Business name"
+            <input value={form.name} onChange={e => set('name', e.target.value)} placeholder="Service name"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
           </div>
 
@@ -53,15 +52,15 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
             <div>
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">City *</label>
               <select value={form.city} onChange={e => set('city', e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white capitalize">
+                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm bg-white capitalize">
                 {CITIES.map(c => <option key={c} value={c}>{c.replace(/-/g, ' ')}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Price Range</label>
-              <select value={form.price_range} onChange={e => set('price_range', e.target.value)}
-                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none bg-white capitalize">
-                {PRICE_RANGES.map(p => <option key={p} value={p}>{p}</option>)}
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Category *</label>
+              <select value={form.category} onChange={e => set('category', e.target.value)}
+                className="w-full px-3 py-3 border border-gray-200 rounded-xl text-sm bg-white capitalize">
+                {CATEGORIES.map(c => <option key={c} value={c}>{c.replace(/_/g, ' ')}</option>)}
               </select>
             </div>
           </div>
@@ -69,33 +68,19 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
           <div>
             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Description</label>
             <textarea value={form.description || ''} onChange={e => set('description', e.target.value)} rows={3}
-              placeholder="Describe this listing…"
+              placeholder="Describe this service…"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none resize-none focus:ring-2 focus:ring-accent/40" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Address</label>
-              <input value={form.address || ''} onChange={e => set('address', e.target.value)} placeholder="Street / area"
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Price Info</label>
+              <input value={form.price_info || ''} onChange={e => set('price_info', e.target.value)} placeholder="e.g. 300 EGP/visit"
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Area / Neighbourhood</label>
-              <input value={form.tags?.[0] || ''} onChange={e => set('tags', e.target.value ? [e.target.value] : [])} placeholder="e.g. Naama Bay"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Phone</label>
-              <input value={form.phone || ''} onChange={e => set('phone', e.target.value)} placeholder="+20…"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
-            </div>
-            <div>
-              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Rating (0–5)</label>
-              <input type="number" min="0" max="5" step="0.1" value={form.avg_rating || ''} onChange={e => set('avg_rating', e.target.value)}
-                placeholder="4.5"
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5 block">Phone / WhatsApp</label>
+              <input value={form.contact_phone || ''} onChange={e => set('contact_phone', e.target.value)} placeholder="+201…"
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-accent/40" />
             </div>
           </div>
@@ -125,7 +110,7 @@ export default function AdminServiceForm({ category, onSave, onClose, record }) 
           <button onClick={handleSave} disabled={saving || !form.name || !form.city}
             className="flex-1 py-3 bg-accent text-accent-foreground rounded-2xl text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2">
             {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-            {record?.id ? 'Save Changes' : 'Add Listing'}
+            {record?.id ? 'Save Changes' : 'Add Service'}
           </button>
         </div>
       </div>

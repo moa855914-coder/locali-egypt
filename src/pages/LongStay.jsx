@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { useSEO } from '../lib/seo';
 import { CITIES } from '../lib/constants';
+import { useAuth } from '@/lib/AuthContext';
+import AdminLongStayForm from '../components/AdminLongStayForm';
 import SafeNextStep from '../components/SafeNextStep';
 import {
   Home, CheckCircle2, Wifi, MapPin, ShieldCheck,
@@ -245,7 +247,7 @@ function Collapsible({ title, children }) {
 }
 
 // ─── Tab content components ───────────────────────────────────────────────────
-function OverviewTab({ city, setCity, category, setCategory, filtered, dbServices }) {
+function OverviewTab({ city, setCity, category, setCategory, filtered, dbServices, isAdmin, onEdit }) {
   return (
     <>
       <div className="bg-accent/10 border border-accent/20 rounded-2xl p-5 mb-6">
@@ -277,20 +279,33 @@ function OverviewTab({ city, setCity, category, setCategory, filtered, dbService
       </div>
       <div className="space-y-4 mb-8">
         {filtered.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground"><Home className="w-8 h-8 mx-auto mb-2 opacity-40" /><p className="text-sm">No services found for this selection.</p></div>
+        <div className="text-center py-12 text-muted-foreground"><Home className="w-8 h-8 mx-auto mb-2 opacity-40" /><p className="text-sm">No services found for this selection.</p></div>
         ) : filtered.map((service, i) => (
-          <div key={i} className="bg-card rounded-2xl border border-border/50 p-5">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-lg">{CATEGORY_ICONS[service.category]}</span>
-                  <h3 className="font-bold">{service.name}</h3>
-                  {service.is_verified && <ShieldCheck className="w-4 h-4 text-success shrink-0" />}
-                </div>
-                <span className="text-[10px] bg-secondary px-2 py-0.5 rounded-full font-bold">{CATEGORY_LABELS[service.category]}</span>
-              </div>
-              {service.price_info && <span className="text-sm font-extrabold text-accent shrink-0">{service.price_info}</span>}
+        <div key={service.id || i} className="bg-card rounded-2xl border border-border/50 p-5">
+          {service.main_image && (
+            <div className="relative h-40 rounded-xl overflow-hidden mb-3">
+              <img src={service.main_image} alt={service.name} className="w-full h-full object-cover" />
             </div>
+          )}
+          <div className="flex items-start justify-between gap-3 mb-2">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-lg">{CATEGORY_ICONS[service.category]}</span>
+                <h3 className="font-bold">{service.name}</h3>
+                {service.is_verified && <ShieldCheck className="w-4 h-4 text-success shrink-0" />}
+              </div>
+              <span className="text-[10px] bg-secondary px-2 py-0.5 rounded-full font-bold">{CATEGORY_LABELS[service.category]}</span>
+            </div>
+            <div className="flex flex-col items-end gap-1 shrink-0">
+              {service.price_info && <span className="text-sm font-extrabold text-accent">{service.price_info}</span>}
+              {isAdmin && service.id && (
+                <button onClick={() => onEdit(service)}
+                  className="text-[10px] font-bold bg-accent/10 text-accent px-2 py-0.5 rounded-full hover:bg-accent/20 transition-colors">
+                  ✏️ Edit
+                </button>
+              )}
+            </div>
+          </div>
             <p className="text-sm text-muted-foreground leading-relaxed mb-3">{service.description}</p>
             <div className="flex items-center justify-between flex-wrap gap-3">
               {service.languages?.length > 0 && (
@@ -821,13 +836,18 @@ export default function LongStay() {
   const [city, setCity] = useState('hurghada');
   const [category, setCategory] = useState('all');
   const [tab, setTab] = useState('overview');
+  const [showForm, setShowForm] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const isAdmin = user?.role === 'admin';
 
   useSEO({
     title: 'Long Stay Egypt 2026 — English Lawyers, Housekeeping, Maintenance, Real Estate for Expats | Hurghada Sharm Luxor Aswan',
     description: 'Complete long-stay guide for foreign residents in Egypt. English-speaking lawyers, verified housekeeping, 24/7 maintenance, real estate, banking, gyms, pets, car rental. Hurghada, Sharm El Sheikh, Luxor, Aswan.',
   });
 
-  const { data: dbServices = [] } = useQuery({
+  const { data: dbServices = [], refetch } = useQuery({
     queryKey: ['long-stay', city],
     queryFn: () => base44.entities.LongStayService.filter({ city }, '-created_date', 30),
   });
@@ -843,11 +863,25 @@ export default function LongStay() {
         <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center shrink-0">
           <Home className="w-6 h-6 text-emerald-600" />
         </div>
-        <div>
+        <div className="flex-1">
           <h1 className="text-2xl md:text-3xl font-black tracking-tight">Long Stay in Egypt</h1>
           <p className="text-sm text-muted-foreground">Lawyers · Housekeeping · Maintenance · Property · Expat Life · 2026</p>
         </div>
+        {isAdmin && (
+          <button onClick={() => setShowForm(true)}
+            className="flex items-center gap-1.5 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold hover:opacity-90 shrink-0">
+            <Plus className="w-3.5 h-3.5" /> Add Service
+          </button>
+        )}
       </div>
+
+      {(showForm || editingRecord) && (
+        <AdminLongStayForm
+          record={editingRecord}
+          onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['long-stay']); }}
+          onClose={() => { setShowForm(false); setEditingRecord(null); }}
+        />
+      )}
 
       {/* City selector (global) */}
       <div className="flex gap-2 overflow-x-auto hide-scrollbar mb-5">
@@ -870,7 +904,7 @@ export default function LongStay() {
       </div>
 
       {/* Tab content */}
-      {tab === 'overview' && <OverviewTab city={city} setCity={setCity} category={category} setCategory={setCategory} filtered={filtered} dbServices={dbServices} />}
+      {tab === 'overview' && <OverviewTab city={city} setCity={setCity} category={category} setCategory={setCategory} filtered={filtered} dbServices={dbServices} isAdmin={isAdmin} onEdit={(r) => setEditingRecord(r)} />}
       {tab === 'legal' && <LegalTab city={city} />}
       {tab === 'housekeeping' && <HousekeepingTab city={city} />}
       {tab === 'maintenance' && <MaintenanceTab city={city} />}

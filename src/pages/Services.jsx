@@ -139,6 +139,20 @@ export default function Services() {
         />
       )}
 
+      {/* Admin banner */}
+      {isAdmin && (
+        <div className="mb-4 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold text-amber-800">⚡ Admin Mode — Manual Entry Active</p>
+            <p className="text-xs text-amber-700 mt-0.5">Click "Add Listing" to enter name, city, area, rating & upload images.</p>
+          </div>
+          <button onClick={() => setShowForm(true)}
+            className="shrink-0 flex items-center gap-1.5 bg-amber-600 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-700">
+            <Plus className="w-3.5 h-3.5" /> Add Place
+          </button>
+        </div>
+      )}
+
       {/* Results */}
       {isLoading ? (
         <div className="flex justify-center py-12">
@@ -152,7 +166,15 @@ export default function Services() {
         <div className="text-center py-16">
           <Search className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
           <p className="font-medium text-muted-foreground">No services found</p>
-          <p className="text-sm text-muted-foreground/60 mt-1">Try adjusting your filters</p>
+          <p className="text-sm text-muted-foreground/60 mt-1">
+            {isAdmin ? 'Click "Add Place" above to add the first listing here.' : 'Try adjusting your filters'}
+          </p>
+          {isAdmin && (
+            <button onClick={() => setShowForm(true)}
+              className="mt-4 flex items-center gap-1.5 bg-accent text-accent-foreground px-4 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 mx-auto">
+              <Plus className="w-4 h-4" /> Add First Listing
+            </button>
+          )}
         </div>
       )}
     </div>
