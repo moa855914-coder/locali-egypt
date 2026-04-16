@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { MapPin, Sparkles, Star, ChevronRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
 const TAG_STYLES = {
   Adventure: 'bg-orange-500/10 text-orange-600 border-orange-500/20',
@@ -468,11 +470,32 @@ function GemCardMobile({ gem }) {
 export default function HiddenGems() {
   const [activeRegion, setActiveRegion] = useState('All');
 
-  const filtered = activeRegion === 'All' ? GEMS : GEMS.filter(g => g.region === activeRegion);
+  // Pull from DB, fall back to static GEMS
+  const { data: dbGems = [] } = useQuery({
+    queryKey: ['hidden-gem-places'],
+    queryFn: () => base44.entities.HiddenGemPlace.filter({ is_published: true }, 'gem_number', 60),
+  });
+
+  // Merge: db records mapped to same shape as static GEMS
+  const liveGems = dbGems.length > 0
+    ? dbGems.map(g => ({
+        id: g.id,
+        name: g.title,
+        area: `${g.city}${g.area ? ', ' + g.area : ''}`,
+        region: g.region,
+        tag: g.tag,
+        desc: g.description,
+        why: g.why_special,
+        image: g.main_image || g.image_url || 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
+        number: String(g.gem_number || '').padStart(2, '0'),
+      }))
+    : GEMS;
+
+  const filtered = activeRegion === 'All' ? liveGems : liveGems.filter(g => g.region === activeRegion);
 
   // Group by region for All view
   const grouped = activeRegion === 'All'
-    ? REGIONS.slice(1).map(r => ({ region: r, gems: GEMS.filter(g => g.region === r) }))
+    ? REGIONS.slice(1).map(r => ({ region: r, gems: liveGems.filter(g => g.region === r) }))
     : [{ region: activeRegion, gems: filtered }];
 
   const regionEmojis = {
