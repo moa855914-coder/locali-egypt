@@ -18,6 +18,8 @@ export default function CityLivePanel({ cityId, lang = 'en' }) {
 
   const info = data?.[0];
 
+  const noData = !isLoading && !info;
+
   if (isLoading) {
     return (
       <div className="bg-card border border-border rounded-2xl p-4 animate-pulse">
@@ -45,6 +47,15 @@ export default function CityLivePanel({ cityId, lang = 'en' }) {
     ? Math.floor((Date.now() - new Date(info.updated_date).getTime()) / 86400000)
     : null;
   const updatedText = daysAgo === null ? null : daysAgo === 0 ? 'Today' : `${daysAgo}d ago`;
+
+  if (noData) {
+    return (
+      <div className="bg-card border border-border rounded-2xl p-4 text-center py-6">
+        <p className="text-sm text-muted-foreground">No live updates available yet for this city.</p>
+        <p className="text-xs text-muted-foreground/60 mt-1">Check back soon — we update regularly.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-card border border-border rounded-2xl p-4">
