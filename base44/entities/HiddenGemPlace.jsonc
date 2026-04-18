@@ -57,13 +57,20 @@
     },
     "image_url": {
       "type": "string",
-      "title": "Image URL"
+      "title": "Image URL (fallback)"
     },
     "main_image": {
       "type": "string",
       "format": "uri",
       "title": "Main Image Upload",
       "ui:widget": "file"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Additional Photos"
     },
     "gem_number": {
       "type": "integer",
@@ -76,7 +83,7 @@
     },
     "keywords": {
       "type": "string",
-      "title": "Search Keywords (hidden gems, egypt, travel, explore, must visit)"
+      "title": "Search Keywords"
     }
   },
   "required": [
