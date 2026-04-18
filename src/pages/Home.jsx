@@ -49,9 +49,10 @@ const CORE_ACTIONS = [
 ];
 
 const TRUST_ITEMS = [
-  { icon: '👥', text: '2,000+ travelers' },
+  { icon: '👥', text: '2,000+ travelers from 40+ countries' },
   { icon: '📋', text: 'Real tourist reports' },
   { icon: '✅', text: 'Verified services' },
+  { icon: '🚨', text: '500+ scams reported & avoided' },
 ];
 
 export default function Home() {
@@ -127,10 +128,10 @@ export default function Home() {
           <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
             <Bot className="w-4 h-4 text-accent" />
           </div>
-          <span className="text-sm text-muted-foreground flex-1">Ask your Egypt guide…</span>
+          <span className="text-sm text-muted-foreground flex-1">Ask me anything — prices, scams, transport, tips...</span>
           <div className="flex items-center gap-1 bg-accent/10 rounded-full px-2 py-0.5">
             <Sparkles className="w-3 h-3 text-accent" />
-            <span className="text-[10px] font-bold text-accent">AI</span>
+            <span className="text-[10px] font-bold text-accent">AI Guide</span>
           </div>
         </button>
       </div>
@@ -194,10 +195,10 @@ export default function Home() {
       {/* ── 4. TRUST STRIP ── */}
       <div className="bg-card border border-border rounded-2xl px-4 py-3 mb-6 space-y-2">
         <LiveTrustBadge lastUpdated={new Date().toISOString()} reportCount={2000} label="travelers" />
-        <div className="flex items-center justify-between">
+        <div className="grid grid-cols-2 gap-2">
           {TRUST_ITEMS.map((t, i) => (
-            <div key={i} className="flex flex-col items-center text-center gap-1">
-              <span className="text-lg">{t.icon}</span>
+            <div key={i} className="flex items-center gap-1.5">
+              <span className="text-base">{t.icon}</span>
               <p className="text-[10px] font-bold text-muted-foreground leading-tight">{t.text}</p>
             </div>
           ))}
@@ -208,8 +209,8 @@ export default function Home() {
       <div className="bg-card border border-border rounded-2xl p-4 mb-6">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h3 className="font-extrabold text-sm">{t('ask_local', lang)}</h3>
-            <p className="text-xs text-muted-foreground">{t('ask_local', lang)}</p>
+            <h3 className="font-extrabold text-sm">Ask a Local (from your country)</h3>
+            <p className="text-xs text-muted-foreground">Connect with a verified local who speaks your language and knows your culture</p>
           </div>
           <Link to="/ask-a-local" className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 hover:bg-accent/20 active:scale-95 transition-all">
             <Users className="w-4 h-4 text-accent" />
@@ -220,7 +221,7 @@ export default function Home() {
             value={aiInput}
             onChange={e => setAiInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && openAIChat()}
-            placeholder={t('search_placeholder', lang)}
+            placeholder="Connect with someone from your country living in Egypt..."
             className="flex-1 bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none border border-transparent focus:border-accent/30"
           />
           <button
