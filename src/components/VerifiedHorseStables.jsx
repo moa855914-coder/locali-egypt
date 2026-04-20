@@ -32,9 +32,8 @@ const STABLES = [
     whatsapp: 'https://wa.me/201281972670',
     instagram: 'https://www.instagram.com/aqua_horse_hurghada/',
     photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Horse_on_beach_Red_Sea_Egypt.jpg/960px-Horse_on_beach_Red_Sea_Egypt.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Horses_swimming_in_the_sea.jpg/960px-Horses_swimming_in_the_sea.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Horse_riding_beach_egypt.jpg/960px-Horse_riding_beach_egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Camels_and_horses_on_beach_Red_Sea_Egypt.jpg/960px-Camels_and_horses_on_beach_Red_Sea_Egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hurghada_beach_horses.jpg/960px-Hurghada_beach_horses.jpg',
     ],
   },
   {
@@ -49,9 +48,7 @@ const STABLES = [
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/SamaraHorseHurghada',
     photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Desert_horse_riding_Egypt.jpg/960px-Desert_horse_riding_Egypt.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Horse_riding_Red_Sea_desert.jpg/960px-Horse_riding_Red_Sea_desert.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Horses_Red_Sea_Egypt_beach.jpg/960px-Horses_Red_Sea_Egypt_beach.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
     ],
   },
   {
@@ -67,9 +64,7 @@ const STABLES = [
     whatsapp: 'https://wa.me/201064905721',
     instagram: 'https://www.instagram.com/luckyhorsesstable/',
     photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Horse_riding_sunset_Egypt.jpg/960px-Horse_riding_sunset_Egypt.jpg',
       'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Desert_riding_horse_Hurghada.jpg/960px-Desert_riding_horse_Hurghada.jpg',
     ],
   },
   {
@@ -84,9 +79,7 @@ const STABLES = [
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/YallaHorseStable',
     photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Horse_swimming_Red_Sea.jpg/960px-Horse_swimming_Red_Sea.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mangrove_beach_Egypt_Red_Sea.jpg/960px-Mangrove_beach_Egypt_Red_Sea.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Horse_on_beach_Red_Sea_Egypt.jpg/960px-Horse_on_beach_Red_Sea_Egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
     ],
   },
   // EL GOUNA
