@@ -743,6 +743,9 @@ export default function AdminCMS() {
             <button onClick={() => navigate('/admin/el-gouna-fix')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors">
               <span>🌊</span> Cairo→El Gouna Fix
             </button>
+            <button onClick={() => navigate('/admin/place-images')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">
+              <span>🖼️</span> Place Image Updater
+            </button>
             <button onClick={() => navigate('/admin/bulk-populate')} className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition-colors">
               <span>⚡</span> Bulk Populator
             </button>
