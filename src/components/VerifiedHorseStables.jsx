@@ -86,6 +86,7 @@ const STABLES = [
     special: 'Award-winning animal welfare, German-owned, rescued horses',
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/HabibaHorseElGouna',
+    imageQuery: 'horseback riding beach Egypt',
   },
   {
     city: 'el-gouna',
@@ -98,6 +99,7 @@ const STABLES = [
     special: 'Private spacious stables, 10 box stalls, personalized service',
     rating: 4.7,
     maps: 'https://maps.app.goo.gl/FarahStablesElGouna',
+    imageQuery: 'horse stable Egypt desert',
   },
   // SHARM
   {
@@ -111,6 +113,7 @@ const STABLES = [
     special: 'Owner is a former dressage champion, helmets provided, best stables in Sharm',
     rating: 4.9,
     instagram: 'https://www.instagram.com/edelweissequestriancenter/',
+    imageQuery: 'horseback riding Sinai desert',
   },
   {
     city: 'sharm-el-sheikh',
@@ -123,6 +126,7 @@ const STABLES = [
     special: 'Rides to Nabq National Park beach with sea swimming option',
     rating: 4.7,
     maps: 'https://maps.app.goo.gl/SaharaStablesSharm',
+    imageQuery: 'horseback riding Egypt beach desert',
   },
   // LUXOR
   {
@@ -136,6 +140,7 @@ const STABLES = [
     special: 'Boat transfers from East Bank, ride past Colossi of Memnon & temples',
     rating: 4.9,
     website: 'https://www.luxorstables.com',
+    imageQuery: 'horse riding near pyramids Egypt',
   },
   {
     city: 'luxor',
@@ -148,6 +153,7 @@ const STABLES = [
     special: 'Egyptian-American owned, rescued horses, desert camping under stars',
     rating: 4.9,
     website: 'https://www.horsesandhieroglyphs.com',
+    imageQuery: 'horseback riding Egypt temples Luxor',
   },
 ];
 
