@@ -7,6 +7,7 @@ import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import AdminServiceForm from '../components/AdminServiceForm';
 import VerifiedKidsActivities from '../components/VerifiedKidsActivities';
+import VerifiedNightlifeVenues from '../components/VerifiedNightlifeVenues';
 import { useAuth } from '@/lib/AuthContext';
 
 // All categories support manual admin creation
@@ -156,6 +157,9 @@ export default function Services() {
 
       {/* Kids & Family activities section */}
       {selectedCategory === 'kids_family' && <VerifiedKidsActivities />}
+
+      {/* Nightlife venues section */}
+      {selectedCategory === 'nightlife' && <VerifiedNightlifeVenues />}
 
       {/* Results */}
       {isLoading ? (

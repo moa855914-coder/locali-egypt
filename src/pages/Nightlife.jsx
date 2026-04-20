@@ -9,7 +9,6 @@ import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import ReviewSection from '../components/ReviewSection';
 import AdminNightlifeForm from '../components/AdminNightlifeForm';
 import { useAuth } from '@/lib/AuthContext';
-import VerifiedNightlifeVenues from '../components/VerifiedNightlifeVenues';
 
 const STATIC_VENUES = {
   'sharm-el-sheikh': [
@@ -195,9 +194,6 @@ export default function Nightlife() {
           );
         })}
       </div>
-
-      {/* Verified Venues */}
-      <VerifiedNightlifeVenues />
 
       {/* VIP & Yacht info */}
       <h2 className="text-xl font-extrabold mb-4">Yacht & VIP Experiences</h2>
