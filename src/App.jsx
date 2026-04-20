@@ -25,7 +25,6 @@ import LastMinuteEgypt from './pages/LastMinuteEgypt';
 import Nightlife from './pages/Nightlife';
 import RemoteWork from './pages/RemoteWork';
 
-import LongStay from './pages/LongStay';
 import CityScams from './pages/city/CityScams';
 import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
 import TripDecision from './pages/TripDecision';
@@ -182,7 +181,6 @@ const AuthenticatedApp = () => {
         <Route path="/nationality-guide" element={<NationalityGuide />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/my-trips" element={<MyTrips />} />
-        <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
         <Route path="/verify-apply" element={<VerifyApply />} />

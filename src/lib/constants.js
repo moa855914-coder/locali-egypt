@@ -15,7 +15,6 @@ export const SERVICE_CATEGORIES = [
   { id: 'sim_internet', label: 'SIM & Internet', labelRu: 'SIM и интернет', labelDe: 'SIM & Internet', labelFr: 'SIM & Internet', labelIt: 'SIM & Internet', labelEs: 'SIM & Internet', labelZh: 'SIM卡', icon: 'Wifi' },
   { id: 'nightlife', label: 'Nightlife', labelRu: 'Ночная жизнь', labelDe: 'Nachtleben', labelFr: 'Vie nocturne', labelIt: 'Vita notturna', labelEs: 'Vida nocturna', labelZh: '夜生活', icon: 'Music' },
   { id: 'remote_work', label: 'Remote Work', labelRu: 'Удалённая работа', labelDe: 'Remote-Arbeit', labelFr: 'Télétravail', labelIt: 'Lavoro remoto', labelEs: 'Trabajo remoto', labelZh: '远程工作', icon: 'Laptop' },
-  { id: 'long_stay', label: 'Long Stay', labelRu: 'Долгосрочное', labelDe: 'Langzeitaufenthalt', labelFr: 'Long séjour', labelIt: 'Lungo soggiorno', labelEs: 'Larga estancia', labelZh: '长期居住', icon: 'Home' },
 ];
 
 export const SCAM_CATEGORIES = [
