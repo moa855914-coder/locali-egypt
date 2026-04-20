@@ -6,6 +6,8 @@ import { Search, X, Plus, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
 import PlaceDetailModal from '../components/PlaceDetailModal';
+import VerifiedHorseStables from '../components/VerifiedHorseStables';
+import VerifiedKidsActivities from '../components/VerifiedKidsActivities';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -334,6 +336,12 @@ export default function HorseRidingExperiences() {
             {(featured.length > 0 ? regular : filtered).map(e => <ExperienceCard key={e.id} exp={e} />)}
           </div>
         )}
+
+        {/* Verified Stables */}
+        <VerifiedHorseStables />
+
+        {/* Kids Activities */}
+        <VerifiedKidsActivities />
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-400 rounded-3xl p-6 text-center text-white mb-10">

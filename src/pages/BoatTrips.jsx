@@ -6,6 +6,7 @@ import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
 import PlaceDetailModal from '../components/PlaceDetailModal';
+import VerifiedBoatProviders from '../components/VerifiedBoatProviders';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -336,6 +337,9 @@ export default function BoatTrips() {
             {(featured.length > 0 ? regular : filtered).map(b => <BoatCard key={b.id} boat={b} />)}
           </div>
         )}
+
+        {/* Verified Providers */}
+        <VerifiedBoatProviders />
 
         {/* Submit CTA */}
         <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl p-6 text-center text-white mb-10">
