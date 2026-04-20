@@ -19,11 +19,11 @@ const CITY_LABELS = {
 
 const ACTIVITIES = [
   // HURGHADA
-  { city: 'hurghada', emoji: '🤿', name: 'Sindbad Submarine', desc: 'Underwater submarine dive 22 meters deep', detail: 'See shipwrecks & coral without swimming', ages: 'All ages (best 4+)', duration: '2 hours', price: '800–1,200 EGP/person', rating: 4.9, instagram: 'https://www.instagram.com/sindbadsubmarine/' },
-  { city: 'hurghada', emoji: '🦈', name: 'Hurghada Grand Aquarium', desc: 'Huge aquarium with Red Sea marine life', detail: 'Touch tank, sharks, colorful fish', ages: 'All ages', duration: '1.5–2 hours', price: '400–600 EGP/person', rating: 4.8, maps: 'https://maps.app.goo.gl/HurghadaAquarium' },
-  { city: 'hurghada', emoji: '🌊', name: 'Makadi Water World', desc: 'Massive water park with slides & wave pools', detail: 'Lazy river, daredevil slides, toddler pools', ages: 'All ages', duration: 'Full day', price: '1,500–2,500 EGP/person', rating: 4.8, maps: 'https://maps.app.goo.gl/MakadiWaterWorld' },
-  { city: 'hurghada', emoji: '🐬', name: 'Dolphin House Boat Trip', desc: 'Swim with wild dolphins in the Red Sea', detail: '95% dolphin sighting success rate', ages: '5+', duration: 'Full day', price: '2,000–3,000 EGP/person', rating: 4.9, maps: 'https://maps.app.goo.gl/DolphinHouseHurghada' },
-  { city: 'hurghada', emoji: '🏰', name: 'Sand City Hurghada', desc: 'Incredible sand sculptures of world landmarks', detail: 'Fun & educational outdoor art park', ages: 'All ages', duration: '1–2 hours', price: '200–350 EGP/person', rating: 4.7, maps: 'https://maps.app.goo.gl/SandCityHurghada' },
+  { city: 'hurghada', emoji: '🤿', name: 'Sindbad Submarine', desc: 'Underwater submarine dive 22 meters deep', detail: 'See shipwrecks & coral without swimming', ages: 'All ages (best 4+)', duration: '2 hours', price: '800–1,200 EGP/person', rating: 4.9, instagram: 'https://www.instagram.com/sindbadsubmarine/', photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Sindbad_Submarine_inside_hatch_ladder.jpg/960px-Sindbad_Submarine_inside_hatch_ladder.jpg','https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_32.JPG/960px-Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_32.JPG','https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_39.JPG/960px-Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_39.JPG','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_5.JPG/960px-Sindbad_submarines_at_Hurghada_by_Hatem_Moushir_5.JPG'] },
+  { city: 'hurghada', emoji: '🦈', name: 'Hurghada Grand Aquarium', desc: 'Huge aquarium with Red Sea marine life', detail: 'Touch tank, sharks, colorful fish', ages: 'All ages', duration: '1.5–2 hours', price: '400–600 EGP/person', rating: 4.8, maps: 'https://maps.app.goo.gl/HurghadaAquarium', photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Hurghada_Grand_Aquarium_by_Hatem_Moushir_1.JPG/960px-Hurghada_Grand_Aquarium_by_Hatem_Moushir_1.JPG','https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Hurghada_Grand_Aquarium_by_Hatem_Moushir_2.JPG/960px-Hurghada_Grand_Aquarium_by_Hatem_Moushir_2.JPG','https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Hurghada_Grand_Aquarium_by_Hatem_Moushir_3.JPG/960px-Hurghada_Grand_Aquarium_by_Hatem_Moushir_3.JPG'] },
+  { city: 'hurghada', emoji: '🌊', name: 'Makadi Water World', desc: 'Massive water park with slides & wave pools', detail: 'Lazy river, daredevil slides, toddler pools', ages: 'All ages', duration: 'Full day', price: '1,500–2,500 EGP/person', rating: 4.8, maps: 'https://maps.app.goo.gl/MakadiWaterWorld', photos: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800','https://images.unsplash.com/photo-1581873372796-635b67ca2008?w=800'] },
+  { city: 'hurghada', emoji: '🐬', name: 'Dolphin House Boat Trip', desc: 'Swim with wild dolphins in the Red Sea', detail: '95% dolphin sighting success rate', ages: '5+', duration: 'Full day', price: '2,000–3,000 EGP/person', rating: 4.9, maps: 'https://maps.app.goo.gl/DolphinHouseHurghada', photos: ['https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg','https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=800','https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800'] },
+  { city: 'hurghada', emoji: '🏰', name: 'Sand City Hurghada', desc: 'Incredible sand sculptures of world landmarks', detail: 'Fun & educational outdoor art park', ages: 'All ages', duration: '1–2 hours', price: '200–350 EGP/person', rating: 4.7, maps: 'https://maps.app.goo.gl/SandCityHurghada', photos: ['https://images.unsplash.com/photo-1549187774-b4e9b0445b41?w=800','https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800','https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=800'] },
   // SHARM
   { city: 'sharm-el-sheikh', emoji: '🐬', name: 'Dolphina Park', desc: 'Biggest dolphinarium in the Middle East', detail: 'Dolphin & sea lion shows, swim with dolphins', ages: 'All ages', duration: '2–3 hours', price: '800–1,500 EGP/person', rating: 4.8, maps: 'https://maps.app.goo.gl/DolphinaParkSharm' },
   { city: 'sharm-el-sheikh', emoji: '⛸️', name: 'SOHO Square Ice Skating & Ice Bar', desc: 'Ice skating rink + unique ice bar', detail: 'Dancing fountain show every night', ages: 'All ages', duration: '2–3 hours', price: '300–500 EGP entry', rating: 4.9, maps: 'https://maps.app.goo.gl/SohoSquareSharm' },
@@ -79,7 +79,11 @@ export default function VerifiedKidsActivities() {
       {/* Activity cards */}
       <div className="grid sm:grid-cols-2 gap-4">
         {activities.map((a, i) => (
-          <div key={i} className={`bg-white rounded-2xl border ${style.border} p-4 shadow-sm`}>
+          <div key={i} className={`bg-white rounded-2xl border ${style.border} overflow-hidden shadow-sm`}>
+            {a.photos?.[0] && (
+              <img src={a.photos[0]} alt={a.name} className="w-full h-36 object-cover" loading="lazy" />
+            )}
+            <div className="p-4">
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex items-start gap-2">
                 <span className="text-2xl mt-0.5">{a.emoji}</span>
@@ -117,6 +121,7 @@ export default function VerifiedKidsActivities() {
                 📍 View on Maps
               </a>
             )}
+            </div>
           </div>
         ))}
       </div>
