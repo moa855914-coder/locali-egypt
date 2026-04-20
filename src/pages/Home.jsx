@@ -58,7 +58,6 @@ const TRUST_ITEMS = [
 export default function Home() {
   const { openAIChat, lang = 'en' } = useOutletContext();
   const [selectedCity, setSelectedCity] = useState('hurghada');
-  const [aiInput, setAiInput] = useState('');
 
   const { data: liveData } = useQuery({
     queryKey: ['liveInfo'],
@@ -216,21 +215,7 @@ export default function Home() {
             <Users className="w-4 h-4 text-accent" />
           </Link>
         </div>
-        <div className="flex gap-2">
-          <input
-            value={aiInput}
-            onChange={e => setAiInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && openAIChat()}
-            placeholder="Connect with someone from your country living in Egypt..."
-            className="flex-1 bg-secondary rounded-xl px-3 py-2.5 text-sm outline-none border border-transparent focus:border-accent/30"
-          />
-          <button
-            onClick={openAIChat}
-            className="w-10 h-10 bg-accent text-accent-foreground rounded-xl flex items-center justify-center shrink-0"
-          >
-            <Bot className="w-4 h-4" />
-          </button>
-        </div>
+
       </div>
 
       {/* ── 6. LIVE INFO ── */}
