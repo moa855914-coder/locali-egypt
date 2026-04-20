@@ -31,6 +31,11 @@ const STABLES = [
     rating: 4.9,
     whatsapp: 'https://wa.me/201281972670',
     instagram: 'https://www.instagram.com/aqua_horse_hurghada/',
+    photos: [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Horse_on_beach_Red_Sea_Egypt.jpg/960px-Horse_on_beach_Red_Sea_Egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Horses_swimming_in_the_sea.jpg/960px-Horses_swimming_in_the_sea.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Horse_riding_beach_egypt.jpg/960px-Horse_riding_beach_egypt.jpg',
+    ],
   },
   {
     city: 'hurghada',
@@ -43,6 +48,11 @@ const STABLES = [
     special: 'Hotel pickup included, camels also available',
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/SamaraHorseHurghada',
+    photos: [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Desert_horse_riding_Egypt.jpg/960px-Desert_horse_riding_Egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Horse_riding_Red_Sea_desert.jpg/960px-Horse_riding_Red_Sea_desert.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Horses_Red_Sea_Egypt_beach.jpg/960px-Horses_Red_Sea_Egypt_beach.jpg',
+    ],
   },
   {
     city: 'hurghada',
@@ -56,6 +66,11 @@ const STABLES = [
     rating: 4.7,
     whatsapp: 'https://wa.me/201064905721',
     instagram: 'https://www.instagram.com/luckyhorsesstable/',
+    photos: [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Horse_riding_sunset_Egypt.jpg/960px-Horse_riding_sunset_Egypt.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Desert_riding_horse_Hurghada.jpg/960px-Desert_riding_horse_Hurghada.jpg',
+    ],
   },
   {
     city: 'hurghada',
@@ -68,6 +83,11 @@ const STABLES = [
     special: 'Beautiful mangrove scenery, highly rated guides',
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/YallaHorseStable',
+    photos: [
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Horse_swimming_Red_Sea.jpg/960px-Horse_swimming_Red_Sea.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mangrove_beach_Egypt_Red_Sea.jpg/960px-Mangrove_beach_Egypt_Red_Sea.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Horse_on_beach_Red_Sea_Egypt.jpg/960px-Horse_on_beach_Red_Sea_Egypt.jpg',
+    ],
   },
   // EL GOUNA
   {
@@ -197,7 +217,12 @@ export default function VerifiedHorseStables() {
       {stables.length > 0 && (
         <div className="grid sm:grid-cols-2 gap-4">
           {stables.map((s, i) => (
-            <div key={i} className={`bg-white rounded-2xl border ${style.border} p-4 shadow-sm`}>
+            <div key={i} className={`bg-white rounded-2xl border ${style.border} overflow-hidden shadow-sm`}>
+              {s.photos?.[0] && (
+                <img src={s.photos[0]} alt={s.name} className="w-full h-40 object-cover" loading="lazy"
+                  onError={e => { e.target.style.display = 'none'; }} />
+              )}
+              <div className="p-4">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
                   <h3 className="font-extrabold text-sm text-gray-900 leading-tight">{s.name}</h3>
@@ -258,6 +283,7 @@ export default function VerifiedHorseStables() {
                     🌐 Visit Website
                   </a>
                 )}
+              </div>
               </div>
             </div>
           ))}
