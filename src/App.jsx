@@ -85,6 +85,7 @@ import PlaceSearch from './pages/PlaceSearch';
 import TravelTips from './pages/TravelTips';
 import SuperAgent from './pages/SuperAgent';
 import AdminCMS from './pages/AdminCMS';
+import AddService from './pages/AddService';
 import AdminBulkPopulate from './pages/AdminBulkPopulate';
 import AdminElGounaFix from './pages/AdminElGounaFix';
 import AdminHomeCMS from './pages/AdminHomeCMS';
@@ -215,6 +216,7 @@ const AuthenticatedApp = () => {
         <Route path="/hidden-gems-egypt" element={<HiddenGems />} />
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
+        <Route path="/add-service" element={<AddService />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

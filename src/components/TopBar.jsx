@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck, Plus, ChevronDown, Car, Hotel, Bot, Map, Globe, Compass, Database } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from './LanguageSwitcher';
 import { t } from '../lib/constants';
 import { useAuth } from '../lib/AuthContext';
-import AddServiceModal from './AddServiceModal';
 
 const NAV_GROUPS = [
   {
@@ -181,10 +180,12 @@ function AccordionGroup({ group, location, onNavigate }) {
 
 export default function TopBar({ lang, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
+
+  const goAddService = () => { setMobileOpen(false); navigate('/add-service'); };
 
   return (
     <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-xl border-b-2 border-border/60 shadow-[0_2px_12px_rgba(0,0,0,0.10)]">
@@ -237,7 +238,7 @@ export default function TopBar({ lang, onLangChange }) {
             </>
           )}
           <button
-            onClick={() => setShowModal(true)}
+            onClick={goAddService}
             className="hidden md:flex items-center gap-1.5 text-white px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
             style={{ background: '#2E7D8A' }}
           >
@@ -260,8 +261,6 @@ export default function TopBar({ lang, onLangChange }) {
         </div>
       </div>
 
-      <AddServiceModal open={showModal} onClose={() => setShowModal(false)} />
-
       {/* Mobile Accordion Menu */}
       <AnimatePresence>
         {mobileOpen && (
@@ -276,7 +275,7 @@ export default function TopBar({ lang, onLangChange }) {
             <div className="px-3 py-3 space-y-2">
               {/* Add Service CTA */}
               <button
-                onClick={() => { setMobileOpen(false); setShowModal(true); }}
+                onClick={goAddService}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-white shadow-md"
                 style={{ background: 'linear-gradient(135deg, #2E7D8A, #1a5f6a)' }}
               >
