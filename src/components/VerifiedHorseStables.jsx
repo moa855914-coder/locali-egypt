@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, Clock, MessageCircle, MapPin, Instagram, Globe } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 const CITY_STYLES = {
   hurghada: { tag: 'bg-orange-100 text-orange-700', border: 'border-orange-200' },
@@ -31,10 +32,7 @@ const STABLES = [
     rating: 4.9,
     whatsapp: 'https://wa.me/201281972670',
     instagram: 'https://www.instagram.com/aqua_horse_hurghada/',
-    photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Camels_and_horses_on_beach_Red_Sea_Egypt.jpg/960px-Camels_and_horses_on_beach_Red_Sea_Egypt.jpg',
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hurghada_beach_horses.jpg/960px-Hurghada_beach_horses.jpg',
-    ],
+    imageQuery: 'horseback riding Egypt beach',
   },
   {
     city: 'hurghada',
@@ -47,9 +45,7 @@ const STABLES = [
     special: 'Hotel pickup included, camels also available',
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/SamaraHorseHurghada',
-    photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
-    ],
+    imageQuery: 'horseback riding Egypt desert',
   },
   {
     city: 'hurghada',
@@ -63,9 +59,7 @@ const STABLES = [
     rating: 4.7,
     whatsapp: 'https://wa.me/201064905721',
     instagram: 'https://www.instagram.com/luckyhorsesstable/',
-    photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
-    ],
+    imageQuery: 'horseback riding Egypt pyramids',
   },
   {
     city: 'hurghada',
@@ -78,9 +72,7 @@ const STABLES = [
     special: 'Beautiful mangrove scenery, highly rated guides',
     rating: 4.9,
     maps: 'https://maps.app.goo.gl/YallaHorseStable',
-    photos: [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg',
-    ],
+    imageQuery: 'horseback riding Egypt beach',
   },
   // EL GOUNA
   {
@@ -170,6 +162,99 @@ const LEVEL_STYLE = {
   'All levels, gentle rides to gallops': 'bg-green-100 text-green-700',
 };
 
+function StableCard({ s, style }) {
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!s.imageQuery) return;
+    setLoading(true);
+    base44.functions.invoke('fetchFreeImages', { placeName: s.imageQuery, maxImages: 3 })
+      .then(res => {
+        const imgs = res?.data?.images || [];
+        if (imgs.length > 0) setPhoto(imgs[0].url);
+      })
+      .finally(() => setLoading(false));
+  }, [s.imageQuery]);
+
+  return (
+    <div className={`bg-white rounded-2xl border ${style.border} overflow-hidden shadow-sm`}>
+      {loading && (
+        <div className="w-full h-40 bg-amber-50 flex items-center justify-center">
+          <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
+      {!loading && photo && (
+        <img src={photo} alt={s.name} className="w-full h-40 object-cover" loading="lazy"
+          onError={e => { e.target.style.display = 'none'; }} />
+      )}
+      <div className="p-4">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div>
+            <h3 className="font-extrabold text-sm text-gray-900 leading-tight">{s.name}</h3>
+            <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">{s.rides}</p>
+          </div>
+          <div className="flex items-center gap-1 shrink-0">
+            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+            <span className="text-xs font-black text-gray-700">{s.rating}</span>
+          </div>
+        </div>
+
+        <p className="text-[10px] text-gray-400 flex items-center gap-1 mb-2">
+          <MapPin className="w-3 h-3" />{s.location}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5 mb-2">
+          <span className="text-[10px] bg-gray-50 text-gray-600 px-2 py-0.5 rounded-full flex items-center gap-1">
+            <Clock className="w-3 h-3" />{s.duration}
+          </span>
+          <span className="text-[10px] font-bold bg-gray-50 text-gray-800 px-2 py-0.5 rounded-full">{s.price}</span>
+          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${LEVEL_STYLE[s.level] || 'bg-gray-100 text-gray-600'}`}>
+            ✅ {s.level}
+          </span>
+        </div>
+
+        {s.special && (
+          <p className="text-[10px] text-amber-700 bg-amber-50 px-2 py-1.5 rounded-lg mb-3">
+            ⭐ {s.special}
+          </p>
+        )}
+
+        <div className="flex flex-col gap-2">
+          {s.whatsapp && (
+            <a href={s.whatsapp} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+              <MessageCircle className="w-4 h-4" />
+              📲 Book via WhatsApp
+            </a>
+          )}
+          {s.instagram && (
+            <a href={s.instagram} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl text-xs transition-colors">
+              <Instagram className="w-3.5 h-3.5" />
+              📸 Follow on Instagram
+            </a>
+          )}
+          {s.maps && (
+            <a href={s.maps} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs transition-colors">
+              <MapPin className="w-3.5 h-3.5" />
+              📍 View on Maps
+            </a>
+          )}
+          {s.website && (
+            <a href={s.website} target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 rounded-xl text-xs transition-colors">
+              <Globe className="w-3.5 h-3.5" />
+              🌐 Visit Website
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function VerifiedHorseStables() {
   const [activeCity, setActiveCity] = useState('hurghada');
 
@@ -210,75 +295,7 @@ export default function VerifiedHorseStables() {
       {stables.length > 0 && (
         <div className="grid sm:grid-cols-2 gap-4">
           {stables.map((s, i) => (
-            <div key={i} className={`bg-white rounded-2xl border ${style.border} overflow-hidden shadow-sm`}>
-              {s.photos?.[0] && (
-                <img src={s.photos[0]} alt={s.name} className="w-full h-40 object-cover" loading="lazy"
-                  onError={e => { e.target.style.display = 'none'; }} />
-              )}
-              <div className="p-4">
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <div>
-                  <h3 className="font-extrabold text-sm text-gray-900 leading-tight">{s.name}</h3>
-                  <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">{s.rides}</p>
-                </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-                  <span className="text-xs font-black text-gray-700">{s.rating}</span>
-                </div>
-              </div>
-
-              <p className="text-[10px] text-gray-400 flex items-center gap-1 mb-2">
-                <MapPin className="w-3 h-3" />{s.location}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 mb-2">
-                <span className="text-[10px] bg-gray-50 text-gray-600 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <Clock className="w-3 h-3" />{s.duration}
-                </span>
-                <span className="text-[10px] font-bold bg-gray-50 text-gray-800 px-2 py-0.5 rounded-full">{s.price}</span>
-                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${LEVEL_STYLE[s.level] || 'bg-gray-100 text-gray-600'}`}>
-                  ✅ {s.level}
-                </span>
-              </div>
-
-              {s.special && (
-                <p className="text-[10px] text-amber-700 bg-amber-50 px-2 py-1.5 rounded-lg mb-3">
-                  ⭐ {s.special}
-                </p>
-              )}
-
-              <div className="flex flex-col gap-2">
-                {s.whatsapp && (
-                  <a href={s.whatsapp} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
-                    <MessageCircle className="w-4 h-4" />
-                    📲 Book via WhatsApp
-                  </a>
-                )}
-                {s.instagram && (
-                  <a href={s.instagram} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl text-xs transition-colors">
-                    <Instagram className="w-3.5 h-3.5" />
-                    📸 Follow on Instagram
-                  </a>
-                )}
-                {s.maps && (
-                  <a href={s.maps} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2 rounded-xl text-xs transition-colors">
-                    <MapPin className="w-3.5 h-3.5" />
-                    📍 View on Maps
-                  </a>
-                )}
-                {s.website && (
-                  <a href={s.website} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 rounded-xl text-xs transition-colors">
-                    <Globe className="w-3.5 h-3.5" />
-                    🌐 Visit Website
-                  </a>
-                )}
-              </div>
-              </div>
-            </div>
+            <StableCard key={i} s={s} style={style} />
           ))}
         </div>
       )}
