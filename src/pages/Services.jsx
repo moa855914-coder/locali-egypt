@@ -6,6 +6,7 @@ import { CITIES, SERVICE_CATEGORIES, t, getCityName } from '../lib/constants';
 import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import AdminServiceForm from '../components/AdminServiceForm';
+import VerifiedKidsActivities from '../components/VerifiedKidsActivities';
 import { useAuth } from '@/lib/AuthContext';
 
 // All categories support manual admin creation
@@ -152,6 +153,9 @@ export default function Services() {
           </button>
         </div>
       )}
+
+      {/* Kids & Family activities section */}
+      {selectedCategory === 'kids_family' && <VerifiedKidsActivities />}
 
       {/* Results */}
       {isLoading ? (
