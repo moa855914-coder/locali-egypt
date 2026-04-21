@@ -486,7 +486,7 @@ export default function HiddenGems() {
         tag: g.tag,
         desc: g.description,
         why: g.why_special,
-        image: g.main_image || (g.photos && g.photos[0]) || g.image_url || 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
+        image: g.main_image || g.image_url || 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
         number: String(g.gem_number || '').padStart(2, '0'),
       }))
     : GEMS;
