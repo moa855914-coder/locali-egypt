@@ -1,21 +1,19 @@
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ShieldCheck, Star, Globe, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Star, Globe, ExternalLink } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import { HOTELS_BY_CITY } from '../lib/elGounaContent';
 import PlaceDetailModal from '../components/PlaceDetailModal';
 import WhereToStay from '../components/WhereToStay';
 
 const CITY_LABELS = {
-  hurghada: '🌊 Hurghada',
-  'el-gouna': '⛵ El Gouna',
+  'el-gouna': '🌊 El Gouna',
   'sharm-el-sheikh': '🤿 Sharm El Sheikh',
   luxor: '🏛️ Luxor',
   aswan: '🛶 Aswan',
 };
 
 const CITY_INTROS = {
-  hurghada: 'Egypt\'s biggest Red Sea resort — massive all-inclusives, private bay resorts, and world-class diving.',
   'el-gouna': 'A private island city — upscale boutique hotels and international 5-star resorts across 13 islands.',
   'sharm-el-sheikh': 'From dive-focused boutique hotels to ultra-all-inclusive palace resorts on the Red Sea.',
   luxor: 'Sleep where Howard Carter planned the discovery of Tutankhamun — legendary history meets modern comfort.',
@@ -30,33 +28,11 @@ function FeaturePill({ label }) {
 
 function HotelCard({ hotel, city }) {
   const [open, setOpen] = useState(false);
-  const [imgIdx, setImgIdx] = useState(0);
-  const photos = hotel.photos || [];
+  const bookingComUrl = `https://www.booking.com/search.html?ss=${encodeURIComponent(hotel.name + ' ' + (city || ''))}`;
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.name + ' ' + (city || '') + ' Egypt')}`;
 
   return (
     <div className="bg-card rounded-2xl border border-border/50 overflow-hidden cursor-pointer hover:shadow-md transition-shadow" onClick={() => setOpen(true)}>
-      {/* Photo gallery */}
-      {photos.length > 0 && (
-        <div className="relative h-48 overflow-hidden bg-muted" onClick={e => e.stopPropagation()}>
-          <img src={photos[imgIdx]} alt={hotel.name} className="w-full h-full object-cover" loading="lazy" />
-          {photos.length > 1 && (
-            <>
-              <button onClick={() => setImgIdx(i => (i - 1 + photos.length) % photos.length)}
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full p-1 hover:bg-black/70">
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button onClick={() => setImgIdx(i => (i + 1) % photos.length)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white rounded-full p-1 hover:bg-black/70">
-                <ChevronRight className="w-4 h-4" />
-              </button>
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                {photos.map((_, i) => <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === imgIdx ? 'bg-white' : 'bg-white/50'}`} />)}
-              </div>
-            </>
-          )}
-        </div>
-      )}
       {/* Header */}
       <div className="p-4 border-b border-border/30">
         <div className="flex items-start justify-between gap-2 mb-2">
@@ -111,25 +87,21 @@ function HotelCard({ hotel, city }) {
 
       {/* CTAs */}
       <div className="px-4 pb-4 space-y-2">
-        {hotel.website && (
-          <a
-            href={hotel.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full bg-accent text-accent-foreground py-3 rounded-xl text-sm font-bold hover:opacity-90 transition-opacity"
-            onClick={e => e.stopPropagation()}
-          >
-            <ExternalLink className="w-4 h-4" />
-            Book on Official Website
-          </a>
-        )}
+        <a
+          href={bookingComUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full bg-blue-600 text-white py-3 rounded-xl text-sm font-bold hover:bg-blue-700 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Book on Booking.com
+        </a>
         <GoogleReviewsButton name={hotel.name} />
         <a
           href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full border border-border py-2.5 rounded-xl text-xs font-bold hover:bg-secondary transition-colors"
-          onClick={e => e.stopPropagation()}
         >
           <Globe className="w-3.5 h-3.5" />
           Find on Google Maps
@@ -142,7 +114,7 @@ function HotelCard({ hotel, city }) {
 
 export default function Hotels() {
   const { lang } = useOutletContext();
-  const [cityFilter, setCityFilter] = useState('hurghada');
+  const [cityFilter, setCityFilter] = useState('el-gouna');
 
   const hotels = HOTELS_BY_CITY[cityFilter] || [];
 
@@ -150,7 +122,7 @@ export default function Hotels() {
     <div className="px-4 py-8 max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-1">Hotels & Accommodation</h1>
-        <p className="text-sm text-muted-foreground">Verified properties · Real prices in EGP · Book directly on official websites</p>
+        <p className="text-sm text-muted-foreground">Verified properties · Real prices in EGP · Book directly on Booking.com</p>
       </div>
 
       {/* City filter */}

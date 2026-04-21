@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Shield, Menu, X, DollarSign, AlertTriangle, Search, Phone, Sparkles, ShieldCheck, Plus, ChevronDown, Car, Hotel, Bot, Map, Globe, Compass, Database } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from './LanguageSwitcher';
 import { t } from '../lib/constants';
 import { useAuth } from '../lib/AuthContext';
+import AddServiceModal from './AddServiceModal';
 
 const NAV_GROUPS = [
   {
     id: 'explore',
     label: 'Explore Egypt',
-    description: 'Destinations & hidden gems',
     icon: Compass,
     color: 'text-amber-600',
     bg: 'bg-amber-50',
@@ -19,6 +19,7 @@ const NAV_GROUPS = [
       { path: '/hidden-gems-egypt', label: '🌍 30 Hidden Gems', icon: Sparkles, highlight: false },
       { path: '/el-gouna', label: 'El Gouna Guide', icon: Compass },
       { path: '/beaches', label: 'Beaches', icon: Compass },
+      { path: '/boat-trips', label: 'Boat Trips', icon: Compass },
       { path: '/horse-riding', label: 'Horse Riding', icon: Compass },
       { path: '/nightlife', label: 'Nightlife', icon: Compass },
     ],
@@ -26,7 +27,6 @@ const NAV_GROUPS = [
   {
     id: 'safety',
     label: 'Safety & Security',
-    description: 'Stay safe & avoid scams',
     icon: ShieldCheck,
     color: 'text-red-600',
     bg: 'bg-red-50',
@@ -41,7 +41,6 @@ const NAV_GROUPS = [
   {
     id: 'around',
     label: 'Get Around',
-    description: 'Transport & getting from A to B',
     icon: Car,
     color: 'text-amber-700',
     bg: 'bg-amber-50',
@@ -56,7 +55,6 @@ const NAV_GROUPS = [
   {
     id: 'do',
     label: 'Things To Do',
-    description: 'Activities & bookable services',
     icon: Compass,
     color: 'text-emerald-700',
     bg: 'bg-emerald-50',
@@ -71,7 +69,6 @@ const NAV_GROUPS = [
   {
     id: 'plan',
     label: 'Plan & Book',
-    description: 'Verified services & reservations',
     icon: Hotel,
     color: 'text-violet-700',
     bg: 'bg-violet-50',
@@ -120,14 +117,12 @@ function AccordionGroup({ group, location, onNavigate }) {
         >
           <Icon className="w-4 h-4" style={{ color: open ? group.accent : '#6b7280' }} />
         </div>
-        <div className="flex-1 text-left">
-          <span className="block text-sm font-bold" style={{ color: open ? group.accent : '#1f2937' }}>
-            {group.label}
-          </span>
-          {group.description && (
-            <span className="block text-[10px] text-muted-foreground font-normal">{group.description}</span>
-          )}
-        </div>
+        <span
+          className="flex-1 text-left text-sm font-bold"
+          style={{ color: open ? group.accent : '#1f2937' }}
+        >
+          {group.label}
+        </span>
         {isAnyActive && !open && (
           <span className="w-1.5 h-1.5 rounded-full" style={{ background: group.accent }} />
         )}
@@ -180,12 +175,10 @@ function AccordionGroup({ group, location, onNavigate }) {
 
 export default function TopBar({ lang, onLangChange }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin = user?.role === 'admin';
-
-  const goAddService = () => { setMobileOpen(false); navigate('/add-service'); };
 
   return (
     <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-xl border-b-2 border-border/60 shadow-[0_2px_12px_rgba(0,0,0,0.10)]">
@@ -238,7 +231,7 @@ export default function TopBar({ lang, onLangChange }) {
             </>
           )}
           <button
-            onClick={goAddService}
+            onClick={() => setShowModal(true)}
             className="hidden md:flex items-center gap-1.5 text-white px-3 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity"
             style={{ background: '#2E7D8A' }}
           >
@@ -261,6 +254,8 @@ export default function TopBar({ lang, onLangChange }) {
         </div>
       </div>
 
+      <AddServiceModal open={showModal} onClose={() => setShowModal(false)} />
+
       {/* Mobile Accordion Menu */}
       <AnimatePresence>
         {mobileOpen && (
@@ -275,15 +270,12 @@ export default function TopBar({ lang, onLangChange }) {
             <div className="px-3 py-3 space-y-2">
               {/* Add Service CTA */}
               <button
-                onClick={goAddService}
+                onClick={() => { setMobileOpen(false); setShowModal(true); }}
                 className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold text-white shadow-md"
                 style={{ background: 'linear-gradient(135deg, #2E7D8A, #1a5f6a)' }}
               >
-                <Plus className="w-4 h-4 shrink-0" />
-                <div className="text-left">
-                  <div>Add Your Service Free</div>
-                  <div className="text-[10px] font-normal opacity-80">Join 200+ verified Egyptian service providers</div>
-                </div>
+                <Plus className="w-4 h-4" />
+                Add Your Service Free
               </button>
 
               {/* Accordion Groups */}

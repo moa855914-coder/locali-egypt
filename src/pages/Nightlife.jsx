@@ -61,13 +61,10 @@ export default function Nightlife() {
   });
 
   const staticVenues = STATIC_VENUES[city] || [];
-  // Merge DB venues with static, avoiding duplicates by name
-  const dbVenueNames = new Set(dbVenues.map(v => v.name?.toLowerCase()));
-  const dedupedStatic = staticVenues.filter(v => !dbVenueNames.has(v.name?.toLowerCase()));
-  const allVenues = [...dedupedStatic, ...dbVenues];
+  const allVenues = [...staticVenues, ...dbVenues];
   const filtered = typeFilter === 'all' ? allVenues : allVenues.filter(v => v.type === typeFilter);
 
-  const availableCities = ['sharm-el-sheikh', 'hurghada', 'luxor', 'aswan', 'el-gouna'];
+  const availableCities = ['sharm-el-sheikh', 'hurghada'];
 
   return (
     <div className="px-4 py-8 max-w-4xl mx-auto">
@@ -106,6 +103,7 @@ export default function Nightlife() {
             </button>
           );
         })}
+        <span className="shrink-0 px-4 py-2 rounded-full text-xs font-bold bg-secondary text-muted-foreground">Luxor / Aswan — limited nightlife</span>
       </div>
 
       {/* Type filter */}

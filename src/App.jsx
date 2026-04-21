@@ -25,6 +25,7 @@ import LastMinuteEgypt from './pages/LastMinuteEgypt';
 import Nightlife from './pages/Nightlife';
 import RemoteWork from './pages/RemoteWork';
 
+import LongStay from './pages/LongStay';
 import CityScams from './pages/city/CityScams';
 import MiddleEastSafetyMap from './pages/MiddleEastSafetyMap';
 import TripDecision from './pages/TripDecision';
@@ -84,7 +85,6 @@ import PlaceSearch from './pages/PlaceSearch';
 import TravelTips from './pages/TravelTips';
 import SuperAgent from './pages/SuperAgent';
 import AdminCMS from './pages/AdminCMS';
-import AddService from './pages/AddService';
 import AdminBulkPopulate from './pages/AdminBulkPopulate';
 import AdminElGounaFix from './pages/AdminElGounaFix';
 import AdminHomeCMS from './pages/AdminHomeCMS';
@@ -95,7 +95,6 @@ import LocaliHome from './pages/LocaliHome';
 import HiddenGems from './pages/HiddenGems';
 import LocaliHostDashboard from './pages/LocaliHostDashboard';
 import LocaliAdminPanel from './pages/LocaliAdminPanel';
-import AdminPlaceImageUpdater from './pages/AdminPlaceImageUpdater';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -181,6 +180,7 @@ const AuthenticatedApp = () => {
         <Route path="/nationality-guide" element={<NationalityGuide />} />
         <Route path="/trip-planner" element={<TripPlanner />} />
         <Route path="/my-trips" element={<MyTrips />} />
+        <Route path="/long-stay" element={<LongStay />} />
         <Route path="/middle-east-safety-map" element={<MiddleEastSafetyMap />} />
         <Route path="/trip-decision" element={<TripDecision />} />
         <Route path="/verify-apply" element={<VerifyApply />} />
@@ -215,8 +215,6 @@ const AuthenticatedApp = () => {
         <Route path="/hidden-gems-egypt" element={<HiddenGems />} />
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
-        <Route path="/admin/place-images" element={<AdminPlaceImageUpdater />} />
-        <Route path="/add-service" element={<AddService />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

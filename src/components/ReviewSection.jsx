@@ -3,13 +3,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Star, Send } from 'lucide-react';
 
-const FALLBACK_REVIEWS = [
-  { rating: 5, comment: "Absolutely amazing experience! The guide spoke perfect English and everything was exactly as described. Paid the price listed \u2014 no hidden extras.", country: "UK", date: "2 weeks ago" },
-  { rating: 4, comment: "Really good service overall. Used the app to check prices beforehand so I knew exactly what to expect. No surprises, which is rare in Egypt's tourist areas!", country: "Germany", date: "1 month ago" },
-  { rating: 5, comment: "Booked through Locali and felt safe the whole time. Driver was on time, car was clean, and the price was exactly what was quoted. Will use again.", country: "France", date: "3 weeks ago" },
-  { rating: 4, comment: "Great value compared to what hotel reception was quoting. Same service, honest price. Highly recommend checking Locali before booking anything in Egypt.", country: "Australia", date: "2 months ago" },
-];
-
 function StarPicker({ value, onChange }) {
   const [hover, setHover] = useState(0);
   return (
@@ -111,22 +104,7 @@ export default function ReviewSection({ entityId, city }) {
           ))}
         </div>
       ) : (
-        <div className="space-y-3 mb-6">
-          {FALLBACK_REVIEWS.map((r, i) => (
-            <div key={i} className="bg-card rounded-2xl border border-border/50 p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map(star => (
-                    <Star key={star} className={`w-3.5 h-3.5 ${star <= r.rating ? 'text-accent fill-accent' : 'text-border'}`} />
-                  ))}
-                </div>
-                <span className="text-[10px] text-muted-foreground">from {r.country}</span>
-                <span className="text-[10px] text-muted-foreground ml-auto">{r.date}</span>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">{r.comment}</p>
-            </div>
-          ))}
-        </div>
+        <p className="text-sm text-muted-foreground mb-6">No reviews yet — be the first!</p>
       )}
 
       {/* Submit form */}

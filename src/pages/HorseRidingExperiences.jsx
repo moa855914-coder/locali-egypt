@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ImageUpload from '../components/ImageUpload';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
@@ -6,7 +6,6 @@ import { Search, X, Plus, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
 import PlaceDetailModal from '../components/PlaceDetailModal';
-import VerifiedHorseStables from '../components/VerifiedHorseStables';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -39,7 +38,7 @@ const SAMPLE_HORSES = [
     duration: '2 hours',
     skill_level: 'all_levels',
     description: 'Ride through Sinai desert and gallop along Red Sea. Expert guide, calm horses. 4.9/5 on GetYourGuide (360+ reviews). Helmet & transfer included.',
-    imageQuery: 'horseback riding Sinai desert Egypt',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/sharm-el-sheikh-l970/horseback-riding-tc193/',
     is_featured: true,
@@ -55,7 +54,7 @@ const SAMPLE_HORSES = [
     duration: '3 hours',
     skill_level: 'all_levels',
     description: 'Ride through desert then gallop into Red Sea. Swim with your horse. 4.8/5 on GetYourGuide (420+ reviews) & Viator. Helmet & transfer.',
-    imageQuery: 'horseback riding Egypt beach Red Sea',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/hurghada-l970/horseback-riding-tc193/',
     is_featured: true,
@@ -71,7 +70,7 @@ const SAMPLE_HORSES = [
     duration: '3 hours',
     skill_level: 'all_levels',
     description: 'Ride into Red Sea and swim with your horse — unique experience. 4.7/5 on GetYourGuide (180+ reviews). Safety instructor present. Children 7+.',
-    imageQuery: 'horseback riding Egypt pyramids',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/hurghada-l970/swimming-horses-tc193/',
     is_featured: true,
@@ -87,9 +86,25 @@ const SAMPLE_HORSES = [
     duration: '2 hours',
     skill_level: 'beginner',
     description: 'Early morning ride through Sinai desert. Watch sunrise over Red Sea. Bedouin tea & snacks. 4.6/5 on GetYourGuide (220+ reviews). Beginner friendly.',
-    imageQuery: 'horse riding near pyramids Egypt',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/sharm-el-sheikh-l970/sunrise-horse-ride-tc193/',
+    is_featured: false,
+    status: 'approved',
+  },
+  {
+    id: 's5',
+    title: 'Aswan — Nubian Desert Village Ride (2 hrs)',
+    city: 'aswan',
+    experience_type: 'desert_ride',
+    price: null,
+    price_type: 'per_person',
+    duration: '2 hours',
+    skill_level: 'all_levels',
+    description: 'Desert ride through Nubian landscape, visit traditional village. Sunset views over Nile. Nubian tea.',
+    photos: ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'],
+    whatsapp: null,
+    booking_url: 'https://www.viator.com/Egypt/d798-ttd',
     is_featured: false,
     status: 'approved',
   },
@@ -97,17 +112,7 @@ const SAMPLE_HORSES = [
 
 function ExperienceCard({ exp }) {
   const [open, setOpen] = useState(false);
-  const [photo, setPhoto] = useState(null);
-
-  useEffect(() => {
-    const query = exp.imageQuery || exp.title;
-    base44.functions.invoke('fetchFreeImages', { placeName: query, maxImages: 1 })
-      .then(res => {
-        const imgs = res?.data?.images || [];
-        if (imgs.length > 0) setPhoto(imgs[0].url);
-      });
-  }, [exp.imageQuery, exp.title]);
-
+  const photos = exp.photos?.length ? exp.photos : ['https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=800'];
   const CITY_HORSE_VIATOR = {
     hurghada: 'https://www.viator.com/Hurghada-tours/Outdoor-Activities/d5323-g28/',
     'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Outdoor-Activities/d832-g28/',
@@ -119,14 +124,8 @@ function ExperienceCard({ exp }) {
 
   return (
     <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer" onClick={() => setOpen(true)}>
-      <div className="relative h-52 overflow-hidden bg-amber-50">
-        {photo ? (
-          <img src={photo} alt={exp.title} className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none'; }} />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <div className="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
+      <div className="relative h-52 overflow-hidden">
+        <img src={photos[0]} alt={exp.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
           {exp.is_featured && (
@@ -156,7 +155,7 @@ function ExperienceCard({ exp }) {
         <GoogleReviewsButton name={exp.title} className="mb-2" />
         <BookingButtons activity={exp.title} city={CITY_LABELS[exp.city] || exp.city} />
       </div>
-      {open && <PlaceDetailModal place={{ name: exp.title, description: exp.description, photo: photo, city: CITY_LABELS[exp.city] || exp.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
+      {open && <PlaceDetailModal place={{ name: exp.title, description: exp.description, photo: photos[0], city: CITY_LABELS[exp.city] || exp.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }
@@ -335,9 +334,6 @@ export default function HorseRidingExperiences() {
             {(featured.length > 0 ? regular : filtered).map(e => <ExperienceCard key={e.id} exp={e} />)}
           </div>
         )}
-
-        {/* Verified Stables */}
-        <VerifiedHorseStables />
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-500 to-orange-400 rounded-3xl p-6 text-center text-white mb-10">
