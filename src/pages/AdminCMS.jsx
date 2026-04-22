@@ -110,7 +110,7 @@ const ENTITIES = [
   {
     name: 'LiveSituation', label: 'Live Situation', icon: '🔴',
     fields: [
-      { key: 'city', label: 'City', type: 'select', options: ['hurghada','sharm-el-sheikh','luxor','aswan','global'], required: true },
+      { key: 'city', label: 'City', type: 'select', options: ['hurghada','sharm-el-sheikh','luxor','aswan','el-gouna','global'], required: true },
       { key: 'status', label: 'Status', type: 'select', options: ['green','yellow','red'] },
       { key: 'weather', label: 'Weather Summary', type: 'text' },
       { key: 'temperature_c', label: 'Temperature (°C)', type: 'number' },
@@ -302,6 +302,25 @@ const ENTITIES = [
       { key: 'is_verified', label: 'Verified', type: 'boolean' },
     ],
     displayFields: ['name', 'city', 'type', 'wifi_reliability', 'is_verified'],
+  },
+  {
+    name: 'HiddenGemPlace', label: 'Hidden Gems', icon: '💎',
+    fields: [
+      { key: 'title', label: 'Name', type: 'text', required: true },
+      { key: 'description', label: 'Description', type: 'textarea', required: true },
+      { key: 'why_special', label: 'Why It\'s Special / Highlights', type: 'textarea', required: true },
+      { key: 'tag', label: 'Category', type: 'select', options: ['Adventure', 'Chill', 'Cultural', 'Luxury', 'Explorer', 'Nature'] },
+      { key: 'city', label: 'City', type: 'select', options: ['Luxor', 'Aswan', 'Sinai', 'Hurghada', 'Marsa Alam', 'El Gouna', 'Dahab', 'Nuweiba'] },
+      { key: 'area', label: 'Area / Neighbourhood', type: 'text' },
+      { key: 'region', label: 'Region (used for grouping)', type: 'select', options: ['Luxor', 'Aswan', 'Sinai', 'Red Sea', 'El Gouna'] },
+      { key: 'gem_number', label: 'Display Number (1–30)', type: 'number' },
+      { key: 'keywords', label: 'Search Keywords', type: 'text' },
+      { key: 'main_image', label: 'Main Image', type: 'image' },
+      { key: 'image_url', label: 'Image URL (fallback)', type: 'text' },
+      { key: 'photos', label: 'Additional Photos', type: 'multi_image' },
+      { key: 'is_published', label: 'Published / Visible', type: 'boolean' },
+    ],
+    displayFields: ['title', 'region', 'city', 'tag', 'gem_number', 'is_published'],
   },
   {
     name: 'CurrencyRate', label: 'Currency Rates', icon: '💱',
