@@ -212,7 +212,6 @@ const AuthenticatedApp = () => {
         <Route path="/city-guide/:cityId" element={<CityGuide />} />
         <Route path="/locali" element={<LocaliHome />} />
         <Route path="/hidden-gems" element={<HiddenGems />} />
-        <Route path="/hidden-gems-egypt" element={<HiddenGems />} />
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
         <Route path="*" element={<PageNotFound />} />

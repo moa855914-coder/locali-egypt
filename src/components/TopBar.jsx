@@ -9,22 +9,6 @@ import AddServiceModal from './AddServiceModal';
 
 const NAV_GROUPS = [
   {
-    id: 'explore',
-    label: 'Explore Egypt',
-    icon: Compass,
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
-    accent: '#d97706',
-    items: [
-      { path: '/hidden-gems-egypt', label: '🌍 30 Hidden Gems', icon: Sparkles, highlight: false },
-      { path: '/el-gouna', label: 'El Gouna Guide', icon: Compass },
-      { path: '/beaches', label: 'Beaches', icon: Compass },
-      { path: '/boat-trips', label: 'Boat Trips', icon: Compass },
-      { path: '/horse-riding', label: 'Horse Riding', icon: Compass },
-      { path: '/nightlife', label: 'Nightlife', icon: Compass },
-    ],
-  },
-  {
     id: 'safety',
     label: 'Safety & Security',
     icon: ShieldCheck,
@@ -83,7 +67,6 @@ const NAV_GROUPS = [
 ];
 
 const NAV_LINKS = [
-  { path: '/hidden-gems-egypt', label: '🌍 Hidden Gems', icon: Sparkles },
   { path: '/services', labelKey: 'services', icon: Search },
   { path: '/price-checker', labelKey: 'price_checker', icon: DollarSign },
   { path: '/scam-map', labelKey: 'scam_map', icon: AlertTriangle },
@@ -194,7 +177,7 @@ export default function TopBar({ lang, onLangChange }) {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map(({ path, labelKey, label }) => (
+          {NAV_LINKS.map(({ path, labelKey }) => (
             <Link
               key={path}
               to={path}
@@ -204,7 +187,7 @@ export default function TopBar({ lang, onLangChange }) {
                   : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
               }`}
             >
-              {label || t(labelKey, lang)}
+              {t(labelKey, lang)}
             </Link>
           ))}
         </nav>
