@@ -6,6 +6,7 @@ import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
 import GoogleReviewsButton from '../components/GoogleReviewsButton';
 import BookingButtons from '../components/BookingButtons';
 import PlaceDetailModal from '../components/PlaceDetailModal';
+import VerifiedBoatProviders from '../components/VerifiedBoatProviders';
 
 const CITIES = [
   { id: 'hurghada', label: 'Hurghada' },
@@ -39,7 +40,7 @@ const SAMPLE_BOATS = [
     capacity: 30,
     duration_hours: 8,
     description: 'Hurghada\'s #1 rated cruise — 4.9/5 on GetYourGuide with 8,200+ reviews. Full day: Orange Bay snorkeling (2 stops), buffet lunch, soft drinks, hotel pickup.',
-    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'],
+    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=85', 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800', 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/hurghada-l970/boat-tours-tc45/',
     is_featured: true,
@@ -56,7 +57,7 @@ const SAMPLE_BOATS = [
     capacity: 25,
     duration_hours: 6,
     description: 'Full-day catamaran to Ras Mohamed (Shark Reef & Yolanda Reef). 4.8/5 on Viator, 450+ reviews. Lunch & drinks included.',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
+    photos: ['https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=85', 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800', 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'],
     whatsapp: null,
     booking_url: 'https://www.viator.com/Sharm-El-Sheikh-tours/Sailing-and-Boating/d4312-g12/',
     is_featured: true,
@@ -73,7 +74,7 @@ const SAMPLE_BOATS = [
     capacity: 25,
     duration_hours: 7,
     description: 'See wild dolphins at Dolphin House, snorkel at Giftun Island. 4.6/5 on GetYourGuide (2,100+ reviews). Hotel pickup included.',
-    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800'],
+    photos: ['https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=85', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg', 'https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=800'],
     whatsapp: null,
     booking_url: 'https://www.viator.com/Egypt/d798-ttd',
     is_featured: false,
@@ -90,7 +91,7 @@ const SAMPLE_BOATS = [
     capacity: 8,
     duration_hours: 3,
     description: 'Explore El Gouna\'s lagoon system. Visit islands, beaches, canals. 4.4/5 on GetYourGuide (280+ reviews).',
-    photos: ['https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800'],
+    photos: ['https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=85', 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800', 'https://images.unsplash.com/photo-1472745942893-4b9f730c7668?w=800'],
     whatsapp: null,
     booking_url: 'https://www.getyourguide.com/el-gouna-l97451/',
     is_featured: false,
@@ -107,7 +108,7 @@ const SAMPLE_BOATS = [
     capacity: 8,
     duration_hours: 2,
     description: 'Authentic Nubian felucca at sunset between islands. Traditional sailing, Nubian tea, local music.',
-    photos: ['https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800'],
+    photos: ['https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=800&q=85', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Felucca_on_the_Nile.jpg/960px-Felucca_on_the_Nile.jpg', 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800'],
     whatsapp: null,
     booking_url: 'https://www.viator.com/Egypt/d798-ttd',
     is_featured: false,
@@ -336,6 +337,9 @@ export default function BoatTrips() {
             {(featured.length > 0 ? regular : filtered).map(b => <BoatCard key={b.id} boat={b} />)}
           </div>
         )}
+
+        {/* Verified Providers */}
+        <VerifiedBoatProviders />
 
         {/* Submit CTA */}
         <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl p-6 text-center text-white mb-10">
