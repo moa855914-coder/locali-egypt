@@ -85,7 +85,6 @@ import PlaceSearch from './pages/PlaceSearch';
 import TravelTips from './pages/TravelTips';
 import SuperAgent from './pages/SuperAgent';
 import AdminCMS from './pages/AdminCMS';
-import AddService from './pages/AddService';
 import AdminBulkPopulate from './pages/AdminBulkPopulate';
 import AdminElGounaFix from './pages/AdminElGounaFix';
 import AdminHomeCMS from './pages/AdminHomeCMS';
@@ -93,7 +92,6 @@ import AdminLocalPersonas from './pages/AdminLocalPersonas';
 import AdminPriceManager from './pages/AdminPriceManager';
 import PriceInsights from './pages/PriceInsights';
 import LocaliHome from './pages/LocaliHome';
-import HiddenGems from './pages/HiddenGems';
 import LocaliHostDashboard from './pages/LocaliHostDashboard';
 import LocaliAdminPanel from './pages/LocaliAdminPanel';
 
@@ -212,11 +210,8 @@ const AuthenticatedApp = () => {
         <Route path="/apartments" element={<Apartments />} />
         <Route path="/city-guide/:cityId" element={<CityGuide />} />
         <Route path="/locali" element={<LocaliHome />} />
-        <Route path="/hidden-gems" element={<HiddenGems />} />
-        <Route path="/hidden-gems-egypt" element={<HiddenGems />} />
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
-        <Route path="/add-service" element={<AddService />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
