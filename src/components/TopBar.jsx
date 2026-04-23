@@ -40,17 +40,18 @@ const NAV_GROUPS = [
   },
   {
     id: 'around',
-    label: 'Get Around',
-    description: 'Transport & getting from A to B',
+    label: 'Travel Essentials',
+    description: 'Transport, SIM cards & money',
     icon: Car,
     color: 'text-amber-700',
     bg: 'bg-amber-50',
     accent: '#d97706',
     items: [
+      { path: '/drivers', label: '🚗 Transport & Drivers', icon: Car },
       { path: '/price-checker', label: 'Price Checker', icon: DollarSign },
-      { path: '/drivers', label: 'Verified Drivers', icon: Car },
       { path: '/sim-cards', label: 'SIM Cards', icon: Globe },
       { path: '/currency-rates', label: 'Currency Rates', icon: DollarSign },
+      { path: '/visa-entry', label: 'Visa & Entry', icon: Globe },
     ],
   },
   {
@@ -63,15 +64,16 @@ const NAV_GROUPS = [
     accent: '#059669',
     items: [
       { path: '/services', label: 'All Services', icon: Search },
-      { path: '/deals', label: 'Deals & Offers', icon: Sparkles },
+      { path: '/services?category=activities', label: 'Activities', icon: Compass },
+      { path: '/services?category=restaurant', label: 'Restaurants', icon: Search },
       { path: '/boat-trips', label: 'Boat Trips', icon: Compass },
-      { path: '/restaurants', label: 'Restaurants', icon: Search },
+      { path: '/temple-trips', label: 'Temple Trips', icon: Compass },
     ],
   },
   {
     id: 'plan',
-    label: 'Plan & Book',
-    description: 'Verified services & reservations',
+    label: 'Plan Your Trip',
+    description: 'Hotels, planning & recommendations',
     icon: Hotel,
     color: 'text-violet-700',
     bg: 'bg-violet-50',
@@ -81,6 +83,7 @@ const NAV_GROUPS = [
       { path: '/ai-assistant', label: 'AI Assistant', icon: Bot },
       { path: '/hotels', label: 'Hotels', icon: Hotel },
       { path: '/apartments', label: 'Apartments', icon: Hotel },
+      { path: '/tour-operators', label: 'Tour Operators', icon: Map },
     ],
   },
 ];
@@ -88,9 +91,9 @@ const NAV_GROUPS = [
 const NAV_LINKS = [
   { path: '/hidden-gems-egypt', label: '🌍 Hidden Gems', icon: Sparkles },
   { path: '/services', labelKey: 'services', icon: Search },
+  { path: '/drivers', label: '🚗 Transport', icon: Car },
   { path: '/price-checker', labelKey: 'price_checker', icon: DollarSign },
   { path: '/scam-map', labelKey: 'scam_map', icon: AlertTriangle },
-  { path: '/deals', labelKey: 'deals', icon: Sparkles },
   { path: '/emergency', labelKey: 'emergency', icon: Phone },
 ];
 

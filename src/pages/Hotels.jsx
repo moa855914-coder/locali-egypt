@@ -182,6 +182,33 @@ export default function Hotels() {
 
       <WhereToStay city={cityFilter} />
 
+      {/* Traveler-type recommendation block */}
+      <div className="mt-8 bg-card border border-border rounded-2xl p-5">
+        <h3 className="font-black text-base mb-1">Not sure where to stay?</h3>
+        <p className="text-xs text-muted-foreground mb-4">Pick your travel style and we'll point you in the right direction.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { emoji: '💎', label: 'Luxury Traveler', desc: 'World-class resorts & private beach access', cities: ['el-gouna', 'hurghada'], cityLabel: 'El Gouna · Hurghada' },
+            { emoji: '🏛️', label: 'Culture & History', desc: 'Sleep near ancient temples & the Nile', cities: ['luxor', 'aswan'], cityLabel: 'Luxor · Aswan' },
+            { emoji: '🤿', label: 'Beaches & Diving', desc: 'Best coral reefs & Red Sea water sports', cities: ['sharm-el-sheikh', 'hurghada'], cityLabel: 'Sharm El Sheikh · Hurghada' },
+            { emoji: '🌴', label: 'Hidden Relaxation', desc: 'Boutique stays, Nile islands & peaceful escapes', cities: ['aswan', 'el-gouna'], cityLabel: 'Aswan · El Gouna' },
+          ].map(rec => (
+            <button
+              key={rec.label}
+              onClick={() => setCityFilter(rec.cities[0])}
+              className="flex items-start gap-3 text-left p-3 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all"
+            >
+              <span className="text-2xl shrink-0">{rec.emoji}</span>
+              <div>
+                <p className="font-bold text-sm">{rec.label}</p>
+                <p className="text-xs text-muted-foreground">{rec.desc}</p>
+                <p className="text-[11px] text-accent font-bold mt-1">{rec.cityLabel} →</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="mt-8 bg-secondary/50 rounded-2xl p-4 text-center text-xs text-muted-foreground">
         Want to list your hotel here?{' '}
         <a href="/verify-apply" className="text-accent font-bold underline underline-offset-2">Apply for Verified Badge →</a>
