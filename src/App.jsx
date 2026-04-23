@@ -96,6 +96,7 @@ import HiddenGems from './pages/HiddenGems';
 import LocaliHostDashboard from './pages/LocaliHostDashboard';
 import LocaliAdminPanel from './pages/LocaliAdminPanel';
 import AdminPlaceImageUpdater from './pages/AdminPlaceImageUpdater';
+import AdminAutoImages from './pages/AdminAutoImages';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -216,6 +217,7 @@ const AuthenticatedApp = () => {
         <Route path="/locali/dashboard" element={<LocaliHostDashboard />} />
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
         <Route path="/admin/place-images" element={<AdminPlaceImageUpdater />} />
+        <Route path="/admin/auto-images" element={<AdminAutoImages />} />
         <Route path="/add-service" element={<AddService />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
