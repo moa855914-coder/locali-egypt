@@ -8,7 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import CityPage from './pages/CityPage';
-import Services from './pages/Services';
+import Services from './pages/Services.jsx';
 import ServiceDetail from './pages/ServiceDetail';
 import PriceChecker from './pages/PriceChecker';
 import ScamMap from './pages/ScamMap';
