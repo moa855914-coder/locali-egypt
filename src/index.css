@@ -9,8 +9,8 @@
     --font-inter: 'Inter', sans-serif;
 
     /* Desert Luxury Palette */
-    --background: 36 40% 97%;        /* warm off-white */
-    --foreground: 20 40% 15%;        /* deep brown #3A2A1E */
+    --background: 0 0% 100%;          /* clean white */
+    --foreground: 220 25% 15%;       /* dark navy */
     --card: 0 0% 100%;
     --card-foreground: 20 40% 15%;
     --popover: 0 0% 100%;
@@ -21,7 +21,7 @@
     --secondary-foreground: 20 40% 15%;
     --muted: 36 30% 91%;
     --muted-foreground: 20 20% 45%;
-    --accent: 186 50% 36%;           /* ocean blue #2E7D8A */
+    --accent: 174 72% 35%;           /* teal #18978A */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 90% 50%;
     --destructive-foreground: 0 0% 100%;

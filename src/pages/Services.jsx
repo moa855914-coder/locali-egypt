@@ -165,6 +165,28 @@ function EmptyState({ cityId, category, onClearCity, onClearCategory, isAdmin, o
   );
 }
 
+const CATEGORY_CHIPS = [
+  { id: '', label: '✨ All', emoji: '' },
+  { id: 'restaurant', label: '🍽️ Restaurants' },
+  { id: 'medical', label: '🏥 Medical' },
+  { id: 'transport', label: '🚗 Transport' },
+  { id: 'activities', label: '🏄 Activities' },
+  { id: 'kids_family', label: '👨‍👩‍👧 Kids' },
+  { id: 'sim_internet', label: '📶 SIM' },
+  { id: 'nightlife', label: '🎉 Nightlife' },
+  { id: 'remote_work', label: '💻 Remote Work' },
+  { id: 'long_stay', label: '🏠 Long Stay' },
+];
+
+const CITY_CHIPS = [
+  { id: '', label: '🌍 All Cities' },
+  { id: 'hurghada', label: '🌊 Hurghada' },
+  { id: 'sharm-el-sheikh', label: '🤿 Sharm' },
+  { id: 'el-gouna', label: '⛵ El Gouna' },
+  { id: 'luxor', label: '🏛️ Luxor' },
+  { id: 'aswan', label: '🛶 Aswan' },
+];
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function Services() {
   const { lang } = useOutletContext();
@@ -218,109 +240,136 @@ export default function Services() {
     return sortServices(result);
   }, [services, selectedCity, selectedCategory, search, verifiedOnly]);
 
-  const city = CITIES.find(c => c.id === selectedCity);
-  const categoryLabel = SERVICE_CATEGORIES.find(c => c.id === selectedCategory)?.label || '';
-  const sectionTitle = selectedCity
-    ? `${categoryLabel ? categoryLabel + ' in ' : 'Services in '}${city?.name || selectedCity}`
-    : categoryLabel ? `All ${categoryLabel} Services` : 'All Services';
-
   return (
-    <div className="px-4 py-6 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-1">
-        <h1 className="text-2xl font-black tracking-tight">{t('services', lang)}</h1>
-        {isAdmin && (
-          <button onClick={() => setShowForm(true)}
-            className="flex items-center gap-1.5 bg-accent text-accent-foreground px-3 py-2 rounded-xl text-xs font-bold hover:opacity-90">
-            <Plus className="w-3.5 h-3.5" /> Add Listing
-          </button>
-        )}
-      </div>
-      <p className="text-sm text-muted-foreground mb-5">Find trusted services across Egypt</p>
-
-      <div className="relative mb-4">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="Search services..."
-          className="w-full pl-10 pr-4 py-3 bg-card rounded-xl border border-border text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-      </div>
-
-      {/* City Filter */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-3">
-        <button onClick={() => setSelectedCity('')}
-          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${!selectedCity ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'}`}>
-          {t('all_cities', lang)}
-        </button>
-        {CITIES.map(city => {
-          const count = cityCounts[city.id] || 0;
-          return (
-            <button key={city.id} onClick={() => setSelectedCity(city.id)}
-              className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${selectedCity === city.id ? 'bg-primary text-primary-foreground' : 'bg-card border border-border'}`}>
-              {getCityName(city, lang)}
-              <span className={`ml-1 text-[10px] ${selectedCity === city.id ? 'opacity-80' : 'opacity-50'}`}>({count})</span>
+    <div className="bg-gray-50 min-h-screen">
+      {/* Header + Search */}
+      <div className="bg-teal-600 pt-6 pb-5 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-white font-black text-2xl">Local Directory</h1>
+              <p className="text-teal-100 text-xs">Find trusted businesses in Egypt</p>
+            </div>
+            <button onClick={() => setShowForm(true)}
+              className="flex items-center gap-1.5 bg-orange-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-orange-600 transition-colors">
+              <Plus className="w-3.5 h-3.5" /> Add Business
             </button>
-          );
-        })}
+          </div>
+          {/* Search bar */}
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search restaurants, hospitals, transport..."
+              className="w-full pl-10 pr-4 py-3 bg-white rounded-2xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 shadow-sm font-medium"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Category + Verified Filter */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-5">
-        <button onClick={() => setVerifiedOnly(v => !v)}
-          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${verifiedOnly ? 'bg-success text-success-foreground' : 'bg-card border border-border'}`}>
-          <SlidersHorizontal className="w-3 h-3" /> Verified Only
-        </button>
-        <button onClick={() => setSelectedCategory('')}
-          className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${!selectedCategory ? 'bg-accent text-accent-foreground' : 'bg-card border border-border'}`}>
-          All
-        </button>
-        {SERVICE_CATEGORIES.map(cat => (
-          <button key={cat.id} onClick={() => setSelectedCategory(cat.id)}
-            className={`shrink-0 px-3 py-2 rounded-xl text-xs font-bold transition-all ${selectedCategory === cat.id ? 'bg-accent text-accent-foreground' : 'bg-card border border-border'}`}>
-            {lang === 'ru' ? cat.labelRu : lang === 'de' ? cat.labelDe : cat.label}
-          </button>
-        ))}
-      </div>
-
-      {isAdmin && <AdminCityFixTool onDone={() => queryClient.invalidateQueries(['allServices'])} />}
-
-      {(showForm || editingRecord) && (
-        <AdminServiceForm
-          category={selectedCategory || editingRecord?.category || 'medical'}
-          record={editingRecord}
-          onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['allServices']); }}
-          onClose={() => { setShowForm(false); setEditingRecord(null); }}
-        />
-      )}
-
-      {!isLoading && filtered.length > 0 && (
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-extrabold tracking-tight">{sectionTitle}</h2>
-          <span className="text-xs text-muted-foreground">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</span>
-        </div>
-      )}
-
-      {selectedCategory === 'kids_family' && <VerifiedKidsActivities />}
-      {selectedCategory === 'nightlife' && <VerifiedNightlifeVenues />}
-
-      {isLoading ? (
-        <div className="flex justify-center py-12">
-          <div className="w-8 h-8 border-4 border-border border-t-accent rounded-full animate-spin" />
-        </div>
-      ) : filtered.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map(s => (
-            <ServiceCard key={s.id} service={s} isAdmin={isAdmin} onEdit={() => setEditingRecord(s)} />
+      {/* City filter chips */}
+      <div className="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-10 shadow-sm">
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
+          {CITY_CHIPS.map(c => (
+            <button
+              key={c.id}
+              onClick={() => setSelectedCity(c.id)}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
+                selectedCity === c.id
+                  ? 'bg-teal-600 text-white border-teal-600'
+                  : 'bg-white text-gray-600 border-gray-200 hover:border-teal-400'
+              }`}
+            >
+              {c.label}
+              {c.id && <span className="ml-1 opacity-60">({cityCounts[c.id] || 0})</span>}
+            </button>
           ))}
         </div>
-      ) : (
-        <EmptyState
-          cityId={selectedCity}
-          category={selectedCategory}
-          onClearCity={(id) => setSelectedCity(id || '')}
-          onClearCategory={() => setSelectedCategory('')}
-          isAdmin={isAdmin}
-          onAdd={() => setShowForm(true)}
-        />
-      )}
+      </div>
+
+      {/* Category chips */}
+      <div className="bg-white border-b border-gray-100 px-4 py-2">
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
+          {CATEGORY_CHIPS.map(c => (
+            <button
+              key={c.id}
+              onClick={() => setSelectedCategory(c.id)}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${
+                selectedCategory === c.id
+                  ? 'bg-orange-500 text-white border-orange-500'
+                  : 'bg-gray-50 text-gray-600 border-gray-200 hover:border-orange-300'
+              }`}
+            >
+              {c.label}
+            </button>
+          ))}
+          <button
+            onClick={() => setVerifiedOnly(v => !v)}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all whitespace-nowrap flex items-center gap-1 ${
+              verifiedOnly ? 'bg-green-500 text-white border-green-500' : 'bg-gray-50 text-gray-600 border-gray-200'
+            }`}
+          >
+            <SlidersHorizontal className="w-3 h-3" /> Verified
+          </button>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-5xl mx-auto px-4 py-4">
+        {isAdmin && <AdminCityFixTool onDone={() => queryClient.invalidateQueries(['allServices'])} />}
+
+        {(showForm || editingRecord) && (
+          <AdminServiceForm
+            category={selectedCategory || editingRecord?.category || 'medical'}
+            record={editingRecord}
+            onSave={() => { setShowForm(false); setEditingRecord(null); queryClient.invalidateQueries(['allServices']); }}
+            onClose={() => { setShowForm(false); setEditingRecord(null); }}
+          />
+        )}
+
+        {/* Results count */}
+        {!isLoading && (
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-bold text-gray-700">
+              {filtered.length} {filtered.length === 1 ? 'result' : 'results'}
+              {selectedCity && ` in ${CITY_CHIPS.find(c => c.id === selectedCity)?.label || selectedCity}`}
+            </p>
+            {isAdmin && (
+              <button onClick={() => setShowForm(true)}
+                className="flex items-center gap-1 text-xs font-bold text-teal-600 hover:underline">
+                <Plus className="w-3.5 h-3.5" /> Add Listing
+              </button>
+            )}
+          </div>
+        )}
+
+        {selectedCategory === 'kids_family' && <VerifiedKidsActivities />}
+        {selectedCategory === 'nightlife' && <VerifiedNightlifeVenues />}
+
+        {isLoading ? (
+          <div className="flex flex-col items-center py-16">
+            <div className="w-10 h-10 border-4 border-gray-200 border-t-teal-500 rounded-full animate-spin mb-3" />
+            <p className="text-sm text-gray-400 font-medium">Loading listings...</p>
+          </div>
+        ) : filtered.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {filtered.map(s => (
+              <ServiceCard key={s.id} service={s} isAdmin={isAdmin} onEdit={() => setEditingRecord(s)} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            cityId={selectedCity}
+            category={selectedCategory}
+            onClearCity={(id) => setSelectedCity(id || '')}
+            onClearCategory={() => setSelectedCategory('')}
+            isAdmin={isAdmin}
+            onAdd={() => setShowForm(true)}
+          />
+        )}
+      </div>
     </div>
   );
 }

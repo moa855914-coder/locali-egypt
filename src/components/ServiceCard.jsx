@@ -1,103 +1,149 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShieldCheck, MapPin, BadgeCheck, Pencil } from 'lucide-react';
-import DiscountClaim from './DiscountClaim';
+import { Star, ShieldCheck, MapPin, Phone, MessageCircle, Pencil, Navigation } from 'lucide-react';
 import SmartImage from './SmartImage';
 import AdminImageUploadOverlay from './AdminImageUploadOverlay';
 
+const CATEGORY_LABELS = {
+  restaurant: '🍽️ Restaurant',
+  medical: '🏥 Medical',
+  transport: '🚗 Transport',
+  activities: '🏄 Activities',
+  kids_family: '👨‍👩‍👧 Kids & Family',
+  sim_internet: '📶 SIM & Internet',
+  nightlife: '🎉 Nightlife',
+  remote_work: '💻 Remote Work',
+  long_stay: '🏠 Long Stay',
+  other: '📌 Other',
+};
+
 export default function ServiceCard({ service: initialService, isAdmin, onEdit }) {
   const [service, setService] = useState(initialService);
-  const priceLabel = { budget: '€', moderate: '€€', premium: '€€€' };
+
+  const mapsUrl = service.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(service.name + ' ' + (service.address || '') + ' Egypt')}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(service.name + ' Egypt')}`;
+
+  const waNumber = service.phone?.replace(/[^0-9]/g, '');
 
   return (
-    <div className="relative group">
-    {isAdmin && (
-      <button
-        onClick={(e) => { e.preventDefault(); onEdit?.(); }}
-        className="absolute top-2 right-2 z-10 bg-white/90 backdrop-blur-sm border border-gray-200 text-gray-700 hover:bg-accent hover:text-accent-foreground p-1.5 rounded-lg shadow-sm transition-all opacity-0 group-hover:opacity-100"
-        title="Edit listing"
-      >
-        <Pencil className="w-3.5 h-3.5" />
-      </button>
-    )}
-    <Link
-      to={`/service/${service.id}`}
-      className="block bg-white rounded-2xl border-2 border-border/40 overflow-hidden card-3d transition-all duration-300"
-    >
+    <div className="relative bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+      {isAdmin && (
+        <button
+          onClick={(e) => { e.preventDefault(); onEdit?.(); }}
+          className="absolute top-2 right-2 z-20 bg-white/90 border border-gray-200 text-gray-500 p-1.5 rounded-lg shadow-sm hover:bg-teal-50 hover:text-teal-600 transition-all"
+          title="Edit listing"
+        >
+          <Pencil className="w-3.5 h-3.5" />
+        </button>
+      )}
+
+      {/* Image */}
       <AdminImageUploadOverlay
         entityName="Service"
         recordId={service.id}
         onUploaded={(url) => setService(prev => ({ ...prev, main_image: url }))}
-        className="relative aspect-[16/10] overflow-hidden"
+        className="relative h-40 overflow-hidden bg-gray-100"
       >
-        <SmartImage
-          place={service}
-          width={600}
-          height={375}
-          className="w-full h-full transition-transform duration-500 group-hover:scale-105"
-          alt={service.name}
-        />
+        <Link to={`/service/${service.id}`}>
+          <SmartImage
+            place={service}
+            width={600}
+            height={300}
+            className="w-full h-full object-cover"
+            alt={service.name}
+          />
+        </Link>
         {service.is_verified && (
-          <div className="absolute top-3 left-3 flex items-center gap-1 bg-success text-success-foreground px-2 py-1 rounded-full">
+          <div className="absolute top-2 left-2 flex items-center gap-1 bg-teal-500 text-white px-2 py-0.5 rounded-full">
             <ShieldCheck className="w-3 h-3" />
-            <span className="text-[10px] font-bold">VERIFIED</span>
+            <span className="text-[10px] font-bold uppercase">Verified</span>
           </div>
         )}
         {service.is_featured && (
-          <div className="absolute top-3 right-3 bg-accent text-accent-foreground px-2 py-1 rounded-full">
-            <span className="text-[10px] font-bold">FEATURED</span>
+          <div className="absolute top-2 right-2 bg-orange-500 text-white px-2 py-0.5 rounded-full">
+            <span className="text-[10px] font-bold uppercase">Featured</span>
           </div>
         )}
       </AdminImageUploadOverlay>
 
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="font-bold text-foreground truncate">{service.name}</h3>
-          {service.price_range && (
-            <span className="text-xs font-bold text-accent shrink-0">
-              {priceLabel[service.price_range]}
-            </span>
-          )}
-        </div>
+      {/* Content */}
+      <div className="p-3 flex flex-col flex-1">
+        {/* Category chip */}
+        <span className="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full self-start mb-1">
+          {CATEGORY_LABELS[service.category] || service.category}
+        </span>
+
+        {/* Business name */}
+        <Link to={`/service/${service.id}`}>
+          <h3 className="font-black text-gray-900 text-base leading-tight mb-1 hover:text-teal-600 transition-colors line-clamp-1">
+            {service.name}
+          </h3>
+        </Link>
+
+        {/* Area / Address */}
         {service.address && (
-          <div className="flex items-center gap-1 mb-2">
-            <MapPin className="w-3 h-3 text-muted-foreground shrink-0" />
-            <span className="text-xs text-muted-foreground truncate">{service.address}</span>
+          <div className="flex items-center gap-1 mb-1.5">
+            <MapPin className="w-3 h-3 text-gray-400 shrink-0" />
+            <span className="text-xs text-gray-500 truncate">{service.address}</span>
           </div>
         )}
-        <div className="flex items-center gap-3 mb-3">
-          {service.avg_rating > 0 ? (
-            <div className="flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 text-accent fill-accent" />
-              <span className="text-sm font-bold">{service.avg_rating.toFixed(1)}</span>
-              <span className="text-xs text-muted-foreground">({service.review_count})</span>
-            </div>
-          ) : (
-            <span className="text-xs text-muted-foreground italic">Be the first to review</span>
+
+        {/* Rating */}
+        {service.avg_rating > 0 && (
+          <div className="flex items-center gap-1 mb-2">
+            <Star className="w-3.5 h-3.5 text-orange-400 fill-orange-400" />
+            <span className="text-sm font-bold text-gray-800">{service.avg_rating.toFixed(1)}</span>
+            {service.review_count > 0 && (
+              <span className="text-xs text-gray-400">({service.review_count})</span>
+            )}
+          </div>
+        )}
+
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Action buttons */}
+        <div className="flex gap-2 mt-2">
+          {/* Google Maps — always shown */}
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+            className="flex items-center gap-1 flex-1 justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-xl text-xs font-bold transition-colors"
+          >
+            <Navigation className="w-3.5 h-3.5" />
+            Maps
+          </a>
+
+          {/* Phone — only if real phone exists */}
+          {service.phone && (
+            <a
+              href={`tel:${service.phone}`}
+              onClick={e => e.stopPropagation()}
+              className="flex items-center gap-1 flex-1 justify-center bg-teal-500 hover:bg-teal-600 text-white py-2 rounded-xl text-xs font-bold transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              Call
+            </a>
           )}
-          {service.scam_score > 0 && (
-            <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
-              service.scam_score > 60 ? 'bg-red-500/10 text-red-600' :
-              service.scam_score > 30 ? 'bg-amber-500/10 text-amber-600' :
-              'bg-emerald-500/10 text-emerald-600'
-            }`}>
-              Risk: {service.scam_score}%
-            </div>
+
+          {/* WhatsApp — only if phone exists */}
+          {service.phone && (
+            <a
+              href={`https://wa.me/${waNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="flex items-center gap-1 flex-1 justify-center bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl text-xs font-bold transition-colors"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              WA
+            </a>
           )}
         </div>
-
-        <DiscountClaim businessName={service.name} compact />
-
-        {!service.is_verified && (
-          <div className="mt-2 flex items-center gap-1.5 bg-secondary/60 rounded-xl px-3 py-1.5">
-            <BadgeCheck className="w-3 h-3 text-muted-foreground shrink-0" />
-            <span className="text-[10px] text-muted-foreground">
-              Get Verified — <strong className="text-foreground">$6/month</strong> · Reach more tourists instantly
-            </span>
-          </div>
-        )}
       </div>
-    </Link>
     </div>
   );
 }
