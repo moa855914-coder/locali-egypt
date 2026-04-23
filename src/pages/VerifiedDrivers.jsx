@@ -15,32 +15,7 @@ const CITY_OPTIONS = [
 const LANG_OPTIONS = ['English', 'Arabic', 'Russian', 'German', 'French', 'Italian', 'Polish'];
 const LANG_FLAGS = { English: '🇬🇧', Russian: '🇷🇺', German: '🇩🇪', Arabic: '🇪🇬', French: '🇫🇷', Italian: '🇮🇹', Polish: '🇵🇱' };
 
-const SAMPLE_DRIVERS = [
-  {
-    id: 's1', full_name: 'Ahmed Hassan', city: 'hurghada', languages: ['Arabic', 'English', 'Russian'],
-    car_model: 'Toyota Camry 2022', years_experience: 8, whatsapp: '201001234567',
-    is_verified: true, status: 'approved',
-    description: 'Airport transfers, day trips, city tours. 8 years experience. Always on time.',
-  },
-  {
-    id: 's2', full_name: 'Mohamed Samir', city: 'sharm-el-sheikh', languages: ['Arabic', 'English', 'German'],
-    car_model: 'Hyundai Tucson 2021', years_experience: 6, whatsapp: '201101234567',
-    is_verified: true, status: 'approved',
-    description: 'Sinai expert. Sharm airport transfers, Ras Mohamed, St. Catherine trips. No hidden fees.',
-  },
-  {
-    id: 's3', full_name: 'Youssef Nour', city: 'luxor', languages: ['Arabic', 'English', 'French', 'Italian'],
-    car_model: 'Kia Sportage 2023', years_experience: 12, whatsapp: '201201234567',
-    is_verified: true, status: 'approved',
-    description: 'Upper Egypt specialist. Luxor & Aswan temples. Licensed tourism driver since 2012.',
-  },
-  {
-    id: 's4', full_name: 'Khaled Ibrahim', city: 'aswan', languages: ['Arabic', 'English'],
-    car_model: 'Skoda Octavia 2020', years_experience: 5, whatsapp: '201301234567',
-    is_verified: false, status: 'approved',
-    description: 'Aswan airport runs, Abu Simbel day trips, Nubian village tours.',
-  },
-];
+
 
 // ─── Report Modal ─────────────────────────────────────────────────────────────
 function ReportModal({ driver, onClose }) {
@@ -257,10 +232,9 @@ export default function VerifiedDrivers() {
     queryFn: () => base44.entities.VerifiedDriver.filter({ status: 'approved' }),
   });
 
-  const allDrivers = [...SAMPLE_DRIVERS, ...dbDrivers];
   const filtered = cityFilter
-    ? allDrivers.filter(d => d.city === cityFilter || d.cities_covered?.includes(cityFilter))
-    : allDrivers;
+    ? dbDrivers.filter(d => d.city === cityFilter || d.cities_covered?.includes(cityFilter))
+    : dbDrivers;
 
   return (
     <div className="px-4 py-8 max-w-4xl mx-auto">
@@ -304,9 +278,21 @@ export default function VerifiedDrivers() {
       <p className="text-xs text-gray-400 mb-4">{filtered.length} driver{filtered.length !== 1 ? 's' : ''} {cityFilter ? `in ${CITY_OPTIONS.find(c => c.id === cityFilter)?.label}` : 'across Egypt'}</p>
 
       {/* Driver Grid */}
-      <div className="grid sm:grid-cols-2 gap-4 mb-10">
-        {filtered.map((d, i) => <DriverCard key={d.id || i} driver={d} />)}
-      </div>
+      {filtered.length === 0 ? (
+        <div className="text-center py-16 mb-10 bg-card rounded-2xl border border-border">
+          <Car className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+          <p className="font-bold text-base mb-1">No drivers listed yet</p>
+          <p className="text-sm text-muted-foreground mb-4">Be the first verified driver in {cityFilter ? CITY_OPTIONS.find(c => c.id === cityFilter)?.label : 'Egypt'}!</p>
+          <button onClick={() => setShowRegister(true)}
+            className="bg-green-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90">
+            Register as Driver →
+          </button>
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 gap-4 mb-10">
+          {filtered.map((d, i) => <DriverCard key={d.id || i} driver={d} />)}
+        </div>
+      )}
 
       {/* Driver CTA */}
       <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-center text-white">
