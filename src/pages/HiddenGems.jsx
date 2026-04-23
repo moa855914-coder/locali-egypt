@@ -477,20 +477,25 @@ export default function HiddenGems() {
     queryFn: () => base44.entities.HiddenGemPlace.filter({ is_published: true }, 'gem_number', 60),
   });
 
-  // Merge: db records mapped to same shape as static GEMS
-  const liveGems = dbGems.length > 0
-    ? dbGems.map(g => ({
-        id: g.id,
-        name: g.title,
-        area: `${g.city}${g.area ? ', ' + g.area : ''}`,
-        region: g.region,
-        tag: g.tag,
-        desc: g.description,
-        why: g.why_special,
-        image: g.main_image || (g.photos && g.photos[0]) || g.image_url || 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
-        number: String(g.gem_number || '').padStart(2, '0'),
-      }))
-    : GEMS;
+  // Map DB gems to same shape
+  const mappedDbGems = dbGems.map(g => ({
+    id: g.id,
+    name: g.title,
+    area: `${g.city}${g.area ? ', ' + g.area : ''}`,
+    region: g.region,
+    tag: g.tag,
+    desc: g.description,
+    why: g.why_special,
+    image: g.main_image || (g.photos && g.photos[0]) || g.image_url || 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
+    number: String(g.gem_number || '').padStart(2, '0'),
+  }));
+
+  // Always use static GEMS as base, override with DB gems by name
+  const dbNames = new Set(mappedDbGems.map(g => g.name));
+  const liveGems = [
+    ...GEMS.filter(g => !dbNames.has(g.name)),
+    ...mappedDbGems,
+  ].sort((a, b) => parseInt(a.number) - parseInt(b.number));
 
   const filtered = activeRegion === 'All' ? liveGems : liveGems.filter(g => g.region === activeRegion);
 
