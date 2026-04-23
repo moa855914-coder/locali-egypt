@@ -25,7 +25,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'The ancient village where the workers who built the royal tombs actually lived.',
     why: 'Reveals real daily life of ancient Egypt — not kings and gods, but craftsmen and families from 3,200 years ago.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Deir_el-Medina_1.jpg/1200px-Deir_el-Medina_1.jpg',
+    image: 'https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=800&q=80',
     number: '01',
   },
   {
@@ -36,7 +36,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'Over 400 tombs of high officials — same artistic quality as Valley of the Kings, without the queues.',
     why: 'You can stand alone before 3,500-year-old paintings in complete silence. Most tourists never come here.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Tomb_of_Nakht_%281%29.jpg/1200px-Tomb_of_Nakht_%281%29.jpg',
+    image: 'https://images.unsplash.com/photo-1601591875309-b2f42b060bb3?w=800&q=80',
     number: '02',
   },
   {
@@ -47,7 +47,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'A massive, vibrant temple complex of Ramesses III — colors still vivid after 3,000 years.',
     why: 'Far less crowded than Karnak. You walk through it almost completely alone.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Medinet_Habu_temple_from_the_top.jpg/1200px-Medinet_Habu_temple_from_the_top.jpg',
+    image: 'https://images.unsplash.com/photo-1706541266792-8c0475ba5b9e?w=800&q=80',
     number: '03',
   },
   {
@@ -58,7 +58,7 @@ const GEMS = [
     tag: 'Explorer',
     desc: 'Dramatic ruins with a fallen colossal statue of Ramesses II — inspiration for Shelley\'s Ozymandias.',
     why: 'Creates a cinematic, melancholic atmosphere unlike anything else in Egypt.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ramesseum_Colossus_of_Ramesses.jpg/1200px-Ramesseum_Colossus_of_Ramesses.jpg',
+    image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80',
     number: '04',
   },
   {
@@ -69,7 +69,7 @@ const GEMS = [
     tag: 'Chill',
     desc: 'A lush Nile island covered in banana and mango groves, reachable by short felucca ride.',
     why: 'Slow Nile drifting, fresh fruit picked off the tree, and zero tourist infrastructure.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Nile_felucca_Luxor.jpg/1200px-Nile_felucca_Luxor.jpg',
+    image: 'https://images.unsplash.com/photo-1553342385-111fd9d0c46a?w=800&q=80',
     number: '05',
   },
   {
@@ -80,7 +80,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'Ancient villages where locals still live above and around pharaonic tombs.',
     why: 'Mud-brick houses, donkeys, and children playing — life unchanged for centuries.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Luxor_west_bank_village.jpg/1200px-Luxor_west_bank_village.jpg',
+    image: 'https://images.unsplash.com/photo-1594735981133-d68e0b6d9b5d?w=800&q=80',
     number: '06',
   },
 
@@ -93,7 +93,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'The original settlement of Aswan — one of the oldest inhabited places in Egypt with a Nubian village and ancient ruins.',
     why: 'History, calm local life, and Nile views that most visitors completely miss.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Elephantine_island_aswan.jpg/1200px-Elephantine_island_aswan.jpg',
+    image: 'https://images.unsplash.com/photo-1600256697320-1d65df022f93?w=800&q=80',
     number: '07',
   },
   {
@@ -104,7 +104,7 @@ const GEMS = [
     tag: 'Explorer',
     desc: 'A granite island covered in over 250 ancient inscriptions and petroglyphs spanning 4,000 years.',
     why: 'Pharaohs, traders, and soldiers all carved their marks here — it\'s an open-air historical archive.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Sehel_island_aswan_egypt.jpg/1200px-Sehel_island_aswan_egypt.jpg',
+    image: 'https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=800&q=80',
     number: '08',
   },
   {
@@ -115,7 +115,7 @@ const GEMS = [
     tag: 'Nature',
     desc: 'A serene botanical garden island gifted to Lord Kitchener, now filled with exotic plants from Africa and Asia.',
     why: 'Shaded, peaceful and uncrowded — one of the most calming spots on the entire Nile.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Kitchener%27s_Island%2C_Aswan.jpg/1200px-Kitchener%27s_Island%2C_Aswan.jpg',
+    image: 'https://images.unsplash.com/photo-1585150166695-7a5e36394d9c?w=800&q=80',
     number: '09',
   },
   {
@@ -126,7 +126,7 @@ const GEMS = [
     tag: 'Cultural',
     desc: 'Authentic Nubian village with painted houses in turquoise, yellow, and indigo — untouched by mass tourism.',
     why: 'Walk through hand-painted alleyways and meet locals who invite strangers in for tea.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Nubian_village_Aswan.jpg/1200px-Nubian_village_Aswan.jpg',
+    image: 'https://images.unsplash.com/photo-1541343672885-9be56236302a?w=800&q=80',
     number: '10',
   },
   {
@@ -137,7 +137,7 @@ const GEMS = [
     tag: 'Explorer',
     desc: 'Rock-cut tombs of Aswan\'s ancient governors carved into desert cliffs overlooking the Nile.',
     why: 'The view from the cliff path — desert, Nile, and Elephantine below — is one of Egypt\'s best.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Qubbet_el-Hawa_tombs_aswan.jpg/1200px-Qubbet_el-Hawa_tombs_aswan.jpg',
+    image: 'https://images.unsplash.com/photo-1559547776-b85ceed0c9a4?w=800&q=80',
     number: '11',
   },
   {
@@ -148,7 +148,7 @@ const GEMS = [
     tag: 'Adventure',
     desc: 'A relocated Nubian temple on Lake Nasser\'s shore — accessible only by boat, almost no visitors.',
     why: 'Standing alone before a complete ancient temple with nothing but lake and desert around you is unforgettable.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Kalabsha_temple_lake_nasser.jpg/1200px-Kalabsha_temple_lake_nasser.jpg',
+    image: 'https://images.unsplash.com/photo-1539143428705-8e89617c0d5a?w=800&q=80',
     number: '12',
   },
 
