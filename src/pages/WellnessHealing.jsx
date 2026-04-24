@@ -259,11 +259,13 @@ export default function WellnessHealing() {
 
       {/* Hero */}
       <div className="relative bg-teal-700 overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200&q=80"
-          alt="Heal in Egypt"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
+        <div className="absolute inset-0">
+          <EditableImage
+            src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200&q=80"
+            alt="Heal in Egypt"
+            className="w-full h-full object-cover opacity-30"
+          />
+        </div>
         <div className="relative px-4 pt-10 pb-10 max-w-xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white rounded-full px-4 py-1.5 text-xs font-bold mb-4">
             <Heart className="w-3.5 h-3.5 text-rose-300" />
