@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/AuthContext';
@@ -7,12 +7,41 @@ import { base44 } from '@/api/base44Client';
 const ACCEPTED = ['image/jpeg', 'image/png', 'image/webp'];
 const MAX_MB = 5;
 
+// Cache of city image overrides loaded from DB: { cityId: { recordId, imageUrl } }
+const cityImageCache = {};
+
 export default function HomeCityCard({ city }) {
   const { user } = useAuth();
   const [img, setImg] = useState(city.img);
+  const [recordId, setRecordId] = useState(null);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   const isAdmin = user?.role === 'admin';
+
+  // Load persisted image from HomeContent on mount
+  useEffect(() => {
+    const sectionKey = `city_card_${city.id}`;
+
+    // Use cache if already fetched
+    if (cityImageCache[city.id] !== undefined) {
+      if (cityImageCache[city.id]) {
+        setImg(cityImageCache[city.id].imageUrl);
+        setRecordId(cityImageCache[city.id].recordId);
+      }
+      return;
+    }
+
+    base44.entities.HomeContent.filter({ section_key: sectionKey }, '-created_date', 1)
+      .then(results => {
+        if (results && results.length > 0 && results[0].image_url) {
+          cityImageCache[city.id] = { imageUrl: results[0].image_url, recordId: results[0].id };
+          setImg(results[0].image_url);
+          setRecordId(results[0].id);
+        } else {
+          cityImageCache[city.id] = null;
+        }
+      });
+  }, [city.id]);
 
   const handleFile = async (file) => {
     if (!ACCEPTED.includes(file.type) || file.size > MAX_MB * 1024 * 1024) return;
@@ -20,6 +49,24 @@ export default function HomeCityCard({ city }) {
     try {
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
       setImg(file_url);
+
+      const sectionKey = `city_card_${city.id}`;
+      if (recordId) {
+        // Update existing record
+        await base44.entities.HomeContent.update(recordId, { image_url: file_url });
+      } else {
+        // Create new record
+        const created = await base44.entities.HomeContent.create({
+          section_key: sectionKey,
+          section_type: 'city_pill',
+          title: city.label,
+          image_url: file_url,
+          is_active: true,
+        });
+        setRecordId(created.id);
+        cityImageCache[city.id] = { imageUrl: file_url, recordId: created.id };
+      }
+      cityImageCache[city.id] = { imageUrl: file_url, recordId: recordId || null };
     } finally {
       setLoading(false);
     }
