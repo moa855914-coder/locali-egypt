@@ -57,20 +57,20 @@ export default function EditableImage({
   }
 
   return (
-    <span className="relative inline-block w-full h-full">
+    <div className="relative w-full h-full">
       <img src={src} alt={alt} className={className} {...rest} />
 
       {/* Pencil button — bottom right corner */}
       <button
         type="button"
-        onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); inputRef.current?.click(); }}
         disabled={loading}
-        className="absolute bottom-2 right-2 z-20 w-7 h-7 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center shadow-md transition-colors disabled:opacity-50"
+        className="absolute bottom-2 right-2 z-30 w-8 h-8 bg-black/70 hover:bg-black/90 text-white rounded-full flex items-center justify-center shadow-lg transition-colors disabled:opacity-50"
         title="Replace image"
       >
         {loading
           ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-          : <Pencil className="w-3 h-3" />}
+          : <Pencil className="w-3.5 h-3.5" />}
       </button>
 
       <input
@@ -80,6 +80,6 @@ export default function EditableImage({
         className="hidden"
         onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ''; }}
       />
-    </span>
+    </div>
   );
 }
