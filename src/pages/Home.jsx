@@ -145,6 +145,7 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
             alt="Egypt"
             className="w-full h-full object-cover opacity-70"
+            sectionKey="home_hero"
           />
         </div>
         <div className="relative px-4 pt-10 pb-10 max-w-xl mx-auto text-center">

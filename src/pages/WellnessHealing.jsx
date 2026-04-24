@@ -161,7 +161,7 @@ function ExperienceCard({ exp }) {
           src={exp.image}
           alt={exp.title}
           className="w-full h-full object-cover"
-          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800'; }}
+          sectionKey={`wellness_card_${exp.id}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
@@ -264,6 +264,7 @@ export default function WellnessHealing() {
             src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=1200&q=80"
             alt="Heal in Egypt"
             className="w-full h-full object-cover opacity-30"
+            sectionKey="wellness_hero"
           />
         </div>
         <div className="relative px-4 pt-10 pb-10 max-w-xl mx-auto text-center">
