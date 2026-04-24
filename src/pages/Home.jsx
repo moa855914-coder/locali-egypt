@@ -139,12 +139,12 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <div className="relative bg-teal-600 overflow-hidden">
+      <div className="relative bg-gray-900 overflow-hidden">
         <div className="absolute inset-0">
           <EditableImage
             src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
             alt="Egypt"
-            className="w-full h-full object-cover mix-blend-overlay opacity-40"
+            className="w-full h-full object-cover opacity-70"
           />
         </div>
         <div className="relative px-4 pt-10 pb-10 max-w-xl mx-auto text-center">
