@@ -3,16 +3,20 @@
  *   real photo → Unsplash stock (category-matched) → gradient placeholder
  *
  * Props:
- *   place      — { id, name, category, image?, photo?, photos? }
- *   width      — number (default 600)
- *   height     — number (default 400)
- *   className  — extra classes for the img/div
- *   alt        — alt text override
+ *   place         — { id, name, category, image?, photo?, photos? }
+ *   width         — number (default 600)
+ *   height        — number (default 400)
+ *   className     — extra classes for the img/div
+ *   alt           — alt text override
+ *   entityName    — (optional) entity name for admin image upload
+ *   recordId      — (optional) record id for admin image upload
+ *   onUploaded    — (optional) callback after admin image upload
  */
 import { useState } from 'react';
 import { getStockImageUrl, getCategoryGradient, CATEGORY_EMOJI } from '../lib/imageSystem';
+import AdminImageUploadOverlay from './AdminImageUploadOverlay';
 
-export default function SmartImage({ place = {}, width = 600, height = 400, className = '', alt }) {
+export default function SmartImage({ place = {}, width = 600, height = 400, className = '', alt, entityName, recordId, onUploaded }) {
   const realUrl = place.main_image || place.image || place.photo || place.photos?.[0] || null;
   const identifier = place.id || place.name || 'place';
   const stockUrl = getStockImageUrl(identifier, place.category, { width, height });
@@ -24,11 +28,9 @@ export default function SmartImage({ place = {}, width = 600, height = 400, clas
 
   const handleError = () => {
     if (source === 'real') {
-      // Fallback to stock
       setSrc(stockUrl);
       setSource('stock');
     } else {
-      // All sources failed → show gradient placeholder
       setFailed(true);
     }
   };
@@ -48,9 +50,8 @@ export default function SmartImage({ place = {}, width = 600, height = 400, clas
     );
   }
 
-  return (
+  const imgEl = (
     <div className={`relative overflow-hidden ${className}`}>
-      {/* Skeleton while loading */}
       {!loaded && (
         <div className={`absolute inset-0 bg-gradient-to-br ${gradient} animate-pulse flex items-center justify-center`}>
           <span className="text-3xl opacity-40">{emoji}</span>
@@ -63,7 +64,6 @@ export default function SmartImage({ place = {}, width = 600, height = 400, clas
         onLoad={() => setLoaded(true)}
         className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
       />
-      {/* Subtle source badge */}
       {loaded && source === 'stock' && (
         <div className="absolute bottom-1.5 right-1.5 bg-black/30 backdrop-blur-sm text-white text-[9px] px-1.5 py-0.5 rounded-full">
           📷 Stock
@@ -71,4 +71,20 @@ export default function SmartImage({ place = {}, width = 600, height = 400, clas
       )}
     </div>
   );
+
+  // If entity info provided, wrap with upload overlay
+  if (entityName && recordId) {
+    return (
+      <AdminImageUploadOverlay
+        entityName={entityName}
+        recordId={recordId}
+        onUploaded={(url) => { setSrc(url); setSource('real'); onUploaded?.(url); }}
+        className={className}
+      >
+        {imgEl}
+      </AdminImageUploadOverlay>
+    );
+  }
+
+  return imgEl;
 }

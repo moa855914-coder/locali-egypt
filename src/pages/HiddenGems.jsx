@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Sparkles, Star, ChevronRight } from 'lucide-react';
+import EditableImage from '../components/EditableImage';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
@@ -368,7 +369,7 @@ function GemCard({ gem }) {
       style={{ height: '420px' }}
     >
       {/* Background image */}
-      <img
+      <EditableImage
         src={gem.image}
         alt={gem.name}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -431,7 +432,7 @@ function GemCardMobile({ gem }) {
       style={{ height: '380px' }}
       onClick={() => setExpanded(e => !e)}
     >
-      <img
+      <EditableImage
         src={gem.image}
         alt={gem.name}
         className="absolute inset-0 w-full h-full object-cover"

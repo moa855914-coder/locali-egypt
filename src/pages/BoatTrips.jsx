@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ImageUpload from '../components/ImageUpload';
+import EditableImage from '../components/EditableImage';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Anchor, Clock, Users, Plus, X, ChevronDown, ChevronUp, Navigation, DollarSign } from 'lucide-react';
@@ -149,7 +150,7 @@ function ExperienceCard({ exp }) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
-        <img
+        <EditableImage
           src={exp.image}
           alt={exp.name}
           className="w-full h-full object-cover"

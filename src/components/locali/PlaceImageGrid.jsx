@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Images } from 'lucide-react';
+import AdminImageUploadOverlay from '../AdminImageUploadOverlay';
 
 // Normalizes any place's image data into a flat array of URLs
 export function getPlaceImages(place) {
@@ -95,7 +96,7 @@ function GalleryModal({ images, startIndex = 0, onClose }) {
 }
 
 // Airbnb-style image grid: 1 large + up to 4 smaller + "+X more" overlay
-export default function PlaceImageGrid({ place, className = '' }) {
+export default function PlaceImageGrid({ place, className = '', onMainImageUploaded }) {
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryStart, setGalleryStart] = useState(0);
 
@@ -117,12 +118,16 @@ export default function PlaceImageGrid({ place, className = '' }) {
   if (images.length === 1) {
     return (
       <>
-        <div
+        <AdminImageUploadOverlay
+          entityName="Place"
+          recordId={place.id}
+          onUploaded={onMainImageUploaded}
           className={`relative aspect-[4/3] overflow-hidden rounded-2xl cursor-pointer group ${className}`}
-          onClick={() => openGallery(0)}
         >
-          <img src={images[0]} alt={place.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        </div>
+          <div onClick={() => openGallery(0)}>
+            <img src={images[0]} alt={place.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          </div>
+        </AdminImageUploadOverlay>
         {galleryOpen && <GalleryModal images={images} startIndex={galleryStart} onClose={() => setGalleryOpen(false)} />}
       </>
     );
@@ -138,12 +143,16 @@ export default function PlaceImageGrid({ place, className = '' }) {
       <div className={`relative overflow-hidden rounded-2xl ${className}`}>
         <div className="grid grid-cols-2 gap-1 h-64 sm:h-80">
           {/* Cover — left half */}
-          <div
+          <AdminImageUploadOverlay
+            entityName="Place"
+            recordId={place.id}
+            onUploaded={onMainImageUploaded}
             className="relative overflow-hidden cursor-pointer group row-span-2"
-            onClick={() => openGallery(0)}
           >
-            <img src={cover} alt={place.title} className="w-full h-full object-cover group-hover:brightness-90 transition-all duration-300" />
-          </div>
+            <div onClick={() => openGallery(0)}>
+              <img src={cover} alt={place.title} className="w-full h-full object-cover group-hover:brightness-90 transition-all duration-300" />
+            </div>
+          </AdminImageUploadOverlay>
 
           {/* Side images — right half, 2x2 grid */}
           <div className="grid grid-cols-2 gap-1 row-span-2">

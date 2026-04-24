@@ -52,6 +52,9 @@ export default function ServiceCard({ service: initialService, isAdmin, onEdit }
             height={300}
             className="w-full h-full object-cover"
             alt={service.name}
+            entityName="Service"
+            recordId={service.id}
+            onUploaded={(url) => setService(prev => ({ ...prev, main_image: url }))}
           />
         </Link>
         {service.is_verified && (

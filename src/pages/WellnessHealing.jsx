@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { MapPin, Clock, ChevronDown, ChevronUp, Navigation, Heart, Star } from 'lucide-react';
+import { MapPin, ChevronDown, ChevronUp, Navigation, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import EditableImage from '../components/EditableImage';
 
 const EXPERIENCES = [
   {
@@ -156,7 +157,7 @@ function ExperienceCard({ exp }) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
-        <img
+        <EditableImage
           src={exp.image}
           alt={exp.title}
           className="w-full h-full object-cover"

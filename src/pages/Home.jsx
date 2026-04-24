@@ -3,10 +3,10 @@ import { useOutletContext, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import {
-  Bot, Sparkles, DollarSign, AlertTriangle, ShieldCheck, ChevronRight,
-  Plane, Smartphone, Map, Users, Eye, Anchor, HelpCircle, Star,
-  ArrowRight, Search
+  Bot, Sparkles, DollarSign, ShieldCheck, ChevronRight,
+  Map, Users, Eye, Star, ArrowRight, Search
 } from 'lucide-react';
+import EditableImage from '../components/EditableImage';
 
 // ─── Section Data ─────────────────────────────────────────────────────────────
 const JOURNEY_STEPS = [
@@ -139,7 +139,7 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <div className="relative bg-teal-600 overflow-hidden">
-        <img
+        <EditableImage
           src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
           alt="Egypt"
           className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
@@ -270,9 +270,9 @@ export default function Home() {
             {CITIES.map(city => (
               <Link key={city.id} to={`/city/${city.id}`}
                 className="shrink-0 relative w-28 h-36 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <img src={city.img} alt={city.label} className="w-full h-full object-cover"
+                <EditableImage src={city.img} alt={city.label} className="w-full h-full object-cover"
                   onError={e => { e.target.src = 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=400'; }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                 <div className="absolute bottom-0 left-0 right-0 p-2.5 text-center">
                   <span className="text-lg block">{city.emoji}</span>
                   <p className="text-white font-black text-xs">{city.label}</p>
