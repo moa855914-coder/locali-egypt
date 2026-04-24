@@ -325,6 +325,19 @@ export default function Home() {
           </div>
         </button>
 
+        {/* ── WELLNESS BANNER ──────────────────────────────────────────── */}
+        <Link to="/wellness"
+          className="block bg-teal-50 border border-teal-100 rounded-2xl p-4 mb-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">🌿</span>
+            <div className="flex-1">
+              <p className="font-black text-teal-700 text-sm">Wellness & Natural Healing in Egypt</p>
+              <p className="text-xs text-teal-500 mt-0.5">7 experiences · Safaga, Siwa, White Desert, Red Sea & more</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-teal-400 shrink-0" />
+          </div>
+        </Link>
+
         {/* ── QUICK SCAM ALERT ─────────────────────────────────────────── */}
         <Link to="/scam-map"
           className="block bg-red-50 border border-red-100 rounded-2xl p-4 mb-6">

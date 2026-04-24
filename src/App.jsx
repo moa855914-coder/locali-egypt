@@ -97,6 +97,7 @@ import LocaliHostDashboard from './pages/LocaliHostDashboard';
 import LocaliAdminPanel from './pages/LocaliAdminPanel';
 import AdminPlaceImageUpdater from './pages/AdminPlaceImageUpdater';
 import AdminAutoImages from './pages/AdminAutoImages';
+import WellnessHealing from './pages/WellnessHealing';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -218,6 +219,7 @@ const AuthenticatedApp = () => {
         <Route path="/locali/admin" element={<LocaliAdminPanel />} />
         <Route path="/admin/place-images" element={<AdminPlaceImageUpdater />} />
         <Route path="/admin/auto-images" element={<AdminAutoImages />} />
+        <Route path="/wellness" element={<WellnessHealing />} />
         <Route path="/add-service" element={<AddService />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
