@@ -348,6 +348,7 @@ export const CITY_LISTINGS = {
       { name: 'Careem / Uber', desc: 'Available and reliable in Hurghada. Fixed prices. No bargaining. Strongly recommended over street taxis.', area: 'Citywide', rating: 4.6, price: '€€', lat: 27.2574, lng: 33.8129, tags: ['app', 'safe', 'fixed price'] },
       { name: 'Airport Official Taxi Desk', desc: 'Inside arrivals hall. Fixed price to major areas posted on board. Use ONLY this, not drivers outside.', area: 'Hurghada Airport', rating: 4.0, price: '€€', lat: 27.1769, lng: 33.8036, tags: ['official', 'airport', 'fixed price'] },
       { name: 'Coastal Microbus (Route 1)', desc: 'Shared minibus along the main coastal road. 5–10 EGP flat fare. Locals use it. Not for luggage or late night.', area: 'Main Road', rating: 3.7, price: '€', lat: 27.2400, lng: 33.8150, tags: ['cheap', 'local', 'microbus'] },
+      { name: 'Pink App', desc: 'Egyptian ride-hailing app popular in Hurghada. Download before arrival. Fixed app prices, no negotiation. Good coverage across all Hurghada zones.', area: 'Citywide', rating: 4.4, price: '€€', lat: 27.2574, lng: 33.8129, tags: ['app', 'fixed price', 'local app'] },
     ],
     activities: [
       { name: 'Red Sea Diving Safari', desc: 'Premium liveaboard and day diving. PADI certified crew. Top safety record in Hurghada. Clear pricing.', area: 'Marina', rating: 4.9, price: '€€€', lat: 27.2396, lng: 33.8317, tags: ['diving', 'liveaboard', 'premium'] },
@@ -454,7 +455,7 @@ export const CITY_TRANSPORT = {
   hurghada: {
     intro: 'Hurghada is spread over 40km of coastline. Transport is essential and scams are rampant. The airport approach road has the highest concentration of scam taxis in Egypt.',
     tips: [
-      { title: 'Careem Is the Best Option', desc: 'Careem is widely used and trusted in Hurghada. More reliable than Uber here. Use for all non-resort travel.' },
+      { title: 'Careem & Pink App — Best Options', desc: 'Careem and Pink App are the most used and trusted ride apps in Hurghada. Fixed prices, no negotiation. Download both before arrival.' },
       { title: 'The Microbus (Local Secret)', desc: 'Shared minibuses run along the main coastal road for 5–10 EGP. Locals use them. Not for tourists with luggage but fine for short solo hops.' },
       { title: 'Hotel Transfer vs Street Taxi', desc: 'Hotel transfers are overpriced but safe. Street taxis outside the airport are the highest risk. Use only the official desk inside the terminal.' },
       { title: 'Between Resort Zones', desc: 'El Dahar to Marina: 60–80 EGP. Marina to Sahl Hasheesh: 100–150 EGP. Airport to any zone: 120–180 EGP.' },
