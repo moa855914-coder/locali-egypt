@@ -173,7 +173,7 @@ export function buildArticleSchema({ title, description, url }) {
     headline: title,
     description,
     url: url || (typeof window !== 'undefined' ? window.location.href : ''),
-    datePublished: '2025-01-01',
+    datePublished: '2026-01-01',
     dateModified: ISO_DATE,
     author: { '@type': 'Organization', name: 'Locali Egypt' },
     publisher: {

@@ -14,8 +14,8 @@ export default function CityPrices() {
   const faqs = CITY_FAQS[cityId] || [];
 
   useSEO({
-    title: meta ? `Real Prices in ${meta.name} 2025 — What Tourists Actually Pay` : 'Price Guide Egypt',
-    description: meta ? `Honest price guide for ${meta.name}: taxi fares, restaurant costs, activity prices and scam rates. Know what locals pay vs what tourists pay. Updated 2025.` : '',
+    title: meta ? `Real Prices in ${meta.name} 2026 — What Tourists Actually Pay` : 'Price Guide Egypt',
+    description: meta ? `Honest price guide for ${meta.name}: taxi fares, restaurant costs, activity prices and scam rates. Know what locals pay vs what tourists pay. Updated 2026.` : '',
     jsonLd: faqs.length ? buildFAQSchema(faqs) : undefined,
   });
 
@@ -28,7 +28,7 @@ export default function CityPrices() {
 
       <div className="px-4 py-8 max-w-4xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
-          Real Prices in {meta.name} — 2025 Honest Tourist Guide
+          Real Prices in {meta.name} — 2026 Honest Tourist Guide
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed mb-4">
           Exact price data for tourists in {meta.name} — what locals pay, what's a fair tourist price, and what scammers charge. This is not a sponsored guide. We show you real numbers so you can negotiate confidently and avoid being overcharged.

@@ -34,7 +34,7 @@ export default function CityScams() {
   const [submitted, setSubmitted] = useState(false);
 
   useSEO({
-    title: meta ? `Scams in ${meta.name} — What to Watch Out For in 2025` : 'Egypt Scam Guide',
+    title: meta ? `Scams in ${meta.name} — What to Watch Out For in 2026` : 'Egypt Scam Guide',
     description: meta ? `Know the most common tourist scams in ${meta.name} before you arrive. Taxi scams, fake guides, overcharging and how to avoid them. Real community reports.` : '',
     jsonLd: faqs.length ? buildFAQSchema(faqs) : undefined,
   });
@@ -59,7 +59,7 @@ export default function CityScams() {
 
       <div className="px-4 py-8 max-w-4xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
-          Common Tourist Scams in {meta.name} — 2025 Warning Guide
+          Common Tourist Scams in {meta.name} — 2026 Warning Guide
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
           These scams happen in {meta.name} every single week. This is not sensationalism — it is pattern recognition. Tourists who know these patterns are almost never targeted successfully. Reading this page is one of the most valuable things you can do before visiting.

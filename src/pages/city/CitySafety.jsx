@@ -28,7 +28,7 @@ const FAQS = {
     { q: 'Is it safe to go to the desert near Sharm?', a: 'Yes, for organized tours with licensed operators. Do not go into the Sinai desert independently. Always tell your hotel where you are going and when you expect to return.' },
   ],
   hurghada: [
-    { q: 'Is Hurghada safe in 2025?', a: 'Yes. Hurghada has an excellent safety record for tourists. The main tourist areas are well-patrolled. The primary risk is financial scams, not violent crime.' },
+    { q: 'Is Hurghada safe in 2026?', a: 'Yes. Hurghada has an excellent safety record for tourists. The main tourist areas are well-patrolled. The primary risk is financial scams, not violent crime.' },
     { q: 'Are there sharks in Hurghada?', a: 'Shark encounters are extremely rare in tourist areas. There have been very isolated incidents. Standard safety: do not swim near fishing boats or at night, and do not bleed in the water.' },
     { q: 'Is Hurghada safe for women traveling alone?', a: 'Yes, particularly in the Marina, Sahl Hasheesh, and resort areas. These are well-lit, well-patrolled, and have international visitors constantly. Standard caution applies at night.' },
     { q: 'What is the emergency number in Hurghada?', a: 'Tourist Police: 126 (free). Ambulance: 123. Police: 122. Your hotel can also call for emergency assistance — this is often the fastest option.' },
@@ -70,8 +70,8 @@ export default function CitySafety() {
   const faqs = FAQS[cityId] || [];
 
   useSEO({
-    title: meta ? `Is ${meta.name} Safe for Tourists in 2025? Honest Safety Guide` : 'Egypt Safety Guide',
-    description: meta ? `Honest safety assessment for ${meta.name} in 2025. What risks actually exist, what the media exaggerates, and practical safety tips for tourists. Women safety section included.` : '',
+    title: meta ? `Is ${meta.name} Safe for Tourists in 2026? Honest Safety Guide` : 'Egypt Safety Guide',
+    description: meta ? `Honest safety assessment for ${meta.name} in 2026. What risks actually exist, what the media exaggerates, and practical safety tips for tourists. Women safety section included.` : '',
     jsonLd: faqs.length ? buildFAQSchema(faqs) : undefined,
   });
 
@@ -86,7 +86,7 @@ export default function CitySafety() {
 
       <div className="px-4 py-8 max-w-4xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
-          Is {meta.name} Safe for Tourists in 2025? Honest Guide
+          Is {meta.name} Safe for Tourists in 2026? Honest Guide
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
           Honest safety assessment for {meta.name}. This is not designed to scare you — it is designed to prepare you. The reality is that the vast majority of tourists have completely safe and enjoyable trips. The risks that exist are manageable with the right knowledge.
@@ -97,7 +97,7 @@ export default function CitySafety() {
           <div className="flex items-center gap-3 mb-3">
             <ShieldCheck className={`w-6 h-6 ${ratingStyle.text}`} />
             <div>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Overall Safety Rating — {meta.name} 2025</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Overall Safety Rating — {meta.name} 2026</p>
               <p className={`text-xl font-extrabold ${ratingStyle.text}`}>{safety.rating}</p>
             </div>
           </div>

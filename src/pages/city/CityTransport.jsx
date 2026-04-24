@@ -51,8 +51,8 @@ export default function CityTransport() {
   const faqs = FAQS[cityId] || [];
 
   useSEO({
-    title: meta ? `Transport & Taxis in ${meta.name} 2025 — Prices & How to Get Around` : 'Egypt Transport Guide',
-    description: meta ? `Complete transport guide for ${meta.name}: taxi prices, how to avoid overcharging, ride apps, airport transfers, and getting around safely in 2025.` : '',
+    title: meta ? `Transport & Taxis in ${meta.name} 2026 — Prices & How to Get Around` : 'Egypt Transport Guide',
+    description: meta ? `Complete transport guide for ${meta.name}: taxi prices, how to avoid overcharging, ride apps, airport transfers, and getting around safely in 2026.` : '',
     jsonLd: faqs.length ? buildFAQSchema(faqs) : undefined,
   });
 
@@ -65,7 +65,7 @@ export default function CityTransport() {
 
       <div className="px-4 py-8 max-w-4xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-2">
-          Transport &amp; Taxi Guide — {meta.name} 2025
+          Transport &amp; Taxi Guide — {meta.name} 2026
         </h1>
         <p className="text-muted-foreground text-sm leading-relaxed mb-8">
           {transport.intro} This guide gives you exact prices, the safest options, and what to say when a driver tries to overcharge you.
