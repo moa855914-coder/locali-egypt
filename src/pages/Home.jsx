@@ -25,7 +25,7 @@ const JOURNEY_STEPS = [
       { label: 'Visa & Entry Requirements', to: '/visa-entry', icon: '🛂' },
       { label: 'What to Pack & Bring', to: '/airport-items', icon: '🎒' },
       { label: 'Women\'s Safety Guide', to: '/women-safety', icon: '👩' },
-      { label: 'Cultural Tips & Etiquette', to: '/before-you-land', icon: '🕌' },
+      { label: 'Cultural Tips & Etiquette', to: '/smart-guide', icon: '🕌' },
     ],
     cta: 'Start Planning',
     ctaTo: '/before-you-land',
