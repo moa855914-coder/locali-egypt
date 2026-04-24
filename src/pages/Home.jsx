@@ -140,11 +140,13 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <div className="relative bg-teal-600 overflow-hidden">
-        <EditableImage
-          src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
-          alt="Egypt"
-          className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
-        />
+        <div className="absolute inset-0">
+          <EditableImage
+            src="https://images.unsplash.com/photo-1539768942893-daf53e448371?w=1200&q=80"
+            alt="Egypt"
+            className="w-full h-full object-cover mix-blend-overlay opacity-40"
+          />
+        </div>
         <div className="relative px-4 pt-10 pb-10 max-w-xl mx-auto text-center">
           {/* Live status pill */}
           <div className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm text-white rounded-full px-3 py-1 text-xs font-bold mb-4">
