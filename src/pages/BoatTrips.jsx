@@ -2,184 +2,273 @@ import { useState } from 'react';
 import ImageUpload from '../components/ImageUpload';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Anchor, Search, X, Plus, Users, Clock, Star } from 'lucide-react';
-import GoogleReviewsButton from '../components/GoogleReviewsButton';
-import BookingButtons from '../components/BookingButtons';
-import PlaceDetailModal from '../components/PlaceDetailModal';
-import VerifiedBoatProviders from '../components/VerifiedBoatProviders';
+import { Anchor, Clock, Users, Plus, X, ChevronDown, ChevronUp, Navigation, DollarSign } from 'lucide-react';
 
-const CITIES = [
-  { id: 'hurghada', label: 'Hurghada' },
-  { id: 'sharm-el-sheikh', label: 'Sharm El Sheikh' },
-  { id: 'dahab', label: 'Dahab' },
-  { id: 'el-gouna', label: 'El Gouna' },
-  { id: 'aswan', label: 'Aswan' },
-];
-
-const BOAT_TYPES = [
-  { id: 'yacht', label: '⛵ Yacht' },
-  { id: 'speedboat', label: '🚤 Speedboat' },
-  { id: 'fishing_boat', label: '🎣 Fishing Boat' },
-  { id: 'sailboat', label: '🌊 Sailboat' },
-  { id: 'catamaran', label: '🛥️ Catamaran' },
-];
-
-const CITY_LABELS = { hurghada: 'Hurghada', 'sharm-el-sheikh': 'Sharm El Sheikh', dahab: 'Dahab', 'el-gouna': 'El Gouna', aswan: 'Aswan' };
-const TYPE_LABELS = { yacht: '⛵ Yacht', speedboat: '🚤 Speedboat', fishing_boat: '🎣 Fishing Boat', sailboat: '🌊 Sailboat', catamaran: '🛥️ Catamaran' };
-const PRICE_TYPE_LABELS = { per_hour: '/hr', per_trip: '/trip', per_person: '/person' };
-
-// Verified sources: GetYourGuide, Viator, TripAdvisor — contact via booking platforms only
-const SAMPLE_BOATS = [
+// ─── Experience Types (informational, no external booking links) ──────────────
+const EXPERIENCE_CATALOG = [
+  // ── Hurghada ──
   {
-    id: 's1',
-    boat_name: 'Royal Luxury Catamaran — Orange Bay (GetYourGuide #1)',
+    id: 'hgd-glass',
     city: 'hurghada',
-    boat_type: 'catamaran',
-    price: null,
-    price_type: 'per_person',
-    capacity: 30,
-    duration_hours: 8,
-    description: 'Hurghada\'s #1 rated cruise — 4.9/5 on GetYourGuide with 8,200+ reviews. Full day: Orange Bay snorkeling (2 stops), buffet lunch, soft drinks, hotel pickup.',
-    photos: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=85', 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800', 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800'],
-    whatsapp: null,
-    booking_url: 'https://www.getyourguide.com/hurghada-l970/boat-tours-tc45/',
-    is_featured: true,
-    status: 'approved',
-    includes: 'Snorkeling gear, buffet lunch, soft drinks, hotel pickup',
+    cityLabel: 'Hurghada',
+    name: 'Glass Bottom Boat',
+    emoji: '🔭',
+    tier: 'Budget',
+    tierColor: 'bg-green-100 text-green-700 border-green-200',
+    description: 'Observe colorful coral reefs and tropical fish through a large glass panel beneath the boat — no swimming required. Perfect for families and non-swimmers.',
+    duration: '1 – 2 hours',
+    priceRange: '$10 – $20 USD per person',
+    priceEGP: '300 – 620 EGP',
+    audience: 'Families, children, budget travelers',
+    departure: 'Hurghada Marina or Sigala Beach area',
+    highlights: ['No swimming needed', 'Safe for all ages', 'Clear reef views', 'Short trip'],
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=85',
   },
   {
-    id: 's2',
-    boat_name: 'Ras Mohamed Catamaran — Sharm El Sheikh',
+    id: 'hgd-semi',
+    city: 'hurghada',
+    cityLabel: 'Hurghada',
+    name: 'Semi Submarine',
+    emoji: '🤿',
+    tier: 'Mid',
+    tierColor: 'bg-blue-100 text-blue-700 border-blue-200',
+    description: 'A boat with an underwater observation cabin. Passengers descend below the waterline through a staircase to view marine life through panoramic glass windows — much closer than a glass-bottom boat.',
+    duration: '1.5 – 2.5 hours',
+    priceRange: '$25 – $40 USD per person',
+    priceEGP: '780 – 1,250 EGP',
+    audience: 'Mid-range travelers, couples, teens',
+    departure: 'Hurghada Marina',
+    highlights: ['Underwater cabin', 'Panoramic windows', 'No diving needed', 'Better visibility than glass-bottom'],
+    image: 'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=85',
+  },
+  {
+    id: 'hgd-sub',
+    city: 'hurghada',
+    cityLabel: 'Hurghada',
+    name: 'Sindbad Submarine',
+    emoji: '🚢',
+    tier: 'Premium',
+    tierColor: 'bg-purple-100 text-purple-700 border-purple-200',
+    description: 'A real submarine experience descending up to 22 meters underwater. The Sindbad Submarine is the only certified tourist submarine in Egypt, offering a genuine deep-sea viewing experience with professional crew.',
+    duration: 'Approx. 2 hours (includes transfer)',
+    priceRange: '$40 – $60 USD per person',
+    priceEGP: '1,250 – 1,900 EGP',
+    audience: 'All ages, premium experience seekers',
+    departure: 'Sindbad Beach Resort, Hurghada',
+    highlights: ['Real submarine — goes 22m underwater', 'Only submarine in Egypt', 'Air-conditioned interior', 'Professional crew'],
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=85',
+  },
+  {
+    id: 'hgd-cat',
+    city: 'hurghada',
+    cityLabel: 'Hurghada',
+    name: 'Catamaran Day Cruise',
+    emoji: '⛵',
+    tier: 'Mid',
+    tierColor: 'bg-blue-100 text-blue-700 border-blue-200',
+    description: 'Full-day catamaran cruise to Orange Bay and Giftun Island. Includes snorkeling stops, sunbathing on deck, buffet lunch, and soft drinks.',
+    duration: '7 – 8 hours',
+    priceRange: '$35 – $55 USD per person',
+    priceEGP: '1,100 – 1,700 EGP',
+    audience: 'Groups, families, active travelers',
+    departure: 'Hurghada Marina',
+    highlights: ['Orange Bay snorkeling', 'Giftun Island stop', 'Buffet lunch included', 'Soft drinks included'],
+    image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800&q=85',
+  },
+
+  // ── Sharm El Sheikh ──
+  {
+    id: 'shm-glass',
     city: 'sharm-el-sheikh',
-    boat_type: 'catamaran',
-    price: null,
-    price_type: 'per_person',
-    capacity: 25,
-    duration_hours: 6,
-    description: 'Full-day catamaran to Ras Mohamed (Shark Reef & Yolanda Reef). 4.8/5 on Viator, 450+ reviews. Lunch & drinks included.',
-    photos: ['https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=85', 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800', 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'],
-    whatsapp: null,
-    booking_url: 'https://www.viator.com/Sharm-El-Sheikh-tours/Sailing-and-Boating/d4312-g12/',
-    is_featured: true,
-    status: 'approved',
-    includes: 'Snorkeling gear, lunch, soft drinks, guide',
+    cityLabel: 'Sharm El Sheikh',
+    name: 'Glass Bottom Boat',
+    emoji: '🔭',
+    tier: 'Budget',
+    tierColor: 'bg-green-100 text-green-700 border-green-200',
+    description: 'Explore Sharm\'s famous coral reefs from the comfort of a glass-bottom boat. See parrotfish, clownfish, and coral gardens without getting wet.',
+    duration: '1 – 2 hours',
+    priceRange: '$10 – $20 USD per person',
+    priceEGP: '300 – 620 EGP',
+    audience: 'Families, children, budget travelers',
+    departure: 'Naama Bay Beach or Old Market Marina',
+    highlights: ['No swimming needed', 'Naama Bay coral reefs', 'Safe for all ages', 'Budget-friendly'],
+    image: 'https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=800&q=85',
   },
   {
-    id: 's3',
-    boat_name: 'Dolphin House & Giftun Island — Hurghada',
-    city: 'hurghada',
-    boat_type: 'catamaran',
-    price: null,
-    price_type: 'per_person',
-    capacity: 25,
-    duration_hours: 7,
-    description: 'See wild dolphins at Dolphin House, snorkel at Giftun Island. 4.6/5 on GetYourGuide (2,100+ reviews). Hotel pickup included.',
-    photos: ['https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=800&q=85', 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Dolphin_hurghada.jpg/960px-Dolphin_hurghada.jpg', 'https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=800'],
-    whatsapp: null,
-    booking_url: 'https://www.viator.com/Egypt/d798-ttd',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Snorkeling gear, lunch, drinks, hotel transfer',
+    id: 'shm-semi',
+    city: 'sharm-el-sheikh',
+    cityLabel: 'Sharm El Sheikh',
+    name: 'Semi Submarine',
+    emoji: '🤿',
+    tier: 'Mid',
+    tierColor: 'bg-blue-100 text-blue-700 border-blue-200',
+    description: 'Experience Sharm\'s legendary marine life through the underwater cabin of a semi-submarine. The Strait of Tiran and Naama Bay reefs are among the most vibrant in the Red Sea.',
+    duration: '1.5 – 2.5 hours',
+    priceRange: '$25 – $40 USD per person',
+    priceEGP: '780 – 1,250 EGP',
+    audience: 'Mid-range travelers, couples, teens',
+    departure: 'Naama Bay Marina',
+    highlights: ['World-class coral views', 'No diving license needed', 'Panoramic underwater windows', 'Air-conditioned cabin'],
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=85',
   },
   {
-    id: 's4',
-    boat_name: 'El Gouna Lagoon Speedboat — Islands & Canals',
-    city: 'el-gouna',
-    boat_type: 'speedboat',
-    price: null,
-    price_type: 'per_person',
-    capacity: 8,
-    duration_hours: 3,
-    description: 'Explore El Gouna\'s lagoon system. Visit islands, beaches, canals. 4.4/5 on GetYourGuide (280+ reviews).',
-    photos: ['https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=85', 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800', 'https://images.unsplash.com/photo-1472745942893-4b9f730c7668?w=800'],
-    whatsapp: null,
-    booking_url: 'https://www.getyourguide.com/el-gouna-l97451/',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Life jackets, water, professional guide',
-  },
-  {
-    id: 's5',
-    boat_name: 'Nile Felucca Sunset Sail — Aswan',
-    city: 'aswan',
-    boat_type: 'sailboat',
-    price: null,
-    price_type: 'per_hour',
-    capacity: 8,
-    duration_hours: 2,
-    description: 'Authentic Nubian felucca at sunset between islands. Traditional sailing, Nubian tea, local music.',
-    photos: ['https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=800&q=85', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Felucca_on_the_Nile.jpg/960px-Felucca_on_the_Nile.jpg', 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800'],
-    whatsapp: null,
-    booking_url: 'https://www.viator.com/Egypt/d798-ttd',
-    is_featured: false,
-    status: 'approved',
-    includes: 'Nubian tea, traditional music, licensed guide',
+    id: 'shm-cat',
+    city: 'sharm-el-sheikh',
+    cityLabel: 'Sharm El Sheikh',
+    name: 'Ras Mohamed Catamaran',
+    emoji: '⛵',
+    tier: 'Mid',
+    tierColor: 'bg-blue-100 text-blue-700 border-blue-200',
+    description: 'Full-day catamaran to Ras Mohamed National Park — one of the world\'s top dive sites. Snorkel at Shark Reef and Yolanda Reef. Lunch and drinks included.',
+    duration: '6 – 7 hours',
+    priceRange: '$40 – $60 USD per person',
+    priceEGP: '1,250 – 1,900 EGP',
+    audience: 'Active travelers, snorkelers, nature lovers',
+    departure: 'Naama Bay or Sharm Marina',
+    highlights: ['Ras Mohamed National Park', 'Shark Reef snorkeling', 'Yolanda Reef stop', 'Lunch & drinks included'],
+    image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=85',
   },
 ];
 
-function BoatCard({ boat }) {
-  const [imgIdx, setImgIdx] = useState(0);
-  const [open, setOpen] = useState(false);
-  const photos = boat.photos?.length ? boat.photos : ['https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800'];
-  const CITY_BOAT_VIATOR = {
-    hurghada: 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
-    'sharm-el-sheikh': 'https://www.viator.com/Sharm-el-Sheikh-tours/Sailing-and-Boating/d832-g12/',
-    aswan: 'https://www.viator.com/Aswan-tours/Cruises-Water-Tours/d4776-g63/',
-    dahab: 'https://www.viator.com/Dahab/d4314-ttd',
-    'el-gouna': 'https://www.viator.com/Hurghada-tours/Cruises-Water-Tours/d5323-g63/',
-  };
-  const bookingUrl = CITY_BOAT_VIATOR[boat.city] || 'https://www.viator.com/Egypt/d798-ttd';
+const TIERS = ['All', 'Budget', 'Mid', 'Premium'];
+const CITIES = [
+  { id: '', label: '🌍 All Cities' },
+  { id: 'hurghada', label: '🌊 Hurghada' },
+  { id: 'sharm-el-sheikh', label: '🤿 Sharm El Sheikh' },
+];
+
+const TIER_ICONS = { Budget: '💚', Mid: '💙', Premium: '💜' };
+
+function ExperienceCard({ exp }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const mapsQuery = encodeURIComponent(`${exp.name} boat ${exp.cityLabel} Egypt`);
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer" onClick={() => setOpen(true)}>
-      <div className="relative h-48 overflow-hidden">
-        <img src={photos[imgIdx]} alt={boat.boat_name} className="w-full h-full object-cover" />
-        <div className="absolute top-3 left-3 flex gap-2">
-          {boat.is_featured && (
-            <span className="bg-amber-400 text-white text-[10px] font-black px-2 py-1 rounded-full">⭐ Featured</span>
-          )}
-          <span className="bg-white/90 text-blue-600 text-[10px] font-black px-2 py-1 rounded-full border border-blue-200">
-            {TYPE_LABELS[boat.boat_type] || boat.boat_type}
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      {/* Image */}
+      <div className="relative h-44 overflow-hidden">
+        <img
+          src={exp.image}
+          alt={exp.name}
+          className="w-full h-full object-cover"
+          onError={e => { e.target.src = 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80'; }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+        {/* City badge */}
+        <div className="absolute top-3 left-3">
+          <span className="bg-white/90 text-gray-800 text-[10px] font-black px-2 py-1 rounded-full">
+            📍 {exp.cityLabel}
           </span>
         </div>
-      </div>
 
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-extrabold text-base text-gray-900 leading-tight">{boat.boat_name}</h3>
+        {/* Tier badge */}
+        <div className="absolute top-3 right-3">
+          <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${exp.tierColor}`}>
+            {TIER_ICONS[exp.tier]} {exp.tier}
+          </span>
         </div>
 
-        <p className="text-xs text-gray-400 mb-2 flex items-center gap-1">
-          <span>📍</span>{CITY_LABELS[boat.city] || boat.city}
-          {boat.duration_hours && <><span className="mx-1">·</span><Clock className="w-3 h-3" />{boat.duration_hours}h</>}
-          <span className="mx-1">·</span><Users className="w-3 h-3" />Up to {boat.capacity}
-        </p>
+        {/* Name on image */}
+        <div className="absolute bottom-3 left-3 right-3">
+          <h3 className="text-white font-black text-lg leading-tight drop-shadow-sm">
+            {exp.emoji} {exp.name}
+          </h3>
+        </div>
+      </div>
 
-        <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-3">{boat.description}</p>
+      {/* Content */}
+      <div className="p-4">
+        <p className="text-sm text-gray-600 leading-relaxed mb-3">{exp.description}</p>
 
-        {boat.includes && (
-          <p className="text-[10px] text-gray-400 bg-gray-50 rounded-xl px-3 py-1.5 mb-3">
-            ✅ Includes: {boat.includes}
-          </p>
+        {/* Key info row */}
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="bg-gray-50 rounded-xl px-3 py-2">
+            <p className="text-[10px] text-gray-400 font-bold uppercase mb-0.5">Duration</p>
+            <p className="text-xs font-bold text-gray-800 flex items-center gap-1">
+              <Clock className="w-3 h-3 text-teal-500" /> {exp.duration}
+            </p>
+          </div>
+          <div className="bg-green-50 rounded-xl px-3 py-2">
+            <p className="text-[10px] text-gray-400 font-bold uppercase mb-0.5">Fair Price</p>
+            <p className="text-xs font-bold text-green-700 flex items-center gap-1">
+              <DollarSign className="w-3 h-3" /> {exp.priceRange}
+            </p>
+          </div>
+        </div>
+
+        {/* Price in EGP */}
+        <div className="bg-orange-50 border border-orange-100 rounded-xl px-3 py-2 mb-3">
+          <p className="text-[10px] text-orange-600 font-bold uppercase mb-0.5">Approx. in EGP</p>
+          <p className="text-sm font-black text-orange-700">{exp.priceEGP}</p>
+        </div>
+
+        {/* Expandable details */}
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="w-full flex items-center justify-between text-xs font-bold text-teal-600 mb-2"
+        >
+          <span>More details</span>
+          {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        </button>
+
+        {expanded && (
+          <div className="space-y-2 mb-3">
+            <div>
+              <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Best For</p>
+              <p className="text-xs text-gray-700">{exp.audience}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Departure Point</p>
+              <p className="text-xs text-gray-700">{exp.departure}</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-gray-500 uppercase mb-1">Highlights</p>
+              <div className="flex flex-wrap gap-1">
+                {exp.highlights.map((h, i) => (
+                  <span key={i} className="text-[10px] bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full border border-teal-100">
+                    ✓ {h}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
         )}
 
-        <GoogleReviewsButton name={boat.boat_name} className="mb-2" />
-        <BookingButtons activity={boat.boat_name} city={CITY_LABELS[boat.city] || boat.city} />
+        {/* Google Maps CTA only */}
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-xl text-xs font-bold transition-colors"
+        >
+          <Navigation className="w-3.5 h-3.5" /> Find on Google Maps
+        </a>
       </div>
-      {open && <PlaceDetailModal place={{ name: boat.boat_name, description: boat.description, photo: photos[0], city: CITY_LABELS[boat.city] || boat.city, type: 'activity' }} onClose={e => { e.stopPropagation(); setOpen(false); }} />}
     </div>
   );
 }
 
 function SubmitForm({ onClose }) {
-  const [form, setForm] = useState({ boat_name: '', city: '', boat_type: '', price: '', price_type: 'per_trip', capacity: '', duration_hours: '', description: '', whatsapp: '', main_image: '' });
+  const [form, setForm] = useState({
+    boat_name: '', city: '', boat_type: '', price: '',
+    price_type: 'per_trip', capacity: '', duration_hours: '',
+    description: '', whatsapp: '', main_image: '',
+  });
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
   const submit = async () => {
-    if (!form.boat_name || !form.city || !form.boat_type || !form.price || !form.whatsapp) return;
+    if (!form.boat_name || !form.city || !form.boat_type || !form.whatsapp) return;
     setLoading(true);
-    await base44.entities.BoatTrip.create({ ...form, price: parseFloat(form.price), capacity: parseInt(form.capacity), status: 'pending' });
+    await base44.entities.BoatTrip.create({
+      ...form,
+      price: parseFloat(form.price) || 0,
+      capacity: parseInt(form.capacity) || 0,
+      status: 'pending',
+    });
     setLoading(false);
     setDone(true);
   };
@@ -187,9 +276,9 @@ function SubmitForm({ onClose }) {
   if (done) return (
     <div className="text-center py-8">
       <div className="text-5xl mb-4">✅</div>
-      <h3 className="text-xl font-black mb-2">Submitted Successfully!</h3>
+      <h3 className="text-xl font-black mb-2">Submitted!</h3>
       <p className="text-sm text-gray-500 mb-4">Your listing is under review. We'll approve it within 24 hours.</p>
-      <button onClick={onClose} className="bg-blue-500 text-white px-6 py-2 rounded-xl font-bold">Close</button>
+      <button onClick={onClose} className="bg-teal-500 text-white px-6 py-2 rounded-xl font-bold">Close</button>
     </div>
   );
 
@@ -199,45 +288,42 @@ function SubmitForm({ onClose }) {
         ⚓ Submit your boat listing for review. Once approved it will be visible to tourists.
       </div>
       {[
-        { label: 'Boat Name', key: 'boat_name', type: 'text' },
+        { label: 'Boat / Experience Name', key: 'boat_name' },
+        { label: 'WhatsApp Number', key: 'whatsapp', placeholder: '201001234567' },
         { label: 'Price (EGP)', key: 'price', type: 'number' },
         { label: 'Capacity (people)', key: 'capacity', type: 'number' },
         { label: 'Duration (hours)', key: 'duration_hours', type: 'number' },
-        { label: 'WhatsApp Number', key: 'whatsapp', type: 'text', placeholder: '201001234567' },
       ].map(f => (
         <div key={f.key}>
           <label className="text-xs font-bold text-gray-600 mb-1 block">{f.label}</label>
-          <input type={f.type} placeholder={f.placeholder || f.label} value={form[f.key]}
-            onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          <input type={f.type || 'text'} placeholder={f.placeholder || f.label}
+            value={form[f.key]} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-400" />
         </div>
       ))}
-      {[
-        { label: 'City', key: 'city', options: CITIES.map(c => ({ value: c.id, label: c.label })) },
-        { label: 'Boat Type', key: 'boat_type', options: BOAT_TYPES.map(t => ({ value: t.id, label: t.label })) },
-        { label: 'Price Type', key: 'price_type', options: [{ value: 'per_trip', label: 'Per Trip' }, { value: 'per_hour', label: 'Per Hour' }, { value: 'per_person', label: 'Per Person' }] },
-      ].map(f => (
-        <div key={f.key}>
-          <label className="text-xs font-bold text-gray-600 mb-1 block">{f.label}</label>
-          <select value={form[f.key]} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white">
-            <option value="">Select {f.label}</option>
-            {f.options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
-        </div>
-      ))}
+      <div>
+        <label className="text-xs font-bold text-gray-600 mb-1 block">City</label>
+        <select value={form.city} onChange={e => setForm(p => ({ ...p, city: e.target.value }))}
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none">
+          <option value="">Select city</option>
+          <option value="hurghada">Hurghada</option>
+          <option value="sharm-el-sheikh">Sharm El Sheikh</option>
+          <option value="el-gouna">El Gouna</option>
+          <option value="aswan">Aswan</option>
+        </select>
+      </div>
       <div>
         <label className="text-xs font-bold text-gray-600 mb-1 block">Description</label>
         <textarea value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} rows={3}
           placeholder="Describe your boat trip experience..."
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none" />
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none resize-none" />
       </div>
       <div>
         <label className="text-xs font-bold text-gray-600 mb-1 block">Main Photo (optional)</label>
         <ImageUpload value={form.main_image} onChange={url => setForm(p => ({ ...p, main_image: url || '' }))} label="Upload Boat Photo" />
       </div>
-      <button onClick={submit} disabled={loading}
-        className="w-full bg-blue-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-600 transition-all disabled:opacity-50">
+      <button onClick={submit} disabled={loading || !form.boat_name || !form.city || !form.whatsapp}
+        className="w-full bg-teal-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-teal-600 transition-all disabled:opacity-50">
         {loading ? 'Submitting...' : 'Submit My Boat'}
       </button>
     </div>
@@ -245,108 +331,125 @@ function SubmitForm({ onClose }) {
 }
 
 export default function BoatTrips() {
-  const [search, setSearch] = useState('');
   const [cityFilter, setCityFilter] = useState('');
-  const [typeFilter, setTypeFilter] = useState('');
+  const [tierFilter, setTierFilter] = useState('All');
   const [showForm, setShowForm] = useState(false);
 
+  // Also load any DB-submitted boats that got approved
   const { data: dbBoats = [] } = useQuery({
     queryKey: ['boattrips'],
     queryFn: () => base44.entities.BoatTrip.filter({ status: 'approved' }),
   });
 
-  const boats = dbBoats.length > 0 ? dbBoats : SAMPLE_BOATS;
-
-  const filtered = boats.filter(b => {
-    const matchSearch = !search || b.boat_name.toLowerCase().includes(search.toLowerCase()) || CITY_LABELS[b.city]?.toLowerCase().includes(search.toLowerCase());
-    const matchCity = !cityFilter || b.city === cityFilter;
-    const matchType = !typeFilter || b.boat_type === typeFilter;
-    return matchSearch && matchCity && matchType;
+  const filtered = EXPERIENCE_CATALOG.filter(exp => {
+    const matchCity = !cityFilter || exp.city === cityFilter;
+    const matchTier = tierFilter === 'All' || exp.tier === tierFilter;
+    return matchCity && matchTier;
   });
 
-  const featured = filtered.filter(b => b.is_featured);
-  const regular = filtered.filter(b => !b.is_featured);
+  const tierCounts = { All: EXPERIENCE_CATALOG.length };
+  EXPERIENCE_CATALOG.forEach(e => {
+    tierCounts[e.tier] = (tierCounts[e.tier] || 0) + 1;
+  });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 px-4 pt-10 pb-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="text-5xl mb-3">⛵</div>
-          <h1 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight">Boat Trips Marketplace</h1>
-          <p className="text-white/80 text-sm mb-6">Verified Red Sea & Nile boat experiences · Exclusive 10% discount for Locali users</p>
-          <button onClick={() => setShowForm(true)}
-            className="bg-white text-blue-600 font-extrabold px-6 py-3 rounded-2xl text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-2 mx-auto">
-            <Plus className="w-4 h-4" /> List Your Boat
-          </button>
+      <div className="bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 px-4 pt-8 pb-16">
+        <div className="max-w-2xl mx-auto text-center">
+          <span className="text-5xl block mb-3">⛵</span>
+          <h1 className="text-3xl font-black text-white mb-2">Boat Experiences</h1>
+          <p className="text-teal-100 text-sm mb-2">Red Sea Marine Life · Fair Prices · No Booking Fees</p>
+          <p className="text-teal-200 text-xs">Compare experiences · Find fair prices · Contact locally</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 -mt-6">
-        {/* Search + Filters */}
-        <div className="bg-white rounded-3xl shadow-lg p-4 mb-6 border border-gray-100">
-          <div className="relative mb-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search boats or city..."
-              className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <select value={cityFilter} onChange={e => setCityFilter(e.target.value)}
-              className="flex-1 min-w-[130px] px-3 py-2 border border-gray-200 rounded-xl text-xs font-bold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="">All Cities</option>
-              {CITIES.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
-            </select>
-            <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
-              className="flex-1 min-w-[130px] px-3 py-2 border border-gray-200 rounded-xl text-xs font-bold bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="">All Boat Types</option>
-              {BOAT_TYPES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
-            </select>
-            {(cityFilter || typeFilter || search) && (
-              <button onClick={() => { setCityFilter(''); setTypeFilter(''); setSearch(''); }}
-                className="px-3 py-2 bg-red-50 text-red-500 rounded-xl text-xs font-bold border border-red-100">
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
+      <div className="max-w-4xl mx-auto px-4 -mt-8">
+        {/* Price comparison card */}
+        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 mb-6">
+          <h2 className="font-black text-gray-900 text-sm mb-3 flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-teal-600" /> Fair Price Guide
+          </h2>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { tier: 'Budget', icon: '💚', name: 'Glass Bottom', price: '$10–$20' },
+              { tier: 'Mid', icon: '💙', name: 'Semi Submarine', price: '$25–$40' },
+              { tier: 'Premium', icon: '💜', name: 'Real Submarine', price: '$40–$60' },
+            ].map(t => (
+              <div key={t.tier} className="text-center bg-gray-50 rounded-xl p-2.5">
+                <span className="text-lg block mb-1">{t.icon}</span>
+                <p className="text-[10px] font-bold text-gray-500 mb-0.5">{t.name}</p>
+                <p className="text-xs font-black text-gray-900">{t.price}</p>
+                <p className="text-[9px] text-gray-400">per person</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Featured */}
-        {featured.length > 0 && (
+        {/* City filter */}
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 mb-3">
+          {CITIES.map(c => (
+            <button key={c.id} onClick={() => setCityFilter(c.id)}
+              className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all ${
+                cityFilter === c.id ? 'bg-teal-600 text-white border-teal-600' : 'bg-white text-gray-600 border-gray-200'
+              }`}>
+              {c.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tier filter */}
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 mb-5">
+          {TIERS.map(t => (
+            <button key={t} onClick={() => setTierFilter(t)}
+              className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold border transition-all ${
+                tierFilter === t ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-gray-600 border-gray-200'
+              }`}>
+              {t === 'All' ? '✨ All' : `${TIER_ICONS[t]} ${t}`}
+              <span className="ml-1 opacity-60">({tierCounts[t] || 0})</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Results count */}
+        <p className="text-xs font-bold text-gray-500 mb-4">{filtered.length} experience{filtered.length !== 1 ? 's' : ''} found</p>
+
+        {/* Experience grid */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-8">
+          {filtered.map(exp => <ExperienceCard key={exp.id} exp={exp} />)}
+        </div>
+
+        {/* DB-submitted boats */}
+        {dbBoats.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-lg font-extrabold text-gray-900 mb-3 flex items-center gap-2">
-              <Star className="w-5 h-5 text-amber-400 fill-amber-400" /> Featured Boats
+            <h2 className="font-black text-gray-900 text-base mb-3 flex items-center gap-2">
+              <Anchor className="w-4 h-4 text-teal-600" /> Community Listed Boats
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
-              {featured.map(b => <BoatCard key={b.id} boat={b} />)}
+              {dbBoats.map(b => (
+                <div key={b.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+                  <h3 className="font-black text-gray-900 mb-1">{b.boat_name}</h3>
+                  <p className="text-xs text-gray-500 mb-2">📍 {b.city} · ⏱ {b.duration_hours}h · 👥 Up to {b.capacity}</p>
+                  {b.price > 0 && <p className="text-sm font-bold text-teal-600 mb-2">{b.price.toLocaleString()} EGP</p>}
+                  {b.description && <p className="text-xs text-gray-600 mb-3">{b.description}</p>}
+                  {b.whatsapp && (
+                    <a href={`https://wa.me/${b.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full bg-green-500 text-white py-2.5 rounded-xl text-xs font-bold">
+                      WhatsApp Inquiry
+                    </a>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
 
-        {/* All listings */}
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-extrabold text-gray-900">All Boat Trips ({filtered.length})</h2>
-        </div>
-        {filtered.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
-            <span className="text-5xl">⛵</span>
-            <p className="mt-3 font-bold">No boats found</p>
-            <p className="text-sm">Try adjusting your filters</p>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 gap-4 mb-12">
-            {(featured.length > 0 ? regular : filtered).map(b => <BoatCard key={b.id} boat={b} />)}
-          </div>
-        )}
-
-        {/* Verified Providers */}
-        <VerifiedBoatProviders />
-
-        {/* Submit CTA */}
-        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl p-6 text-center text-white mb-10">
-          <h3 className="font-extrabold text-lg mb-1">Own a Boat? List It Free!</h3>
-          <p className="text-white/80 text-xs mb-4">Reach thousands of tourists. No commission — just leads.</p>
+        {/* Owner CTA */}
+        <div className="bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl p-6 text-center text-white mb-10">
+          <h3 className="font-black text-lg mb-1">Own a Boat or Offer Tours?</h3>
+          <p className="text-white/80 text-xs mb-4">List your experience free. Tourists contact you directly.</p>
           <button onClick={() => setShowForm(true)}
-            className="bg-white text-blue-600 font-extrabold px-6 py-2.5 rounded-2xl text-sm hover:opacity-90">
+            className="bg-white text-teal-600 font-black px-6 py-2.5 rounded-xl text-sm hover:opacity-90">
             List My Boat →
           </button>
         </div>
@@ -356,7 +459,7 @@ export default function BoatTrips() {
       {showForm && (
         <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-4" onClick={() => setShowForm(false)}>
           <div className="bg-white rounded-3xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600">
+            <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 p-1 text-gray-400">
               <X className="w-5 h-5" />
             </button>
             <h2 className="text-xl font-black mb-4 text-gray-900">⛵ List Your Boat</h2>
