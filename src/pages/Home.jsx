@@ -7,6 +7,7 @@ import {
   Map, Users, Eye, Star, ArrowRight, Search
 } from 'lucide-react';
 import EditableImage from '../components/EditableImage';
+import CityCard from '../components/HomeCityCard';
 
 // ─── Section Data ─────────────────────────────────────────────────────────────
 const JOURNEY_STEPS = [
@@ -268,16 +269,7 @@ export default function Home() {
           </div>
           <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
             {CITIES.map(city => (
-              <Link key={city.id} to={`/city/${city.id}`}
-                className="shrink-0 relative w-28 h-36 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <EditableImage src={city.img} alt={city.label} className="w-full h-full object-cover"
-                  onError={e => { e.target.src = 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=400'; }} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 p-2.5 text-center">
-                  <span className="text-lg block">{city.emoji}</span>
-                  <p className="text-white font-black text-xs">{city.label}</p>
-                </div>
-              </Link>
+              <CityCard key={city.id} city={city} />
             ))}
           </div>
         </div>
