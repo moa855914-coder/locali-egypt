@@ -1,0 +1,52 @@
+{
+  "name": "Auto-Fill Missing Images \u2014 Every 30 Min",
+  "description": "Scans Service, Place, and HiddenGemPlace entities for missing images and fills them using Pexels + Unsplash with smart location-accurate queries. Scores each image for realism and rejects stock/studio shots.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "interval",
+      "cron_expression": null,
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": 30,
+      "interval_unit": "minutes",
+      "interval_anchor": "2026-04-23T16:06:16.433000",
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "auto_fill_missing_images_every_30_min",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "smartAutoImages",
+            "args": {
+              "scheduled": true,
+              "entities": [
+                "Service",
+                "Place",
+                "HiddenGemPlace"
+              ],
+              "limit": 20
+            }
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "smartAutoImages"
+  }
+}
